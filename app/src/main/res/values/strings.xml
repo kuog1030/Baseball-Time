@@ -5,9 +5,13 @@
     <string name="B">B</string>
     <string name="S">S</string>
     <string name="O">O</string>
-    <string name="ball_one">●</string>
-    <string name="ball_two">●●</string>
-    <string name="ball_three">●●●</string>
+    <string name="two_zero">○○</string>
+    <string name="two_one">●○</string>
+    <string name="two_two">●●</string>
+    <string name="three_zero">○○○</string>
+    <string name="three_one">●○○</string>
+    <string name="three_two">●●○</string>
+    <string name="three_three">●●●</string>
 
 
     <string name="strike">好球</string>
