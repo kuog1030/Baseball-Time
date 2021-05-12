@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Baseball</string>
+
+
+    <string name="B">B</string>
+    <string name="S">S</string>
+    <string name="O">O</string>
+    <string name="ball_one">●</string>
+    <string name="ball_two">●●</string>
+    <string name="ball_three">●●●</string>
+
+
+    <string name="strike">好球</string>
+    <string name="ball">壞球</string>
+    <string name="foul">界外</string>
+    <string name="out">出局</string>
+    <string name="safe">上壘</string>
+
+
 </resources>
