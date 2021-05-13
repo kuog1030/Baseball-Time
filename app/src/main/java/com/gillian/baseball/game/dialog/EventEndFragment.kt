@@ -6,21 +6,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.gillian.baseball.databinding.FragmentHitterBinding
+import com.gillian.baseball.databinding.FragmentEventEndBinding
 
-class HitterFragment : Fragment() {
-
-    //val viewModel by viewModels<HitterViewModel> { getVmFactory() }
+class EventEndFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val binding = FragmentHitterBinding.inflate(inflater, container, false)
+        val binding = FragmentEventEndBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
 
         return binding.root
     }
-
 }

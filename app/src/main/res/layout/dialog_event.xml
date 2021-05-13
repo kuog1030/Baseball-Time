@@ -7,9 +7,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+
+        <Button
+            android:id="@+id/button_event_forward"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_baseline_arrow_forward_24"
+            android:layout_marginEnd="@dimen/margin"
+            app:layout_constraintBottom_toBottomOf="@+id/viewpager_event"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/viewpager_event"/>
+
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager_event"
-            android:layout_width="300dp"
+            android:layout_width="400dp"
             android:layout_height="600dp"
             android:layout_marginTop="@dimen/margin"
             app:layout_constraintBottom_toBottomOf="parent"

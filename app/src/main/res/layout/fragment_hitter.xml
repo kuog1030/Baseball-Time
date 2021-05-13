@@ -6,23 +6,24 @@
     <data>
         <variable
             name="viewModel"
-            type="com.gillian.baseball.game.dialog.HitterViewModel" />
+            type="com.gillian.baseball.game.dialog.EventDialogViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
         <Button
-            style="@style/GameButton"
             android:id="@+id/button_hitter_single"
+            style="@style/GameButton"
             android:layout_width="@dimen/hitter_button_width"
             android:layout_height="wrap_content"
-            android:text="@string/Single"
             android:onClick="@{()->viewModel.single()}"
+            android:text="@string/Single"
+            android:layout_marginTop="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:layout_editor_absoluteY="221dp" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             style="@style/GameButton"
