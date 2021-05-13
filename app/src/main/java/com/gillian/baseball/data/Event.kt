@@ -19,4 +19,9 @@ data class Event(
 //    // runner will only be recorded when
 //    // 1. on base event eg. steal base, advance by error
 //    val runner: EventPlayer? = null
-) : Parcelable
+) : Parcelable {
+
+    override fun toString(): String {
+        return ("打者 ${player.name} 在 $strike 好球之下擊出了安打")
+    }
+}

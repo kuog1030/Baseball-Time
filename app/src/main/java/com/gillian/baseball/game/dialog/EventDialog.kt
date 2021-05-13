@@ -8,20 +8,25 @@ import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.databinding.DialogEventBinding
+import com.gillian.baseball.game.batting.BattingViewModel
 
 class EventDialog  : AppCompatDialogFragment() {
+
+    val args : EventDialogArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
+        val event = args.preEvent
         val binding = DialogEventBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
+        viewModel.event.value = event
 
         fun changePage(){
             val currentPosition = binding.viewpagerEvent.currentItem
             if ( currentPosition >= 0 ) {
-                Log.i("gillian", "it is suppose to be zero $currentPosition")
                 binding.viewpagerEvent.setCurrentItem( currentPosition + 1 )
             }
         }
@@ -43,6 +48,8 @@ class EventDialog  : AppCompatDialogFragment() {
         viewModel.dismiss.observe(viewLifecycleOwner, Observer {
             it?.let{
                 dismiss()
+                ViewModelProvider(requireActivity()).get(BattingViewModel::class.java).nextPlayer()
+                //val battingViewModel by viewModels<BattingViewModel> { getVmFactory() }
                 viewModel.onDialogDismiss()
             }
         })

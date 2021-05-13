@@ -4,13 +4,14 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.source.BaseballRepository
 
 //class HitterViewModel(private val repository: BaseballRepository) : ViewModel() {
 class EventDialogViewModel : ViewModel() {
 
-    var temp = MutableLiveData<String>("kuo")
     var tempList = mutableListOf<String>()
+    var event = MutableLiveData<Event>()
 
     private var _changeToNextPage = MutableLiveData<Boolean>()
     val changeToNextPage: LiveData<Boolean>

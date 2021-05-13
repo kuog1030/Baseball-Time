@@ -15,7 +15,11 @@
     <dialog
         android:id="@+id/eventDialog"
         android:name="com.gillian.baseball.game.dialog.EventDialog"
-        android:label="EventDialog" />
+        android:label="EventDialog" >
+        <argument
+            android:name="preEvent"
+            app:argType="com.gillian.baseball.data.Event" />
+    </dialog>
 
     <action android:id="@+id/navigationToEventDialog" app:destination="@id/eventDialog" />
 
