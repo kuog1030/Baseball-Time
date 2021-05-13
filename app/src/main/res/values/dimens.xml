@@ -7,4 +7,7 @@
 
     <dimen name="bar_height">1dp</dimen>
 
+    <dimen name="hitter_button_width">150dp</dimen>
+    <dimen name="hitter_button_width2">100dp</dimen>
+
 </resources>

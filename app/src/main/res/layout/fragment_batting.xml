@@ -20,7 +20,7 @@
             android:layout_height="@dimen/bar_height"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:background="@color/grey_888"
+            android:background="@color/orange"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="1.0"
@@ -120,6 +120,7 @@
             style="@style/BallSign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/green_ball"
             app:ballCount="@{viewModel.ballCount}"
             app:layout_constraintBottom_toBottomOf="@+id/text_batting_ball"
             app:layout_constraintStart_toEndOf="@+id/text_batting_ball"
@@ -131,6 +132,7 @@
             style="@style/BallSign"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textColor="@color/yellow_strike"
             app:twoCount="@{viewModel.strikeCount}"
             app:layout_constraintBottom_toBottomOf="@+id/text_batting_strike"
             app:layout_constraintStart_toEndOf="@+id/text_batting_strike"
@@ -143,53 +145,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:twoCount="@{viewModel.outCount}"
+            android:textColor="@color/red_out"
             app:layout_constraintBottom_toBottomOf="@+id/text_batting_foul"
             app:layout_constraintStart_toEndOf="@+id/text_batting_foul"
             app:layout_constraintTop_toTopOf="@+id/text_batting_foul"
             tools:text="@string/two_two" />
-
-        <TextView
-            style="@style/GameTitle"
-            android:id="@+id/text_batting_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="AppWorks School世界盃總冠軍賽"/>
-
-        <TextView
-            style="@style/GameScore"
-            android:id="@+id/text_batting_guest"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/double_margin"
-            app:layout_constraintEnd_toStartOf="@+id/text_batting_score"
-            app:layout_constraintTop_toBottomOf="@+id/text_batting_title"
-            tools:text="Flutter"/>
-
-
-        <TextView
-            style="@style/GameScore"
-            android:id="@+id/text_batting_score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_batting_guest"
-            tools:text="5:5"/>
-
-        <TextView
-            style="@style/GameScore"
-            android:id="@+id/text_batting_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/double_margin"
-            app:layout_constraintStart_toEndOf="@+id/text_batting_score"
-            app:layout_constraintTop_toTopOf="@+id/text_batting_score"
-            tools:text="Android"/>
 
         <ImageView
             android:id="@+id/image_batting_field"
@@ -202,7 +162,7 @@
             app:layout_constraintBottom_toTopOf="@+id/bar_batting"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_batting_score"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/field" />
 
         <TextView
@@ -219,10 +179,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
+            android:fontFamily="@font/noto_sans"
             app:layout_constraintBottom_toTopOf="@+id/text_batting_hitter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_batting_field"
-            tools:text="No.15 Sam"/>
+            tools:text="No.15 Sam" />
 
         <TextView
             android:id="@+id/text_batting_third"

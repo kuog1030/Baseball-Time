@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.game.GameViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_game_title"
+            style="@style/GameTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:text="@{viewModel.game.name}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="AppWorks School世界盃總冠軍賽" />
+
+        <TextView
+            android:id="@+id/text_game_guest"
+            style="@style/GameScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:text="Flutter"
+            app:layout_constraintEnd_toStartOf="@+id/text_game_score"
+            app:layout_constraintTop_toBottomOf="@+id/text_game_title"
+            tools:text="Flutter" />
+
+
+        <TextView
+            android:id="@+id/text_game_score"
+            style="@style/GameScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="5:5"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_game_guest"
+            tools:text="5:5" />
+
+        <TextView
+            android:id="@+id/text_game_home"
+            style="@style/GameScore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:text="Android"
+            app:layout_constraintStart_toEndOf="@+id/text_game_score"
+            app:layout_constraintTop_toTopOf="@+id/text_game_score"
+            tools:text="Android" />
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager_game"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_game_home">
+
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs_game"
+                android:layout_width="0dp"
+                android:layout_height="0dp" />
+
+        </androidx.viewpager.widget.ViewPager>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

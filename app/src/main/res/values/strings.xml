@@ -20,5 +20,16 @@
     <string name="out">出局</string>
     <string name="safe">上壘</string>
 
+    <string name="Single">1安</string>
+    <string name="Double">2安</string>
+    <string name="Triple">3安</string>
+    <string name="homerun">全壘打</string>
+    <string name="hit_by_pitch">觸身</string>
+    <string name="error">失誤</string>
+    <string name="dropped_third">不死三振</string>
+
+    <string name="walk">保送</string>
+    <string name="intent_walk">故意四壞</string>
+
 
 </resources>

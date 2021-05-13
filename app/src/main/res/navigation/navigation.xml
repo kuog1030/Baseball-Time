@@ -1,5 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation">
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    app:startDestination="@id/gameFragment">
+
+    <fragment
+        android:id="@+id/battingFragment"
+        android:name="com.gillian.baseball.game.batting.BattingFragment"
+        android:label="BattingFragment" />
+
+    <fragment
+        android:id="@+id/gameFragment"
+        android:name="com.gillian.baseball.game.GameFragment"
+        android:label="GameFragment" />
+    <dialog
+        android:id="@+id/eventDialog"
+        android:name="com.gillian.baseball.game.dialog.EventDialog"
+        android:label="EventDialog" />
+
+    <action android:id="@+id/navigationToEventDialog" app:destination="@id/eventDialog" />
 
 </navigation>
