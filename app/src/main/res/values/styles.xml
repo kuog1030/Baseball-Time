@@ -18,6 +18,10 @@
         <item name="android:textSize">20sp</item>
     </style>
 
+    <style name="EventPage">
+        <item name="android:textSize">18sp</item>
+    </style>
+
     <style name="GameButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0.15</item>

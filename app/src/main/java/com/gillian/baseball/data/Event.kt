@@ -21,7 +21,7 @@ data class Event(
 //    val runner: EventPlayer? = null
 ) : Parcelable {
 
-    override fun toString(): String {
-        return ("打者 ${player.name} 在 $strike 好球之下擊出了安打")
-    }
+//    override fun toString(): String {
+//        return ("打者 ${player.name} 在 $strike 好球之下擊出了安打")
+//    }
 }

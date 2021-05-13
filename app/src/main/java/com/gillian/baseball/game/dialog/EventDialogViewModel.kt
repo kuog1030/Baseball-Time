@@ -4,11 +4,13 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.source.BaseballRepository
+import kotlinx.coroutines.launch
 
 //class HitterViewModel(private val repository: BaseballRepository) : ViewModel() {
-class EventDialogViewModel : ViewModel() {
+class EventDialogViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     var tempList = mutableListOf<String>()
     var event = MutableLiveData<Event>()
@@ -38,39 +40,68 @@ class EventDialogViewModel : ViewModel() {
     }
 
     fun saveAndDismiss() {
+        Log.i("gillian", "the event now is ${event.value}")
+        event.value?.let{
+            viewModelScope.launch { repository.sendEvent(it) }
+        }
         dismissDialog()
     }
 
     fun single() {
-        tempList.add("single")
+        event.value?.let{
+            it.result = 1
+        }
         changeToNextPage()
     }
 
     fun Double() {
-        tempList.add("double")
+        event.value?.let{
+            it.result = 2
+        }
         changeToNextPage()
     }
 
     fun triple() {
-        tempList.add("triple")
+        event.value?.let{
+            it.result = 3
+        }
         changeToNextPage()
     }
 
     fun homerun() {
-        tempList.add("homerun")
+        event.value?.let{
+            it.result = 4
+        }
         changeToNextPage()
     }
 
     fun hbp() {
-        for (i in tempList) {
-            Log.i("gillian", "temp list contains $i")
+        event.value?.let{
+            it.result = 5
         }
     }
 
     fun error() {
-        Log.i("gillian", "temp list total is ${tempList.size}")
+        event.value?.let{
+            it.result = 6
+        }
     }
 
-    fun droppedThird(){}
+    fun droppedThird() {
+        event.value?.let{
+            it.result = 7
+        }
+    }
 
+    fun secondBase() {
+        changeToNextPage()
+    }
+
+    fun thirdBase() {
+        changeToNextPage()
+    }
+
+    fun run() {
+        changeToNextPage()
+    }
 }

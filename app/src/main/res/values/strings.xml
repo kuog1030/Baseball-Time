@@ -20,6 +20,11 @@
     <string name="out">出局</string>
     <string name="safe">上壘</string>
 
+    <string name="first_base">一壘</string>
+    <string name="second_base">二壘</string>
+    <string name="third_base">三壘</string>
+    <string name="get_run">回壘得分</string>
+
     <string name="Single">1安</string>
     <string name="Double">2安</string>
     <string name="Triple">3安</string>

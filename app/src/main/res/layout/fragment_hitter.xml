@@ -7,6 +7,9 @@
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.dialog.EventDialogViewModel" />
+        <variable
+            name="page"
+            type="String" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -103,6 +106,7 @@
             app:layout_constraintTop_toTopOf="@+id/button_hitter_error" />
 
         <TextView
+            style="@style/EventPage"
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -110,7 +114,29 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             android:text="@{String.valueOf(viewModel.event.player.name)}"
-            tools:layout_editor_absoluteX="167dp"
-            tools:layout_editor_absoluteY="26dp" />
+            tools:text="陳傑憲"/>
+
+        <View
+            android:id="@+id/bar_hitter"
+            android:layout_width="0dp"
+            android:layout_height="2dp"
+            android:background="@color/grey_888"
+            android:layout_marginBottom="60dp"
+            app:layout_constraintStart_toStartOf="@id/button_hitter_hbp"
+            app:layout_constraintEnd_toEndOf="@id/button_hitter_drop"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            style="@style/EventPage"
+            android:id="@+id/text_hitter_page"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{page}"
+            app:layout_constraintTop_toBottomOf="@id/bar_hitter"
+            app:layout_constraintStart_toStartOf="@id/bar_hitter"
+            app:layout_constraintEnd_toEndOf="@id/bar_hitter"
+            android:layout_marginTop="@dimen/margin"
+            tools:text="1/4"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

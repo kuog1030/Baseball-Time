@@ -8,7 +8,7 @@ import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.source.BaseballRepository
 
-class BattingViewModel(private val repository: BaseballRepository?=null) : ViewModel() {
+class BattingViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     var ballCount = MutableLiveData<Int>().apply {
         value = 0

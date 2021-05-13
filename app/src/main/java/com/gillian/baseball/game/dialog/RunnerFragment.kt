@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.databinding.FragmentRunnerBinding
 
-class RunnerFragment : Fragment() {
+class RunnerFragment(val page : String) : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -17,6 +17,7 @@ class RunnerFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.page = page
 
 
         return binding.root

@@ -8,9 +8,9 @@ class EventDialogAdapter(fragmentManager: FragmentManager) : FragmentStatePagerA
 
     override fun getItem(position: Int): Fragment {
         return when (position) {
-            0 -> HitterFragment()
+            0 -> HitterFragment("1/$count")
             (count-1) -> EventEndFragment()
-            else -> RunnerFragment()
+            else -> RunnerFragment("${position+1}/$count")
         }
     }
 

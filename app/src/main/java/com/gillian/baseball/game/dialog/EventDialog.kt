@@ -9,8 +9,10 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
+import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.databinding.DialogEventBinding
+import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.batting.BattingViewModel
 
 class EventDialog(val event : Event)  : AppCompatDialogFragment() {
@@ -22,13 +24,20 @@ class EventDialog(val event : Event)  : AppCompatDialogFragment() {
 
         //val event = args.preEvent
         val binding = DialogEventBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
+        //val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
+        val viewModel = ViewModelProvider(
+            requireActivity(),
+            ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)
+        ).get(EventDialogViewModel::class.java)
+
+
+
         viewModel.event.value = event
 
         fun changePage(){
             val currentPosition = binding.viewpagerEvent.currentItem
             if ( currentPosition >= 0 ) {
-                binding.viewpagerEvent.setCurrentItem( currentPosition + 1 )
+                binding.viewpagerEvent.setCurrentItem( currentPosition + 1 , true)
             }
         }
 

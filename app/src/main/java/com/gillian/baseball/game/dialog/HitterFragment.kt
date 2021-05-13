@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.databinding.FragmentHitterBinding
 
-class HitterFragment : Fragment() {
+class HitterFragment(val page : String) : Fragment() {
 
     //val viewModel by viewModels<HitterViewModel> { getVmFactory() }
 
@@ -18,6 +18,7 @@ class HitterFragment : Fragment() {
         val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+        binding.page = page
 
 
         return binding.root
