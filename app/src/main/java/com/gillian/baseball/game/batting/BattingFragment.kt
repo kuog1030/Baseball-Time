@@ -1,6 +1,7 @@
 package com.gillian.baseball.game.batting
 
 import android.os.Bundle
+import android.util.EventLog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -15,18 +16,16 @@ import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.databinding.FragmentBattingBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.factory.ViewModelFactory
+import com.gillian.baseball.game.dialog.EventDialog
 
 class BattingFragment : Fragment() {
-
-    //val viewModel by viewModels<BattingViewModel> { getVmFactory() }
-    //val viewModel: BattingViewModel by lazy { ViewModelProvider(this).get(BattingViewModel::class.java)}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         val binding = FragmentBattingBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(
-            requireActivity(),
+            this,
             ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)
         ).get(BattingViewModel::class.java)
 
@@ -37,7 +36,9 @@ class BattingFragment : Fragment() {
 
         viewModel.navigateToHitter.observe(viewLifecycleOwner, Observer {
             it?.let{
-                findNavController().navigate(NavigationDirections.navigationToEventDialog(it))
+                val eventDialog = EventDialog(it)
+                eventDialog.show(childFragmentManager, "Success")
+                //findNavController().navigate(NavigationDirections.navigationToEventDialog(it))
                 viewModel.onHitterNavigated()
             }
         })
