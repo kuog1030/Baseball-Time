@@ -24,15 +24,15 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         value = 0
     }
 
-    val lineup = mutableListOf<EventPlayer>(EventPlayer("0024", "陳傑憲", "24"),
-            EventPlayer("0032","蘇智傑", "32"),
-            EventPlayer("0013", "陳鏞基", "13"),
-            EventPlayer("0077", "林安可", "77"),
-            EventPlayer("0065", "陳重羽", "65"),
-            EventPlayer("0064", "林靖凱", "64"),
-            EventPlayer("0052", "張偉聖", "52"),
-            EventPlayer("0031", "林岱安", "31"),
-            EventPlayer("0039", "林祖傑", "39")
+    val lineup = mutableListOf<EventPlayer>(EventPlayer("0024", "1陳傑憲", "24"),
+            EventPlayer("0032","2蘇智傑", "32"),
+            EventPlayer("0013", "3陳鏞基", "13"),
+            EventPlayer("0077", "4林安可", "77"),
+            EventPlayer("0065", "5陳重羽", "65"),
+            EventPlayer("0064", "6林靖凱", "64"),
+            EventPlayer("0052", "7張偉聖", "52"),
+            EventPlayer("0031", "8林岱安", "31"),
+            EventPlayer("0039", "9林祖傑", "39")
     )
 
 
@@ -62,6 +62,10 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     val navigateToOut : LiveData<List<AtBase>>
         get() = _navigateToOut
 
+    private val _updateRunner = MutableLiveData<Boolean>()
+    val updateRunner : LiveData<Boolean>
+        get() = _updateRunner
+
 
     fun ball() {
         ballCount.value = ballCount.value!!.plus(1)
@@ -75,7 +79,6 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         strikeCount.value = strikeCount.value!!.plus(1)
         totalStrike += 1
 
-        // TODO()
         if (strikeCount.value == 3) {
             sendEvent(Event(player = lineup[atBatNumber],
                     result = 9,
@@ -183,12 +186,22 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         // change the hitter to next person in line
         baseList[0] = lineup[atBatNumber]
         atBatName.value = "第${atBatNumber+1}棒 ${baseList[0]!!.name}"
+        updateRunnerUI()
+
 
         // debugging
         for ((index, base) in baseList.withIndex()){
             Log.i("at base next player()", "base $index is now ${base?.name}")
         }
         Log.i("at base ", "--------------next-------------")
+    }
+
+    fun updateRunnerUI() {
+        _updateRunner.value = true
+    }
+
+    fun onUpdateRunnerDone(){
+        _updateRunner.value = null
     }
 
     fun setNewBaseList(newList: Array<EventPlayer?>) {

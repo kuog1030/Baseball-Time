@@ -54,6 +54,15 @@ class BattingFragment : Fragment() {
             }
         })
 
+        viewModel.updateRunner.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                binding.textBattingFirst.text = viewModel.baseList[1]?.name ?: ""
+                binding.textBattingSecond.text = viewModel.baseList[2]?.name ?: ""
+                binding.textBattingThird.text = viewModel.baseList[3]?.name ?: ""
+                viewModel.onUpdateRunnerDone()
+            }
+        })
+
 
         return binding.root
     }

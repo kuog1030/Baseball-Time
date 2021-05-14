@@ -2,6 +2,7 @@ package com.gillian.baseball
 
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import com.gillian.baseball.data.EventPlayer
 
 @BindingAdapter("ballCount")
 fun bindBallCount(textView: TextView, count: Int?) {
@@ -25,3 +26,8 @@ fun bindStrikeCount(textView: TextView, count: Int?) {
         }
     }
 }
+//
+//@BindingAdapter("onFirstBase")
+//fun bindFirstBaseRunner(textView: TextView, baseList: Array<EventPlayer?>) {
+//    textView.text = if (baseList[1] != null) baseList[1]!!.name else ""
+//}
