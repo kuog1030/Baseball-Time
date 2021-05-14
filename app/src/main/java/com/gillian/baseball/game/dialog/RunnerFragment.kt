@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.databinding.FragmentRunnerBinding
 
-class RunnerFragment(val page : String) : Fragment() {
+class RunnerFragment(val page : String, val atBase: AtBase) : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {

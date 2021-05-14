@@ -6,9 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.databinding.FragmentHitterBinding
 
-class HitterFragment(val page : String) : Fragment() {
+class HitterFragment(val page : String, val atBase: AtBase) : Fragment() {
 
     //val viewModel by viewModels<HitterViewModel> { getVmFactory() }
 

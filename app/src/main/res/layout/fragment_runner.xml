@@ -16,77 +16,119 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
 
+        <ImageView
+            android:id="@+id/image_runner_field"
+            android:layout_width="wrap_content"
+            android:layout_height="200dp"
+            android:layout_marginTop="40dp"
+            app:layout_constraintBottom_toTopOf="@+id/button_runner_second"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView"
+            app:srcCompat="@drawable/field" />
+
         <Button
             android:id="@+id/button_runner_second"
             style="@style/GameButton"
             android:layout_width="@dimen/hitter_button_width"
             android:layout_height="wrap_content"
-            android:text="@string/second_base"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="@dimen/double_margin"
             android:onClick="@{()->viewModel.secondBase()}"
+            android:text="@string/second_base"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/image_runner_field" />
 
         <Button
-            style="@style/GameButton"
             android:id="@+id/button_runner_third"
+            style="@style/GameButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
-            android:text="@string/third_base"
             android:onClick="@{()->viewModel.thirdBase()}"
+            android:text="@string/third_base"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_second"
             app:layout_constraintStart_toStartOf="@+id/button_runner_second"
             app:layout_constraintTop_toBottomOf="@+id/button_runner_second" />
 
         <Button
-            style="@style/GameButton"
             android:id="@+id/button_runner_run"
+            style="@style/GameButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
-            android:text="@string/get_run"
             android:onClick="@{()->viewModel.run()}"
+            android:text="@string/get_run"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_third"
             app:layout_constraintStart_toStartOf="@+id/button_runner_third"
             app:layout_constraintTop_toBottomOf="@+id/button_runner_third" />
 
 
         <TextView
-            style="@style/EventPage"
             android:id="@+id/textView"
+            style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:text="@{String.valueOf(viewModel.event.player.name)}"
-            tools:text="陳傑憲"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="陳傑憲" />
 
         <View
             android:id="@+id/bar_hitter"
             android:layout_width="332dp"
             android:layout_height="2dp"
-            android:background="@color/grey_888"
-            android:layout_marginBottom="60dp"
             android:layout_marginStart="@dimen/double_margin"
             android:layout_marginEnd="@dimen/double_margin"
-            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginBottom="60dp"
+            android:background="@color/grey_888"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="parent" />
 
         <TextView
-            style="@style/EventPage"
             android:id="@+id/text_hitter_page"
+            style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{page}"
-            app:layout_constraintTop_toBottomOf="@id/bar_hitter"
-            app:layout_constraintStart_toStartOf="@id/bar_hitter"
-            app:layout_constraintEnd_toEndOf="@id/bar_hitter"
             android:layout_marginTop="@dimen/margin"
-            tools:text="2/4"/>
+            android:text="@{page}"
+            app:layout_constraintEnd_toEndOf="@id/bar_hitter"
+            app:layout_constraintStart_toStartOf="@id/bar_hitter"
+            app:layout_constraintTop_toBottomOf="@id/bar_hitter"
+            tools:text="2/4" />
+
+        <TextView
+            android:id="@+id/text_runner_first_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@id/image_runner_field"
+            app:layout_constraintHorizontal_bias="0.9"
+            app:layout_constraintStart_toStartOf="@+id/image_runner_field"
+            app:layout_constraintTop_toTopOf="@+id/text_runner_third_player" />
+
+        <TextView
+            android:id="@+id/text_runner_third_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/image_runner_field"
+            app:layout_constraintEnd_toEndOf="@+id/image_runner_field"
+            app:layout_constraintHorizontal_bias="0.1"
+            app:layout_constraintStart_toStartOf="@+id/image_runner_field"
+            app:layout_constraintTop_toTopOf="@+id/image_runner_field" />
+
+        <TextView
+            android:id="@+id/text_runner_second_player"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/image_runner_field"/>
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

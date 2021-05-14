@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.source.BaseballRepository
@@ -20,12 +21,24 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         value = 0
     }
 
-    val lineup = mutableListOf<EventPlayer>(EventPlayer("0024", "陳傑憲", "24"), EventPlayer("0032","蘇智傑", "32"))
+    val lineup = mutableListOf<EventPlayer>(EventPlayer("0024", "陳傑憲", "24"),
+            EventPlayer("0032","蘇智傑", "32"),
+            EventPlayer("0013", "陳鏞基", "13"),
+            EventPlayer("0077", "林安可", "77"),
+            EventPlayer("0065", "陳重羽", "65"))
+
+    // 進到dialog的時候帶過去的用球數
+    lateinit var hitterEvent : Event
+
+    var baseList = arrayOf<EventPlayer?>(null, null, lineup[3], null)
+    var atBaseList = mutableListOf<AtBase>()
+    //val newAtBase = arrayOf<EventPlayer?>(null, null, null, null)
+
     var atBatNumber = 0
 
-    private val _navigateToHitter = MutableLiveData<Event>()
-    val navigateToHitter : LiveData<Event>
-        get() = _navigateToHitter
+    private val _navigateToEvent = MutableLiveData<List<AtBase>>()
+    val navigateToEvent : LiveData<List<AtBase>>
+        get() = _navigateToEvent
 
     private val _navigateToRunner = MutableLiveData<Boolean>()
     val navigateToRunner : LiveData<Boolean>
@@ -66,17 +79,26 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     }
 
     fun safe() {
-        Log.i("Gillian", "ready to navigate to 上壘 and at bat number is $atBatNumber")
-        _navigateToHitter.value = Event(
-            ball = ballCount.value ?: 0,
-            strike = strikeCount.value ?: 0,
-            out = outCount.value ?: 0,
-            player = lineup[atBatNumber]
+        atBaseList.clear()
+        hitterEvent = Event(
+                ball = ballCount.value ?: 0,
+                strike = strikeCount.value ?: 0,
+                out = outCount.value ?: 0,
+                player = lineup[atBatNumber]
         )
+
+        baseList[0] = lineup[atBatNumber]
+        for ((index, player) in baseList.withIndex()) {
+            if (player != null) {
+                atBaseList.add(AtBase(base = index, player = player))
+            }
+        }
+
+        _navigateToEvent.value = atBaseList
     }
 
-    fun onHitterNavigated() {
-        _navigateToHitter.value = null
+    fun onEventNavigated() {
+        _navigateToEvent.value = null
     }
 
 
@@ -93,6 +115,14 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         ballCount.value = 0
         strikeCount.value = 0
     }
+
+    fun clearBase() {
+        baseList = arrayOf<EventPlayer?>(null, null, null, null)
+    }
+
+//    fun updateBase( base: Int, newPlayer : EventPlayer ) {
+//        newAtBase[base] = newPlayer
+//    }
 
     fun switch() {
         outCount.value = 0 // ?

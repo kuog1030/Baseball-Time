@@ -1,20 +1,15 @@
 package com.gillian.baseball.game.batting
 
 import android.os.Bundle
-import android.util.EventLog
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.BaseballApplication
-import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.databinding.FragmentBattingBinding
-import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.dialog.EventDialog
 
@@ -34,18 +29,23 @@ class BattingFragment : Fragment() {
 
         Log.i("gillian", "in batting fragment viewmodel is $viewModel")
 
-        viewModel.navigateToHitter.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToEvent.observe(viewLifecycleOwner, Observer {
             it?.let{
-                val eventDialog = EventDialog(it)
+
+                for(i in it) {
+                    Log.i("gillian", "at base list is ${i}")
+                }
+
+                val eventDialog = EventDialog(it, viewModel.hitterEvent)
                 eventDialog.show(childFragmentManager, "Success")
                 //findNavController().navigate(NavigationDirections.navigationToEventDialog(it))
-                viewModel.onHitterNavigated()
+                viewModel.onEventNavigated()
             }
         })
 
         viewModel.navigateToRunner.observe(viewLifecycleOwner, Observer {
             it?.let {
-                viewModel.onHitterNavigated()
+                viewModel.onEventNavigated()
             }
         })
 

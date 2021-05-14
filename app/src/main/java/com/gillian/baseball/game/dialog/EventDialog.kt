@@ -10,12 +10,14 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.BaseballApplication
+import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
+import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.databinding.DialogEventBinding
 import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.batting.BattingViewModel
 
-class EventDialog(val event : Event)  : AppCompatDialogFragment() {
+class EventDialog(val argsAtBase: List<AtBase>, val argsHitterEvent: Event)  : AppCompatDialogFragment() {
 
     //val args : EventDialogArgs by navArgs()
 
@@ -31,8 +33,8 @@ class EventDialog(val event : Event)  : AppCompatDialogFragment() {
         ).get(EventDialogViewModel::class.java)
 
 
-
-        viewModel.event.value = event
+        viewModel.atBaseList = argsAtBase
+        viewModel.event.value = argsHitterEvent
 
         fun changePage(){
             val currentPosition = binding.viewpagerEvent.currentItem
@@ -41,7 +43,7 @@ class EventDialog(val event : Event)  : AppCompatDialogFragment() {
             }
         }
 
-        binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager)
+        binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager, argsAtBase)
         binding.tabsEvent.setupWithViewPager(binding.viewpagerEvent)
 
         binding.buttonEventForward.setOnClickListener{

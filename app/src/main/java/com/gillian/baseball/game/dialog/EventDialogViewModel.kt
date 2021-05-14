@@ -5,14 +5,18 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
+import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.source.BaseballRepository
 import kotlinx.coroutines.launch
 
 //class HitterViewModel(private val repository: BaseballRepository) : ViewModel() {
 class EventDialogViewModel(private val repository: BaseballRepository) : ViewModel() {
 
-    var tempList = mutableListOf<String>()
+    var atBaseList = listOf<AtBase>()
+
+    var eventList = mutableListOf<Event>()
     var event = MutableLiveData<Event>()
 
     private var _changeToNextPage = MutableLiveData<Boolean>()
@@ -40,10 +44,14 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     }
 
     fun saveAndDismiss() {
-        Log.i("gillian", "the event now is ${event.value}")
-        event.value?.let{
-            viewModelScope.launch { repository.sendEvent(it) }
+        Log.i("gillian", "event list count ${eventList.size}, the event now is ${event.value}")
+        val readyToSend = eventList
+        viewModelScope.launch {
+            for (singleEvent in readyToSend) {
+                repository.sendEvent(singleEvent)
+            }
         }
+        eventList.clear()
         dismissDialog()
     }
 
@@ -51,6 +59,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         event.value?.let{
             it.result = 1
         }
+        eventList.add(event.value!!)
         changeToNextPage()
     }
 
@@ -102,6 +111,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     }
 
     fun run() {
+        eventList.add(Event())
         changeToNextPage()
     }
 }
