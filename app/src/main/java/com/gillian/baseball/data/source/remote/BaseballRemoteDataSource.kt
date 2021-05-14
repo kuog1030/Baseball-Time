@@ -11,6 +11,6 @@ object BaseballRemoteDataSource : BaseballDataSource{
     }
 
     override suspend fun sendEvent(event: Event) {
-        Log.i("gillian", "todo")
+        Log.i("at base remote", "event to be sent $event")
     }
 }

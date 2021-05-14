@@ -31,10 +31,20 @@ class BattingFragment : Fragment() {
 
         viewModel.navigateToEvent.observe(viewLifecycleOwner, Observer {
             it?.let{
-                val eventDialog = EventDialog(it, viewModel.hitterEvent)
+                val eventDialog = EventDialog(it, true, viewModel.hitterEvent)
                 eventDialog.show(childFragmentManager, "Success")
+                Log.i("gillian", "navigate to event $eventDialog")
                 //findNavController().navigate(NavigationDirections.navigationToEventDialog(it))
                 viewModel.onEventNavigated()
+            }
+        })
+
+        viewModel.navigateToOut.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                val eventDialog = EventDialog(it, false, viewModel.hitterEvent)
+                Log.i("gillian", "navigate to out $eventDialog")
+                eventDialog.show(childFragmentManager, "Success")
+                viewModel.onOutNavigated()
             }
         })
 

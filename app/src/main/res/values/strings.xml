@@ -32,6 +32,10 @@
     <string name="hit_by_pitch">觸身</string>
     <string name="error">失誤</string>
     <string name="dropped_third">不死三振</string>
+    
+    <string name="ground_out">滾地球</string>
+    <string name="air_out">高飛球</string>
+    <string name="sacrifice_fly">犧牲打（打點）</string>
 
     <string name="walk">保送</string>
     <string name="intent_walk">故意四壞</string>

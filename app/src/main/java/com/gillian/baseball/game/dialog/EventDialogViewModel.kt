@@ -17,6 +17,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     var atBaseList = listOf<AtBase>()
     var hitterEvent = MutableLiveData<Event>()
     var newBaseList = arrayOf<EventPlayer?>(null, null, null, null)
+    var hasOut : Boolean? = null
 
 
     var eventList = mutableListOf<Event>()
@@ -43,10 +44,13 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
 
     fun onDialogDismiss() {
         _dismiss.value = null
+        hasOut = null
     }
 
     fun saveAndDismiss() {
         val readyToSend = eventList
+        // 好球會在真正要送出前才記錄
+        readyToSend[0].strike += 1
         viewModelScope.launch {
             for (singleEvent in readyToSend) {
                 repository.sendEvent(singleEvent)
@@ -57,6 +61,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         for (atBase in atBaseList) {
             if (atBase.base != -1) {
                 newBaseList[atBase.base] = atBase.player
+                //Log.i("at base", "when save and dismiss ${atBase.base} ${atBase.player}")
             }
         }
         dismissDialog()
@@ -121,14 +126,33 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     fun run(atBase: AtBase) {
         atBase.base = -1
         eventList.add(Event(run = 1, player = atBase.player))
+        eventList[0].rbi += 1
+        changeToNextPage()
+    }
+
+    fun groundOut() {
+        hitterEvent.value?.let{
+            it.result = 21
+            it.rbi = 1
+        }
+        eventList.add(hitterEvent.value!!)
+        atBaseList[0].base = -1
+        hasOut = true
+        changeToNextPage()
+    }
+
+    fun airOut(hasRbi: Boolean) {
+        hitterEvent.value?.let{
+            it.result = if (hasRbi) 23 else 22
+            it.rbi = 1
+        }
+        eventList.add(hitterEvent.value!!)
+        atBaseList[0].base = -1
+        hasOut = true
         changeToNextPage()
     }
 
     fun initNextEvent() {
-        // debugging
-        for (event in eventList) {
-            Log.i("at base event", "send event $event")
-        }
         eventList.clear()
         newBaseList = arrayOf(null, null, null, null)
     }

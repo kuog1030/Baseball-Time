@@ -19,6 +19,7 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     var strikeCount = MutableLiveData<Int>().apply{
         value = 0
     }
+    var totalStrike = 0
     var outCount = MutableLiveData<Int>().apply {
         value = 0
     }
@@ -27,12 +28,20 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
             EventPlayer("0032","蘇智傑", "32"),
             EventPlayer("0013", "陳鏞基", "13"),
             EventPlayer("0077", "林安可", "77"),
-            EventPlayer("0065", "陳重羽", "65"))
+            EventPlayer("0065", "陳重羽", "65"),
+            EventPlayer("0064", "林靖凱", "64"),
+            EventPlayer("0052", "張偉聖", "52"),
+            EventPlayer("0031", "林岱安", "31"),
+            EventPlayer("0039", "林祖傑", "39")
+    )
+
 
     // 進到dialog的時候帶過去的用球數
     lateinit var hitterEvent : Event
 
+    // 一般來說在這裡都是使用base list
     var baseList = arrayOf<EventPlayer?>(lineup[0], null, null, null)
+    // 要進到dialog的樣子
     var atBaseList = mutableListOf<AtBase>()
     //val newAtBase = arrayOf<EventPlayer?>(null, null, null, null)
 
@@ -49,6 +58,10 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     val navigateToRunner : LiveData<Boolean>
         get() = _navigateToRunner
 
+    private val _navigateToOut = MutableLiveData<List<AtBase>>()
+    val navigateToOut : LiveData<List<AtBase>>
+        get() = _navigateToOut
+
 
     fun ball() {
         ballCount.value = ballCount.value!!.plus(1)
@@ -60,7 +73,15 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
 
     fun strike() {
         strikeCount.value = strikeCount.value!!.plus(1)
+        totalStrike += 1
+
+        // TODO()
         if (strikeCount.value == 3) {
+            sendEvent(Event(player = lineup[atBatNumber],
+                    result = 9,
+                    ball = ballCount.value ?: 0,
+                    strike = totalStrike,
+                    out = outCount.value ?: 0))
             out()
         }
     }
@@ -69,24 +90,25 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         if (strikeCount.value!! < 2) {
             strikeCount.value = strikeCount.value!!.plus(1)
         }
+        totalStrike += 1
     }
 
     fun out() {
         outCount.value = outCount.value!!.plus(1)
-
         if (outCount.value!! == 3) {
             // three out! switch
             outCount.value = 0
+            Log.i("at base", "*-------------change!------------*")
         } else {
             nextPlayer()
         }
     }
 
-    fun safe() {
+    fun toEventDialog(isSafe: Boolean) {
         atBaseList.clear()
         hitterEvent = Event(
                 ball = ballCount.value ?: 0,
-                strike = strikeCount.value ?: 0,
+                strike = totalStrike,
                 out = outCount.value ?: 0,
                 player = lineup[atBatNumber]
         )
@@ -98,15 +120,27 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
             }
         }
 
-        _navigateToEvent.value = atBaseList
+        if (isSafe) {
+            _navigateToEvent.value = atBaseList
+        } else {
+            //TODO()應該何時加上出局數呢? 如果只是不小心按到話??
+            if (outCount.value == 2) {
+                _navigateToOut.value = listOf(AtBase(0, baseList[0]!!))
+            } else {
+                _navigateToOut.value = atBaseList
+            }
+        }
     }
 
     fun onEventNavigated() {
         _navigateToEvent.value = null
     }
 
+    fun onOutNavigated() {
+        _navigateToOut.value = null
+    }
+
     fun advanceBase(start_: Int) {
-        // TODO()得分的情況回傳
         var start = start_
         while ( baseList[start] != null) {
             if (start == 3) {
@@ -121,13 +155,17 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     }
 
     fun ballFour() {
+        sendEvent(Event(player = lineup[atBatNumber],
+                result = 8,
+                ball = 4,
+                strike = totalStrike,
+                out = outCount.value ?: 0))
         advanceBase(0)
         clearCount()
         nextPlayer()
     }
 
     fun sendEvent(event: Event) {
-        Log.i("at base", "event to be sent $event")
         viewModelScope.launch {
             repository.sendEvent(event)
         }
@@ -148,9 +186,9 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
 
         // debugging
         for ((index, base) in baseList.withIndex()){
-            Log.i("at base", "base $index is now ${base?.name}")
+            Log.i("at base next player()", "base $index is now ${base?.name}")
         }
-        Log.i("at base", "--------------next-------------")
+        Log.i("at base ", "--------------next-------------")
     }
 
     fun setNewBaseList(newList: Array<EventPlayer?>) {
@@ -158,6 +196,7 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     }
 
     fun clearCount() {
+        totalStrike = 0
         ballCount.value = 0
         strikeCount.value = 0
     }

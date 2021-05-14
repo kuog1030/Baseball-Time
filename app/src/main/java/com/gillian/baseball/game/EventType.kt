@@ -6,10 +6,15 @@ enum class EventType(val number : Int, val letter: String) {
     TRIPLE(3, "3B"),
     HOMERUN(4, "HR"),
     HITBYPITCH(5, "HBP"),
-    DROPPEDTHIRD(7, ""),
+    DROPPEDTHIRD(7, "KK"),
+    WALK(8, "BB"),
+    STRIKEOUT(9, "K"),
     RUN(11, "R"), //得分
     HIT(12, "H"),
     ERROR(13, "E"),
-    STEALBASE(21, "SB"),
+    GROUNDOUT(21, "GO"),
+    AIROUT(22, "AO"),
+    SACRIFICEFLY(23, "SF"),
+    STEALBASE(31, "SB"),
     INNINGSPITCHED(50, "IP")
 }

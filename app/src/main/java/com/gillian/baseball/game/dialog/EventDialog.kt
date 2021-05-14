@@ -17,53 +17,62 @@ import com.gillian.baseball.databinding.DialogEventBinding
 import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.batting.BattingViewModel
 
-class EventDialog(val argsAtBase: List<AtBase>, val argsHitterEvent: Event)  : AppCompatDialogFragment() {
+class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHitterEvent: Event) : AppCompatDialogFragment() {
 
     //val args : EventDialogArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
+//        for (i in argsAtBase) {
+//            Log.i("at base debuging", "event dialog $i")
+//        }
+
         val binding = DialogEventBinding.inflate(inflater, container, false)
         //val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
         val viewModel = ViewModelProvider(
-            requireActivity(),
-            ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)
+                requireActivity(),
+                ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)
         ).get(EventDialogViewModel::class.java)
 
 
         viewModel.atBaseList = argsAtBase
         viewModel.hitterEvent.value = argsHitterEvent
 
-        fun changePage(){
+        fun changePage() {
             val currentPosition = binding.viewpagerEvent.currentItem
-            if ( currentPosition >= 0 ) {
-                binding.viewpagerEvent.setCurrentItem( currentPosition + 1 , true)
+            if (currentPosition >= 0) {
+                binding.viewpagerEvent.setCurrentItem(currentPosition + 1, true)
             }
         }
 
-        binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager, argsAtBase)
+        binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager, isSafe, argsAtBase)
         binding.tabsEvent.setupWithViewPager(binding.viewpagerEvent)
 
-        binding.buttonEventForward.setOnClickListener{
+        binding.buttonEventForward.setOnClickListener {
             changePage()
         }
 
         viewModel.changeToNextPage.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 changePage()
                 viewModel.onNextPageChanged()
             }
         })
 
         viewModel.dismiss.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                dismiss()
+            it?.let {
                 val battingViewModel = ViewModelProvider(requireParentFragment()).get(BattingViewModel::class.java)
-                battingViewModel.setNewBaseList(it)
-                battingViewModel.nextPlayer()
+                if (viewModel.hasOut != null) {
+                    battingViewModel.setNewBaseList(it)
+                    battingViewModel.out()
+                } else {
+                    battingViewModel.setNewBaseList(it)
+                    battingViewModel.nextPlayer()
+                }
                 Log.i("gillian", "in event dialog $battingViewModel")
                 //val battingViewModel by viewModels<BattingViewModel> { getVmFactory() }
+                dismiss()
                 viewModel.onDialogDismiss()
             }
         })
