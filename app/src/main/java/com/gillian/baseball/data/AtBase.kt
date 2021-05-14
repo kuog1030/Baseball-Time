@@ -5,6 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class AtBase (
-        val base: Int,
+        var base: Int,
         val player: EventPlayer
-) : Parcelable
+) : Parcelable {
+    val runnerString = "原本的${base}壘跑者${player.name}現在到了..."
+}

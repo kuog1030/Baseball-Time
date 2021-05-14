@@ -10,6 +10,9 @@
         <variable
             name="page"
             type="String" />
+        <variable
+            name="atBase"
+            type="com.gillian.baseball.data.AtBase" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -33,8 +36,8 @@
             android:layout_width="@dimen/hitter_button_width"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
-            android:onClick="@{()->viewModel.secondBase()}"
             android:text="@string/second_base"
+            android:onClick="@{()->viewModel.secondBase(atBase)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/image_runner_field" />
@@ -45,7 +48,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
-            android:onClick="@{()->viewModel.thirdBase()}"
+            android:onClick="@{()->viewModel.thirdBase(atBase)}"
             android:text="@string/third_base"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_second"
             app:layout_constraintStart_toStartOf="@+id/button_runner_second"
@@ -57,7 +60,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
-            android:onClick="@{()->viewModel.run()}"
+            android:onClick="@{()->viewModel.run(atBase)}"
             android:text="@string/get_run"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_third"
             app:layout_constraintStart_toStartOf="@+id/button_runner_third"
@@ -69,7 +72,7 @@
             style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{String.valueOf(viewModel.event.player.name)}"
+            android:text="@{atBase.runnerString}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

@@ -5,7 +5,8 @@
     <color name="purple_700">#FF3700B3</color>
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
-    <color name="orange">#FFffb27f</color>
+    <color name="orange">#FF3b5998</color>
+<!--    <color name="orange">#FFffb27f</color>-->
     <color name="red_out">#bf0603</color>
     <color name="green_ball">#88ab75</color>
     <color name="yellow_strike">#ffd400</color>

@@ -15,16 +15,18 @@ import kotlinx.coroutines.launch
 class EventDialogViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     var atBaseList = listOf<AtBase>()
+    var hitterEvent = MutableLiveData<Event>()
+    var newBaseList = arrayOf<EventPlayer?>(null, null, null, null)
+
 
     var eventList = mutableListOf<Event>()
-    var event = MutableLiveData<Event>()
 
     private var _changeToNextPage = MutableLiveData<Boolean>()
     val changeToNextPage: LiveData<Boolean>
         get() = _changeToNextPage
 
-    private var _dismiss = MutableLiveData<Boolean>()
-    val dismiss: LiveData<Boolean>
+    private var _dismiss = MutableLiveData<Array<EventPlayer?>>()
+    val dismiss: LiveData<Array<EventPlayer?>>
         get() = _dismiss
 
     fun changeToNextPage() {
@@ -36,7 +38,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     }
 
     fun dismissDialog() {
-        _dismiss.value = true
+        _dismiss.value = newBaseList
     }
 
     fun onDialogDismiss() {
@@ -44,74 +46,109 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     }
 
     fun saveAndDismiss() {
-        Log.i("gillian", "event list count ${eventList.size}, the event now is ${event.value}")
         val readyToSend = eventList
         viewModelScope.launch {
             for (singleEvent in readyToSend) {
                 repository.sendEvent(singleEvent)
             }
         }
-        eventList.clear()
+        initNextEvent()
+
+        for (atBase in atBaseList) {
+            if (atBase.base != -1) {
+                newBaseList[atBase.base] = atBase.player
+            }
+        }
         dismissDialog()
     }
 
     fun single() {
-        event.value?.let{
+        hitterEvent.value?.let{
             it.result = 1
         }
-        eventList.add(event.value!!)
+        eventList.add(hitterEvent.value!!)
+        // atBaseList[0] is hitter
+        atBaseList[0].base = 1
+
+
         changeToNextPage()
     }
 
     fun Double() {
-        event.value?.let{
+        hitterEvent.value?.let{
             it.result = 2
         }
+        eventList.add(hitterEvent.value!!)
+        atBaseList[0].base = 2
+
         changeToNextPage()
     }
 
     fun triple() {
-        event.value?.let{
+        hitterEvent.value?.let{
             it.result = 3
         }
+
+        eventList.add(hitterEvent.value!!)
+        atBaseList[0].base = 3
         changeToNextPage()
     }
 
     fun homerun() {
-        event.value?.let{
+        hitterEvent.value?.let{
             it.result = 4
         }
+        eventList.add(hitterEvent.value!!)
+        atBaseList[0].base = 4
         changeToNextPage()
     }
 
     fun hbp() {
-        event.value?.let{
+        hitterEvent.value?.let{
             it.result = 5
         }
+        atBaseList[0].base = 1
     }
 
+
+    // 應該要改成勾勾? 失誤上一壘 失誤上二壘 失誤上三壘
+    // 一安+失誤?????好可怕
+    //TODO()
     fun error() {
-        event.value?.let{
+        hitterEvent.value?.let{
             it.result = 6
         }
     }
 
     fun droppedThird() {
-        event.value?.let{
+        hitterEvent.value?.let{
             it.result = 7
         }
+        atBaseList[0].base = 1
     }
 
-    fun secondBase() {
+    fun secondBase(atBase: AtBase) {
+        atBase.base = 2
         changeToNextPage()
     }
 
-    fun thirdBase() {
+    fun thirdBase(atBase: AtBase) {
+        atBase.base = 3
         changeToNextPage()
     }
 
-    fun run() {
-        eventList.add(Event())
+    fun run(atBase: AtBase) {
+        atBase.base = -1
+        eventList.add(Event(run = 1, player = atBase.player))
         changeToNextPage()
+    }
+
+    fun initNextEvent() {
+        // debugging
+        for (event in eventList) {
+            Log.i("at base event", "send event $event")
+        }
+        eventList.clear()
+        newBaseList = arrayOf(null, null, null, null)
     }
 }

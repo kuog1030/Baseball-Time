@@ -113,7 +113,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="@{String.valueOf(viewModel.event.player.name)}"
+            android:text="@{String.valueOf(viewModel.hitterEvent.player.name)}"
             tools:text="陳傑憲"/>
 
         <View

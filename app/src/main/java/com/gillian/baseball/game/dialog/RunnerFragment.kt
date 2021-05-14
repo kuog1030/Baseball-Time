@@ -18,6 +18,8 @@ class RunnerFragment(val page : String, val atBase: AtBase) : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
+        binding.atBase = atBase
         binding.page = page
 
 

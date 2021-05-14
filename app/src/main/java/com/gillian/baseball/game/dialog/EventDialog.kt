@@ -34,7 +34,7 @@ class EventDialog(val argsAtBase: List<AtBase>, val argsHitterEvent: Event)  : A
 
 
         viewModel.atBaseList = argsAtBase
-        viewModel.event.value = argsHitterEvent
+        viewModel.hitterEvent.value = argsHitterEvent
 
         fun changePage(){
             val currentPosition = binding.viewpagerEvent.currentItem
@@ -61,6 +61,7 @@ class EventDialog(val argsAtBase: List<AtBase>, val argsHitterEvent: Event)  : A
             it?.let{
                 dismiss()
                 val battingViewModel = ViewModelProvider(requireParentFragment()).get(BattingViewModel::class.java)
+                battingViewModel.setNewBaseList(it)
                 battingViewModel.nextPlayer()
                 Log.i("gillian", "in event dialog $battingViewModel")
                 //val battingViewModel by viewModels<BattingViewModel> { getVmFactory() }

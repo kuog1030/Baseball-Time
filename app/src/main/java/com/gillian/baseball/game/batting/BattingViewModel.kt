@@ -30,11 +30,14 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     // 進到dialog的時候帶過去的用球數
     lateinit var hitterEvent : Event
 
-    var baseList = arrayOf<EventPlayer?>(null, null, lineup[3], null)
+    var baseList = arrayOf<EventPlayer?>(lineup[0], null, null, null)
     var atBaseList = mutableListOf<AtBase>()
     //val newAtBase = arrayOf<EventPlayer?>(null, null, null, null)
 
     var atBatNumber = 0
+    var atBatName = MutableLiveData<String>().apply{
+        value = "第1棒 ${baseList[0]?.name}"
+    }
 
     private val _navigateToEvent = MutableLiveData<List<AtBase>>()
     val navigateToEvent : LiveData<List<AtBase>>
@@ -70,12 +73,13 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
 
     fun out() {
         if (outCount.value!! == 2) {
-            // switch
+            // three out! switch
             outCount.value = 0
         } else {
             outCount.value = outCount.value!!.plus(1)
         }
         clearCount()
+        nextPlayer()
     }
 
     fun safe() {
@@ -109,6 +113,18 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         } else {
             atBatNumber += 1
         }
+        baseList[0] = lineup[atBatNumber]
+        atBatName.value = "第${atBatNumber+1}棒 ${baseList[0]!!.name}"
+
+        // debugging
+        for ((index, base) in baseList.withIndex()){
+            Log.i("at base", "base $index is now ${base?.name}")
+        }
+        Log.i("at base", "--------------next-------------")
+    }
+
+    fun setNewBaseList(newList: Array<EventPlayer?>) {
+        baseList = newList
     }
 
     fun clearCount() {
@@ -119,10 +135,6 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     fun clearBase() {
         baseList = arrayOf<EventPlayer?>(null, null, null, null)
     }
-
-//    fun updateBase( base: Int, newPlayer : EventPlayer ) {
-//        newAtBase[base] = newPlayer
-//    }
 
     fun switch() {
         outCount.value = 0 // ?
