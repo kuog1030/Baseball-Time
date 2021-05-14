@@ -4,10 +4,12 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.source.BaseballRepository
+import kotlinx.coroutines.launch
 
 class BattingViewModel(private val repository: BaseballRepository) : ViewModel() {
 
@@ -52,7 +54,7 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         ballCount.value = ballCount.value!!.plus(1)
         if (ballCount.value == 4) {
             // single
-            clearCount()
+            ballFour()
         }
     }
 
@@ -103,6 +105,33 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         _navigateToEvent.value = null
     }
 
+    fun advanceBase(start_: Int) {
+        // TODO()得分的情況回傳
+        var start = start_
+        while ( baseList[start] != null) {
+            if (start == 3) {
+                sendEvent(Event(player = baseList[3]!!, run = 1))
+                break
+            }
+            start += 1
+        }
+        for ( i in start downTo 1) {
+            baseList[i] = baseList[i-1]
+        }
+    }
+
+    fun ballFour() {
+        advanceBase(0)
+        clearCount()
+        nextPlayer()
+    }
+
+    fun sendEvent(event: Event) {
+        Log.i("at base", "event to be sent $event")
+        viewModelScope.launch {
+            repository.sendEvent(event)
+        }
+    }
 
     fun nextPlayer() {
         clearCount()
