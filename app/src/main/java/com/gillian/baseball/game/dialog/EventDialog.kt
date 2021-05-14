@@ -24,7 +24,6 @@ class EventDialog(val argsAtBase: List<AtBase>, val argsHitterEvent: Event)  : A
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-        //val event = args.preEvent
         val binding = DialogEventBinding.inflate(inflater, container, false)
         //val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
         val viewModel = ViewModelProvider(

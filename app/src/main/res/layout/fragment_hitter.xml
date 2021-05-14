@@ -21,7 +21,7 @@
             style="@style/GameButton"
             android:layout_width="@dimen/hitter_button_width"
             android:layout_height="wrap_content"
-            android:onClick="@{()->viewModel.single()}"
+            android:onClick="@{()->viewModel.hit(1)}"
             android:text="@string/Single"
             android:layout_marginTop="80dp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
             android:text="@string/Double"
-            android:onClick="@{()->viewModel.Double()}"
+            android:onClick="@{()->viewModel.hit(2)}"
             app:layout_constraintEnd_toEndOf="@+id/button_hitter_single"
             app:layout_constraintStart_toStartOf="@+id/button_hitter_single"
             app:layout_constraintTop_toBottomOf="@+id/button_hitter_single" />
@@ -47,7 +47,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
             android:text="@string/Triple"
-            android:onClick="@{()->viewModel.triple()}"
+            android:onClick="@{()->viewModel.hit(3)}"
             app:layout_constraintEnd_toEndOf="@+id/button_hitter_single"
             app:layout_constraintStart_toStartOf="@+id/button_hitter_single"
             app:layout_constraintTop_toBottomOf="@+id/button_hitter_double" />

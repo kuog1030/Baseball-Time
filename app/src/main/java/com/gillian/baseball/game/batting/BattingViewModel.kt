@@ -49,19 +49,17 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
 
 
     fun ball() {
-        if (ballCount.value == 3) {
+        ballCount.value = ballCount.value!!.plus(1)
+        if (ballCount.value == 4) {
             // single
             clearCount()
-        } else {
-            ballCount.value = ballCount.value!!.plus(1)
         }
     }
 
     fun strike() {
-        if (strikeCount.value == 2) {
+        strikeCount.value = strikeCount.value!!.plus(1)
+        if (strikeCount.value == 3) {
             out()
-        } else {
-            strikeCount.value = strikeCount.value!!.plus(1)
         }
     }
 
@@ -72,14 +70,14 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     }
 
     fun out() {
-        if (outCount.value!! == 2) {
+        outCount.value = outCount.value!!.plus(1)
+
+        if (outCount.value!! == 3) {
             // three out! switch
             outCount.value = 0
         } else {
-            outCount.value = outCount.value!!.plus(1)
+            nextPlayer()
         }
-        clearCount()
-        nextPlayer()
     }
 
     fun safe() {
@@ -107,12 +105,15 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
 
 
     fun nextPlayer() {
+        clearCount()
         // if current at bat is the last player of line up
         if (atBatNumber == (lineup.size-1)) {
             atBatNumber = 0
         } else {
             atBatNumber += 1
         }
+
+        // change the hitter to next person in line
         baseList[0] = lineup[atBatNumber]
         atBatName.value = "第${atBatNumber+1}棒 ${baseList[0]!!.name}"
 

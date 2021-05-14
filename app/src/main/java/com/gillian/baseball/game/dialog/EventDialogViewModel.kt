@@ -62,41 +62,22 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         dismissDialog()
     }
 
-    fun single() {
+    fun hit(baseCount: Int) {
         hitterEvent.value?.let{
-            it.result = 1
+            it.result = baseCount
         }
         eventList.add(hitterEvent.value!!)
         // atBaseList[0] is hitter
-        atBaseList[0].base = 1
+        atBaseList[0].base = baseCount
 
-
-        changeToNextPage()
-    }
-
-    fun Double() {
-        hitterEvent.value?.let{
-            it.result = 2
-        }
-        eventList.add(hitterEvent.value!!)
-        atBaseList[0].base = 2
-
-        changeToNextPage()
-    }
-
-    fun triple() {
-        hitterEvent.value?.let{
-            it.result = 3
-        }
-
-        eventList.add(hitterEvent.value!!)
-        atBaseList[0].base = 3
         changeToNextPage()
     }
 
     fun homerun() {
+        //TODO()
         hitterEvent.value?.let{
             it.result = 4
+            it.run = 1
         }
         eventList.add(hitterEvent.value!!)
         atBaseList[0].base = 4
