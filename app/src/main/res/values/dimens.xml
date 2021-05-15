@@ -7,6 +7,9 @@
 
     <dimen name="bar_height">1dp</dimen>
 
+    <dimen name="bottom_nav_height">48dp</dimen>
+    <dimen name="bottom_nav_icon_size">30dp</dimen>
+
     <dimen name="dialog_width">400dp</dimen>
     <dimen name="dialog_height">600dp</dimen>
 
