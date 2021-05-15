@@ -32,6 +32,8 @@
     <string name="hit_by_pitch">觸身</string>
     <string name="error">失誤</string>
     <string name="dropped_third">不死三振</string>
+    <string name="field_choice">野手選擇</string>
+    <string name="out_field_choice">出局</string>
     
     <string name="ground_out">滾地球</string>
     <string name="air_out">高飛球</string>
@@ -39,6 +41,15 @@
 
     <string name="walk">保送</string>
     <string name="intent_walk">故意四壞</string>
+    
+    <string name="pick_off">牽制出局</string>
+    <string name="steal_base_success">盜壘成功</string>
+    <string name="steal_base_fail">盜壘失敗</string>
+    <string name="advance">單純進壘</string>
+    <string name="error_advance">對方失誤</string>
+    <string name="pinch">換人</string>
+
+    <string name="page_one">1/1</string>
 
 
 </resources>

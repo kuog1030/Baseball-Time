@@ -4,6 +4,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.batting.BattingViewModel" />
@@ -176,33 +177,46 @@
             app:layout_constraintTop_toBottomOf="@+id/image_batting_field"
             tools:text="No.19 Sean"/>
 
-        <TextView
-            android:id="@+id/text_batting_first"
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
+            android:id="@+id/button_batting_first"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:fontFamily="@font/noto_sans"
+            android:onClick="@{()->viewModel.showOnBaseDialog(1)}"
+            android:text="@{viewModel.firstBaseName}"
+            android:visibility="@{viewModel.firstBaseVisible? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/text_batting_hitter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_batting_field"
             tools:text="No.15 Sam" />
 
-        <TextView
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/text_batting_third"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:onClick="@{()->viewModel.showOnBaseDialog(3)}"
+            android:text="@{viewModel.thirdBaseName}"
+            android:visibility="@{viewModel.thirdBaseVisible? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toTopOf="@+id/text_batting_hitter"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_batting_second"
             tools:text="No.28 Peter"/>
 
-        <TextView
+        <Button
+            style="@style/Widget.AppCompat.Button.Borderless"
             android:id="@+id/text_batting_second"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.showOnBaseDialog(2)}"
+            android:text="@{viewModel.secondBaseName}"
+            android:visibility="@{viewModel.secondBaseVisible? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_batting_field"
+            app:layout_constraintBottom_toTopOf="@+id/image_batting_field"
             tools:text="No.99 Wency"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>

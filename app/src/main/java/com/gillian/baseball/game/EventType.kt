@@ -9,6 +9,7 @@ enum class EventType(val number : Int, val letter: String) {
     DROPPEDTHIRD(7, "KK"),
     WALK(8, "BB"),
     STRIKEOUT(9, "K"),
+    FIELDERCHOICE(10, "FC"),
     RUN(11, "R"), //得分
     HIT(12, "H"),
     ERROR(13, "E"),

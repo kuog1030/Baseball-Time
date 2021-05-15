@@ -54,17 +54,21 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     val navigateToEvent : LiveData<List<AtBase>>
         get() = _navigateToEvent
 
-    private val _navigateToRunner = MutableLiveData<Boolean>()
-    val navigateToRunner : LiveData<Boolean>
-        get() = _navigateToRunner
+    private val _navigateToOnBase = MutableLiveData<Int>()
+    val navigateToOnBase : LiveData<Int>
+        get() = _navigateToOnBase
 
     private val _navigateToOut = MutableLiveData<List<AtBase>>()
     val navigateToOut : LiveData<List<AtBase>>
         get() = _navigateToOut
 
-    private val _updateRunner = MutableLiveData<Boolean>()
-    val updateRunner : LiveData<Boolean>
-        get() = _updateRunner
+
+    var firstBaseVisible = MutableLiveData<Boolean>(false)
+    var firstBaseName = MutableLiveData<String>("")
+    var secondBaseVisible = MutableLiveData<Boolean>(false)
+    var secondBaseName = MutableLiveData<String>("")
+    var thirdBaseVisible = MutableLiveData<Boolean>(false)
+    var thirdBaseName = MutableLiveData<String>("")
 
 
     fun ball() {
@@ -107,6 +111,17 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         }
     }
 
+    fun onBaseOut(base: Int) {
+        outCount.value = outCount.value!!.plus(1)
+        if (outCount.value!! == 3) {
+            // three out! switch
+            outCount.value = 0
+            Log.i("at base", "*-------------change!------------*")
+        } else {
+            baseList[base] = null
+        }
+    }
+
     fun toEventDialog(isSafe: Boolean) {
         atBaseList.clear()
         hitterEvent = Event(
@@ -135,6 +150,10 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         }
     }
 
+    fun showOnBaseDialog(base: Int) {
+        _navigateToOnBase.value = base
+    }
+
     fun onEventNavigated() {
         _navigateToEvent.value = null
     }
@@ -143,18 +162,40 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         _navigateToOut.value = null
     }
 
-    fun advanceBase(start_: Int) {
-        var start = start_
-        while ( baseList[start] != null) {
-            if (start == 3) {
+    fun onOnBaseNavigated() {
+        _navigateToOnBase.value = null
+    }
+
+
+    fun advanceBase(myself: Int) {
+
+        // 0 -> 1 -> 2 -> 3
+        // 從我開始出發，往前進
+        // 找到最前面的那個人
+        // 往前進
+        // 原本我的位置變成null
+
+        var end = myself
+        while ( baseList[end] != null) {
+            if (end == 3) {
+                // 擠壘事件造成的得分
                 sendEvent(Event(player = baseList[3]!!, run = 1))
                 break
             }
-            start += 1
+            end += 1
         }
-        for ( i in start downTo 1) {
+        for ( i in end downTo (myself+1)) {
             baseList[i] = baseList[i-1]
         }
+        baseList[myself] = null
+
+//        // debugging
+//        Log.i("at base ", "--------------壘上事件變化啦-------------")
+//        for ((index, base) in baseList.withIndex()){
+//            Log.i("at base advance", "base $index is now ${base?.name}")
+//        }
+//        Log.i("at base ", "--------------壘上事件結束-------------")
+        updateRunnerUI() // 放這邊合理嗎?
     }
 
     fun ballFour() {
@@ -197,11 +238,25 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     }
 
     fun updateRunnerUI() {
-        _updateRunner.value = true
-    }
+        if (baseList[1] == null) {
+            firstBaseVisible.value = false
+        } else {
+            firstBaseVisible.value = true
+            firstBaseName.value = baseList[1]!!.name
+        }
+        if (baseList[2] == null) {
+            secondBaseVisible.value = false
+        } else {
+            secondBaseVisible.value = true
+            secondBaseName.value = baseList[2]!!.name
+        }
 
-    fun onUpdateRunnerDone(){
-        _updateRunner.value = null
+        if (baseList[3] == null) {
+            thirdBaseVisible.value = false
+        } else {
+            thirdBaseVisible.value = true
+            thirdBaseName.value = baseList[3]!!.name
+        }
     }
 
     fun setNewBaseList(newList: Array<EventPlayer?>) {
@@ -220,6 +275,7 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
 
     fun switch() {
         outCount.value = 0 // ?
+        // clearBase?
     }
 
     override fun onCleared() {

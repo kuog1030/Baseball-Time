@@ -66,6 +66,18 @@
             app:layout_constraintStart_toStartOf="@+id/button_runner_third"
             app:layout_constraintTop_toBottomOf="@+id/button_runner_third" />
 
+        <Button
+            android:id="@+id/button_runner_out"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:onClick="@{()->viewModel.fielderChoiceOut(atBase)}"
+            android:text="@string/out_field_choice"
+            app:layout_constraintEnd_toEndOf="@+id/button_runner_run"
+            app:layout_constraintStart_toStartOf="@+id/button_runner_run"
+            app:layout_constraintTop_toBottomOf="@+id/button_runner_run" />
+
 
         <TextView
             android:id="@+id/textView"

@@ -65,6 +65,7 @@ class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHit
                 val battingViewModel = ViewModelProvider(requireParentFragment()).get(BattingViewModel::class.java)
                 if (viewModel.hasOut != null) {
                     battingViewModel.setNewBaseList(it)
+                    if (viewModel.hasBaseOut != null) battingViewModel.onBaseOut(viewModel.hasBaseOut!!)
                     battingViewModel.out()
                 } else {
                     battingViewModel.setNewBaseList(it)

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.dialog.EventDialogViewModel" />
+
         <variable
             name="page"
             type="String" />
@@ -21,122 +23,132 @@
             style="@style/GameButton"
             android:layout_width="@dimen/hitter_button_width"
             android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
             android:onClick="@{()->viewModel.hit(1)}"
             android:text="@string/Single"
-            android:layout_marginTop="80dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            style="@style/GameButton"
             android:id="@+id/button_hitter_double"
+            style="@style/GameButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
-            android:text="@string/Double"
             android:onClick="@{()->viewModel.hit(2)}"
+            android:text="@string/Double"
             app:layout_constraintEnd_toEndOf="@+id/button_hitter_single"
             app:layout_constraintStart_toStartOf="@+id/button_hitter_single"
             app:layout_constraintTop_toBottomOf="@+id/button_hitter_single" />
 
         <Button
-            style="@style/GameButton"
             android:id="@+id/button_hitter_triple"
+            style="@style/GameButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
-            android:text="@string/Triple"
             android:onClick="@{()->viewModel.hit(3)}"
+            android:text="@string/Triple"
             app:layout_constraintEnd_toEndOf="@+id/button_hitter_single"
             app:layout_constraintStart_toStartOf="@+id/button_hitter_single"
             app:layout_constraintTop_toBottomOf="@+id/button_hitter_double" />
 
         <Button
-            style="@style/GameButton"
             android:id="@+id/button_hitter_homerun"
+            style="@style/GameButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
-            android:text="@string/homerun"
             android:onClick="@{()->viewModel.homerun()}"
+            android:text="@string/homerun"
             app:layout_constraintEnd_toEndOf="@+id/button_hitter_single"
             app:layout_constraintStart_toStartOf="@+id/button_hitter_single"
             app:layout_constraintTop_toBottomOf="@+id/button_hitter_triple" />
 
         <Button
-            style="@style/GameButton"
             android:id="@+id/button_hitter_hbp"
+            style="@style/GameButton"
             android:layout_width="@dimen/hitter_button_width2"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_margin"
             android:layout_marginTop="@dimen/double_margin"
             android:layout_marginEnd="@dimen/margin"
-            android:text="@string/hit_by_pitch"
             android:onClick="@{()->viewModel.hbp()}"
-            app:layout_constraintEnd_toStartOf="@+id/button_hitter_error"
+            android:text="@string/hit_by_pitch"
+            app:layout_constraintEnd_toStartOf="@+id/button_hitter_fc"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_hitter_homerun" />
 
         <Button
+            android:id="@+id/button_hitter_fc"
             style="@style/GameButton"
-            android:id="@+id/button_hitter_error"
             android:layout_width="@dimen/hitter_button_width2"
             android:layout_height="wrap_content"
-            android:text="@string/error"
-            android:onClick="@{()->viewModel.error()}"
-            app:layout_constraintEnd_toStartOf="@+id/button_hitter_drop"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:onClick="@{()->viewModel.fielderChoice()}"
+            android:text="@string/field_choice"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/button_hitter_hbp"
             app:layout_constraintTop_toTopOf="@+id/button_hitter_hbp" />
 
         <Button
+            android:id="@+id/button_hitter_error"
             style="@style/GameButton"
-            android:id="@+id/button_hitter_drop"
-            android:layout_width="@dimen/hitter_button_width2"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/double_margin"
-            android:text="@string/dropped_third"
+            android:layout_marginTop="@dimen/double_margin"
+            android:onClick="@{()->viewModel.error()}"
+            android:text="@string/error"
+            app:layout_constraintEnd_toEndOf="@+id/button_hitter_hbp"
+            app:layout_constraintStart_toStartOf="@+id/button_hitter_hbp"
+            app:layout_constraintTop_toBottomOf="@+id/button_hitter_hbp" />
+
+        <Button
+            android:id="@+id/button_hitter_drop"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
             android:onClick="@{()->viewModel.droppedThird()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_hitter_error"
+            android:text="@string/dropped_third"
+            app:layout_constraintEnd_toEndOf="@+id/button_hitter_fc"
+            app:layout_constraintStart_toStartOf="@+id/button_hitter_fc"
             app:layout_constraintTop_toTopOf="@+id/button_hitter_error" />
 
         <TextView
-            style="@style/EventPage"
             android:id="@+id/textView"
+            style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
             android:text="@{String.valueOf(viewModel.hitterEvent.player.name)}"
-            tools:text="陳傑憲"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="陳傑憲" />
 
         <View
             android:id="@+id/bar_hitter"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            android:background="@color/grey_888"
             android:layout_marginBottom="60dp"
-            app:layout_constraintStart_toStartOf="@id/button_hitter_hbp"
+            android:background="@color/grey_888"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/button_hitter_drop"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintStart_toStartOf="@id/button_hitter_hbp" />
 
         <TextView
-            style="@style/EventPage"
             android:id="@+id/text_hitter_page"
+            style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{page}"
-            app:layout_constraintTop_toBottomOf="@id/bar_hitter"
-            app:layout_constraintStart_toStartOf="@id/bar_hitter"
-            app:layout_constraintEnd_toEndOf="@id/bar_hitter"
             android:layout_marginTop="@dimen/margin"
-            tools:text="1/4"/>
+            android:text="@{page}"
+            app:layout_constraintEnd_toEndOf="@id/bar_hitter"
+            app:layout_constraintStart_toStartOf="@id/bar_hitter"
+            app:layout_constraintTop_toBottomOf="@id/bar_hitter"
+            tools:text="1/4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

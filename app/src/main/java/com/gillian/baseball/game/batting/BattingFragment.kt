@@ -12,6 +12,7 @@ import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.databinding.FragmentBattingBinding
 import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.dialog.EventDialog
+import com.gillian.baseball.game.dialog.OnBaseDialog
 
 class BattingFragment : Fragment() {
 
@@ -42,26 +43,19 @@ class BattingFragment : Fragment() {
         viewModel.navigateToOut.observe(viewLifecycleOwner, Observer {
             it?.let{
                 val eventDialog = EventDialog(it, false, viewModel.hitterEvent)
-                Log.i("gillian", "navigate to out $eventDialog")
-                eventDialog.show(childFragmentManager, "Success")
+                eventDialog.show(childFragmentManager, "Out")
                 viewModel.onOutNavigated()
             }
         })
 
-        viewModel.navigateToRunner.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToOnBase.observe(viewLifecycleOwner, Observer {
             it?.let {
-                viewModel.onEventNavigated()
+                val onBaseDialog = OnBaseDialog(it, viewModel.baseList)
+                onBaseDialog.show(childFragmentManager, "OnBase")
+                viewModel.onOnBaseNavigated()
             }
         })
 
-        viewModel.updateRunner.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                binding.textBattingFirst.text = viewModel.baseList[1]?.name ?: ""
-                binding.textBattingSecond.text = viewModel.baseList[2]?.name ?: ""
-                binding.textBattingThird.text = viewModel.baseList[3]?.name ?: ""
-                viewModel.onUpdateRunnerDone()
-            }
-        })
 
 
         return binding.root

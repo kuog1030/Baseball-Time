@@ -20,8 +20,8 @@
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/viewpager_event"
-            android:layout_width="400dp"
-            android:layout_height="600dp"
+            android:layout_width="@dimen/dialog_width"
+            android:layout_height="@dimen/dialog_height"
             android:layout_marginTop="@dimen/margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

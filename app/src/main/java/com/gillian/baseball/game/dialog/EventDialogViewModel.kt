@@ -9,6 +9,7 @@ import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.game.EventType
 import kotlinx.coroutines.launch
 
 //class HitterViewModel(private val repository: BaseballRepository) : ViewModel() {
@@ -18,6 +19,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     var hitterEvent = MutableLiveData<Event>()
     var newBaseList = arrayOf<EventPlayer?>(null, null, null, null)
     var hasOut : Boolean? = null
+    var hasBaseOut : Int? = null
 
 
     var eventList = mutableListOf<Event>()
@@ -44,6 +46,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
 
     fun onDialogDismiss() {
         _dismiss.value = null
+        hasBaseOut = null
         hasOut = null
     }
 
@@ -113,6 +116,16 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         atBaseList[0].base = 1
     }
 
+    fun fielderChoice(){
+        // default single
+        hitterEvent.value?.let{
+            it.result = EventType.FIELDERCHOICE.number
+        }
+        eventList.add(hitterEvent.value!!)
+        atBaseList[0].base = 1
+        changeToNextPage()
+    }
+
     fun secondBase(atBase: AtBase) {
         atBase.base = 2
         changeToNextPage()
@@ -127,6 +140,12 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         atBase.base = -1
         eventList.add(Event(run = 1, player = atBase.player))
         eventList[0].rbi += 1
+        changeToNextPage()
+    }
+
+    fun fielderChoiceOut(atBase: AtBase) {
+        hasBaseOut = atBase.base
+        atBase.base = -1
         changeToNextPage()
     }
 
