@@ -12,7 +12,7 @@
         android:title=""/>
 
     <item
-        android:id="@+id/navigation_statistic"
+        android:id="@+id/navigation_stat"
         android:icon="@drawable/ic_baseline_toc_24"
         android:title=""/>
 

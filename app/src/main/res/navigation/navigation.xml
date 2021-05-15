@@ -21,6 +21,18 @@
             app:argType="com.gillian.baseball.data.Event" />
     </dialog>
 
+    <fragment
+        android:id="@+id/statFragment"
+        android:name="com.gillian.baseball.statistics.StatFragment"
+        android:label="StatFragment" />
+    <fragment
+        android:id="@+id/teamFragment"
+        android:name="com.gillian.baseball.team.TeamFragment"
+        android:label="TeamFragment" />
+
     <action android:id="@+id/navigationToEventDialog" app:destination="@id/eventDialog" />
+    <action android:id="@+id/navigationToStat" app:destination="@id/statFragment" />
+    <action android:id="@+id/navigationToTeam" app:destination="@id/teamFragment" />
+    <action android:id="@+id/navigationToGame" app:destination="@id/gameFragment" />
 
 </navigation>
