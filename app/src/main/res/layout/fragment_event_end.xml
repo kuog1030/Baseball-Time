@@ -8,6 +8,9 @@
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.dialog.EventDialogViewModel" />
+        <variable
+            name="page"
+            type="String" />
 
     </data>
 
@@ -61,6 +64,29 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/text_event_end_detail" />
 
+            <View
+                android:id="@+id/bar_event_end"
+                android:layout_width="332dp"
+                android:layout_height="2dp"
+                android:layout_marginStart="@dimen/double_margin"
+                android:layout_marginEnd="@dimen/double_margin"
+                android:layout_marginBottom="60dp"
+                android:background="@color/grey_888"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+
+            <TextView
+                android:id="@+id/text_event_end_page"
+                style="@style/EventPage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@{page}"
+                app:layout_constraintEnd_toEndOf="@id/bar_event_end"
+                app:layout_constraintStart_toStartOf="@id/bar_event_end"
+                app:layout_constraintTop_toBottomOf="@id/bar_event_end"
+                tools:text="4/4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

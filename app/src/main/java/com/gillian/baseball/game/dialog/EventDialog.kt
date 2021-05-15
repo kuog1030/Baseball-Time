@@ -56,10 +56,8 @@ class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHit
 
         binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager, isSafe, argsAtBase)
         binding.tabsEvent.setupWithViewPager(binding.viewpagerEvent)
-
-        binding.buttonEventForward.setOnClickListener {
-            changePage()
-        }
+        binding.viewpagerEventArrow.setArrowIndicatorRes(R.drawable.ic_baseline_arrow_backward_24, R.drawable.ic_baseline_arrow_forward_24)
+        binding.viewpagerEventArrow.bind(binding.viewpagerEvent)
 
         viewModel.changeToNextPage.observe(viewLifecycleOwner, Observer {
             it?.let {

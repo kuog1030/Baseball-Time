@@ -6,22 +6,26 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.EventPlayer
 
-class EventDialogAdapter(fragmentManager: FragmentManager, val isSafe: Boolean, val atBaseList: List<AtBase>) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
+class EventDialogAdapter(
+    fragmentManager: FragmentManager,
+    val isSafe: Boolean,
+    val atBaseList: List<AtBase>
+) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
-        if (isSafe) {
-            return when (position) {
-                0 -> HitterFragment("1/$count", atBaseList.last())
-                (count - 1) -> EventEndFragment()
-                else -> RunnerFragment("${position + 1}/$count", atBaseList[count - 1 - position])
+
+        return when (position) {
+            0 -> {
+                if (isSafe) {
+                    HitterFragment("1/$count", atBaseList.last())
+                } else {
+                    OutFragment("1/$count", atBaseList[position])
+                }
             }
-        } else {
-            return when (position) {
-                0 -> OutFragment("1/$count", atBaseList[position])
-                (count - 1) -> EventEndFragment()
-                else -> RunnerFragment("${position + 1}/$count", atBaseList[count - 1 - position])
-            }
+            (count - 1) -> EventEndFragment("$count/$count")
+            else -> RunnerFragment("${position + 1}/$count", atBaseList[count - 1 - position])
         }
+
     }
 
     override fun getCount(): Int {

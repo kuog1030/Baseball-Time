@@ -7,37 +7,32 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-
-        <Button
-            android:id="@+id/button_event_forward"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:background="@drawable/ic_baseline_arrow_forward_24"
-            android:layout_marginEnd="@dimen/margin"
-            app:layout_constraintBottom_toBottomOf="@+id/viewpager_event"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/viewpager_event"/>
-
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager_event"
-            android:layout_width="@dimen/dialog_width"
-            android:layout_height="@dimen/dialog_height"
-            android:layout_marginTop="@dimen/margin"
+        <com.sembozdemir.viewpagerarrowindicator.library.ViewPagerArrowIndicator
+            android:id="@+id/viewpager_event_arrow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs_event"
-                android:layout_width="0dp"
-                android:layout_height="0dp" />
+            <androidx.viewpager.widget.ViewPager
+                android:id="@+id/viewpager_event"
+                android:layout_width="@dimen/dialog_width"
+                android:layout_height="@dimen/dialog_height"
+                android:layout_marginTop="@dimen/margin">
 
-        </androidx.viewpager.widget.ViewPager>
+                <com.google.android.material.tabs.TabLayout
+                    android:id="@+id/tabs_event"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp" />
+
+            </androidx.viewpager.widget.ViewPager>
+        </com.sembozdemir.viewpagerarrowindicator.library.ViewPagerArrowIndicator>
 
         <TextView
             android:id="@+id/text_event_page"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/dialog_width"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
