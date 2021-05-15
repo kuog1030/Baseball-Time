@@ -18,16 +18,14 @@
         <View
             android:id="@+id/bar_batting"
             android:layout_width="0dp"
-            android:layout_height="@dimen/bar_height"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
-            android:background="@color/orange"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/bg_card"
+            app:layout_constraintTop_toBottomOf="@id/image_batting_field"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.6" />
+            app:layout_constraintEnd_toEndOf="parent"
+            />
 
         <TextView
             android:id="@+id/text_batting_ball"
@@ -36,7 +34,7 @@
             android:layout_marginTop="@dimen/margin"
             android:text="@string/B"
             app:layout_constraintStart_toStartOf="@+id/button_batting_ball"
-            app:layout_constraintTop_toBottomOf="@+id/bar_batting" />
+            app:layout_constraintTop_toTopOf="@+id/bar_batting" />
 
         <TextView
             android:id="@+id/text_batting_strike"
