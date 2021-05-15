@@ -82,21 +82,26 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     }
 
     fun homerun() {
-        //TODO()
         hitterEvent.value?.let{
             it.result = 4
             it.run = 1
+            it.rbi = 1
         }
         eventList.add(hitterEvent.value!!)
-        atBaseList[0].base = 4
+        atBaseList[0].base = -1
         changeToNextPage()
     }
 
     fun hbp() {
         hitterEvent.value?.let{
             it.result = 5
+            // 之後event統一會加strike，所以先扣掉XD
+            it.strike -= 1
+            it.ball += 1
         }
+        eventList.add(hitterEvent.value!!)
         atBaseList[0].base = 1
+        changeToNextPage()
     }
 
 
@@ -152,7 +157,6 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     fun groundOut() {
         hitterEvent.value?.let{
             it.result = 21
-            it.rbi = 1
         }
         eventList.add(hitterEvent.value!!)
         atBaseList[0].base = -1
@@ -160,10 +164,11 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         changeToNextPage()
     }
 
+
     fun airOut(hasRbi: Boolean) {
         hitterEvent.value?.let{
             it.result = if (hasRbi) 23 else 22
-            it.rbi = 1
+            it.rbi = if (hasRbi) 1 else 0
         }
         eventList.add(hitterEvent.value!!)
         atBaseList[0].base = -1

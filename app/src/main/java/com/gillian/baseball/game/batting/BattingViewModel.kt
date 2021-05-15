@@ -141,7 +141,6 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         if (isSafe) {
             _navigateToEvent.value = atBaseList
         } else {
-            //TODO()應該何時加上出局數呢? 如果只是不小心按到話??
             if (outCount.value == 2) {
                 _navigateToOut.value = listOf(AtBase(0, baseList[0]!!))
             } else {
@@ -168,13 +167,6 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
 
 
     fun advanceBase(myself: Int) {
-
-        // 0 -> 1 -> 2 -> 3
-        // 從我開始出發，往前進
-        // 找到最前面的那個人
-        // 往前進
-        // 原本我的位置變成null
-
         var end = myself
         while ( baseList[end] != null) {
             if (end == 3) {
@@ -274,6 +266,7 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
     }
 
     fun switch() {
+        clearCount()
         outCount.value = 0 // ?
         // clearBase?
     }
