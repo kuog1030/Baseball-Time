@@ -46,8 +46,10 @@
     <string name="steal_base_success">盜壘成功</string>
     <string name="steal_base_fail">盜壘失敗</string>
     <string name="advance">單純進壘</string>
-    <string name="error_advance">對方失誤</string>
+    <string name="error_advance">失誤進壘</string>
     <string name="pinch">換人</string>
+
+    <string name="send_event">儲存變更</string>
 
     <string name="page_one">1/1</string>
 

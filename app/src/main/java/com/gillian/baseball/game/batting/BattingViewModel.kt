@@ -88,7 +88,7 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
                     result = 9,
                     ball = ballCount.value ?: 0,
                     strike = totalStrike,
-                    out = outCount.value ?: 0))
+                    out = 1))
             out()
         }
     }
@@ -127,7 +127,6 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         hitterEvent = Event(
                 ball = ballCount.value ?: 0,
                 strike = totalStrike,
-                out = outCount.value ?: 0,
                 player = lineup[atBatNumber]
         )
 

@@ -6,10 +6,12 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.BaseballApplication
+import com.gillian.baseball.R
 import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
@@ -19,7 +21,14 @@ import com.gillian.baseball.game.batting.BattingViewModel
 
 class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHitterEvent: Event) : AppCompatDialogFragment() {
 
-    //val args : EventDialogArgs by navArgs()
+//    想要設定dialog的寬度的話，新增下面這段，並進到dialog_event.xml裡面調整長寬和背景顏色
+//    override fun onCreate(savedInstanceState: Bundle?) {
+//        super.onCreate(savedInstanceState)
+//        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.Dialog)
+//    }
+//    binding.layoutEventOutside.setOnClickListener{
+//        dismiss()
+//    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -29,7 +38,6 @@ class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHit
 //        }
 
         val binding = DialogEventBinding.inflate(inflater, container, false)
-        //val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
         val viewModel = ViewModelProvider(
                 requireActivity(),
                 ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)

@@ -15,17 +15,53 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button_event_end_single"
-            style="@style/GameButton"
-            android:layout_width="@dimen/hitter_button_width"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
-            android:onClick="@{()->viewModel.saveAndDismiss()}"
-            android:text="結束啦"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="@dimen/dialog_width"
+            android:layout_height="@dimen/dialog_height"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent">
 
+            <ImageView
+                android:id="@+id/image_event_end_field"
+                android:layout_width="@dimen/dialog_field_image"
+                android:layout_height="@dimen/dialog_field_image"
+                android:layout_marginTop="@dimen/double_margin"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/diamond_field" />
+
+
+            <TextView
+                style="@style/EventDetailText"
+                android:id="@+id/text_event_end_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/double_margin"
+                android:layout_marginTop="@dimen/double_margin"
+                android:layout_marginEnd="@dimen/double_margin"
+                android:text="@{viewModel.eventDetail}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_event_end_field"
+                tools:text="第四棒陳傑憲 得分+1"/>
+
+
+            <Button
+                android:id="@+id/button_event_end_single"
+                style="@style/GameButton"
+                android:layout_width="@dimen/hitter_button_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_margin"
+                android:onClick="@{()->viewModel.saveAndDismiss()}"
+                android:text="@string/send_event"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_event_end_detail" />
+
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

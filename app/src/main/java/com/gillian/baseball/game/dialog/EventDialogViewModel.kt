@@ -23,6 +23,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
 
 
     var eventList = mutableListOf<Event>()
+    var eventDetail = MutableLiveData<String>("")
 
     private var _changeToNextPage = MutableLiveData<Boolean>()
     val changeToNextPage: LiveData<Boolean>
@@ -145,6 +146,8 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         atBase.base = -1
         eventList.add(Event(run = 1, player = atBase.player))
         eventList[0].rbi += 1
+
+        eventDetail.value = eventDetail.value.plus("${atBase.player.number}號 ${atBase.player.name} 回壘得分 + 1\n")
         changeToNextPage()
     }
 
@@ -157,6 +160,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     fun groundOut() {
         hitterEvent.value?.let{
             it.result = 21
+            it.out = 1
         }
         eventList.add(hitterEvent.value!!)
         atBaseList[0].base = -1
@@ -167,6 +171,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
 
     fun airOut(hasRbi: Boolean) {
         hitterEvent.value?.let{
+            it.out = 1
             it.result = if (hasRbi) 23 else 22
             it.rbi = if (hasRbi) 1 else 0
         }

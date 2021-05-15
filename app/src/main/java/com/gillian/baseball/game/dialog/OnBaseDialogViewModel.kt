@@ -47,6 +47,7 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository) : ViewMo
 
     fun advanceByError() {
         _proceed.value = true
+        dismissDialog()
     }
 
     fun advance() {

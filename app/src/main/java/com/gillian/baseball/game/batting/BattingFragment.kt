@@ -34,8 +34,6 @@ class BattingFragment : Fragment() {
             it?.let{
                 val eventDialog = EventDialog(it, true, viewModel.hitterEvent)
                 eventDialog.show(childFragmentManager, "Success")
-                Log.i("gillian", "navigate to event $eventDialog")
-                //findNavController().navigate(NavigationDirections.navigationToEventDialog(it))
                 viewModel.onEventNavigated()
             }
         })

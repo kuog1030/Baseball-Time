@@ -10,6 +10,8 @@
     <dimen name="dialog_width">400dp</dimen>
     <dimen name="dialog_height">600dp</dimen>
 
+    <dimen name="dialog_field_image">200dp</dimen>
+
     <dimen name="hitter_button_width">150dp</dimen>
     <dimen name="hitter_button_width2">130dp</dimen>
 

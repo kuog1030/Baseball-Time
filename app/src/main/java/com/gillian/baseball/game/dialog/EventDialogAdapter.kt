@@ -11,15 +11,15 @@ class EventDialogAdapter(fragmentManager: FragmentManager, val isSafe: Boolean, 
     override fun getItem(position: Int): Fragment {
         if (isSafe) {
             return when (position) {
-                0 -> HitterFragment("1/$count", atBaseList[position])
+                0 -> HitterFragment("1/$count", atBaseList.last())
                 (count - 1) -> EventEndFragment()
-                else -> RunnerFragment("${position + 1}/$count", atBaseList[position])
+                else -> RunnerFragment("${position + 1}/$count", atBaseList[count - 1 - position])
             }
         } else {
             return when (position) {
                 0 -> OutFragment("1/$count", atBaseList[position])
                 (count - 1) -> EventEndFragment()
-                else -> RunnerFragment("${position + 1}/$count", atBaseList[position])
+                else -> RunnerFragment("${position + 1}/$count", atBaseList[count - 1 - position])
             }
         }
     }
