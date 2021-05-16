@@ -60,15 +60,14 @@
             app:layout_constraintTop_toTopOf="@+id/text_game_score"
             tools:text="Android" />
 
-        <fragment
+        <LinearLayout
             android:id="@+id/gameNavHostFragment"
-            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:defaultNavHost="false"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_game_home"
-            app:navGraph="@navigation/game_navigation" />
+            android:orientation="vertical">
+        </LinearLayout>
 
 <!--        <androidx.viewpager.widget.ViewPager-->
 <!--            android:id="@+id/viewpager_game"-->

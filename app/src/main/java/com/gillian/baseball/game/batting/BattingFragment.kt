@@ -13,6 +13,7 @@ import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.MainActivity
 import com.gillian.baseball.databinding.FragmentBattingBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.factory.GameViewModelFactory
 import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.GameFragmentArgs
 import com.gillian.baseball.game.GameViewModel
@@ -35,9 +36,8 @@ class BattingFragment : Fragment() {
         //Log.i("gillian", "in batting $gameViewModel")
         //viewModel.lineup = gameViewModel.game.value!!.home.lineUp
 
-
-
-
+        val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
+        Log.i("gillian", "in batting : game View Model $gameViewModel")
 
 
 
@@ -45,7 +45,7 @@ class BattingFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        Log.i("gillian", "in batting fragment viewmodel is $viewModel")
+        //Log.i("gillian", "in batting : batting viewmodel is $viewModel")
 
         viewModel.navigateToEvent.observe(viewLifecycleOwner, Observer {
             it?.let{
