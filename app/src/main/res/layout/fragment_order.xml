@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.game.OrderViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_order_you"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginTop="@dimen/double_margin"
+            android:paddingStart="5dp"
+            android:text="@string/you_are"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <RadioGroup
+            android:id="@+id/radio_group_order"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintStart_toStartOf="@id/text_order_you"
+            app:layout_constraintTop_toBottomOf="@id/text_order_you">
+
+            <RadioButton
+                android:id="@+id/radio_order_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/home" />
+
+            <RadioButton
+                android:id="@+id/radio_order_guest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/guest" />
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/text_order_game_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:text="@string/game_title"
+            app:layout_constraintStart_toEndOf="@id/radio_group_order"
+            app:layout_constraintTop_toTopOf="@id/text_order_you" />
+
+        <EditText
+            android:id="@+id/edit_order_game_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.gameTitle}"
+            app:layout_constraintStart_toStartOf="@id/text_order_game_title"
+            app:layout_constraintTop_toBottomOf="@id/text_order_game_title" />
+
+        <TextView
+            android:id="@+id/text_order_away"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:text="@string/away_team_name"
+            app:layout_constraintStart_toStartOf="@id/text_order_game_title"
+            app:layout_constraintTop_toBottomOf="@id/edit_order_game_title"
+            tools:layout_editor_absoluteX="201dp"
+            tools:layout_editor_absoluteY="13dp" />
+
+        <EditText
+            android:id="@+id/edit_order_away"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.awayTeam}"
+            app:layout_constraintStart_toStartOf="@id/text_order_away"
+            app:layout_constraintTop_toBottomOf="@id/text_order_away" />
+
+        <EditText
+            android:id="@+id/edit_order_first"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.first}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_order_second"
+            app:layout_constraintStart_toStartOf="@+id/radio_group_order"
+            app:layout_constraintTop_toBottomOf="@id/edit_order_away"
+            app:layout_constraintVertical_chainStyle="packed" />
+
+        <EditText
+            android:id="@+id/edit_order_second"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.second}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_order_third"
+            app:layout_constraintStart_toStartOf="@+id/edit_order_first"
+            app:layout_constraintTop_toBottomOf="@+id/edit_order_first" />
+
+        <EditText
+            android:id="@+id/edit_order_third"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.third}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_order_forth"
+            app:layout_constraintStart_toStartOf="@+id/edit_order_second"
+            app:layout_constraintTop_toBottomOf="@+id/edit_order_second" />
+
+        <EditText
+            android:id="@+id/edit_order_forth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.forth}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_order_fifth"
+            app:layout_constraintStart_toStartOf="@+id/edit_order_third"
+            app:layout_constraintTop_toBottomOf="@+id/edit_order_third" />
+
+        <EditText
+            android:id="@+id/edit_order_fifth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.fifth}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_order_sixth"
+            app:layout_constraintStart_toStartOf="@+id/edit_order_forth"
+            app:layout_constraintTop_toBottomOf="@+id/edit_order_forth" />
+
+        <EditText
+            android:id="@+id/edit_order_sixth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.sixth}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_order_seventh"
+            app:layout_constraintStart_toStartOf="@+id/edit_order_fifth"
+            app:layout_constraintTop_toBottomOf="@+id/edit_order_fifth" />
+
+        <EditText
+            android:id="@+id/edit_order_seventh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.seventh}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_order_eighth"
+            app:layout_constraintStart_toStartOf="@+id/edit_order_sixth"
+            app:layout_constraintTop_toBottomOf="@+id/edit_order_sixth" />
+
+        <EditText
+            android:id="@+id/edit_order_eighth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.eighth}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_order_ninth"
+            app:layout_constraintStart_toStartOf="@+id/edit_order_seventh"
+            app:layout_constraintTop_toBottomOf="@+id/edit_order_seventh" />
+
+        <EditText
+            android:id="@+id/edit_order_ninth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.ninth}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/edit_order_eighth"
+            app:layout_constraintTop_toBottomOf="@+id/edit_order_eighth" />
+
+        <Button
+            android:id="@+id/button_order_next"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.navigateToGame()}"
+            android:text="Button"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_order_ninth"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_order_first" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

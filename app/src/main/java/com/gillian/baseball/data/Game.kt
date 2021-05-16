@@ -26,5 +26,6 @@ data class Box (
 @Parcelize
 data class GameTeam (
     val name: String = "",
-    val teamId: String = ""
+    val teamId: String = "",
+    val lineUp: List<EventPlayer> = mutableListOf()
 ) : Parcelable

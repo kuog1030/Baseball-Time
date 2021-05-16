@@ -7,12 +7,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.AtBase
-import com.gillian.baseball.databinding.FragmentOutBinding
+import com.gillian.baseball.databinding.PagerHitterBinding
 
+class HitterPager(val page : String, val atBase: AtBase) : Fragment() {
 
-class OutFragment(val page : String, val atBase: AtBase) : Fragment() {
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentOutBinding.inflate(inflater, container, false)
+    //val viewModel by viewModels<HitterViewModel> { getVmFactory() }
+
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        val binding = PagerHitterBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -21,4 +24,5 @@ class OutFragment(val page : String, val atBase: AtBase) : Fragment() {
 
         return binding.root
     }
+
 }

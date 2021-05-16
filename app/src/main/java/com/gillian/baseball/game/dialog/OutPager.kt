@@ -6,18 +6,17 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.gillian.baseball.databinding.FragmentEventEndBinding
+import com.gillian.baseball.data.AtBase
+import com.gillian.baseball.databinding.PagerOutBinding
 
-class EventEndFragment(val page: String) : Fragment() {
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
-    ): View? {
-        val binding = FragmentEventEndBinding.inflate(inflater, container, false)
+class OutPager (val page : String, val atBase: AtBase) : Fragment() {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+        val binding = PagerOutBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
-
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.page = page
         binding.viewModel = viewModel
+        binding.page = page
 
 
         return binding.root

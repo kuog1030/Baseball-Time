@@ -24,7 +24,9 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         value = 0
     }
 
-    val lineup = mutableListOf<EventPlayer>(EventPlayer("0024", "1陳傑憲", "24"),
+    //var lineup = listOf<EventPlayer>()
+
+    var lineup = mutableListOf<EventPlayer>(EventPlayer("0024", "1陳傑憲", "24"),
             EventPlayer("0032","2蘇智傑", "32"),
             EventPlayer("0013", "3陳鏞基", "13"),
             EventPlayer("0077", "4林安可", "77"),

@@ -4,7 +4,6 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.gillian.baseball.data.AtBase
-import com.gillian.baseball.data.EventPlayer
 
 class EventDialogAdapter(
     fragmentManager: FragmentManager,
@@ -17,13 +16,13 @@ class EventDialogAdapter(
         return when (position) {
             0 -> {
                 if (isSafe) {
-                    HitterFragment("1/$count", atBaseList.last())
+                    HitterPager("1/$count", atBaseList.last())
                 } else {
-                    OutFragment("1/$count", atBaseList[position])
+                    OutPager("1/$count", atBaseList[position])
                 }
             }
-            (count - 1) -> EventEndFragment("$count/$count")
-            else -> RunnerFragment("${position + 1}/$count", atBaseList[count - 1 - position])
+            (count - 1) -> EndPager("$count/$count")
+            else -> RunnerPager("${position + 1}/$count", atBaseList[count - 1 - position])
         }
 
     }

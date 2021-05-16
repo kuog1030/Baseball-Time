@@ -60,20 +60,30 @@
             app:layout_constraintTop_toTopOf="@+id/text_game_score"
             tools:text="Android" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/viewpager_game"
+        <fragment
+            android:id="@+id/gameNavHostFragment"
+            android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin"
+            app:defaultNavHost="false"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_game_home">
+            app:layout_constraintTop_toBottomOf="@id/text_game_home"
+            app:navGraph="@navigation/game_navigation" />
 
-            <com.google.android.material.tabs.TabLayout
-                android:id="@+id/tabs_game"
-                android:layout_width="0dp"
-                android:layout_height="0dp" />
+<!--        <androidx.viewpager.widget.ViewPager-->
+<!--            android:id="@+id/viewpager_game"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="0dp"-->
+<!--            android:layout_marginTop="@dimen/margin"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/text_game_home">-->
 
-        </androidx.viewpager.widget.ViewPager>
+<!--            <com.google.android.material.tabs.TabLayout-->
+<!--                android:id="@+id/tabs_game"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="0dp" />-->
+
+<!--        </androidx.viewpager.widget.ViewPager>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

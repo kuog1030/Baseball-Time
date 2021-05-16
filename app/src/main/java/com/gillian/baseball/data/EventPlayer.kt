@@ -7,5 +7,6 @@ import kotlinx.android.parcel.Parcelize
 data class EventPlayer(
     var userId: String = "",
     val name: String = "",
-    val number: String = ""
+    val number: String = "",
+    val pinch: EventPlayer? = null
 ) : Parcelable

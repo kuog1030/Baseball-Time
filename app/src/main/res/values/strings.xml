@@ -2,6 +2,13 @@
     <string name="app_name">Baseball</string>
 
 
+    <string name="you_are">你是</string>
+    <string name="home">主隊</string>
+    <string name="guest">客隊</string>
+    <string name="away_team_name">對手球隊名稱</string>
+    <string name="game_title">賽事名稱</string>
+
+
     <string name="B">B</string>
     <string name="S">S</string>
     <string name="O">O</string>

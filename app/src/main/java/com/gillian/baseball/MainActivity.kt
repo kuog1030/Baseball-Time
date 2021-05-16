@@ -22,7 +22,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_game -> {
-                    navController.navigate(NavigationDirections.navigationToGame())
+                    navController.navigate(NavigationDirections.navigationToOrder())
                     true
                 }
                 R.id.navigation_stat -> {
