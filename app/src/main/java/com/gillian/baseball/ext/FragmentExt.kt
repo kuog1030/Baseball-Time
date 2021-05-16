@@ -13,7 +13,7 @@ fun Fragment.getVmFactory(): ViewModelFactory {
     return ViewModelFactory(repository)
 }
 
-fun Fragment.getVmFactory(game: Game?): GameViewModelFactory {
+fun Fragment.getVmFactory(game: Game): GameViewModelFactory {
     val repository = (requireContext().applicationContext as BaseballApplication).repository
     return GameViewModelFactory(repository, game)
 }

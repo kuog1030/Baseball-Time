@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.GameViewModel" />
@@ -60,29 +61,214 @@
             app:layout_constraintTop_toTopOf="@+id/text_game_score"
             tools:text="Android" />
 
-        <LinearLayout
-            android:id="@+id/gameNavHostFragment"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_game_home"
-            android:orientation="vertical">
-        </LinearLayout>
+            app:layout_constraintBottom_toBottomOf="parent">
 
-<!--        <androidx.viewpager.widget.ViewPager-->
-<!--            android:id="@+id/viewpager_game"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="0dp"-->
-<!--            android:layout_marginTop="@dimen/margin"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/text_game_home">-->
+            <View
+                android:id="@+id/bar_batting"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_margin="@dimen/margin"
+                android:background="@drawable/bg_card"
+                app:layout_constraintTop_toBottomOf="@id/image_batting_field"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                />
 
-<!--            <com.google.android.material.tabs.TabLayout-->
-<!--                android:id="@+id/tabs_game"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="0dp" />-->
+            <TextView
+                android:id="@+id/text_batting_ball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/B"
+                app:layout_constraintStart_toStartOf="@+id/button_batting_ball"
+                app:layout_constraintTop_toTopOf="@+id/bar_batting" />
 
-<!--        </androidx.viewpager.widget.ViewPager>-->
+            <TextView
+                android:id="@+id/text_batting_strike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/S"
+                app:layout_constraintStart_toStartOf="@+id/button_batting_strike"
+                app:layout_constraintTop_toTopOf="@+id/text_batting_ball" />
 
+            <TextView
+                android:id="@+id/text_batting_foul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/O"
+                app:layout_constraintStart_toStartOf="@+id/button_batting_foul"
+                app:layout_constraintTop_toTopOf="@+id/text_batting_strike" />
+
+            <Button
+                android:id="@+id/button_batting_ball"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/ball"
+                android:onClick="@{()->viewModel.ball()}"
+                app:layout_constraintEnd_toStartOf="@+id/button_batting_strike"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_batting_ball" />
+
+            <Button
+                android:id="@+id/button_batting_strike"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/strike"
+                android:onClick="@{()->viewModel.strike()}"
+                app:layout_constraintEnd_toStartOf="@+id/button_batting_foul"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button_batting_ball"
+                app:layout_constraintTop_toTopOf="@+id/button_batting_ball" />
+
+            <Button
+                android:id="@+id/button_batting_foul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/foul"
+                android:onClick="@{()->viewModel.foul()}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button_batting_strike"
+                app:layout_constraintTop_toTopOf="@+id/button_batting_strike" />
+
+            <Button
+                style="@style/GameButton"
+                android:id="@+id/button_batting_out"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/out"
+                android:layout_marginEnd="@dimen/margin"
+                android:onClick="@{()->viewModel.toEventDialog(false)}"
+                app:layout_constraintEnd_toStartOf="@+id/button_batting_safe"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintHorizontal_chainStyle="spread_inside"
+                app:layout_constraintStart_toStartOf="@+id/button_batting_ball"
+                app:layout_constraintTop_toBottomOf="@+id/button_batting_ball" />
+
+            <Button
+                style="@style/GameButton"
+                android:id="@+id/button_batting_safe"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:text="@string/safe"
+                android:onClick="@{()->viewModel.toEventDialog(true)}"
+                android:layout_marginStart="@dimen/margin"
+                app:layout_constraintEnd_toEndOf="@+id/button_batting_foul"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button_batting_out"
+                app:layout_constraintTop_toTopOf="@+id/button_batting_out" />
+
+            <TextView
+                android:id="@+id/text_batting_ball_sign"
+                style="@style/BallSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/green_ball"
+                app:ballCount="@{viewModel.ballCount}"
+                app:layout_constraintBottom_toBottomOf="@+id/text_batting_ball"
+                app:layout_constraintStart_toEndOf="@+id/text_batting_ball"
+                app:layout_constraintTop_toTopOf="@+id/text_batting_ball"
+                tools:text="@string/three_two" />
+
+            <TextView
+                android:id="@+id/text_batting_strike_sign"
+                style="@style/BallSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/yellow_strike"
+                app:twoCount="@{viewModel.strikeCount}"
+                app:layout_constraintBottom_toBottomOf="@+id/text_batting_strike"
+                app:layout_constraintStart_toEndOf="@+id/text_batting_strike"
+                app:layout_constraintTop_toTopOf="@+id/text_batting_strike"
+                tools:text="@string/two_one" />
+
+            <TextView
+                android:id="@+id/text_batting_out_sign"
+                style="@style/BallSign"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:twoCount="@{viewModel.outCount}"
+                android:textColor="@color/red_out"
+                app:layout_constraintBottom_toBottomOf="@+id/text_batting_foul"
+                app:layout_constraintStart_toEndOf="@+id/text_batting_foul"
+                app:layout_constraintTop_toTopOf="@+id/text_batting_foul"
+                tools:text="@string/two_two" />
+
+            <ImageView
+                android:id="@+id/image_batting_field"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_marginStart="48dp"
+                android:layout_marginTop="48dp"
+                android:layout_marginEnd="48dp"
+                android:layout_marginBottom="48dp"
+                app:layout_constraintBottom_toTopOf="@+id/bar_batting"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/field" />
+
+            <TextView
+                android:id="@+id/text_batting_hitter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.atBatName}"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_batting_field"
+                tools:text="No.19 Sean"/>
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/button_batting_first"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="16dp"
+                android:fontFamily="@font/noto_sans"
+                android:onClick="@{()->viewModel.showOnBaseDialog(1)}"
+                android:text="@{viewModel.firstBaseName}"
+                android:visibility="@{viewModel.firstBaseVisible? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toTopOf="@+id/text_batting_hitter"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/image_batting_field"
+                tools:text="No.15 Sam" />
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/text_batting_third"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin"
+                android:onClick="@{()->viewModel.showOnBaseDialog(3)}"
+                android:text="@{viewModel.thirdBaseName}"
+                android:visibility="@{viewModel.thirdBaseVisible? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toTopOf="@+id/text_batting_hitter"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_batting_second"
+                tools:text="No.28 Peter"/>
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/text_batting_second"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.showOnBaseDialog(2)}"
+                android:text="@{viewModel.secondBaseName}"
+                android:visibility="@{viewModel.secondBaseVisible? View.VISIBLE : View.GONE}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/image_batting_field"
+                tools:text="No.99 Wency"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
