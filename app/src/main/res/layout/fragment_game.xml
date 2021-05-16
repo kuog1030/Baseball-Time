@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/double_margin"
-            android:text="Flutter"
+            android:text="@{viewModel.game.guest.name}"
             app:layout_constraintEnd_toStartOf="@+id/text_game_score"
             app:layout_constraintTop_toBottomOf="@+id/text_game_title"
             tools:text="Flutter" />
@@ -43,7 +43,7 @@
             style="@style/GameScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="5:5"
+            android:text='@{viewModel.guestRun + " : " + viewModel.homeRun}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_game_guest"
@@ -55,7 +55,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_margin"
-            android:text="Android"
+            android:text="@{viewModel.game.home.name}"
             app:layout_constraintStart_toEndOf="@+id/text_game_score"
             app:layout_constraintTop_toTopOf="@+id/text_game_score"
             tools:text="Android" />

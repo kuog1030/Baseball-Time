@@ -21,31 +21,17 @@ import kotlinx.android.synthetic.main.fragment_game.*
 
 class GameFragment : Fragment() {
 
-    // mock data
-//    val args: GameFragmentArgs by navArgs()
-    // 下面這是能跑的
    private val viewModel by viewModels<GameViewModel> {getVmFactory(GameFragmentArgs.fromBundle(requireArguments()).preGame) }
-    //val viewModel by viewModels<GameViewModel> ({activity as MainActivity}) {getVmFactory(GameFragmentArgs.fromBundle(requireArguments()).preGame)}
-
-    //沒有用factory的作法
-    //val viewModel: GameViewModel by lazy {ViewModelProvider(this).get(GameViewModel::class.java)}
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val binding = FragmentGameBinding.inflate(inflater, container, false)
 
-
-//        val viewModelFactory = GameViewModelFactory(
-//                (requireContext().applicationContext as BaseballApplication).repository,
-//                GameFragmentArgs.fromBundle(requireArguments()).preGame
-//        )
-        //val viewModel = ViewModelProvider(viewModelStore, viewModelFactory).get(GameViewModel::class.java)
-
         binding.viewModel = viewModel
-        Log.i("gillian", "in game fragment $viewModel")
+        //Log.i("gillian", "in game : game View Model $viewModel")
 
 
-        val battingFragment = BattingFragment()
+        val battingFragment = BattingFragment(viewModel.game.value!!)
         childFragmentManager.beginTransaction().replace(R.id.gameNavHostFragment, battingFragment).commit()
 
 //        binding.viewpagerGame.adapter = GameAdapter(childFragmentManager)

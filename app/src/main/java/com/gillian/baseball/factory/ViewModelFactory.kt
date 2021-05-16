@@ -15,8 +15,6 @@ class ViewModelFactory constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
         with(modelClass) {
             when {
-                isAssignableFrom(BattingViewModel::class.java) ->
-                    BattingViewModel(repository)
                 isAssignableFrom(EventDialogViewModel::class.java) ->
                     EventDialogViewModel(repository)
 //                isAssignableFrom(HitterViewModel::class.java) ->

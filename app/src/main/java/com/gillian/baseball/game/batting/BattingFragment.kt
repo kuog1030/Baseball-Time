@@ -11,8 +11,10 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.MainActivity
+import com.gillian.baseball.data.Game
 import com.gillian.baseball.databinding.FragmentBattingBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.factory.BattingViewModelFactory
 import com.gillian.baseball.factory.GameViewModelFactory
 import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.GameFragmentArgs
@@ -20,32 +22,23 @@ import com.gillian.baseball.game.GameViewModel
 import com.gillian.baseball.game.dialog.EventDialog
 import com.gillian.baseball.game.dialog.OnBaseDialog
 
-class BattingFragment : Fragment() {
+class BattingFragment(val game: Game) : Fragment() {
+
+    private val viewModel by viewModels<BattingViewModel> {getVmFactory(game.home.lineUp) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
         val binding = FragmentBattingBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(
-            this,
-            ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)
-        ).get(BattingViewModel::class.java)
 
-        //val gameViewModel by viewModels<GameViewModel> ({activity as MainActivity }) {getVmFactory(GameFragmentArgs.fromBundle(requireArguments()).preGame)}
-        //val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
-        //Log.i("gillian", "in batting $gameViewModel")
-        //viewModel.lineup = gameViewModel.game.value!!.home.lineUp
-
-        val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
-        Log.i("gillian", "in batting : game View Model $gameViewModel")
-
-
+//        val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
+//        Log.i("gillian", "in batting : batting viewmodel is $viewModel")
+//        Log.i("gillian", "in batting : game View Model $gameViewModel")
 
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        //Log.i("gillian", "in batting : batting viewmodel is $viewModel")
 
         viewModel.navigateToEvent.observe(viewLifecycleOwner, Observer {
             it?.let{

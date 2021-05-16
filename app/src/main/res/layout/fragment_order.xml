@@ -29,6 +29,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
+            android:checkedButton="@={viewModel.selectedSideRadio}"
             app:layout_constraintStart_toStartOf="@id/text_order_you"
             app:layout_constraintTop_toBottomOf="@id/text_order_you">
 
@@ -81,7 +82,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="@={viewModel.awayTeam}"
+            android:text="@={viewModel.awayTeamName}"
             app:layout_constraintStart_toStartOf="@id/text_order_away"
             app:layout_constraintTop_toBottomOf="@id/text_order_away" />
 

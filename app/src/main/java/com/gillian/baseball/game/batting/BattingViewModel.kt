@@ -11,7 +11,7 @@ import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.source.BaseballRepository
 import kotlinx.coroutines.launch
 
-class BattingViewModel(private val repository: BaseballRepository) : ViewModel() {
+class BattingViewModel(private val repository: BaseballRepository, var lineup: List<EventPlayer>) : ViewModel() {
 
     var ballCount = MutableLiveData<Int>().apply {
         value = 0
@@ -24,18 +24,16 @@ class BattingViewModel(private val repository: BaseballRepository) : ViewModel()
         value = 0
     }
 
-    //var lineup = listOf<EventPlayer>()
-
-    var lineup = mutableListOf<EventPlayer>(EventPlayer("0024", "1陳傑憲", "24"),
-            EventPlayer("0032","2蘇智傑", "32"),
-            EventPlayer("0013", "3陳鏞基", "13"),
-            EventPlayer("0077", "4林安可", "77"),
-            EventPlayer("0065", "5陳重羽", "65"),
-            EventPlayer("0064", "6林靖凱", "64"),
-            EventPlayer("0052", "7張偉聖", "52"),
-            EventPlayer("0031", "8林岱安", "31"),
-            EventPlayer("0039", "9林祖傑", "39")
-    )
+//    var lineup = mutableListOf<EventPlayer>(EventPlayer("0024", "1陳傑憲", "24"),
+//            EventPlayer("0032","2蘇智傑", "32"),
+//            EventPlayer("0013", "3陳鏞基", "13"),
+//            EventPlayer("0077", "4林安可", "77"),
+//            EventPlayer("0065", "5陳重羽", "65"),
+//            EventPlayer("0064", "6林靖凱", "64"),
+//            EventPlayer("0052", "7張偉聖", "52"),
+//            EventPlayer("0031", "8林岱安", "31"),
+//            EventPlayer("0039", "9林祖傑", "39")
+//    )
 
 
     // 進到dialog的時候帶過去的用球數

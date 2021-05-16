@@ -4,10 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gillian.baseball.R
-import com.gillian.baseball.data.AtBase
-import com.gillian.baseball.data.EventPlayer
-import com.gillian.baseball.data.Game
-import com.gillian.baseball.data.GameTeam
+import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import java.util.*
 
@@ -16,7 +13,7 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     val selectedSideRadio = MutableLiveData<Int>()
     val gameTitle = MutableLiveData<String>()
-    val awayTeam = MutableLiveData<String>()
+    val awayTeamName = MutableLiveData<String>()
 
     // line up player
     val first = MutableLiveData<String>()
@@ -43,29 +40,46 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     fun navigateToGame() {
         val game = Game(
-                name = gameTitle.value ?: "",
+                name = gameTitle.value ?: "世界第一武道大會",
                 date = Calendar.getInstance().timeInMillis,
                 place = "")
-        val nameList = listOf(first.value, second.value, third.value, forth.value, fifth.value, sixth.value, seventh.value, eighth.value, ninth.value)
-        val lineUp = mutableListOf<EventPlayer>()
 
-        for (name in nameList) {
-            while (name != null) {
+        //val nameList = listOf(first.value, second.value, third.value, forth.value, fifth.value, sixth.value, seventh.value, eighth.value, ninth.value)
+        // TODO() 這是為了debug方便先給預設值，到時候要刪掉
+        val nameList = listOf(first.value ?: "陳傑憲",
+                second.value ?: "蘇智傑",
+                third.value ?: "林安可",
+                forth.value ?: "陳鏞基",
+                fifth.value ?: "林子豪",
+                sixth.value ?: "陳重羽",
+                seventh.value ?: "張偉聖",
+                eighth.value ?: "劉芙豪",
+                ninth.value ?: "林靖凱")
+        val lineUp = mutableListOf<EventPlayer>()
+        val awayLineUp = mutableListOf<EventPlayer>()
+
+        for ((index, name) in nameList.withIndex()) {
+            if ( name != null ){
                 lineUp.add(EventPlayer(name = name))
+                awayLineUp.add(EventPlayer(name = "第${index+1}棒"))
+            } else {
+                break
             }
         }
 
-        val team = GameTeam(
+        val myTeam = GameTeam(
                 name = "Android",
                 teamId = "999",
                 lineUp = lineUp
         )
 
-        if (isHome) {
-            game.home = team
-        } else {
-            game.guest = team
-        }
+        val awayTeam = GameTeam(
+                name = awayTeamName.value ?: "iOS",
+                lineUp = awayLineUp
+        )
+
+        game.home = if (isHome) myTeam else awayTeam
+        game.guest = if (isHome) awayTeam else myTeam
 
         _navigateToGame.value = game
     }
