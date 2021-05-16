@@ -26,6 +26,9 @@ fun bindStrikeCount(textView: TextView, count: Int?) {
         }
     }
 }
+
+
+
 //
 //@BindingAdapter("onFirstBase")
 //fun bindFirstBaseRunner(textView: TextView, baseList: Array<EventPlayer?>) {
