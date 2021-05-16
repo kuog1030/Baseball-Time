@@ -23,6 +23,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var guestRun = MutableLiveData<Int>(0)
 
     var inningCount = 1
+    private var isTop = true
 
     val homeLineUp = argument.home.lineUp
     val guestLineUp = argument.guest.lineUp
@@ -54,12 +55,21 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         clearCount()
         inningCount += 1
         outCount.value = 0
-        lineUp = if (inningCount % 2 == 0) homeLineUp else guestLineUp
-        baseList = arrayOf(lineUp[0], null, null, null)
-        //TODO()要分開記錄上一個打席到哪棒
-        atBatNumber = 0
-        atBatName.value = "第1棒 ${baseList[0]?.name}"
+
+        if (isTop) {
+            guestABNumber = atBatNumber  // 記錄下這次打席的最後人次
+            atBatNumber = homeABNumber   // 開始下一局的人次
+            lineUp = homeLineUp          // 下半局換主隊進攻
+        } else {
+            homeABNumber = atBatNumber
+            atBatNumber = guestABNumber
+            lineUp = guestLineUp
+        }
+        isTop = !isTop
+        baseList = arrayOf(lineUp[atBatNumber], null, null, null)
+        atBatName.value = "第${atBatNumber+1}棒 ${baseList[0]?.name}"
         Log.i("at base", "*-------------change!------------*")
+        Log.i("at base","目前客隊打到第$guestABNumber 主隊打到第$homeABNumber")
         Log.i("at base", "下一隊的打者 $homeLineUp")
         updateRunnerUI()
         // clearBase?
@@ -134,7 +144,12 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun out() {
         outCount.value = outCount.value!!.plus(1)
         if (outCount.value!! == 3) {
-            // three out! switch
+            // three out! switch TODO()這邊跟next player的差別要處理一下
+            if (atBatNumber == (lineUp.size-1)) {
+                atBatNumber = 0
+            } else {
+                atBatNumber += 1
+            }
             switch()
         } else {
             nextPlayer()
