@@ -23,6 +23,11 @@ class OrderFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        val adapter = OrderAdapter()
+        binding.recyclerOrderPlayers.adapter = adapter
+        adapter.submitList(viewModel.lineUp)
+
+
         viewModel.navigateToGame.observe(viewLifecycleOwner, Observer {
             it?.let{
                 findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToGameFragment(it))

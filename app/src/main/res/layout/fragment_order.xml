@@ -86,105 +86,19 @@
             app:layout_constraintStart_toStartOf="@id/text_order_away"
             app:layout_constraintTop_toBottomOf="@id/text_order_away" />
 
-        <EditText
-            android:id="@+id/edit_order_first"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.first}"
-            app:layout_constraintBottom_toTopOf="@+id/edit_order_second"
-            app:layout_constraintStart_toStartOf="@+id/radio_group_order"
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_order_players"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_margin="@dimen/margin"
             app:layout_constraintTop_toBottomOf="@id/edit_order_away"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <EditText
-            android:id="@+id/edit_order_second"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.second}"
-            app:layout_constraintBottom_toTopOf="@+id/edit_order_third"
-            app:layout_constraintStart_toStartOf="@+id/edit_order_first"
-            app:layout_constraintTop_toBottomOf="@+id/edit_order_first" />
-
-        <EditText
-            android:id="@+id/edit_order_third"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.third}"
-            app:layout_constraintBottom_toTopOf="@+id/edit_order_forth"
-            app:layout_constraintStart_toStartOf="@+id/edit_order_second"
-            app:layout_constraintTop_toBottomOf="@+id/edit_order_second" />
-
-        <EditText
-            android:id="@+id/edit_order_forth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.forth}"
-            app:layout_constraintBottom_toTopOf="@+id/edit_order_fifth"
-            app:layout_constraintStart_toStartOf="@+id/edit_order_third"
-            app:layout_constraintTop_toBottomOf="@+id/edit_order_third" />
-
-        <EditText
-            android:id="@+id/edit_order_fifth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.fifth}"
-            app:layout_constraintBottom_toTopOf="@+id/edit_order_sixth"
-            app:layout_constraintStart_toStartOf="@+id/edit_order_forth"
-            app:layout_constraintTop_toBottomOf="@+id/edit_order_forth" />
-
-        <EditText
-            android:id="@+id/edit_order_sixth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.sixth}"
-            app:layout_constraintBottom_toTopOf="@+id/edit_order_seventh"
-            app:layout_constraintStart_toStartOf="@+id/edit_order_fifth"
-            app:layout_constraintTop_toBottomOf="@+id/edit_order_fifth" />
-
-        <EditText
-            android:id="@+id/edit_order_seventh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.seventh}"
-            app:layout_constraintBottom_toTopOf="@+id/edit_order_eighth"
-            app:layout_constraintStart_toStartOf="@+id/edit_order_sixth"
-            app:layout_constraintTop_toBottomOf="@+id/edit_order_sixth" />
-
-        <EditText
-            android:id="@+id/edit_order_eighth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.eighth}"
-            app:layout_constraintBottom_toTopOf="@+id/edit_order_ninth"
-            app:layout_constraintStart_toStartOf="@+id/edit_order_seventh"
-            app:layout_constraintTop_toBottomOf="@+id/edit_order_seventh" />
-
-        <EditText
-            android:id="@+id/edit_order_ninth"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.ninth}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="@+id/edit_order_eighth"
-            app:layout_constraintTop_toBottomOf="@+id/edit_order_eighth" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+
+        </androidx.recyclerview.widget.RecyclerView>
 
         <Button
             android:id="@+id/button_order_next"
@@ -192,9 +106,9 @@
             android:layout_height="wrap_content"
             android:onClick="@{()->viewModel.navigateToGame()}"
             android:text="Button"
-            app:layout_constraintBottom_toBottomOf="@+id/edit_order_ninth"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/edit_order_first" />
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
