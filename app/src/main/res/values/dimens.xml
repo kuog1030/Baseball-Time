@@ -18,4 +18,6 @@
     <dimen name="hitter_button_width">150dp</dimen>
     <dimen name="hitter_button_width2">130dp</dimen>
 
+    <dimen name="final_table_padding">8dp</dimen>
+
 </resources>

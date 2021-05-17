@@ -51,4 +51,14 @@
         <item name="android:windowBackground">@color/black_transparent</item>
     </style>
 
+    <style name="FinalTable">
+        <item name="android:textSize">18sp</item>
+        <item name="android:padding">@dimen/final_table_padding</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="FinalTableTitle" parent="FinalTable">
+        <item name="android:textColor">@color/white</item>
+    </style>
+
 </resources>
