@@ -12,7 +12,6 @@ import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.game.EventType
 import kotlinx.coroutines.launch
 
-//class HitterViewModel(private val repository: BaseballRepository) : ViewModel() {
 class EventDialogViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     var atBaseList = listOf<AtBase>()
@@ -26,6 +25,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     var eventDetail = MutableLiveData<String>("")
 
     var scoreToBeAdded = 0
+    var hitToBeAdded = 0
 
     private var _changeToNextPage = MutableLiveData<Boolean>()
     val changeToNextPage: LiveData<Boolean>
@@ -63,6 +63,16 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
                 repository.sendEvent(singleEvent)
             }
         }
+
+        // 安打數加上去box
+        hitToBeAdded = when ( eventList[0].result ) {
+            EventType.SINGLE.number -> 1
+            EventType.DOUBLE.number -> 1
+            EventType.TRIPLE.number -> 1
+            EventType.HOMERUN.number -> 1
+            else -> 0
+        }
+
         initNextEvent()
 
         for (atBase in atBaseList) {
@@ -87,7 +97,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
 
     fun homerun() {
         hitterEvent.value?.let{
-            it.result = 4
+            it.result = EventType.HOMERUN.number
             it.run = 1
             it.rbi = 1
         }
@@ -145,6 +155,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         changeToNextPage()
     }
 
+    // 回壘得分
     fun run(atBase: AtBase) {
         atBase.base = -1
         eventList.add(Event(run = 1,

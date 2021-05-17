@@ -8,18 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
-import com.gillian.baseball.BaseballApplication
-import com.gillian.baseball.MainActivity
-import com.gillian.baseball.R
-import com.gillian.baseball.data.Game
+import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.databinding.FragmentGameBinding
 import com.gillian.baseball.ext.getVmFactory
-import com.gillian.baseball.factory.GameViewModelFactory
 import com.gillian.baseball.game.dialog.EventDialog
 import com.gillian.baseball.game.dialog.OnBaseDialog
-import kotlinx.android.synthetic.main.fragment_game.*
 
 class GameFragment : Fragment() {
 
@@ -56,6 +49,12 @@ class GameFragment : Fragment() {
                 val onBaseDialog = OnBaseDialog(it)
                 onBaseDialog.show(childFragmentManager, "OnBase")
                 viewModel.onOnBaseNavigated()
+            }
+        })
+
+        viewModel.navigateToFinal.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                findNavController().navigate(GameFragmentDirections.actionGameFragmentToFinalFragment(it))
             }
         })
 

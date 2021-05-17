@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.Game
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.game.GameViewModel
+import com.gillian.baseball.game.finalGame.FinalViewModel
 
 class GameViewModelFactory constructor(
     private val repository: BaseballRepository,
@@ -16,6 +17,8 @@ class GameViewModelFactory constructor(
             when {
                 isAssignableFrom(GameViewModel::class.java) ->
                     GameViewModel(repository, game)
+                isAssignableFrom(FinalViewModel::class.java) ->
+                    FinalViewModel(repository, game)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

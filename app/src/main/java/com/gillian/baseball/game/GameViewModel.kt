@@ -9,6 +9,9 @@ import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import kotlinx.coroutines.launch
 
+// debug用
+val totalInning = 2
+
 class GameViewModel(private val repository: BaseballRepository, private val argument: Game) : ViewModel() {
 
     private val _game = MutableLiveData<Game>(argument)
@@ -20,6 +23,9 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var guestRun = MutableLiveData<Int>(0)
 
     var inningCount = 1
+    var inningShow = MutableLiveData<String>("1上")
+
+
     private var isTop = true
 
     val homeLineUp = argument.home.lineUp
@@ -31,6 +37,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     // 初始化lineup是客隊先攻
     var lineUp = listOf(EventPlayer())
+
     init {
         lineUp = guestLineUp
     }
@@ -43,52 +50,65 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var outCount = MutableLiveData<Int>(0)
 
 
-    fun scored( score: Int ) {
+    fun scored(score: Int) {
         if (isTop) {
             guestRun.value = guestRun.value!!.plus(score)
         } else {
             homeRun.value = homeRun.value!!.plus(score)
         }
-        game.value!!.box.score[inningCount-1] += 1
+        game.value?.let{
+            it.box.score[inningCount-1] += score
+            it.box.run[ (inningCount-1) %2] += score
+        }
     }
 
     fun switch() {
 
-        if (atBatNumber == (lineUp.size-1)) {
-            atBatNumber = 0
+        if (inningCount == totalInning) {
+            _navigateToFinal.value = game.value
         } else {
-            atBatNumber += 1
-        }
+            if (atBatNumber == (lineUp.size - 1)) {
+                atBatNumber = 0
+            } else {
+                atBatNumber += 1
+            }
 
-        clearCount()
-        outCount.value = 0
+            clearCount()
+            outCount.value = 0
+            inningCount += 1
+            if (isTop) {
+                // 目前上半局
+                guestABNumber = atBatNumber  // 記錄下這次打席的最後人次+1
+                atBatNumber = homeABNumber   // 開始下一局的人次
+                lineUp = homeLineUp          // 下半局換主隊進攻
+                pitcher.value = guestPitcher.name
+                inningShow.value = "${(inningCount / 2)} 下"
+            } else {
+                homeABNumber = atBatNumber
+                atBatNumber = guestABNumber
+                lineUp = guestLineUp
+                pitcher.value = homePitcher.name
+                inningShow.value = "${(inningCount / 2) + 1} 上"
+            }
 
-        if (isTop) {
-            // 目前上半局
-            guestABNumber = atBatNumber  // 記錄下這次打席的最後人次+1
-            atBatNumber = homeABNumber   // 開始下一局的人次
-            lineUp = homeLineUp          // 下半局換主隊進攻
-            pitcher.value = guestPitcher.name
-        } else {
-            homeABNumber = atBatNumber
-            atBatNumber = guestABNumber
-            lineUp = guestLineUp
-            pitcher.value = homePitcher.name
+
+            Log.i("at base", "box score ${game.value!!.box.score}")
+            Log.i("at base", "hit box ${game.value!!.box.hit}")
+            Log.i("at base", "run box ${game.value!!.box.run}")
+
+            game.value!!.box.score.add(0)
+            isTop = !isTop
+            baseList = arrayOf(lineUp[atBatNumber], null, null, null)
+            atBatName.value = "第${atBatNumber + 1}棒 ${baseList[0]?.name}"
+            Log.i("at base", "*-------------change!------------*")
+            updateRunnerUI()
+            // clearBase?
         }
-        inningCount += 1
-        Log.i("at base", "box score ${game.value!!.box.score}")
-        game.value!!.box.score.add(0)
-        isTop = !isTop
-        baseList = arrayOf(lineUp[atBatNumber], null, null, null)
-        atBatName.value = "第${atBatNumber+1}棒 ${baseList[0]?.name}"
-        Log.i("at base", "*-------------change!------------*")
-        updateRunnerUI()
-        // clearBase?
     }
 
 
     // 進到dialog的時候帶過去的用球數
-    lateinit var hitterEvent : Event
+    lateinit var hitterEvent: Event
 
     var baseList = arrayOf<EventPlayer?>(lineUp[0], null, null, null)
     var atBaseList = mutableListOf<AtBase>()
@@ -98,21 +118,25 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var guestABNumber = 0
 
     var atBatNumber = 0
-    var atBatName = MutableLiveData<String>().apply{
+    var atBatName = MutableLiveData<String>().apply {
         value = "第1棒 ${baseList[0]?.name}"
     }
 
     private val _navigateToEvent = MutableLiveData<List<AtBase>>()
-    val navigateToEvent : LiveData<List<AtBase>>
+    val navigateToEvent: LiveData<List<AtBase>>
         get() = _navigateToEvent
 
     private val _navigateToOnBase = MutableLiveData<OnBaseInfo>()
-    val navigateToOnBase : LiveData<OnBaseInfo>
+    val navigateToOnBase: LiveData<OnBaseInfo>
         get() = _navigateToOnBase
 
     private val _navigateToOut = MutableLiveData<List<AtBase>>()
-    val navigateToOut : LiveData<List<AtBase>>
+    val navigateToOut: LiveData<List<AtBase>>
         get() = _navigateToOut
+
+    private val _navigateToFinal = MutableLiveData<Game>()
+    val navigateToFinal: LiveData<Game>
+        get() = _navigateToFinal
 
 
     var firstBaseVisible = MutableLiveData<Boolean>(false)
@@ -166,11 +190,11 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     fun onBaseOut(base: Int) {
         sendEvent(Event(
-            inning = inningCount,
-            out = outCount.value ?: 0,
-            player = baseList[base]!!,
-            result = EventType.PICKOFF.number,
-            pitcher = if (isTop) homePitcher else guestPitcher
+                inning = inningCount,
+                out = outCount.value ?: 0,
+                player = baseList[base]!!,
+                result = EventType.PICKOFF.number,
+                pitcher = if (isTop) homePitcher else guestPitcher
         ))
         outCount.value = outCount.value!!.plus(1)
         if (outCount.value!! == 3) {
@@ -233,10 +257,14 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         _navigateToOnBase.value = null
     }
 
+    fun onFinalNavigated() {
+        _navigateToFinal.value = null
+    }
+
 
     fun advanceBase(myself: Int) {
         var end = myself
-        while ( baseList[end] != null) {
+        while (baseList[end] != null) {
             if (end == 3) {
                 // 擠壘事件造成的得分
                 sendEvent(Event(player = baseList[3]!!,
@@ -249,8 +277,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             }
             end += 1
         }
-        for ( i in end downTo (myself+1)) {
-            baseList[i] = baseList[i-1]
+        for (i in end downTo (myself + 1)) {
+            baseList[i] = baseList[i - 1]
         }
         baseList[myself] = null
 
@@ -285,7 +313,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun nextPlayer() {
         clearCount()
         // if current at bat is the last player of line up
-        if (atBatNumber == (lineUp.size-1)) {
+        if (atBatNumber == (lineUp.size - 1)) {
             atBatNumber = 0
         } else {
             atBatNumber += 1
@@ -293,7 +321,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
         // change the hitter to next person in line
         baseList[0] = lineUp[atBatNumber]
-        atBatName.value = "第${atBatNumber+1}棒 ${baseList[0]!!.name}"
+        atBatName.value = "第${atBatNumber + 1}棒 ${baseList[0]!!.name}"
         updateRunnerUI()
     }
 
@@ -319,6 +347,17 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             thirdBaseName.value = baseList[3]!!.name
         }
     }
+
+    fun addHitToBox(run: Int) {
+        game.value?.let {
+            if (isTop) {
+                it.box.hit[0] += run
+            } else {
+                it.box.hit[1] += run
+            }
+        }
+    }
+
 
     fun setNewBaseList(newList: Array<EventPlayer?>) {
         baseList = newList

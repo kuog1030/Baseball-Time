@@ -69,19 +69,25 @@ class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHit
         viewModel.dismiss.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
-                if (viewModel.hasOut != null) {
 
-                    //TODO()這邊要加分嗎?
+                if (viewModel.hasOut != null) {
+                    // 如果有出局數的話 eg. 雖然上壘safe 但是選殺，有仍然有出局數
                     gameViewModel.setNewBaseList(it)
+                    // 如果有壘包上的出局數
                     if (viewModel.hasBaseOut != null) gameViewModel.onBaseOut(viewModel.hasBaseOut!!)
                     gameViewModel.out()
                 } else {
+                    // 如果沒有出局數的話 is safe = true
+                    // 如果有得分，更新畫面得分數&更新box
                     if (viewModel.scoreToBeAdded != 0) gameViewModel.scored(viewModel.scoreToBeAdded)
                     gameViewModel.setNewBaseList(it)
                     gameViewModel.nextPlayer()
                 }
-                Log.i("gillian", "in event dialog $gameViewModel")
-                //val battingViewModel by viewModels<BattingViewModel> { getVmFactory() }
+
+                //Log.i("gillian", "in event dialog $gameViewModel")
+
+                // 更新安打的box
+                if (viewModel.hitToBeAdded != 0) gameViewModel.addHitToBox(viewModel.hitToBeAdded)
                 dismiss()
                 viewModel.onDialogDismiss()
             }

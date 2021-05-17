@@ -10,6 +10,9 @@
         <argument
             android:name="preGame"
             app:argType="com.gillian.baseball.data.Game" />
+        <action
+            android:id="@+id/action_gameFragment_to_finalFragment"
+            app:destination="@id/finalFragment" />
     </fragment>
 
     <fragment
@@ -24,6 +27,7 @@
     <action android:id="@+id/navigationToStat" app:destination="@id/statFragment" />
     <action android:id="@+id/navigationToTeam" app:destination="@id/teamFragment" />
     <action android:id="@+id/navigationToOrder" app:destination="@id/orderFragment" />
+
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.gillian.baseball.game.order.OrderFragment"
@@ -31,6 +35,14 @@
         <action
             android:id="@+id/action_orderFragment_to_gameFragment"
             app:destination="@id/gameFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/finalFragment"
+        android:name="com.gillian.baseball.game.finalGame.FinalFragment"
+        android:label="FinalFragment" >
+        <argument android:name="endGame"
+            app:argType="com.gillian.baseball.data.Game" />
     </fragment>
 
 </navigation>
