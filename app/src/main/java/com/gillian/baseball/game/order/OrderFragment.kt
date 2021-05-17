@@ -1,4 +1,4 @@
-package com.gillian.baseball.game
+package com.gillian.baseball.game.order
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,11 +10,9 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.gillian.baseball.data.Game
 import java.util.Collections.swap
 import com.gillian.baseball.databinding.FragmentOrderBinding
 import com.gillian.baseball.ext.getVmFactory
-import java.util.*
 
 class OrderFragment : Fragment() {
 

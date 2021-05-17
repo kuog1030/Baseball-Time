@@ -1,6 +1,5 @@
-package com.gillian.baseball.game
+package com.gillian.baseball.game.order
 
-import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -18,7 +17,7 @@ class OrderAdapter : ListAdapter<EventPlayer, OrderAdapter.ViewHolder>(DiffCallb
         }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OrderAdapter.ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         return ViewHolder(ItemOrderPlayerBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }

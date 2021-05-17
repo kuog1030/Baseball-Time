@@ -1,4 +1,4 @@
-package com.gillian.baseball.game
+package com.gillian.baseball.game.order
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

@@ -3,9 +3,8 @@ package com.gillian.baseball.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.source.BaseballRepository
-import com.gillian.baseball.game.OrderViewModel
+import com.gillian.baseball.game.order.OrderViewModel
 import com.gillian.baseball.game.dialog.EventDialogViewModel
-import com.gillian.baseball.game.dialog.OnBaseDialogViewModel
 
 class ViewModelFactory constructor(
     private val repository: BaseballRepository
@@ -16,8 +15,6 @@ class ViewModelFactory constructor(
             when {
                 isAssignableFrom(EventDialogViewModel::class.java) ->
                     EventDialogViewModel(repository)
-//                isAssignableFrom(HitterViewModel::class.java) ->
-//                    HitterViewModel(repository)
                 isAssignableFrom(OrderViewModel::class.java) ->
                     OrderViewModel(repository)
                 else ->

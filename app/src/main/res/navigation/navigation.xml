@@ -26,7 +26,7 @@
     <action android:id="@+id/navigationToOrder" app:destination="@id/orderFragment" />
     <fragment
         android:id="@+id/orderFragment"
-        android:name="com.gillian.baseball.game.OrderFragment"
+        android:name="com.gillian.baseball.game.order.OrderFragment"
         android:label="OrderFragment" >
         <action
             android:id="@+id/action_orderFragment_to_gameFragment"
