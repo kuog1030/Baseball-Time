@@ -30,3 +30,9 @@ data class GameTeam (
     var pitcher: EventPlayer = EventPlayer(),
     val lineUp: MutableList<EventPlayer> = mutableListOf()
 ) : Parcelable
+
+@Parcelize
+data class MyGame (
+        val isHome : Boolean? = null,
+        val game : Game
+) : Parcelable

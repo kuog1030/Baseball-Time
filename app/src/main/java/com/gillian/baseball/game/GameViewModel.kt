@@ -35,9 +35,10 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             EventPlayer(name = "Wency", number = "30"),
             EventPlayer(name = "Chloe", number = "2"))
 
+    // 開賽由主隊投手先投
     val pitcher = MutableLiveData<String>(argument.home.pitcher.name)
-    val homePitcher = argument.home.pitcher
-    val guestPitcher = argument.guest.pitcher
+    var homePitcher = argument.home.pitcher
+    var guestPitcher = argument.guest.pitcher
 
     // 初始化lineup是客隊先攻
     var lineUp = mutableListOf(EventPlayer())
@@ -389,6 +390,17 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         homeBench.removeAt(position)
 
         Log.i("gillian", "now 替補球員是 $homeBench")
+    }
+
+    fun nextPitcher(next: EventPlayer) {
+        if (isTop) {
+            next.pinch = homePitcher
+            homePitcher = next
+        } else {
+            next.pinch = guestPitcher
+            guestPitcher = next
+        }
+        pitcher.value = next.name
     }
 
 
