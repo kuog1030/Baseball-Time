@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment
 import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.Game
+import com.gillian.baseball.data.MyGame
 import com.gillian.baseball.data.OnBaseInfo
 import com.gillian.baseball.factory.GameViewModelFactory
 import com.gillian.baseball.factory.OnBaseViewModelFactory
@@ -14,9 +15,9 @@ fun Fragment.getVmFactory(): ViewModelFactory {
     return ViewModelFactory(repository)
 }
 
-fun Fragment.getVmFactory(game: Game): GameViewModelFactory {
+fun Fragment.getVmFactory(myGame: MyGame): GameViewModelFactory {
     val repository = (requireContext().applicationContext as BaseballApplication).repository
-    return GameViewModelFactory(repository, game)
+    return GameViewModelFactory(repository, myGame)
 }
 
 fun Fragment.getVmFactory(onBaseInfo: OnBaseInfo): OnBaseViewModelFactory {

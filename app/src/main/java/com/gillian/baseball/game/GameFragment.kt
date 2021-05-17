@@ -62,7 +62,7 @@ class GameFragment : Fragment() {
 
         viewModel.navigateToPinch.observe(viewLifecycleOwner, Observer {
             it?.let{
-                val pinchDialog = PinchDialog()
+                val pinchDialog = PinchDialog(viewModel.isTop == viewModel.isHome)
                 pinchDialog.show(childFragmentManager, "pinch")
                 viewModel.onPinchNavigated()
             }

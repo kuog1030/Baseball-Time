@@ -4,9 +4,10 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.gillian.baseball.data.Game
+import com.gillian.baseball.data.MyGame
 import com.gillian.baseball.data.source.BaseballRepository
 
-class FinalViewModel(private val repository: BaseballRepository, private val argsGame: Game) : ViewModel() {
+class FinalViewModel(private val repository: BaseballRepository, private val myGame: MyGame) : ViewModel() {
 
     val scoreBox = MutableLiveData<String>()
     var scoreText = ""
@@ -21,16 +22,16 @@ class FinalViewModel(private val repository: BaseballRepository, private val arg
 
     init {
 
-        Log.i("gillian", "score box is ${argsGame.box.score}")
+        Log.i("gillian", "score box is ${myGame.game.box.score}")
 
-        for (score in argsGame.box.score) {
+        for (score in myGame.game.box.score) {
             scoreText += "$score - "
         }
 
         for (i in 0..1) {
-            runText += "${argsGame.box.run[i]} -"
-            hitText += "${argsGame.box.hit[i]} -"
-            errorText += "${argsGame.box.error[i]} -"
+            runText += "${myGame.game.box.run[i]} -"
+            hitText += "${myGame.game.box.hit[i]} -"
+            errorText += "${myGame.game.box.error[i]} -"
         }
 
         scoreBox.value = scoreText

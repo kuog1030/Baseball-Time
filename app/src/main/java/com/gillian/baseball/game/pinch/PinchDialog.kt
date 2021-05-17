@@ -1,29 +1,27 @@
 package com.gillian.baseball.game.pinch
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.lifecycle.ViewModelProvider
-import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.databinding.DialogPinchBinding
 import com.gillian.baseball.game.GameViewModel
 import com.gillian.baseball.game.order.PinchAdapter
 
-class PinchDialog : AppCompatDialogFragment() {
+class PinchDialog(private val isDefense: Boolean) : AppCompatDialogFragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        var isChangingPitcher = false
         val binding = DialogPinchBinding.inflate(inflater, container, false)
         val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
 
+        binding.isDefense = isDefense
 
         val benchAdapter = PinchAdapter(PinchAdapter.OnClickListener{ player, position ->
-            if (isChangingPitcher) {
-                gameViewModel.nextPitcher(player)
+            if (isDefense) {
+                gameViewModel.nextPitcher(player, position)
             } else {
                 gameViewModel.pinch(player, position)
             }
@@ -38,16 +36,10 @@ class PinchDialog : AppCompatDialogFragment() {
 
         binding.recyclerPinchBench.adapter = benchAdapter
         binding.recyclerPinchOnField.adapter = fieldAdapter
-        benchAdapter.submitList(gameViewModel.homeBench)
+        benchAdapter.submitList(gameViewModel.myBench)
         fieldAdapter.submitList(gameViewModel.lineUp)
 
-        binding.buttonPinchPitcher.setOnClickListener {
-            isChangingPitcher = true
-            binding.recyclerPinchOnField.visibility = View.INVISIBLE
-            binding.recyclerPinchBench.visibility = View.VISIBLE
-        }
         binding.buttonPinchHitter.setOnClickListener {
-            isChangingPitcher = false
             binding.recyclerPinchOnField.visibility = View.INVISIBLE
             binding.recyclerPinchBench.visibility = View.VISIBLE
         }

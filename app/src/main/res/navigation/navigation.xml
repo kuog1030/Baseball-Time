@@ -9,7 +9,7 @@
         android:label="GameFragment" >
         <argument
             android:name="preGame"
-            app:argType="com.gillian.baseball.data.Game" />
+            app:argType="com.gillian.baseball.data.MyGame" />
         <action
             android:id="@+id/action_gameFragment_to_finalFragment"
             app:destination="@id/finalFragment" />
@@ -42,7 +42,7 @@
         android:name="com.gillian.baseball.game.finalGame.FinalFragment"
         android:label="FinalFragment" >
         <argument android:name="endGame"
-            app:argType="com.gillian.baseball.data.Game" />
+            app:argType="com.gillian.baseball.data.MyGame" />
     </fragment>
 
 </navigation>

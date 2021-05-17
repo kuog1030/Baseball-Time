@@ -6,7 +6,7 @@
     <data>
         <import type="android.view.View"/>
         <variable
-            name="fromBench"
+            name="isDefense"
             type="Boolean" />
     </data>
 
@@ -15,27 +15,16 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/button_pinch_pitcher"
-            style="@style/GameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/pinch_pitcher"
-            app:layout_constraintEnd_toStartOf="@+id/button_pinch_hitter"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button_pinch_hitter" />
-
-        <Button
             android:id="@+id/button_pinch_hitter"
             style="@style/GameButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
-            android:text="@string/pinch_hitter"
+            android:text="@{isDefense ? @string/pinch_pitcher : @string/pinch_hitter}"
             app:layout_constraintBottom_toTopOf="@+id/recycler_pinch_bench"
             app:layout_constraintEnd_toStartOf="@+id/button_pinch_error"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_pinch_pitcher"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_chainStyle="packed" />
 

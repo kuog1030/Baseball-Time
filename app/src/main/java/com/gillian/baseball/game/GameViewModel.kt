@@ -12,9 +12,19 @@ import kotlinx.coroutines.launch
 // debug用
 val totalInning = 6
 
-class GameViewModel(private val repository: BaseballRepository, private val argument: Game) : ViewModel() {
+class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
-    private val _game = MutableLiveData<Game>(argument)
+
+    /* ---------------------------- init game info ----------------------------
+
+       1. 兩邊打擊順序
+       2. 兩邊投手
+       3. 兩邊分數歸零
+       4. 局數從1開始
+       5. 使用者是主隊or客隊
+     --------------------------------------------------------------------------- */
+
+    private val _game = MutableLiveData<Game>(argument.game)
 
     val game: LiveData<Game>
         get() = _game
@@ -25,20 +35,20 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var inningCount = 1
     var inningShow = MutableLiveData<String>("1上")
 
+    val isHome = argument.isHome ?: true
+    var isTop = true
 
-    private var isTop = true
-
-    val homeLineUp = argument.home.lineUp
-    val guestLineUp = argument.guest.lineUp
+    val homeLineUp = argument.game.home.lineUp
+    val guestLineUp = argument.game.guest.lineUp
     // 替補球員假資料
-    var homeBench = mutableListOf(EventPlayer(name = "Gillian", number = "22"),
+    var myBench = mutableListOf(EventPlayer(name = "Gillian", number = "22"),
             EventPlayer(name = "Wency", number = "30"),
             EventPlayer(name = "Chloe", number = "2"))
 
     // 開賽由主隊投手先投
-    val pitcher = MutableLiveData<String>(argument.home.pitcher.name)
-    var homePitcher = argument.home.pitcher
-    var guestPitcher = argument.guest.pitcher
+    val pitcher = MutableLiveData<String>(argument.game.home.pitcher.name)
+    var homePitcher = argument.game.home.pitcher
+    var guestPitcher = argument.game.guest.pitcher
 
     // 初始化lineup是客隊先攻
     var lineUp = mutableListOf(EventPlayer())
@@ -47,8 +57,12 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         lineUp = guestLineUp
     }
 
+    /* ---------------------------- init game info ---------------------------- */
 
-    /* ------------------------ 打擊相關 ------------------------*/
+
+
+
+    /* ---------------------------- 打擊相關 ----------------------------*/
     var ballCount = MutableLiveData<Int>(0)
     var strikeCount = MutableLiveData<Int>(0)
     var totalStrike = 0
@@ -70,7 +84,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun switch() {
 
         if (inningCount == totalInning) {
-            _navigateToFinal.value = game.value
+            _navigateToFinal.value = MyGame(isHome = isHome, game = game.value!!)
         } else {
             if (atBatNumber == (lineUp.size - 1)) {
                 atBatNumber = 0
@@ -139,8 +153,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     val navigateToOut: LiveData<List<AtBase>>
         get() = _navigateToOut
 
-    private val _navigateToFinal = MutableLiveData<Game>()
-    val navigateToFinal: LiveData<Game>
+    private val _navigateToFinal = MutableLiveData<MyGame>()
+    val navigateToFinal: LiveData<MyGame>
         get() = _navigateToFinal
 
     private val _navigateToPinch = MutableLiveData<Boolean>()
@@ -341,7 +355,6 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun updateRunnerUI() {
         if (baseList[1] == null) {
             firstBaseVisible.value = false
-            Log.i("gillian", "一壘是空的")
         } else {
             firstBaseVisible.value = true
             firstBaseName.value = baseList[1]!!.name
@@ -387,12 +400,13 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         }
         lineUp[atBatNumber] = player
         atBatName.value = player.name
-        homeBench.removeAt(position)
 
-        Log.i("gillian", "now 替補球員是 $homeBench")
+        myBench.removeAt(position)
+
+        Log.i("gillian", "移除掉替補球員，應該要剩下 $myBench")
     }
 
-    fun nextPitcher(next: EventPlayer) {
+    fun nextPitcher(next: EventPlayer, position: Int) {
         if (isTop) {
             next.pinch = homePitcher
             homePitcher = next
@@ -401,6 +415,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             guestPitcher = next
         }
         pitcher.value = next.name
+        myBench.removeAt(position)
     }
 
 

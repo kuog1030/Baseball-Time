@@ -46,8 +46,8 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
             else -> false
         }
 
-    private val _navigateToGame = MutableLiveData<Game>()
-    val navigateToGame : LiveData<Game>
+    private val _navigateToGame = MutableLiveData<MyGame>()
+    val navigateToGame : LiveData<MyGame>
         get() = _navigateToGame
 
 
@@ -100,7 +100,7 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         game.home = if (isHome) myTeam else awayTeam
         game.guest = if (isHome) awayTeam else myTeam
 
-        _navigateToGame.value = game
+        _navigateToGame.value = MyGame(isHome = isHome, game = game)
     }
 
     fun onGameNavigated() {
