@@ -11,6 +11,8 @@ import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.source.BaseballRepository
 import kotlinx.coroutines.launch
 
+
+/*
 class BattingViewModel(private val repository: BaseballRepository, var lineup: List<EventPlayer>) : ViewModel() {
 
     var ballCount = MutableLiveData<Int>().apply {
@@ -275,3 +277,5 @@ class BattingViewModel(private val repository: BaseballRepository, var lineup: L
         Log.i("gillian", "Batting view model on clear")
     }
 }
+
+ */

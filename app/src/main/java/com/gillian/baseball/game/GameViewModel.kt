@@ -5,10 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gillian.baseball.data.AtBase
-import com.gillian.baseball.data.Event
-import com.gillian.baseball.data.EventPlayer
-import com.gillian.baseball.data.Game
+import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import kotlinx.coroutines.launch
 
@@ -28,6 +25,10 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     val homeLineUp = argument.home.lineUp
     val guestLineUp = argument.guest.lineUp
 
+    val pitcher = MutableLiveData<String>(argument.home.pitcher.name)
+    val homePitcher = argument.home.pitcher
+    val guestPitcher = argument.guest.pitcher
+
     // 初始化lineup是客隊先攻
     var lineUp = listOf(EventPlayer())
     init {
@@ -42,35 +43,45 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var outCount = MutableLiveData<Int>(0)
 
 
-    fun homeScored() {
-        homeRun.value = homeRun.value!!.plus(1)
-
-    }
-
-    fun guestScored() {
-        guestRun.value = guestRun.value!!.plus(1)
+    fun scored( score: Int ) {
+        if (isTop) {
+            guestRun.value = guestRun.value!!.plus(score)
+        } else {
+            homeRun.value = homeRun.value!!.plus(score)
+        }
+        game.value!!.box.score[inningCount-1] += 1
     }
 
     fun switch() {
+
+        if (atBatNumber == (lineUp.size-1)) {
+            atBatNumber = 0
+        } else {
+            atBatNumber += 1
+        }
+
         clearCount()
-        inningCount += 1
         outCount.value = 0
 
         if (isTop) {
-            guestABNumber = atBatNumber  // 記錄下這次打席的最後人次
+            // 目前上半局
+            guestABNumber = atBatNumber  // 記錄下這次打席的最後人次+1
             atBatNumber = homeABNumber   // 開始下一局的人次
             lineUp = homeLineUp          // 下半局換主隊進攻
+            pitcher.value = guestPitcher.name
         } else {
             homeABNumber = atBatNumber
             atBatNumber = guestABNumber
             lineUp = guestLineUp
+            pitcher.value = homePitcher.name
         }
+        inningCount += 1
+        Log.i("at base", "box score ${game.value!!.box.score}")
+        game.value!!.box.score.add(0)
         isTop = !isTop
         baseList = arrayOf(lineUp[atBatNumber], null, null, null)
         atBatName.value = "第${atBatNumber+1}棒 ${baseList[0]?.name}"
         Log.i("at base", "*-------------change!------------*")
-        Log.i("at base","目前客隊打到第$guestABNumber 主隊打到第$homeABNumber")
-        Log.i("at base", "下一隊的打者 $homeLineUp")
         updateRunnerUI()
         // clearBase?
     }
@@ -95,8 +106,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     val navigateToEvent : LiveData<List<AtBase>>
         get() = _navigateToEvent
 
-    private val _navigateToOnBase = MutableLiveData<Int>()
-    val navigateToOnBase : LiveData<Int>
+    private val _navigateToOnBase = MutableLiveData<OnBaseInfo>()
+    val navigateToOnBase : LiveData<OnBaseInfo>
         get() = _navigateToOnBase
 
     private val _navigateToOut = MutableLiveData<List<AtBase>>()
@@ -126,10 +137,12 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
         if (strikeCount.value == 3) {
             sendEvent(Event(player = lineUp[atBatNumber],
+                    pitcher = if (isTop) homePitcher else guestPitcher,
+                    inning = inningCount,
                     result = 9,
                     ball = ballCount.value ?: 0,
                     strike = totalStrike,
-                    out = 1))
+                    out = outCount.value ?: 0))
             out()
         }
     }
@@ -145,11 +158,6 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         outCount.value = outCount.value!!.plus(1)
         if (outCount.value!! == 3) {
             // three out! switch TODO()這邊跟next player的差別要處理一下
-            if (atBatNumber == (lineUp.size-1)) {
-                atBatNumber = 0
-            } else {
-                atBatNumber += 1
-            }
             switch()
         } else {
             nextPlayer()
@@ -157,22 +165,32 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun onBaseOut(base: Int) {
+        sendEvent(Event(
+            inning = inningCount,
+            out = outCount.value ?: 0,
+            player = baseList[base]!!,
+            result = EventType.PICKOFF.number,
+            pitcher = if (isTop) homePitcher else guestPitcher
+        ))
         outCount.value = outCount.value!!.plus(1)
         if (outCount.value!! == 3) {
             // three out! switch
-            outCount.value = 0
-            Log.i("at base", "*-------------change!------------*")
+            switch()
         } else {
             baseList[base] = null
         }
+        updateRunnerUI()
     }
 
     fun toEventDialog(isSafe: Boolean) {
         atBaseList.clear()
         hitterEvent = Event(
+                inning = inningCount,
                 ball = ballCount.value ?: 0,
                 strike = totalStrike,
-                player = lineUp[atBatNumber]
+                out = outCount.value ?: 0,
+                player = lineUp[atBatNumber],
+                pitcher = if (isTop) homePitcher else guestPitcher
         )
 
         baseList[0] = lineUp[atBatNumber]
@@ -193,8 +211,14 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         }
     }
 
-    fun showOnBaseDialog(base: Int) {
-        _navigateToOnBase.value = base
+    fun toOnBaseDialog(base: Int) {
+        _navigateToOnBase.value = OnBaseInfo(
+                inning = inningCount,
+                out = outCount.value ?: 0,
+                onClickPlayer = base,
+                pitcher = if (isTop) homePitcher else guestPitcher,
+                baseList = baseList.toList()
+        )
     }
 
     fun onEventNavigated() {
@@ -215,7 +239,12 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         while ( baseList[end] != null) {
             if (end == 3) {
                 // 擠壘事件造成的得分
-                sendEvent(Event(player = baseList[3]!!, run = 1))
+                sendEvent(Event(player = baseList[3]!!,
+                        pitcher = if (isTop) homePitcher else guestPitcher,
+                        run = 1,
+                        out = outCount.value ?: 0,
+                        inning = inningCount))
+                scored(1)
                 break
             }
             end += 1
@@ -236,6 +265,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     fun ballFour() {
         sendEvent(Event(player = lineUp[atBatNumber],
+                pitcher = if (isTop) homePitcher else guestPitcher,
+                inning = inningCount,
                 result = 8,
                 ball = 4,
                 strike = totalStrike,
@@ -269,6 +300,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun updateRunnerUI() {
         if (baseList[1] == null) {
             firstBaseVisible.value = false
+            Log.i("gillian", "一壘是空的")
         } else {
             firstBaseVisible.value = true
             firstBaseName.value = baseList[1]!!.name
@@ -301,7 +333,4 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun clearBase() {
         baseList = arrayOf<EventPlayer?>(null, null, null, null)
     }
-
-
-
 }

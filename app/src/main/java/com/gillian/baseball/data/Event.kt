@@ -13,7 +13,8 @@ data class Event(
     var out: Int = 0,
     var rbi: Int = 0,
     var run: Int = 0,
-    val player: EventPlayer = EventPlayer()
+    val player: EventPlayer = EventPlayer(),
+    val pitcher: EventPlayer = EventPlayer()
 //    val hitter: EventPlayer? = null,
 //    val pitcher: EventPlayer? = null,
 //    // runner will only be recorded when

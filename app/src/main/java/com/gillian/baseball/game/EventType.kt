@@ -16,6 +16,8 @@ enum class EventType(val number : Int, val letter: String) {
     GROUNDOUT(21, "GO"),
     AIROUT(22, "AO"),
     SACRIFICEFLY(23, "SF"),
+    // 壘包上事件
     STEALBASE(31, "SB"),
+    PICKOFF(32, "PO"),
     INNINGSPITCHED(50, "IP")
 }

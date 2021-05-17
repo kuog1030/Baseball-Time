@@ -17,7 +17,6 @@ import com.gillian.baseball.data.Game
 import com.gillian.baseball.databinding.FragmentGameBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.factory.GameViewModelFactory
-import com.gillian.baseball.game.batting.BattingFragment
 import com.gillian.baseball.game.dialog.EventDialog
 import com.gillian.baseball.game.dialog.OnBaseDialog
 import kotlinx.android.synthetic.main.fragment_game.*
@@ -54,12 +53,11 @@ class GameFragment : Fragment() {
 
         viewModel.navigateToOnBase.observe(viewLifecycleOwner, Observer {
             it?.let {
-                val onBaseDialog = OnBaseDialog(it, viewModel.baseList)
+                val onBaseDialog = OnBaseDialog(it)
                 onBaseDialog.show(childFragmentManager, "OnBase")
                 viewModel.onOnBaseNavigated()
             }
         })
-
 
 
         return binding.root

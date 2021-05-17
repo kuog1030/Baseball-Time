@@ -14,6 +14,7 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
     val selectedSideRadio = MutableLiveData<Int>()
     val gameTitle = MutableLiveData<String>()
     val awayTeamName = MutableLiveData<String>()
+    val pitcher = MutableLiveData<String>()
 
     // line up player
 //    val first = MutableLiveData<String>()
@@ -86,11 +87,13 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         val myTeam = GameTeam(
                 name = "Android",
                 teamId = "999",
+                pitcher = EventPlayer(name = pitcher.value ?: "古林睿揚", number = "19", userId = "0019"),
                 lineUp = lineUp
         )
 
         val awayTeam = GameTeam(
                 name = awayTeamName.value ?: "iOS",
+                pitcher = EventPlayer(name = "對方投手"),
                 lineUp = awayLineUp
         )
 

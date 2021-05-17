@@ -7,9 +7,6 @@
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.dialog.OnBaseDialogViewModel" />
-        <variable
-            name="atBase"
-            type="com.gillian.baseball.data.AtBase" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -102,7 +99,7 @@
                 style="@style/EventPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{atBase.runnerString}"
+                android:text="@{viewModel.atBase.runnerString}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"

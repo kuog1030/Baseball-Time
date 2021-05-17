@@ -17,7 +17,7 @@ data class Game (
 
 @Parcelize
 data class Box (
-    val score: MutableList<Int> = mutableListOf(0, 0),
+    val score: MutableList<Int> = mutableListOf(0),
     val run: MutableList<Int> = mutableListOf(0, 0),
     val hit: MutableList<Int> = mutableListOf(0, 0),
     val error: MutableList<Int> = mutableListOf(0, 0)
@@ -27,5 +27,6 @@ data class Box (
 data class GameTeam (
     val name: String = "",
     val teamId: String = "",
+    var pitcher: EventPlayer = EventPlayer(),
     val lineUp: List<EventPlayer> = mutableListOf()
 ) : Parcelable

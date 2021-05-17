@@ -7,17 +7,16 @@ import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
+import com.gillian.baseball.data.OnBaseInfo
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.game.EventType
 import kotlinx.coroutines.launch
 
-class OnBaseDialogViewModel(private val repository: BaseballRepository) : ViewModel() {
+class OnBaseDialogViewModel(private val repository: BaseballRepository, private val onBaseInfo : OnBaseInfo) : ViewModel() {
 
-    var player : EventPlayer? = null
-
-    private var _dismiss = MutableLiveData<Boolean>()
-    val dismiss: LiveData<Boolean>
-        get() = _dismiss
+    var player = onBaseInfo.baseList[onBaseInfo.onClickPlayer]
+    var pitcher = onBaseInfo.pitcher
+    var atBase = AtBase(base = onBaseInfo.onClickPlayer, player = player!!)
 
     private var _proceed = MutableLiveData<Boolean>()
     val proceed: LiveData<Boolean>
@@ -29,38 +28,25 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository) : ViewMo
 
     fun pickOff() {
         _onBaseOut.value = true
-        dismissDialog()
     }
 
     fun stealBaseSuccess() {
         _proceed.value = true
         viewModelScope.launch {
-            repository.sendEvent(Event(player = player!!, result = EventType.STEALBASE.number))
+            repository.sendEvent(Event(player = player!!, pitcher = pitcher!!, result = EventType.STEALBASE.number))
         }
-        dismissDialog()
     }
 
     fun stealBaseFail() {
         _onBaseOut.value = true
-        dismissDialog()
     }
 
     fun advanceByError() {
         _proceed.value = true
-        dismissDialog()
     }
 
     fun advance() {
         _proceed.value = true
-        dismissDialog()
-    }
-
-    fun dismissDialog() {
-        _dismiss.value = true
-    }
-
-    fun onDialogDismiss() {
-        _dismiss.value = null
     }
 
     fun onProceedDone() {

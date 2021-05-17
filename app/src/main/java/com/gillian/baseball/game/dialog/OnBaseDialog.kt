@@ -10,13 +10,16 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.EventPlayer
+import com.gillian.baseball.data.OnBaseInfo
 import com.gillian.baseball.databinding.DialogOnBaseBinding
 import com.gillian.baseball.ext.getVmFactory
-import com.gillian.baseball.game.batting.BattingViewModel
+import com.gillian.baseball.game.GameViewModel
 
-class OnBaseDialog(val onClickPlayer: Int, val argsBaseList: Array<EventPlayer?>) : AppCompatDialogFragment() {
 
-    private val viewModel by viewModels<OnBaseDialogViewModel> {getVmFactory() }
+class OnBaseDialog(val onBaseInfo: OnBaseInfo) : AppCompatDialogFragment() {
+
+    private val viewModel by viewModels<OnBaseDialogViewModel> {getVmFactory(onBaseInfo) }
+    private val onClickPlayer = onBaseInfo.onClickPlayer
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = DialogOnBaseBinding.inflate(inflater, container, false)
@@ -24,26 +27,23 @@ class OnBaseDialog(val onClickPlayer: Int, val argsBaseList: Array<EventPlayer?>
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.atBase = AtBase(base = onClickPlayer, player = argsBaseList[onClickPlayer]!!)
-        viewModel.player = argsBaseList[onClickPlayer]
-        val battingViewModel = ViewModelProvider(requireParentFragment()).get(BattingViewModel::class.java)
+
+        val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
 
         viewModel.proceed.observe(viewLifecycleOwner, Observer {
             it?.let{
-                battingViewModel.advanceBase(onClickPlayer)
+                gameViewModel.advanceBase(onClickPlayer)
                 viewModel.onProceedDone()
+                dismiss()
             }
         })
 
         viewModel.onBaseOut.observe(viewLifecycleOwner, Observer {
             it?.let{
-                battingViewModel.onBaseOut(onClickPlayer)
+                gameViewModel.onBaseOut(onClickPlayer)
                 viewModel.onOutDone()
+                dismiss()
             }
-        })
-
-        viewModel.dismiss.observe(viewLifecycleOwner, Observer {
-            dismiss()
         })
 
         return binding.root

@@ -14,13 +14,15 @@ import com.gillian.baseball.MainActivity
 import com.gillian.baseball.data.Game
 import com.gillian.baseball.databinding.FragmentBattingBinding
 import com.gillian.baseball.ext.getVmFactory
-import com.gillian.baseball.factory.BattingViewModelFactory
 import com.gillian.baseball.factory.GameViewModelFactory
 import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.GameFragmentArgs
 import com.gillian.baseball.game.GameViewModel
 import com.gillian.baseball.game.dialog.EventDialog
 import com.gillian.baseball.game.dialog.OnBaseDialog
+
+
+/*
 
 class BattingFragment(val game: Game) : Fragment() {
 
@@ -69,3 +71,5 @@ class BattingFragment(val game: Game) : Fragment() {
         return binding.root
     }
 }
+
+ */

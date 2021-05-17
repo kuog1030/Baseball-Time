@@ -17,7 +17,7 @@ import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.databinding.DialogEventBinding
 import com.gillian.baseball.factory.ViewModelFactory
-import com.gillian.baseball.game.batting.BattingViewModel
+import com.gillian.baseball.game.GameViewModel
 
 class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHitterEvent: Event) : AppCompatDialogFragment() {
 
@@ -68,16 +68,19 @@ class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHit
 
         viewModel.dismiss.observe(viewLifecycleOwner, Observer {
             it?.let {
-                val battingViewModel = ViewModelProvider(requireParentFragment()).get(BattingViewModel::class.java)
+                val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
                 if (viewModel.hasOut != null) {
-                    battingViewModel.setNewBaseList(it)
-                    if (viewModel.hasBaseOut != null) battingViewModel.onBaseOut(viewModel.hasBaseOut!!)
-                    battingViewModel.out()
+
+                    //TODO()這邊要加分嗎?
+                    gameViewModel.setNewBaseList(it)
+                    if (viewModel.hasBaseOut != null) gameViewModel.onBaseOut(viewModel.hasBaseOut!!)
+                    gameViewModel.out()
                 } else {
-                    battingViewModel.setNewBaseList(it)
-                    battingViewModel.nextPlayer()
+                    if (viewModel.scoreToBeAdded != 0) gameViewModel.scored(viewModel.scoreToBeAdded)
+                    gameViewModel.setNewBaseList(it)
+                    gameViewModel.nextPlayer()
                 }
-                Log.i("gillian", "in event dialog $battingViewModel")
+                Log.i("gillian", "in event dialog $gameViewModel")
                 //val battingViewModel by viewModels<BattingViewModel> { getVmFactory() }
                 dismiss()
                 viewModel.onDialogDismiss()

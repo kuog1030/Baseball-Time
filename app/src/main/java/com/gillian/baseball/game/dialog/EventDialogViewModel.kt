@@ -25,6 +25,8 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     var eventList = mutableListOf<Event>()
     var eventDetail = MutableLiveData<String>("")
 
+    var scoreToBeAdded = 0
+
     private var _changeToNextPage = MutableLiveData<Boolean>()
     val changeToNextPage: LiveData<Boolean>
         get() = _changeToNextPage
@@ -55,6 +57,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         val readyToSend = eventList
         // 好球會在真正要送出前才記錄
         readyToSend[0].strike += 1
+        scoreToBeAdded = eventList[0].rbi
         viewModelScope.launch {
             for (singleEvent in readyToSend) {
                 repository.sendEvent(singleEvent)
@@ -144,7 +147,10 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
 
     fun run(atBase: AtBase) {
         atBase.base = -1
-        eventList.add(Event(run = 1, player = atBase.player))
+        eventList.add(Event(run = 1,
+                player = atBase.player,
+                pitcher = hitterEvent.value?.pitcher!!,
+                out = hitterEvent.value?.out ?: 0))
         eventList[0].rbi += 1
 
         eventDetail.value = eventDetail.value.plus("${atBase.player.number}號 ${atBase.player.name} 回壘得分 + 1\n")
@@ -160,7 +166,6 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
     fun groundOut() {
         hitterEvent.value?.let{
             it.result = 21
-            it.out = 1
         }
         eventList.add(hitterEvent.value!!)
         atBaseList[0].base = -1
@@ -171,7 +176,6 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
 
     fun airOut(hasRbi: Boolean) {
         hitterEvent.value?.let{
-            it.out = 1
             it.result = if (hasRbi) 23 else 22
             it.rbi = if (hasRbi) 1 else 0
         }

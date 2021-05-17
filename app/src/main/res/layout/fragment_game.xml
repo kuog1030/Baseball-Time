@@ -68,7 +68,7 @@
             app:layout_constraintBottom_toBottomOf="parent">
 
             <View
-                android:id="@+id/bar_batting"
+                android:id="@+id/card_batting"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/margin"
@@ -86,7 +86,7 @@
                 android:layout_marginTop="@dimen/margin"
                 android:text="@string/B"
                 app:layout_constraintStart_toStartOf="@+id/button_batting_ball"
-                app:layout_constraintTop_toTopOf="@+id/bar_batting" />
+                app:layout_constraintTop_toTopOf="@+id/card_batting" />
 
             <TextView
                 android:id="@+id/text_batting_strike"
@@ -210,7 +210,7 @@
                 android:layout_marginTop="48dp"
                 android:layout_marginEnd="48dp"
                 android:layout_marginBottom="48dp"
-                app:layout_constraintBottom_toTopOf="@+id/bar_batting"
+                app:layout_constraintBottom_toTopOf="@+id/card_batting"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -234,7 +234,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
                 android:fontFamily="@font/noto_sans"
-                android:onClick="@{()->viewModel.showOnBaseDialog(1)}"
+                android:onClick="@{()->viewModel.toOnBaseDialog(1)}"
                 android:text="@{viewModel.firstBaseName}"
                 android:visibility="@{viewModel.firstBaseVisible? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toTopOf="@+id/text_batting_hitter"
@@ -248,7 +248,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
-                android:onClick="@{()->viewModel.showOnBaseDialog(3)}"
+                android:onClick="@{()->viewModel.toOnBaseDialog(3)}"
                 android:text="@{viewModel.thirdBaseName}"
                 android:visibility="@{viewModel.thirdBaseVisible? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toTopOf="@+id/text_batting_hitter"
@@ -261,13 +261,24 @@
                 android:id="@+id/text_batting_second"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.showOnBaseDialog(2)}"
+                android:onClick="@{()->viewModel.toOnBaseDialog(2)}"
                 android:text="@{viewModel.secondBaseName}"
                 android:visibility="@{viewModel.secondBaseVisible? View.VISIBLE : View.GONE}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintBottom_toTopOf="@+id/image_batting_field"
                 tools:text="No.99 Wency"/>
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{"投手："+ viewModel.pitcher}'
+                android:layout_marginBottom="4dp"
+                android:layout_marginStart="@dimen/margin"
+                app:layout_constraintBottom_toTopOf="@id/card_batting"
+                app:layout_constraintStart_toStartOf="@+id/card_batting"
+                tools:text="投手：潘威倫"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

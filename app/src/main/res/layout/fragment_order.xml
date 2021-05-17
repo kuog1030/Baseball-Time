@@ -4,111 +4,142 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.OrderViewModel" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/text_order_you"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/double_margin"
-            android:layout_marginTop="@dimen/double_margin"
-            android:paddingStart="5dp"
-            android:text="@string/you_are"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-        <RadioGroup
-            android:id="@+id/radio_group_order"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:checkedButton="@={viewModel.selectedSideRadio}"
-            app:layout_constraintStart_toStartOf="@id/text_order_you"
-            app:layout_constraintTop_toBottomOf="@id/text_order_you">
-
-            <RadioButton
-                android:id="@+id/radio_order_home"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/text_order_you"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/home" />
+                android:layout_marginStart="@dimen/double_margin"
+                android:layout_marginTop="@dimen/double_margin"
+                android:text="@string/you_are"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-            <RadioButton
-                android:id="@+id/radio_order_guest"
-                android:layout_width="match_parent"
+            <RadioGroup
+                android:id="@+id/radio_group_order"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/guest" />
-        </RadioGroup>
+                android:checkedButton="@={viewModel.selectedSideRadio}"
+                android:orientation="horizontal"
+                app:layout_constraintBottom_toBottomOf="@+id/text_order_you"
+                app:layout_constraintStart_toStartOf="@+id/edit_order_away"
+                app:layout_constraintTop_toTopOf="@+id/text_order_you">
 
-        <TextView
-            android:id="@+id/text_order_game_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/double_margin"
-            android:text="@string/game_title"
-            app:layout_constraintStart_toEndOf="@id/radio_group_order"
-            app:layout_constraintTop_toTopOf="@id/text_order_you" />
+                <RadioButton
+                    android:id="@+id/radio_order_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/home" />
 
-        <EditText
-            android:id="@+id/edit_order_game_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.gameTitle}"
-            app:layout_constraintStart_toStartOf="@id/text_order_game_title"
-            app:layout_constraintTop_toBottomOf="@id/text_order_game_title" />
+                <RadioButton
+                    android:id="@+id/radio_order_guest"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/guest" />
+            </RadioGroup>
 
-        <TextView
-            android:id="@+id/text_order_away"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/away_team_name"
-            app:layout_constraintStart_toStartOf="@id/text_order_game_title"
-            app:layout_constraintTop_toBottomOf="@id/edit_order_game_title"
-            tools:layout_editor_absoluteX="201dp"
-            tools:layout_editor_absoluteY="13dp" />
+            <TextView
+                android:id="@+id/text_order_game_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/game_title"
+                android:layout_marginTop="@dimen/margin"
+                app:layout_constraintStart_toStartOf="@+id/text_order_you"
+                app:layout_constraintTop_toBottomOf="@+id/text_order_you" />
 
-        <EditText
-            android:id="@+id/edit_order_away"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:ems="10"
-            android:inputType="textPersonName"
-            android:text="@={viewModel.awayTeamName}"
-            app:layout_constraintStart_toStartOf="@id/text_order_away"
-            app:layout_constraintTop_toBottomOf="@id/text_order_away" />
+            <EditText
+                android:id="@+id/edit_order_game_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@={viewModel.gameTitle}"
+                app:layout_constraintStart_toStartOf="@+id/edit_order_away"
+                app:layout_constraintTop_toTopOf="@+id/text_order_game_title" />
+
+            <TextView
+                android:id="@+id/text_order_away"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/away_team_name"
+                app:layout_constraintStart_toStartOf="@id/text_order_game_title"
+                app:layout_constraintTop_toBottomOf="@id/edit_order_game_title"
+                tools:layout_editor_absoluteX="201dp"
+                tools:layout_editor_absoluteY="13dp" />
+
+            <EditText
+                android:id="@+id/edit_order_away"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@={viewModel.awayTeamName}"
+                app:layout_constraintStart_toEndOf="@+id/text_order_away"
+                app:layout_constraintTop_toTopOf="@+id/text_order_away" />
+
+            <TextView
+                android:id="@+id/text_order_pitcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:text="@string/pitcher_name"
+                app:layout_constraintStart_toStartOf="@id/text_order_game_title"
+                app:layout_constraintTop_toBottomOf="@id/edit_order_away"
+                tools:layout_editor_absoluteX="201dp"
+                tools:layout_editor_absoluteY="13dp" />
+
+            <EditText
+                android:id="@+id/edit_order_pitcher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:text="@={viewModel.pitcher}"
+                app:layout_constraintStart_toStartOf="@+id/edit_order_away"
+                app:layout_constraintTop_toTopOf="@+id/text_order_pitcher" />
 
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_order_players"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_margin="@dimen/margin"
-            app:layout_constraintTop_toBottomOf="@id/edit_order_away"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_order_players"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginEnd="100dp"
+                android:layout_marginBottom="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/edit_order_pitcher">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            </androidx.recyclerview.widget.RecyclerView>
 
-        <Button
-            android:id="@+id/button_order_next"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{()->viewModel.navigateToGame()}"
-            android:text="Button"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            <Button
+                android:id="@+id/button_order_next"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewModel.navigateToGame()}"
+                android:text="Button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>
