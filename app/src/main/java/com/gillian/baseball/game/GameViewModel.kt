@@ -10,7 +10,7 @@ import com.gillian.baseball.data.source.BaseballRepository
 import kotlinx.coroutines.launch
 
 // debug用
-val totalInning = 2
+val totalInning = 6
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: Game) : ViewModel() {
 
@@ -30,13 +30,17 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     val homeLineUp = argument.home.lineUp
     val guestLineUp = argument.guest.lineUp
+    // 替補球員假資料
+    var homeBench = mutableListOf(EventPlayer(name = "Gillian", number = "22"),
+            EventPlayer(name = "Wency", number = "30"),
+            EventPlayer(name = "Chloe", number = "2"))
 
     val pitcher = MutableLiveData<String>(argument.home.pitcher.name)
     val homePitcher = argument.home.pitcher
     val guestPitcher = argument.guest.pitcher
 
     // 初始化lineup是客隊先攻
-    var lineUp = listOf(EventPlayer())
+    var lineUp = mutableListOf(EventPlayer())
 
     init {
         lineUp = guestLineUp
@@ -137,6 +141,10 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     private val _navigateToFinal = MutableLiveData<Game>()
     val navigateToFinal: LiveData<Game>
         get() = _navigateToFinal
+
+    private val _navigateToPinch = MutableLiveData<Boolean>()
+    val navigateToPinch: LiveData<Boolean>
+        get() = _navigateToPinch
 
 
     var firstBaseVisible = MutableLiveData<Boolean>(false)
@@ -261,6 +269,10 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         _navigateToFinal.value = null
     }
 
+    fun onPinchNavigated() {
+        _navigateToPinch.value = null
+    }
+
 
     fun advanceBase(myself: Int) {
         var end = myself
@@ -358,6 +370,27 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         }
     }
 
+    // 換代打
+    fun navigateToPinch() {
+        _navigateToPinch.value = true
+    }
+
+    fun pinch(player: EventPlayer, position: Int) {
+        player.pinch = lineUp[atBatNumber]
+        if (isTop) {
+            guestLineUp[atBatNumber] = player
+            Log.i("gillian", "now guest line up $guestLineUp")
+        } else {
+            homeLineUp[atBatNumber] = player
+            Log.i("gillian", "now home line up $homeLineUp")
+        }
+        lineUp[atBatNumber] = player
+        atBatName.value = player.name
+        homeBench.removeAt(position)
+
+        Log.i("gillian", "now 替補球員是 $homeBench")
+    }
+
 
     fun setNewBaseList(newList: Array<EventPlayer?>) {
         baseList = newList
@@ -373,3 +406,16 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         baseList = arrayOf<EventPlayer?>(null, null, null, null)
     }
 }
+
+/*
+    暫時當作optional 換人、失誤的部分
+
+    fun onOptionNavigated() {
+        _navigateToOption.value = null
+    }
+
+
+    private val _navigateToOption = MutableLiveData<List<EventPlayer>>()
+    val navigateToOption: LiveData<List<EventPlayer>>
+        get() = _navigateToOption
+ */

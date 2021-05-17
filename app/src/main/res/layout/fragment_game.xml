@@ -227,11 +227,13 @@
                 app:layout_constraintTop_toTopOf="parent"
                 app:srcCompat="@drawable/field" />
 
-            <TextView
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/text_batting_hitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@{viewModel.atBatName}"
+                android:onClick="@{()->viewModel.navigateToPinch()}"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -292,6 +294,16 @@
                 tools:text="投手：潘威倫"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageButton
+            android:id="@+id/button_game_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/text_game_score"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_game_title"
+            app:srcCompat="@drawable/ic_baseline_more_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

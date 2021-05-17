@@ -8,5 +8,5 @@ data class EventPlayer(
     var userId: String = "",
     val name: String = "",
     val number: String = "",
-    val pinch: EventPlayer? = null
+    var pinch: EventPlayer? = null
 ) : Parcelable

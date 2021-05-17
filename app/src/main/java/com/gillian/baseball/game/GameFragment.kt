@@ -13,6 +13,7 @@ import com.gillian.baseball.databinding.FragmentGameBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.game.dialog.EventDialog
 import com.gillian.baseball.game.dialog.OnBaseDialog
+import com.gillian.baseball.game.pinch.PinchDialog
 
 class GameFragment : Fragment() {
 
@@ -55,6 +56,15 @@ class GameFragment : Fragment() {
         viewModel.navigateToFinal.observe(viewLifecycleOwner, Observer {
             it?.let{
                 findNavController().navigate(GameFragmentDirections.actionGameFragmentToFinalFragment(it))
+                viewModel.onFinalNavigated()
+            }
+        })
+
+        viewModel.navigateToPinch.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                val pinchDialog = PinchDialog()
+                pinchDialog.show(childFragmentManager, "pinch")
+                viewModel.onPinchNavigated()
             }
         })
 
