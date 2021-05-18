@@ -145,6 +145,11 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         changeToNextPage()
     }
 
+    fun toBase(atBase: AtBase, base: Int) {
+        atBase.base = base
+        changeToNextPage()
+    }
+
     fun secondBase(atBase: AtBase) {
         atBase.base = 2
         changeToNextPage()
