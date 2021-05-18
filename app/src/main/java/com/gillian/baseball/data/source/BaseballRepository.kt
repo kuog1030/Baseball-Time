@@ -8,9 +8,9 @@ interface BaseballRepository {
 
     suspend fun createPlayer(player: Player)
 
-    suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer>
-
     suspend fun createGame(game: Game)
+
+    suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer>
 
     suspend fun sendEvent(event: Event)
 

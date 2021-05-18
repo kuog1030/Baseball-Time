@@ -13,6 +13,7 @@
             android:layout_width="300dp"
             android:layout_height="400dp"
             android:background="@drawable/bg_card"
+            android:padding="4dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -20,8 +21,8 @@
 
             <androidx.viewpager.widget.ViewPager
                 android:id="@+id/viewpager_first_login"
-                android:layout_width="@dimen/dialog_width"
-                android:layout_height="@dimen/dialog_height"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
                 android:layout_marginTop="@dimen/margin">
 
                 <com.google.android.material.tabs.TabLayout

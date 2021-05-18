@@ -7,11 +7,15 @@ import com.gillian.baseball.data.source.BaseballDataSource
 object BaseballRemoteDataSource : BaseballDataSource{
 
     override suspend fun createTeam(team: Team) {
-        Log.i("remote", "create a team")
+        Log.i("remote", "create a team $team")
     }
 
     override suspend fun createPlayer(player: Player) {
-        Log.i("remote", "create a player")
+        Log.i("remote", "create a player $player")
+    }
+
+    override suspend fun createGame(game: Game) {
+        Log.i("remote", "game to be created $game")
     }
 
     override suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer> {
@@ -27,10 +31,6 @@ object BaseballRemoteDataSource : BaseballDataSource{
                 EventPlayer("0031", "林岱安", "31"),
                 EventPlayer("0039", "林祖傑", "39")
         )
-    }
-
-    override suspend fun createGame(game: Game) {
-        Log.i("remote", "game to be created $game")
     }
 
     override suspend fun sendEvent(event: Event) {

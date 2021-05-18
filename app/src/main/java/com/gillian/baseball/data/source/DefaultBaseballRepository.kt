@@ -14,12 +14,12 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
         return remoteDataSource.createPlayer(player)
     }
 
-    override suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer> {
-        return remoteDataSource.getTeamPlayer(teamId)
-    }
-
     override suspend fun createGame(game: Game) {
         return remoteDataSource.createGame(game)
+    }
+
+    override suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer> {
+        return remoteDataSource.getTeamPlayer(teamId)
     }
 
     override suspend fun sendEvent(event: Event) {

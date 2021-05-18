@@ -8,6 +8,8 @@
     <string name="create_a_player">新增一個球員吧</string>
     <string name="player_name">球員名稱</string>
     <string name="player_number">球員背號</string>
+    <string name="you">你</string>
+    <string name="your_teammate">你的隊友</string>
 
 
     <!--    game record related -->

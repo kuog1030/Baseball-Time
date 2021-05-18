@@ -4,7 +4,7 @@ data class Team (
     var id : String = "",
     var name : String = "",
     var color : String = "",
-    var member : MutableList<Player>
+    var member : MutableList<Player> = mutableListOf()
 )
 
 data class Player(
@@ -13,13 +13,6 @@ data class Player(
     var teamId : String? = null,
     var name : String = "",
     var nickname : String? = null,
-    var number : String = ""
-
+    var number : String = "",
+    var image: String?
 )
-
-//data class EventPlayer(
-//    var userId: String = "",
-//    val name: String = "",
-//    val number: String = "",
-//    var pinch: EventPlayer? = null
-//) : Parcelable

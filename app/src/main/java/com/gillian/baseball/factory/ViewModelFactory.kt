@@ -18,8 +18,8 @@ class ViewModelFactory constructor(
                     EventDialogViewModel(repository)
                 isAssignableFrom(OrderViewModel::class.java) ->
                     OrderViewModel(repository)
-//                isAssignableFrom(FirstLoginViewModel::class.java) ->
-//                    FirstLoginViewModel(repository)
+                isAssignableFrom(FirstLoginViewModel::class.java) ->
+                    FirstLoginViewModel(repository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

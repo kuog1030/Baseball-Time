@@ -17,6 +17,8 @@ class PagerCreateTeam : Fragment() {
         val viewModel = ViewModelProvider(requireParentFragment()).get(FirstLoginViewModel::class.java)
         binding.viewModel = viewModel
 
+        Log.i("gillian", "in create team $viewModel")
+
         return binding.root
     }
 }

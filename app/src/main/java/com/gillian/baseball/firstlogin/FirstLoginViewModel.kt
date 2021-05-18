@@ -5,9 +5,12 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.MyGame
+import com.gillian.baseball.data.Player
+import com.gillian.baseball.data.Team
+import com.gillian.baseball.data.source.BaseballRepository
 import kotlinx.coroutines.launch
 
-class FirstLoginViewModel : ViewModel () {
+class FirstLoginViewModel(private val repository: BaseballRepository) : ViewModel () {
 
     val teamName = MutableLiveData<String>()
     val playerName = MutableLiveData<String>()
@@ -26,10 +29,14 @@ class FirstLoginViewModel : ViewModel () {
             errorMessage.value = "記得3個欄位都要填寫喔"
         } else {
             errorMessage.value = null
-//
-//            viewModelScope.launch {
-//
-//            }
+
+            val team = Team(name = teamName.value ?: "")
+            val player = Player(name = playerName.value ?: "", number = playerNumber.value ?: "")
+
+            viewModelScope.launch {
+                repository.createTeam(team)
+                repository.createPlayer(player)
+            }
             _navigateToTeam.value = true
         }
     }
