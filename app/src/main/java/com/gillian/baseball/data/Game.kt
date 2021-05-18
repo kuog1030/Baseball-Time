@@ -36,3 +36,9 @@ data class MyGame (
         val isHome : Boolean? = null,
         val game : Game
 ) : Parcelable
+
+data class BoxView (
+        var type : String = "1",
+        var guest : String,
+        var home : String
+)

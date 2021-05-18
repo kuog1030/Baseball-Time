@@ -67,5 +67,9 @@
 
     <string name="page_one">1/1</string>
 
+    <string name="H">H</string>
+    <string name="R">R</string>
+    <string name="E">E</string>
+
 
 </resources>
