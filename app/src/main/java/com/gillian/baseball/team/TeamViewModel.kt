@@ -16,6 +16,11 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val teamPlayers : LiveData<MutableList<Player>>
         get() = _teamPlayers
 
+    private val _showNewPlayerDialog = MutableLiveData<Boolean>()
+
+    val showNewPlayerDialog : LiveData<Boolean>
+        get() = _showNewPlayerDialog
+
 
     fun getTeamPlayer() {
         viewModelScope.launch {
@@ -28,5 +33,13 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         getTeamPlayer()
     }
 
+
+    fun addNewPlayer() {
+        _showNewPlayerDialog.value = true
+    }
+
+    fun onNewPlayerDialogShowed() {
+        _showNewPlayerDialog.value = null
+    }
 
 }

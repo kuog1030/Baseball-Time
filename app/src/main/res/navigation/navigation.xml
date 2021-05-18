@@ -27,6 +27,7 @@
     <action android:id="@+id/navigationToStat" app:destination="@id/statFragment" />
     <action android:id="@+id/navigationToTeam" app:destination="@id/teamFragment" />
     <action android:id="@+id/navigationToOrder" app:destination="@id/orderFragment" />
+    <action android:id="@+id/navigationToNewPlayer" app:destination="@id/newPlayerDialog" />
 
     <fragment
         android:id="@+id/orderFragment"
@@ -48,5 +49,9 @@
         android:id="@+id/firstLoginFragment"
         android:name="com.gillian.baseball.firstlogin.FirstLoginFragment"
         android:label="FirstLoginFragment" />
+    <dialog
+        android:id="@+id/newPlayerDialog"
+        android:name="com.gillian.baseball.team.newplayer.NewPlayerDialog"
+        android:label="NewPlayerDialog" />
 
 </navigation>

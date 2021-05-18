@@ -59,10 +59,12 @@
             app:spanCount="3"
             tools:listitem="@layout/item_teammate" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            android:onClick="@{()->viewModel.addNewPlayer()}"
             app:layout_constraintBottom_toTopOf="@+id/recycler_team_teammate"
             app:layout_constraintEnd_toEndOf="@+id/layout_team_my_card"
             app:layout_constraintTop_toBottomOf="@+id/layout_team_my_card"
