@@ -21,8 +21,8 @@ object BaseballRemoteDataSource : BaseballDataSource{
     override suspend fun getTeamPlayer(teamId: String): MutableList<Player> {
         Log.i("remote", "get mock team player")
         return  mutableListOf(
-                Player(name = "Scolley", number = "15"),
-                Player(name = "Gillian", number = "22"),
+                Player(name = "Scolley", number = "15", image = "https://api.appworks-school.tw/assets/201807242234/0.jpg"),
+                Player(name = "Gillian", number = "22", image = "https://api.appworks-school.tw/assets/201807242234/1.jpg"),
                 Player(name = "Wency", number = "33"),
                 Player(name = "Chloe", number = "79"),
                 Player(name = "Peter", number = "1"),

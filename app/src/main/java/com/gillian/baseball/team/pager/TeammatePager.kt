@@ -20,7 +20,7 @@ class TeammatePager : Fragment() {
         val viewModel = ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
-        
+
         binding.recyclerTeamTeammate.adapter = TeammateAdapter(TeammateAdapter.OnClickListener{ player, position ->
             Log.i("gillian", "eee do something")
         })

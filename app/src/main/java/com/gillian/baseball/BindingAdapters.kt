@@ -1,9 +1,12 @@
 package com.gillian.baseball
 
 import android.util.Log
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.RequestOptions
 import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.team.pager.TeammateAdapter
@@ -40,6 +43,17 @@ fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: MutableList<Player>?
             }
         }
     }
+}
+
+@BindingAdapter("imageUrl")
+fun bindProfileImage(imageView: ImageView, url: String?) {
+    Glide.with(imageView.context)
+            .load(url)
+            .circleCrop()
+            .apply(RequestOptions()
+                    .placeholder(R.drawable.ic_baseline_sports_baseball_24)
+                    .error(R.drawable.ic_baseline_sports_baseball_24))
+            .into(imageView)
 }
 
 //

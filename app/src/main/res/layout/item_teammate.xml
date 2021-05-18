@@ -25,7 +25,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.75"
             app:layout_constraintVertical_chainStyle="packed"
-            app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
+            app:imageUrl="@{player.image}" />
 
         <TextView
             android:id="@+id/text_teammate_number"

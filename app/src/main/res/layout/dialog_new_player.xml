@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/text_new_player_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/name_must"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_new_player_name"
+        app:layout_constraintEnd_toStartOf="@+id/edit_new_player_name"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edit_new_player_name" />
+
+    <EditText
+        android:id="@+id/edit_new_player_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:hint="@string/name_hint"
+        android:inputType="textPersonName"
+        android:layout_marginTop="56dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/text_new_player_name"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/text_new_player_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/number_must"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_new_player_number"
+        app:layout_constraintStart_toStartOf="@+id/text_new_player_name"
+        app:layout_constraintTop_toTopOf="@+id/edit_new_player_number" />
+
+    <EditText
+        android:id="@+id/edit_new_player_number"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:ems="10"
+        android:hint="@string/number_hint"
+        android:inputType="number"
+        app:layout_constraintStart_toStartOf="@+id/edit_new_player_name"
+        app:layout_constraintTop_toBottomOf="@+id/edit_new_player_name" />
+
+    <TextView
+        android:id="@+id/text_new_player_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nickname"
+        app:layout_constraintBottom_toBottomOf="@+id/edit_new_player_nickname"
+        app:layout_constraintStart_toStartOf="@+id/text_new_player_number"
+        app:layout_constraintTop_toTopOf="@+id/edit_new_player_nickname" />
+
+    <EditText
+        android:id="@+id/edit_new_player_nickname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/margin"
+        android:ems="10"
+        android:hint="@string/nickname_hint"
+        android:inputType="textPersonName"
+        app:layout_constraintStart_toStartOf="@+id/edit_new_player_number"
+        app:layout_constraintTop_toBottomOf="@+id/edit_new_player_number" />
+
+    <TextView
+        android:id="@+id/text_new_player_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/image"
+        tools:layout_editor_absoluteX="28dp"
+        tools:layout_editor_absoluteY="291dp" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="@dimen/close_size"
+        android:layout_height="@dimen/close_size"
+        android:layout_marginTop="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_baseline_clear_24" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

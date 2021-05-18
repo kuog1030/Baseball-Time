@@ -58,5 +58,14 @@
             app:layout_constraintTop_toBottomOf="@+id/text_team_your_team"
             app:spanCount="3"
             tools:listitem="@layout/item_teammate" />
+
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toTopOf="@+id/recycler_team_teammate"
+            app:layout_constraintEnd_toEndOf="@+id/layout_team_my_card"
+            app:layout_constraintTop_toBottomOf="@+id/layout_team_my_card"
+            app:srcCompat="@drawable/ic_baseline_add_24" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
