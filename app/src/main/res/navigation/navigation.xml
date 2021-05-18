@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
-    app:startDestination="@id/orderFragment">
+    app:startDestination="@id/firstLoginFragment">
 
     <fragment
         android:id="@+id/gameFragment"
@@ -44,5 +44,9 @@
         <argument android:name="endGame"
             app:argType="com.gillian.baseball.data.MyGame" />
     </fragment>
+    <fragment
+        android:id="@+id/firstLoginFragment"
+        android:name="com.gillian.baseball.firstlogin.FirstLoginFragment"
+        android:label="FirstLoginFragment" />
 
 </navigation>

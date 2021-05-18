@@ -61,4 +61,8 @@
         <item name="android:textColor">@color/white</item>
     </style>
 
+    <style name="CreateTeamTitle">
+        <item name="android:textSize">22sp</item>
+    </style>
+
 </resources>

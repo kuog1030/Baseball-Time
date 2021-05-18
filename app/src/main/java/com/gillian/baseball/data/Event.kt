@@ -15,11 +15,6 @@ data class Event(
     var run: Int = 0,
     val player: EventPlayer = EventPlayer(),
     val pitcher: EventPlayer = EventPlayer()
-//    val hitter: EventPlayer? = null,
-//    val pitcher: EventPlayer? = null,
-//    // runner will only be recorded when
-//    // 1. on base event eg. steal base, advance by error
-//    val runner: EventPlayer? = null
 ) : Parcelable {
 
 //    override fun toString(): String {

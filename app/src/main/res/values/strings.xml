@@ -2,6 +2,15 @@
     <string name="app_name">Baseball</string>
 
 
+    <!--    team related -->
+    <string name="create_a_team">新增一支你的球隊吧</string>
+    <string name="team_name">球隊名稱</string>
+    <string name="create_a_player">新增一個球員吧</string>
+    <string name="player_name">球員名稱</string>
+
+
+    <!--    game record related -->
+
     <string name="you_are">你是</string>
     <string name="home">主隊</string>
     <string name="guest">客隊</string>
