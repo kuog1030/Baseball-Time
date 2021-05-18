@@ -18,9 +18,26 @@ object BaseballRemoteDataSource : BaseballDataSource{
         Log.i("remote", "game to be created $game")
     }
 
-    override suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer> {
+    override suspend fun getTeamPlayer(teamId: String): MutableList<Player> {
+        Log.i("remote", "get mock team player")
+        return  mutableListOf(
+                Player(name = "Scolley", number = "15"),
+                Player(name = "Gillian", number = "22"),
+                Player(name = "Wency", number = "33"),
+                Player(name = "Chloe", number = "79"),
+                Player(name = "Peter", number = "1"),
+                Player(name = "Wayne", number = "26"),
+                Player(name = "Serena", number = "71"),
+                Player(name = "Wenbin", number = "42"),
+                Player(name = "Czerny", number = "18"),
+                Player(name = "Sean", number = "66"),
+                Player(name = "Shirney", number = "1")
+        )
+    }
+
+    override suspend fun getTeamEventPlayer(teamId: String): MutableList<EventPlayer> {
         // MOCK DATA
-        Log.i("remote", "get team player")
+        Log.i("remote", "get mock team EVENT player")
         return mutableListOf<EventPlayer>(EventPlayer("0024", "陳傑憲", "24"),
                 EventPlayer("0032","蘇智傑", "32"),
                 EventPlayer("0013", "陳鏞基", "13"),

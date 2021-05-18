@@ -11,6 +11,9 @@
     <string name="you">你</string>
     <string name="your_teammate">你的隊友</string>
 
+    <string name="all_player">所有隊員</string>
+    <string name="rank">排行榜</string>
+
 
     <!--    game record related -->
 

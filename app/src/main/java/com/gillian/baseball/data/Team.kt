@@ -14,5 +14,5 @@ data class Player(
     var name : String = "",
     var nickname : String? = null,
     var number : String = "",
-    var image: String?
+    var image: String? = null
 )

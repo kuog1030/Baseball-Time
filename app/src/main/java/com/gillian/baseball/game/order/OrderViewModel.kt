@@ -40,7 +40,7 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     fun getTeamPlayer() {
         viewModelScope.launch {
-            lineUp = repository.getTeamPlayer("MOCK")
+            lineUp = repository.getTeamEventPlayer("MOCK")
         }
     }
 

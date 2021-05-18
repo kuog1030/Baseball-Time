@@ -10,7 +10,9 @@ interface BaseballDataSource {
 
     suspend fun createGame(game: Game)
 
-    suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer>
+    suspend fun getTeamPlayer(teamId: String): MutableList<Player>
+
+    suspend fun getTeamEventPlayer(teamId: String): MutableList<EventPlayer>
 
     suspend fun sendEvent(event: Event)
 

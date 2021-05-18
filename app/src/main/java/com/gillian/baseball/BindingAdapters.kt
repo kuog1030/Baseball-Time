@@ -1,8 +1,12 @@
 package com.gillian.baseball
 
+import android.util.Log
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.gillian.baseball.data.EventPlayer
+import com.gillian.baseball.data.Player
+import com.gillian.baseball.team.pager.TeammateAdapter
 
 @BindingAdapter("ballCount")
 fun bindBallCount(textView: TextView, count: Int?) {
@@ -27,7 +31,16 @@ fun bindStrikeCount(textView: TextView, count: Int?) {
     }
 }
 
-
+@BindingAdapter("teammates")
+fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: MutableList<Player>?) {
+    teamPlayers?.let{
+        recyclerView.adapter?.apply {
+            when (this) {
+                is TeammateAdapter -> submitList(it)
+            }
+        }
+    }
+}
 
 //
 //@BindingAdapter("onFirstBase")

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<data>
+    <variable
+        name="viewModel"
+        type="com.gillian.baseball.team.TeamViewModel" />
+</data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <TextView
+            android:id="@+id/text_team_you"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:text="@string/you"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/layout_team_my_card"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/team_my_card_height"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:background="@drawable/bg_card"
+            app:layout_constraintTop_toBottomOf="@+id/text_team_you">
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:id="@+id/text_team_your_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:text="@string/your_teammate"
+            app:layout_constraintStart_toStartOf="@+id/text_team_you"
+            app:layout_constraintTop_toBottomOf="@+id/layout_team_my_card" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_team_teammate"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:background="@drawable/bg_card"
+            app:teammates="@{viewModel.teamPlayers}"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:layout_constraintEnd_toEndOf="@+id/layout_team_my_card"
+            app:layout_constraintStart_toStartOf="@+id/layout_team_my_card"
+            app:layout_constraintTop_toBottomOf="@+id/text_team_your_team"
+            app:spanCount="3"
+            tools:listitem="@layout/item_teammate" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

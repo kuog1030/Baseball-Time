@@ -16,7 +16,6 @@ import com.gillian.baseball.ext.getVmFactory
 
 class FirstLoginFragment : Fragment() {
 
-    //private val viewModel: FirstLoginViewModel by lazy {ViewModelProvider(this).get(FirstLoginViewModel::class.java)}
     private val viewModel by viewModels<FirstLoginViewModel> {getVmFactory() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

@@ -6,6 +6,7 @@ import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.firstlogin.FirstLoginViewModel
 import com.gillian.baseball.game.order.OrderViewModel
 import com.gillian.baseball.game.dialog.EventDialogViewModel
+import com.gillian.baseball.team.TeamViewModel
 
 class ViewModelFactory constructor(
     private val repository: BaseballRepository
@@ -20,6 +21,8 @@ class ViewModelFactory constructor(
                     OrderViewModel(repository)
                 isAssignableFrom(FirstLoginViewModel::class.java) ->
                     FirstLoginViewModel(repository)
+                isAssignableFrom(TeamViewModel::class.java) ->
+                    TeamViewModel(repository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }
