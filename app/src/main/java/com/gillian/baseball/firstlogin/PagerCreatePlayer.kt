@@ -12,11 +12,11 @@ import com.gillian.baseball.databinding.PagerCreatePlayerBinding
 class PagerCreatePlayer : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = PagerCreatePlayerBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val viewModel = ViewModelProvider(requireParentFragment()).get(FirstLoginViewModel::class.java)
         binding.viewModel = viewModel
 
-        Log.i("gillian", "in create player viewmodel $viewModel")
 
         return binding.root
     }

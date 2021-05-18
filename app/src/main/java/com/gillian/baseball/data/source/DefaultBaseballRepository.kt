@@ -1,12 +1,18 @@
 package com.gillian.baseball.data.source
 
-import com.gillian.baseball.data.Event
-import com.gillian.baseball.data.EventPlayer
-import com.gillian.baseball.data.Game
+import com.gillian.baseball.data.*
 
 class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource,
                                 private val localDataSource: BaseballDataSource
 ) : BaseballRepository {
+
+    override suspend fun createTeam(team: Team) {
+        return remoteDataSource.createTeam(team)
+    }
+
+    override suspend fun createPlayer(player: Player) {
+        return remoteDataSource.createPlayer(player)
+    }
 
     override suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer> {
         return remoteDataSource.getTeamPlayer(teamId)

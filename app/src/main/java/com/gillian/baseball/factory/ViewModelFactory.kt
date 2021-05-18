@@ -3,6 +3,7 @@ package com.gillian.baseball.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.firstlogin.FirstLoginViewModel
 import com.gillian.baseball.game.order.OrderViewModel
 import com.gillian.baseball.game.dialog.EventDialogViewModel
 
@@ -17,6 +18,8 @@ class ViewModelFactory constructor(
                     EventDialogViewModel(repository)
                 isAssignableFrom(OrderViewModel::class.java) ->
                     OrderViewModel(repository)
+//                isAssignableFrom(FirstLoginViewModel::class.java) ->
+//                    FirstLoginViewModel(repository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

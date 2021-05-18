@@ -1,12 +1,18 @@
 package com.gillian.baseball.data.source.remote
 
 import android.util.Log
-import com.gillian.baseball.data.Event
-import com.gillian.baseball.data.EventPlayer
-import com.gillian.baseball.data.Game
+import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
 
 object BaseballRemoteDataSource : BaseballDataSource{
+
+    override suspend fun createTeam(team: Team) {
+        Log.i("remote", "create a team")
+    }
+
+    override suspend fun createPlayer(player: Player) {
+        Log.i("remote", "create a player")
+    }
 
     override suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer> {
         // MOCK DATA

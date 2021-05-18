@@ -1,10 +1,12 @@
 package com.gillian.baseball.data.source
 
-import com.gillian.baseball.data.Event
-import com.gillian.baseball.data.EventPlayer
-import com.gillian.baseball.data.Game
+import com.gillian.baseball.data.*
 
 interface BaseballRepository {
+
+    suspend fun createTeam(team: Team)
+
+    suspend fun createPlayer(player: Player)
 
     suspend fun getTeamPlayer(teamId: String): MutableList<EventPlayer>
 
