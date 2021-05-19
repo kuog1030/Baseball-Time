@@ -30,12 +30,12 @@ class TeammatePager : Fragment() {
         })
 
 
-        viewModel.showNewPlayerDialog.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                findNavController().navigate(NavigationDirections.navigationToNewPlayer())
-                viewModel.onNewPlayerDialogShowed()
-            }
-        })
+//        viewModel.showNewPlayerDialog.observe(viewLifecycleOwner, Observer {
+//            it?.let{
+//                findNavController().navigate(NavigationDirections.navigationToNewPlayer(true))
+//                viewModel.onNewPlayerDialogShowed()
+//            }
+//        })
 
         return binding.root
     }

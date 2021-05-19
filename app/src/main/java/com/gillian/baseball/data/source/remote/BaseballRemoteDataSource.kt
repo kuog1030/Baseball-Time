@@ -6,7 +6,6 @@ import com.gillian.baseball.data.source.BaseballDataSource
 import com.gillian.baseball.login.UserManager
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlin.Result
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -28,6 +27,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
         team.id = document.id
         player.id = playerDocument.id
+        player.userId = UserManager.userId
         team.membersId.add(playerDocument.id)
         UserManager.teamId = document.id
 
@@ -96,7 +96,8 @@ object BaseballRemoteDataSource : BaseballDataSource {
         Log.i("remote", "game to be created $game")
     }
 
-    override suspend fun getTeamPlayer(teamId: String): MutableList<Player> = suspendCoroutine {continuation ->
+    //TODO() 目前這個function沒有用到teamId欸
+    override suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>> = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
                 .collection(PLAYERS)
                 .whereEqualTo(TEAMID, UserManager.teamId)
@@ -108,27 +109,15 @@ object BaseballRemoteDataSource : BaseballDataSource {
                             Log.i("remote", " ${document.id} -> ${document.data}")
                             result.add(document.toObject(Player::class.java))
                         }
-                        continuation.resume(result)
+                        continuation.resume(Result.Success(result))
                     } else {
                         task.exception?.let {
 
                             Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
-                            continuation.resume(mutableListOf(
-                                    Player(name = "This", number = "15", image = "https://api.appworks-school.tw/assets/201807242234/0.jpg"),
-                                    Player(name = "Is", number = "22", image = "https://api.appworks-school.tw/assets/201807242234/1.jpg"),
-                                    Player(name = "Mock", number = "33"),
-                                    Player(name = "Data", number = "79"),
-                                    Player(name = "Peter", number = "1"),
-                                    Player(name = "Wayne", number = "26"),
-                                    Player(name = "Serena", number = "71"),
-                                    Player(name = "Wenbin", number = "42"),
-                                    Player(name = "Czerny", number = "18"),
-                                    Player(name = "Sean", number = "66"),
-                                    Player(name = "Shirney", number = "1")
-                            ))
+                            continuation.resume( Result.Error(it) )
                             return@addOnCompleteListener
                         }
-                        continuation.resume(mutableListOf())
+                        continuation.resume(Result.Fail("get team player fail"))
                     }
                 }
     }
@@ -152,41 +141,3 @@ object BaseballRemoteDataSource : BaseballDataSource {
         Log.i("remote", "event to be sent $event")
     }
 }
-
-/*
-    override suspend fun getTeamPlayer(teamId: String): MutableList<Player> {
-        val players = FirebaseFirestore.getInstance().collection(PLAYERS)
-        val result = mutableListOf<Player>()
-
-
-        players.whereEqualTo(TEAMID, UserManager.teamId).get()
-                .addOnSuccessListener { documents ->
-                    for (document in documents) {
-                        result.add(document.toObject(Player::class.java))
-                    }
-                }
-                .addOnFailureListener { exception ->
-                    Log.w("remote", "Error getting teammates $exception")
-                }
-
-        // 這樣下面這個會先跑欸 不行
-        if (result.size != 0) {
-            return result
-        } else {
-            Log.w("remote", "get team player error, returning mock data")
-            return mutableListOf(
-                    Player(name = "This", number = "15", image = "https://api.appworks-school.tw/assets/201807242234/0.jpg"),
-                    Player(name = "Is", number = "22", image = "https://api.appworks-school.tw/assets/201807242234/1.jpg"),
-                    Player(name = "Mock", number = "33"),
-                    Player(name = "Data", number = "79"),
-                    Player(name = "Peter", number = "1"),
-                    Player(name = "Wayne", number = "26"),
-                    Player(name = "Serena", number = "71"),
-                    Player(name = "Wenbin", number = "42"),
-                    Player(name = "Czerny", number = "18"),
-                    Player(name = "Sean", number = "66"),
-                    Player(name = "Shirney", number = "1")
-            )
-        }
-    }
- */

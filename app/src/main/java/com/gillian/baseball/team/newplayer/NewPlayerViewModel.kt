@@ -21,6 +21,8 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     val errorMessage = MutableLiveData<Int>()
 
+    var needRefresh = false
+
     private val _dismissDialog = MutableLiveData<Boolean>()
 
     val dismissDialog : LiveData<Boolean>
@@ -42,6 +44,7 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
             viewModelScope.launch {
                 repository.createPlayer(player)
             }
+            needRefresh = true
             _dismissDialog.value = true
         }
     }

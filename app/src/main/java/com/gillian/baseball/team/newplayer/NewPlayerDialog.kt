@@ -9,16 +9,21 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.R
 import com.gillian.baseball.databinding.DialogNewPlayerBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.team.TeamFragment
+import com.gillian.baseball.team.TeamViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-class NewPlayerDialog  : BottomSheetDialogFragment() {
+class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialogFragment() {
 
-    private val viewModel by viewModels<NewPlayerViewModel> {getVmFactory() }
+    private val viewModel by viewModels<NewPlayerViewModel> { getVmFactory() }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val binding = DialogNewPlayerBinding.inflate(inflater, container, false)
 
@@ -27,9 +32,17 @@ class NewPlayerDialog  : BottomSheetDialogFragment() {
 
 
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                dismiss()
-                viewModel.onDialogDismiss()
+            it?.let {
+
+                try {
+                    if (fromTeamFragment && viewModel.needRefresh) {
+                        ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java)
+                            .refresh()
+                    }
+                } finally {
+                    dismiss()
+                    viewModel.onDialogDismiss()
+                }
             }
         })
 

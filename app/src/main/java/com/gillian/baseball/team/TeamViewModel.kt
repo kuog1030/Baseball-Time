@@ -6,7 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.Player
+import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.login.UserManager
 import kotlinx.coroutines.launch
 
 class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
@@ -23,8 +25,25 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     fun getTeamPlayer() {
+
         viewModelScope.launch {
-            _teamPlayers.value = repository.getTeamPlayer("teamId")
+
+            val result = repository.getTeamPlayer(UserManager.teamId)
+
+            _teamPlayers.value = when (result) {
+                is Result.Success -> {
+                    result.data
+                }
+                is Result.Fail -> {
+                    null
+                }
+                is Result.Error -> {
+                    null
+                }
+                else -> {
+                    null
+                }
+            }
         }
     }
 
@@ -41,5 +60,10 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     fun onNewPlayerDialogShowed() {
         _showNewPlayerDialog.value = null
     }
+
+    fun refresh() {
+        getTeamPlayer()
+    }
+
 
 }

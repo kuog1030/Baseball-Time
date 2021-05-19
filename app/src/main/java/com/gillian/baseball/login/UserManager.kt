@@ -3,5 +3,6 @@ package com.gillian.baseball.login
 object UserManager {
 
     // mock data
-    var teamId: String = "eZeQMf9ckwiGTFW4OCJH"
+    var teamId: String = "qyjO8rziwuMz7O0oUfIo"
+    var userId: String = "eNNuZztIQCNLwRI6sSZl"
 }

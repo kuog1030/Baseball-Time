@@ -52,6 +52,7 @@
     <dialog
         android:id="@+id/newPlayerDialog"
         android:name="com.gillian.baseball.team.newplayer.NewPlayerDialog"
-        android:label="NewPlayerDialog" />
+        android:label="NewPlayerDialog" >
+    </dialog>
 
 </navigation>
