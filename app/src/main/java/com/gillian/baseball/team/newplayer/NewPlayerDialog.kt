@@ -33,7 +33,6 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
 
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             it?.let {
-
                 try {
                     if (fromTeamFragment && viewModel.needRefresh) {
                         ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java)

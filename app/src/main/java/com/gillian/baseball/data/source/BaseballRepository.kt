@@ -1,5 +1,6 @@
 package com.gillian.baseball.data.source
 
+import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 
 interface BaseballRepository {
@@ -11,6 +12,8 @@ interface BaseballRepository {
     suspend fun createPlayer(player: Player)
 
     suspend fun createGame(game: Game)
+
+    suspend fun getTeam(teamId: String): MutableLiveData<Team>
 
     suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>>
 

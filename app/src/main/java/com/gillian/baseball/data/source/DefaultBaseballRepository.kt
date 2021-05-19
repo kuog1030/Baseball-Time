@@ -1,5 +1,6 @@
 package com.gillian.baseball.data.source
 
+import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 
 class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource,
@@ -21,6 +22,10 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
 
     override suspend fun createGame(game: Game) {
         return remoteDataSource.createGame(game)
+    }
+
+    override suspend fun getTeam(teamId: String): MutableLiveData<Team> {
+        return remoteDataSource.getTeam(teamId)
     }
 
     override suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>> {

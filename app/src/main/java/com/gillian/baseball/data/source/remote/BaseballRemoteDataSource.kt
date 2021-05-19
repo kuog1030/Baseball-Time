@@ -1,6 +1,7 @@
 package com.gillian.baseball.data.source.remote
 
 import android.util.Log
+import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
 import com.gillian.baseball.login.UserManager
@@ -95,6 +96,20 @@ object BaseballRemoteDataSource : BaseballDataSource {
     override suspend fun createGame(game: Game) {
         Log.i("remote", "game to be created $game")
     }
+
+    override suspend fun getTeam(teamId: String): MutableLiveData<Team> {
+        val team = MutableLiveData<Team>()
+        FirebaseFirestore.getInstance().collection(TEAMS)
+            .document(teamId)
+            .get()
+            .addOnCompleteListener {task ->
+                task.result?.let{
+                    team.value = it.toObject(Team::class.java)
+                }
+            }
+        return team
+    }
+
 
     //TODO() 目前這個function沒有用到teamId欸
     override suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>> = suspendCoroutine {continuation ->
