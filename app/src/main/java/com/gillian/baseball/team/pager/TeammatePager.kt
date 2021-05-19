@@ -13,6 +13,7 @@ import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.databinding.PagerTeammateBinding
 import com.gillian.baseball.team.TeamViewModel
+import com.gillian.baseball.team.newplayer.NewPlayerDialog
 
 class TeammatePager : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

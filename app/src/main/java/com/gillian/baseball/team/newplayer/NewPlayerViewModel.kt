@@ -46,8 +46,12 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
         }
     }
 
+    fun dismissDialog() {
+        _dismissDialog.value = true
+    }
+
     fun onDialogDismiss() {
-        _dismissDialog.value = false
+        _dismissDialog.value = null
     }
 
 }

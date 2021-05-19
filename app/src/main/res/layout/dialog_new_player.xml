@@ -18,6 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/name_must"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_new_player_name"
             app:layout_constraintEnd_toStartOf="@+id/edit_new_player_name"
             app:layout_constraintHorizontal_bias="0.5"
@@ -30,8 +31,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="56dp"
             android:ems="10"
-            android:hint="@string/name_hint"
+            android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/name_hint}"
             android:text="@={viewModel.name}"
+            android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -43,6 +45,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/number_must"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_new_player_number"
             app:layout_constraintStart_toStartOf="@+id/text_new_player_name"
             app:layout_constraintTop_toTopOf="@+id/edit_new_player_number" />
@@ -53,9 +56,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
             android:ems="10"
-            android:hint="@string/number_hint"
+            android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/number_hint}"
             android:text="@={viewModel.number}"
             android:inputType="number"
+            android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
             app:layout_constraintStart_toStartOf="@+id/edit_new_player_name"
             app:layout_constraintTop_toBottomOf="@+id/edit_new_player_name" />
 
@@ -85,10 +89,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/image"
+            android:layout_marginTop="@dimen/margin"
             app:layout_constraintStart_toStartOf="@+id/text_new_player_nickname"
             app:layout_constraintTop_toBottomOf="@+id/edit_new_player_nickname" />
 
-        <ImageView
+        <ImageButton
             android:id="@+id/imageView3"
             android:layout_width="@dimen/close_size"
             android:layout_height="@dimen/close_size"
@@ -96,7 +101,8 @@
             android:layout_marginEnd="@dimen/margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_clear_24" />
+            android:onClick="@{()->viewModel.dismissDialog()}"
+            android:background="@drawable/ic_baseline_clear_24"/>
 
         <Button
             style="@style/GameButton"

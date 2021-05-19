@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.gillian.baseball.NavigationDirections
 import java.util.Collections.swap
 import com.gillian.baseball.databinding.FragmentOrderBinding
 import com.gillian.baseball.ext.getVmFactory
@@ -37,6 +38,13 @@ class OrderFragment : Fragment() {
             it?.let{
                 findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToGameFragment(it))
                 viewModel.onGameNavigated()
+            }
+        })
+
+        viewModel.showNewPlayerDialog.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                findNavController().navigate(NavigationDirections.navigationToNewPlayer())
+                viewModel.onNewPlayerDialogShowed()
             }
         })
 

@@ -4,6 +4,7 @@
 
     <!--    error hint for user-->
     <string name="create_new_player_error">姓名和背號都是必填的喔</string>
+    <string name="create_new_player_success">新增成功</string>
 
     <!--    team related -->
     <string name="create_a_team">新增一支你的球隊吧</string>
@@ -18,6 +19,7 @@
     <string name="all_player">所有隊員</string>
     <string name="rank">排行榜</string>
 
+    <string name="please_enter">這是必填喔</string>
     <string name="name_must">姓名（必填）</string>
     <string name="name_hint">潘威倫</string>
     <string name="number_must">背號（必填）</string>

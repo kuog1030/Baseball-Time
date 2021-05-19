@@ -34,6 +34,12 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         get() = _navigateToGame
 
 
+    private val _showNewPlayerDialog = MutableLiveData<Boolean>()
+
+    val showNewPlayerDialog : LiveData<Boolean>
+        get() = _showNewPlayerDialog
+
+
     init {
         getTeamPlayer()
     }
@@ -78,8 +84,17 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         _navigateToGame.value = MyGame(isHome = isHome, game = game)
     }
 
+
+    fun showNewPlayerDialog() {
+        _showNewPlayerDialog.value = true
+    }
+
     fun onGameNavigated() {
         _navigateToGame.value = null
+    }
+
+    fun onNewPlayerDialogShowed() {
+        _showNewPlayerDialog.value = null
     }
 
 }
