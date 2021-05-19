@@ -2,10 +2,14 @@
     <string name="app_name">Baseball</string>
 
 
+    <!--    error hint for user-->
+    <string name="create_new_player_error">姓名和背號都是必填的喔</string>
+
     <!--    team related -->
     <string name="create_a_team">新增一支你的球隊吧</string>
     <string name="team_name">球隊名稱</string>
     <string name="create_a_player">新增一個球員吧</string>
+    <string name="create_a_player_button">新增球員</string>
     <string name="player_name">球員名稱</string>
     <string name="player_number">球員背號</string>
     <string name="you">你</string>

@@ -9,6 +9,7 @@ import com.gillian.baseball.data.OnBaseInfo
 import com.gillian.baseball.factory.GameViewModelFactory
 import com.gillian.baseball.factory.OnBaseViewModelFactory
 import com.gillian.baseball.factory.ViewModelFactory
+import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 fun Fragment.getVmFactory(): ViewModelFactory {
     val repository = (requireContext().applicationContext as BaseballApplication).repository
