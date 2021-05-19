@@ -6,6 +6,10 @@ import com.gillian.baseball.data.source.BaseballDataSource
 
 class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
 
+    override suspend fun initTeamAndPlayer(team: Team, player: Player) {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun createTeam(team: Team) {
         TODO("Not yet implemented")
     }

@@ -3,15 +3,89 @@ package com.gillian.baseball.data.source.remote
 import android.util.Log
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
+import com.gillian.baseball.login.UserManager
+import com.google.firebase.firestore.FieldValue
+import com.google.firebase.firestore.FirebaseFirestore
 
 object BaseballRemoteDataSource : BaseballDataSource{
 
+    private const val PLAYERS = "players"
+    private const val TEAMS = "teams"
+    private const val MEMBERS_LIST = "membersId"
+
+
+    override suspend fun initTeamAndPlayer(team: Team, player: Player) {
+        val teams = FirebaseFirestore.getInstance().collection(TEAMS)
+        val document = teams.document()
+
+        val players = FirebaseFirestore.getInstance().collection(PLAYERS)
+        val playerDocument = players.document()
+
+
+        team.id = document.id
+        player.id = playerDocument.id
+        team.membersId.add(playerDocument.id)
+        UserManager.teamId = document.id
+
+        document.set(team).addOnCompleteListener{task ->
+            if (task.isSuccessful) {
+
+                player.teamId = UserManager.teamId
+                playerDocument.set(player).addOnCompleteListener{task ->
+                    if (task.isSuccessful) {
+                        Log.i("remote", "first create team $team and player $player success")
+                    } else {
+                        task.exception?.let {
+                            Log.i("remote", "first create a player fail ${it.message}")
+                        }
+                    }
+                }
+            } else {
+                task.exception?.let {
+                    Log.i("remote", "first create a team fail ${it.message}")
+                }
+            }
+        }
+
+    }
+
+
     override suspend fun createTeam(team: Team) {
-        Log.i("remote", "create a team $team")
+        val teams = FirebaseFirestore.getInstance().collection(TEAMS)
+        val document = teams.document()
+
+        team.id = document.id
+        document.set(team).addOnCompleteListener{task ->
+            if (task.isSuccessful) {
+                Log.i("remote", "create a team $team success")
+            } else {
+                task.exception?.let {
+                    Log.i("remote", "create a team fail ${it.message}")
+                }
+            }
+        }
     }
 
     override suspend fun createPlayer(player: Player) {
-        Log.i("remote", "create a player $player")
+        val players = FirebaseFirestore.getInstance().collection(PLAYERS)
+        val document = players.document()
+
+        player.id = document.id
+        player.teamId = UserManager.teamId
+
+        document.set(player)
+                .addOnSuccessListener {
+                    // update teams member list
+                    FirebaseFirestore.getInstance().collection(TEAMS)
+                            .document(UserManager.teamId)
+                            .update(MEMBERS_LIST, FieldValue.arrayUnion(player.id))
+                            .addOnFailureListener{
+                                Log.w("remote", "Error updating team member list $it")
+                            }
+                }
+                .addOnFailureListener{ exception ->
+                    Log.w("remote", "Error creating new player $exception")
+                }
     }
 
     override suspend fun createGame(game: Game) {

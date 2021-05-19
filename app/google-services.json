@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "192932396323",
+    "project_id": "baseball-a0e15",
+    "storage_bucket": "baseball-a0e15.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:192932396323:android:5f75728cc91b14241b2096",
+        "android_client_info": {
+          "package_name": "com.gillian.baseball"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "192932396323-rc0qj436fpu3shofs24i0r4cfavhjp57.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpTaHq95bB_0EUgMVIrLnDu2X91VlRHzw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "192932396323-rc0qj436fpu3shofs24i0r4cfavhjp57.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

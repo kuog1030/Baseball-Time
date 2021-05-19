@@ -34,8 +34,7 @@ class FirstLoginViewModel(private val repository: BaseballRepository) : ViewMode
             val player = Player(name = playerName.value ?: "", number = playerNumber.value ?: "")
 
             viewModelScope.launch {
-                repository.createTeam(team)
-                repository.createPlayer(player)
+                repository.initTeamAndPlayer(team, player)
             }
             _navigateToTeam.value = true
         }

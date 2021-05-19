@@ -4,7 +4,8 @@ data class Team (
     var id : String = "",
     var name : String = "",
     var color : String = "",
-    var member : MutableList<Player> = mutableListOf()
+    var member : MutableList<Player> = mutableListOf(),
+    var membersId : MutableList<String> = mutableListOf()
 )
 
 data class Player(

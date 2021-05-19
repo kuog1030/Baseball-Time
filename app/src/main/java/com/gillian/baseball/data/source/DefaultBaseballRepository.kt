@@ -6,6 +6,11 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
                                 private val localDataSource: BaseballDataSource
 ) : BaseballRepository {
 
+    override suspend fun initTeamAndPlayer(team: Team, player: Player) {
+        return remoteDataSource.initTeamAndPlayer(team, player)
+    }
+
+
     override suspend fun createTeam(team: Team) {
         return remoteDataSource.createTeam(team)
     }

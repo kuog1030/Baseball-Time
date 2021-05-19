@@ -4,6 +4,8 @@ import com.gillian.baseball.data.*
 
 interface BaseballRepository {
 
+    suspend fun initTeamAndPlayer(team: Team, player: Player)
+
     suspend fun createTeam(team: Team)
 
     suspend fun createPlayer(player: Player)
