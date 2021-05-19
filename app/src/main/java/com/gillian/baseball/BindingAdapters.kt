@@ -1,5 +1,6 @@
 package com.gillian.baseball
 
+import android.graphics.Color
 import android.util.Log
 import android.widget.ImageView
 import android.widget.TextView
@@ -55,6 +56,16 @@ fun bindProfileImage(imageView: ImageView, url: String?) {
                     .error(R.drawable.ic_baseline_sports_baseball_24))
             .into(imageView)
 }
+
+@BindingAdapter("boxStyle")
+fun bindStyleForBox(textView: TextView, isTitle: Boolean) {
+    if (isTitle) {
+        textView.setTextColor(BaseballApplication.instance.getColor(R.color.white))
+    } else {
+        textView.setTextColor(BaseballApplication.instance.getColor(R.color.black))
+    }
+}
+
 
 //
 //@BindingAdapter("onFirstBase")

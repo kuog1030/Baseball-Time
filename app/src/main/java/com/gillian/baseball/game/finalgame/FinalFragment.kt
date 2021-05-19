@@ -24,7 +24,7 @@ class FinalFragment : Fragment() {
 
 
         val boxAdapter = BoxAdapter()
-        binding.recyclerBox.adapter = boxAdapter
+        binding.recyclerFinalBox.adapter = boxAdapter
 
         viewModel.submitAdapter.observe(viewLifecycleOwner, Observer {
             it?.let{

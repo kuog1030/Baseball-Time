@@ -22,6 +22,18 @@
     <string name="nickname_hint">嘟嘟</string>
     <string name="image">圖片</string>
 
+    <!--   box related -->
+    <string name="box_ab">AB</string>
+    <string name="box_r">R</string>
+    <string name="box_h">H</string>
+    <string name="box_rbi">RBI</string>
+    <string name="box_bb">BB</string>
+    <string name="box_so">SO</string>
+    <string name="box_sb">SB</string>
+    <string name="box_ip">IP</string>
+    <string name="box_er">ER</string>
+    <string name="box_hr">HR</string>
+
 
     <!--    game record related -->
 

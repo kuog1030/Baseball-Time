@@ -28,4 +28,7 @@
 
     <dimen name="close_size">32dp</dimen>
 
+
+    <dimen name="player_box_width">38dp</dimen>
+
 </resources>
