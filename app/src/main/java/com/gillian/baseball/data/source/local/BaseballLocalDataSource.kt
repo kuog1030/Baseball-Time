@@ -31,7 +31,7 @@ class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getTeamEventPlayer(teamId: String): MutableList<EventPlayer> {
+    override suspend fun getTeamEventPlayer(teamId: String): Result<MutableList<EventPlayer>> {
         TODO("Not yet implemented")
     }
 

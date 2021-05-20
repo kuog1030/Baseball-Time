@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.newgame.NewGameViewModel" />
+    </data>
+    
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_new_game"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/team_my_card_height"
+            android:layout_margin="@dimen/margin"
+            app:cardCornerRadius="@dimen/card_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/text_new_game_versus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/versus"
+                    android:textSize="45dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.68" />
+
+                <TextView
+                    android:id="@+id/text_new_game_guest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.guestName}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/team_new_game_home"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="客隊" />
+
+                <TextView
+                    android:id="@+id/team_new_game_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.homeName}"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintHorizontal_bias="0.5"
+                    app:layout_constraintStart_toEndOf="@+id/text_new_game_guest"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="主隊" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/text_new_game_side"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:text="@string/home_or_guest"
+            app:layout_constraintBottom_toBottomOf="@id/radio_group_new_game"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/radio_group_new_game" />
+
+
+        <RadioGroup
+            android:id="@+id/radio_group_new_game"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:orientation="horizontal"
+            android:checkedButton="@={viewModel.selectedSideRadio}"
+            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
+            app:layout_constraintStart_toEndOf="@id/text_new_game_side"
+            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
+            app:layout_constraintTop_toBottomOf="@id/card_new_game">
+
+            <RadioButton
+                android:id="@+id/radio_new_game_guest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/guest" />
+
+            <RadioButton
+                android:id="@+id/radio_new_game_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/home" />
+
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/text_new_game_away"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/away_team_name"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName2"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_title"
+            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName2" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName2"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.awayName}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_new_game_away"
+            app:layout_constraintTop_toBottomOf="@+id/radio_group_new_game" />
+
+        <TextView
+            android:id="@+id/text_new_game_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_title"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_side"
+            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.gameTitle}"
+            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_place"
+            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName3"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_title"
+            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName3" />
+
+        <EditText
+            android:id="@+id/editTextTextPersonName3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:background="@drawable/bg_edit_text"
+            android:layout_marginTop="@dimen/double_margin"
+            android:text="@={viewModel.gamePlace}"
+            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
+            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+
+        <TextView
+            android:id="@+id/text_new_game_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_date"
+            app:layout_constraintBottom_toBottomOf="@+id/button_new_game_date"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_away"
+            app:layout_constraintTop_toTopOf="@+id/button_new_game_date" />
+
+        <Button
+            android:id="@+id/button_new_game_date"
+            style="?spinnerStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:paddingStart="15dp"
+            android:text="@{viewModel.gameDate}"
+            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+
+        <TextView
+            android:id="@+id/text_new_game_starter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/starting_pitcher"
+            app:layout_constraintBottom_toBottomOf="@+id/spinner_new_game_starter"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_date"
+            app:layout_constraintTop_toTopOf="@+id/spinner_new_game_starter" />
+
+        <Spinner
+            android:id="@+id/spinner_new_game_starter"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:spinnerMode="dropdown"
+            app:layout_constraintEnd_toEndOf="@+id/button_new_game_date"
+            app:layout_constraintStart_toStartOf="@+id/button_new_game_date"
+            app:layout_constraintTop_toBottomOf="@+id/button_new_game_date" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

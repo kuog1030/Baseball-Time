@@ -45,6 +45,12 @@
     <string name="your_performance">你的成績</string>
 
 
+    <!--    schedule a new game-->
+    <string name="game_date">比賽日期</string>
+    <string name="game_place">比賽地點</string>
+    <string name="starting_pitcher">預計先發投手</string>
+    <string name="home_or_guest">主客隊</string>
+    <string name="versus">VS</string>
 
     <!--    game record related -->
 
@@ -52,7 +58,7 @@
     <string name="home">主隊</string>
     <string name="guest">客隊</string>
     <string name="away_team_name">對手球隊名稱</string>
-    <string name="game_title">賽事名稱</string>
+    <string name="game_title">比賽名稱</string>
     <string name="pitcher_name">投手名稱</string>
 
 

@@ -1,6 +1,7 @@
 package com.gillian.baseball.game.order
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -28,10 +29,20 @@ class OrderFragment : Fragment() {
 
         val adapter = OrderAdapter()
         binding.recyclerOrderPlayers.adapter = adapter
-        adapter.submitList(viewModel.lineUp)
+
 
         val itemTouchHelper = ItemTouchHelper(simpleCallback)
         itemTouchHelper.attachToRecyclerView(binding.recyclerOrderPlayers)
+
+
+        viewModel.submitList.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                Log.i("gillian", "success and ${viewModel.lineUp}")
+
+                adapter.submitList(viewModel.lineUp)
+                viewModel.submitList.value = null
+            }
+        })
 
 
         viewModel.navigateToGame.observe(viewLifecycleOwner, Observer {

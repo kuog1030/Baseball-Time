@@ -1,5 +1,6 @@
 package com.gillian.baseball.game.order
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -7,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.R
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.login.UserManager
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -21,6 +23,10 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
     var lineUp = mutableListOf<EventPlayer>()
 
     val awayLineUp = mutableListOf<EventPlayer>()
+
+    // TODO() 到時候要改成livedata
+    val submitList = MutableLiveData<Boolean>()
+
 
 
     private val isHome: Boolean
@@ -46,7 +52,23 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     fun getTeamPlayer() {
         viewModelScope.launch {
-            lineUp = repository.getTeamEventPlayer("MOCK")
+
+            val result = repository.getTeamEventPlayer(UserManager.teamId)
+            lineUp = when (result) {
+                is Result.Success -> {
+                    result.data
+                }
+                is Result.Fail -> {
+                    mutableListOf()
+                }
+                is Result.Error -> {
+                    mutableListOf()
+                }
+                else -> {
+                    mutableListOf()
+                }
+            }
+            submitList.value = true
         }
     }
 

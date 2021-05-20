@@ -6,7 +6,7 @@
         <item name="colorPrimaryVariant">@color/denim_blue</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
-        <item name="colorSecondary">@color/teal_200</item>
+        <item name="colorSecondary">@color/denim_blue</item>
         <item name="colorSecondaryVariant">@color/denim_blue</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->

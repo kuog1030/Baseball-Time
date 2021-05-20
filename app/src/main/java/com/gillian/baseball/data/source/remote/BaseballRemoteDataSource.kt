@@ -15,7 +15,11 @@ object BaseballRemoteDataSource : BaseballDataSource {
     private const val PLAYERS = "players"
     private const val TEAMS = "teams"
     private const val MEMBERS_LIST = "membersId"
+    // field name
+    private const val USERID = "userId"
     private const val TEAMID = "teamId"
+    private const val NAME = "name"
+    private const val NUMBER = "number"
 
 
     override suspend fun initTeamAndPlayer(team: Team, player: Player) {
@@ -137,19 +141,30 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
-    override suspend fun getTeamEventPlayer(teamId: String): MutableList<EventPlayer> {
-        // MOCK DATA
-        Log.i("remote", "get mock team EVENT player")
-        return mutableListOf<EventPlayer>(EventPlayer("0024", "陳傑憲", "24"),
-                EventPlayer("0032", "蘇智傑", "32"),
-                EventPlayer("0013", "陳鏞基", "13"),
-                EventPlayer("0077", "林安可", "77"),
-                EventPlayer("0065", "陳重羽", "65"),
-                EventPlayer("0064", "林靖凱", "64"),
-                EventPlayer("0052", "張偉聖", "52"),
-                EventPlayer("0031", "林岱安", "31"),
-                EventPlayer("0039", "林祖傑", "39")
-        )
+    //TODO() 目前這個function沒有用到teamId欸
+    override suspend fun getTeamEventPlayer(teamId: String): Result<MutableList<EventPlayer>> = suspendCoroutine {continuation ->
+        FirebaseFirestore.getInstance()
+                .collection(PLAYERS)
+                .whereEqualTo(TEAMID, UserManager.teamId)
+                .get()
+                .addOnCompleteListener{ task ->
+                    if (task.isSuccessful) {
+                        val result = mutableListOf<EventPlayer>()
+                        for (document in task.result!!) {
+                            Log.i("remote", " ${document.id} -> ${document.data}")
+                            result.add(EventPlayer(userId = document[USERID].toString(), name = document[NAME].toString(), number = document[NUMBER].toString()))
+                        }
+                        continuation.resume(Result.Success(result))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("get team event player fail"))
+                    }
+                }
     }
 
     override suspend fun sendEvent(event: Event) {
