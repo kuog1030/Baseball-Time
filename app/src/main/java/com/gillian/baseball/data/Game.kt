@@ -14,6 +14,8 @@ data class Game (
         var guest: GameTeam = GameTeam(),
         val box: Box = Box()
 ) : Parcelable {
+
+    // TODO()這個也被丟到firebase上了!!!!!
     val homeScore : Int
         get() = box.run[0]
 
@@ -31,7 +33,7 @@ data class Box (
 
 @Parcelize
 data class GameTeam (
-    val name: String = "",
+    var name: String = "",
     val acronym : String = name,
     val teamId: String = "",
     var pitcher: EventPlayer = EventPlayer(),

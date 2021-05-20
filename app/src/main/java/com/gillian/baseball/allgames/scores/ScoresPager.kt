@@ -12,13 +12,21 @@ import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.data.Box
 import com.gillian.baseball.data.Game
 import com.gillian.baseball.databinding.PagerScoresBinding
+import com.gillian.baseball.util.CurrentDayDecorator
+import com.prolificinteractive.materialcalendarview.CalendarDay
 
 class ScoresPager : Fragment() {
+
+    private lateinit var binding : PagerScoresBinding
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = PagerScoresBinding.inflate(inflater, container, false)
+        binding = PagerScoresBinding.inflate(inflater, container, false)
 
         val viewModel = ViewModelProvider(requireParentFragment()).get(AllGamesViewModel::class.java)
         viewModel
+
+
+        addDot(2021,5,10)
 
         val adapter = CardScoreAdapter()
         binding.recyclerScores.adapter = adapter
@@ -38,4 +46,13 @@ class ScoresPager : Fragment() {
 
         return binding.root
     }
+
+    private fun addDot(year: Int, month: Int, day: Int) {
+        binding.calendarScores.addDecorators(
+            CurrentDayDecorator(
+                currentDay = CalendarDay.from(year, month, day)
+            )
+        )
+    }
+
 }

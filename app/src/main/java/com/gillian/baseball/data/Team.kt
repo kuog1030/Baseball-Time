@@ -1,5 +1,9 @@
 package com.gillian.baseball.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class Team (
     var id : String = "",
     var name : String = "",
@@ -7,8 +11,10 @@ data class Team (
     var color : String = "",
     var member : MutableList<Player> = mutableListOf(),
     var membersId : MutableList<String> = mutableListOf()
-)
+) : Parcelable
 
+
+@Parcelize
 data class Player(
     var id : String = "",
     var userId : String? = null,
@@ -17,4 +23,4 @@ data class Player(
     var nickname : String? = null,
     var number : String = "",
     var image: String? = null
-)
+) : Parcelable

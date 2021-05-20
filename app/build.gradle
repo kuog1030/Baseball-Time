@@ -67,6 +67,9 @@ dependencies {
 
     implementation 'com.github.sembozdemir:ViewPagerArrowIndicator:1.0.0'
 
+    // material calendar
+    implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
+
     testImplementation 'junit:junit:4.+'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'

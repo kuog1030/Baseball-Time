@@ -34,7 +34,7 @@ class AllGamesFragment : Fragment() {
 
         viewModel.navigateToNewGame.observe(viewLifecycleOwner, Observer {
             it?.let {
-                findNavController().navigate(NavigationDirections.navigationToNewGame())
+                findNavController().navigate(NavigationDirections.navigationToNewGame(viewModel.myTeam.value))
                 viewModel.onNewGameCreated()
             }
         })

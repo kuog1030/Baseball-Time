@@ -169,7 +169,7 @@
 
         <EditText
             android:id="@+id/editTextTextPersonName3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
             android:inputType="textPersonName"
@@ -202,24 +202,35 @@
             app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
 
-        <TextView
-            android:id="@+id/text_new_game_starter"
+        <Button
+            android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/starting_pitcher"
-            app:layout_constraintBottom_toBottomOf="@+id/spinner_new_game_starter"
-            app:layout_constraintStart_toStartOf="@+id/text_new_game_date"
-            app:layout_constraintTop_toTopOf="@+id/spinner_new_game_starter" />
-
-        <Spinner
-            android:id="@+id/spinner_new_game_starter"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
-            android:spinnerMode="dropdown"
-            app:layout_constraintEnd_toEndOf="@+id/button_new_game_date"
-            app:layout_constraintStart_toStartOf="@+id/button_new_game_date"
+            android:text="TODO 建立新遊戲"
+            android:onClick="@{()->viewModel.scheduleNewGame()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/button_new_game_date" />
+
+        <!--        <TextView-->
+<!--            android:id="@+id/text_new_game_starter"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/starting_pitcher"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/spinner_new_game_starter"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/text_new_game_date"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/spinner_new_game_starter" />-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/spinner_new_game_starter"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/double_margin"-->
+<!--            android:spinnerMode="dropdown"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/button_new_game_date"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/button_new_game_date"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/button_new_game_date" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -12,8 +12,11 @@ import kotlin.coroutines.suspendCoroutine
 
 object BaseballRemoteDataSource : BaseballDataSource {
 
+    // collections name
     private const val PLAYERS = "players"
     private const val TEAMS = "teams"
+    private const val GAMES = "games"
+
     private const val MEMBERS_LIST = "membersId"
     // field name
     private const val USERID = "userId"
@@ -59,6 +62,31 @@ object BaseballRemoteDataSource : BaseballDataSource {
     }
 
 
+    override suspend fun scheduleGame(game: Game) : Result<Boolean> = suspendCoroutine { continuation ->
+
+        val games = FirebaseFirestore.getInstance().collection(GAMES)
+        val document = games.document()
+
+        game.id = document.id
+        //article.createdTime = Calendar.getInstance().timeInMillis
+
+        document.set(game)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            continuation.resume(Result.Success(true))
+                        } else {
+                            task.exception?.let {
+
+                                Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                                continuation.resume(Result.Error(it))
+                                return@addOnCompleteListener
+                            }
+                            continuation.resume(Result.Fail("schedule a game fail"))
+                        }
+                    }
+    }
+
+
     override suspend fun createTeam(team: Team) {
         val teams = FirebaseFirestore.getInstance().collection(TEAMS)
         val document = teams.document()
@@ -98,8 +126,22 @@ object BaseballRemoteDataSource : BaseballDataSource {
     }
 
     override suspend fun createGame(game: Game) {
-        Log.i("remote", "game to be created $game")
+        val games = FirebaseFirestore.getInstance().collection(GAMES)
+        val document = games.document()
+
+        game.id = document.id
+
+        document.set(game).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.i("remote", "create a game $game success")
+            } else {
+                task.exception?.let {
+                    Log.i("remote", "create a team fail ${it.message}")
+                }
+            }
+        }
     }
+
 
     override suspend fun getTeam(teamId: String): MutableLiveData<Team> {
         val team = MutableLiveData<Team>()
@@ -114,6 +156,29 @@ object BaseballRemoteDataSource : BaseballDataSource {
         return team
     }
 
+
+    override suspend fun getTeam2(teamId: String): Result<Team> = suspendCoroutine {continuation ->
+        FirebaseFirestore.getInstance()
+            .collection(TEAMS)
+            .document(teamId)
+            .get()
+            .addOnCompleteListener{ task ->
+                if (task.isSuccessful) {
+                    //TODO()這邊可能是空的嗎??
+                    var result = task.result!!.toObject(Team::class.java)
+                    continuation.resume(Result.Success(result!!))
+
+                } else {
+                    task.exception?.let {
+
+                        Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        continuation.resume( Result.Error(it) )
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail("get team player suspend coroutine fail"))
+                }
+            }
+    }
 
     //TODO() 目前這個function沒有用到teamId欸
     override suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>> = suspendCoroutine {continuation ->

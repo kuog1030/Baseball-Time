@@ -13,7 +13,11 @@ interface BaseballDataSource {
 
     suspend fun createGame(game: Game)
 
+    suspend fun scheduleGame(game: Game) : Result<Boolean>
+
     suspend fun getTeam(teamId: String): MutableLiveData<Team>
+
+    suspend fun getTeam2(teamId: String): Result<Team>
 
     suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>>
 

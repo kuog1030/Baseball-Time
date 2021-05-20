@@ -5,6 +5,8 @@
     <!--    error hint for user-->
     <string name="create_new_player_error">姓名和背號都是必填的喔</string>
     <string name="create_new_player_success">新增成功</string>
+    <string name="error_schedule_game">每個欄位都是必填喔</string>
+    <string name="return_nothing">不好意思，神秘力量發生了</string>
 
     <!--    team related -->
     <string name="create_a_team">新增一支你的球隊吧</string>
@@ -49,7 +51,7 @@
     <string name="game_date">比賽日期</string>
     <string name="game_place">比賽地點</string>
     <string name="starting_pitcher">預計先發投手</string>
-    <string name="home_or_guest">主客隊</string>
+    <string name="home_or_guest">你是主客隊？</string>
     <string name="versus">VS</string>
 
     <!--    game record related -->

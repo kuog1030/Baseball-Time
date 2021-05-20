@@ -13,13 +13,24 @@
             android:layout_height="match_parent">
 
 
-            <CalendarView
-                android:id="@+id/calendarView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:id="@+id/calendar_scores"
+                android:layout_width="300dp"
+                android:layout_height="300dp"
+                app:mcv_showOtherDates="all"
+                android:layout_marginStart="@dimen/double_margin"
+                android:layout_marginEnd="@dimen/double_margin"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"/>
+
+<!--            <CalendarView-->
+<!--                android:id="@+id/calendarView"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_scores"
@@ -27,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:padding="@dimen/margin"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintTop_toBottomOf="@+id/calendarView"
+                app:layout_constraintTop_toBottomOf="@id/calendar_scores"
                 tools:layout_editor_absoluteX="-16dp">
 
             </androidx.recyclerview.widget.RecyclerView>

@@ -30,8 +30,6 @@ class ViewModelFactory constructor(
                     NewPlayerViewModel(repository)
                 isAssignableFrom(AllGamesViewModel::class.java) ->
                     AllGamesViewModel(repository)
-                isAssignableFrom(NewGameViewModel::class.java) ->
-                    NewGameViewModel(repository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

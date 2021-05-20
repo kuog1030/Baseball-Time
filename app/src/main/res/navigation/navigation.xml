@@ -63,6 +63,11 @@
     <fragment
         android:id="@+id/newGameFragment"
         android:name="com.gillian.baseball.newgame.NewGameFragment"
-        android:label="NewGameFragment" />
+        android:label="NewGameFragment" >
+        <argument
+            android:name="myTeam"
+            app:argType="com.gillian.baseball.data.Team"
+            app:nullable="true" />
+    </fragment>
 
 </navigation>
