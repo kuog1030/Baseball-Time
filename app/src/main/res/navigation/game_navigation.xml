@@ -1,12 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/game_navigation"
-    app:startDestination="@id/battingFragment">
+    app:startDestination="@id/eventDialog">
 
-    <fragment
-        android:id="@+id/battingFragment"
-        android:name="com.gillian.baseball.game.batting.BattingFragment"
-        android:label="BattingFragment" />
 
     <dialog
         android:id="@+id/eventDialog"

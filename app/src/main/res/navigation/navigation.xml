@@ -27,6 +27,7 @@
     <action android:id="@+id/navigationToStat" app:destination="@id/statFragment" />
     <action android:id="@+id/navigationToTeam" app:destination="@id/teamFragment" />
     <action android:id="@+id/navigationToOrder" app:destination="@id/orderFragment" />
+    <action android:id="@+id/navigationToAllGames" app:destination="@id/allGamesFragment" />
     <action android:id="@+id/navigationToNewPlayer" app:destination="@id/newPlayerDialog" />
 
     <fragment
@@ -54,5 +55,9 @@
         android:name="com.gillian.baseball.team.newplayer.NewPlayerDialog"
         android:label="NewPlayerDialog" >
     </dialog>
+    <fragment
+        android:id="@+id/allGamesFragment"
+        android:name="com.gillian.baseball.allgames.AllGamesFragment"
+        android:label="AllGamesFragment" />
 
 </navigation>

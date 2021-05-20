@@ -21,8 +21,8 @@ class MainActivity : AppCompatActivity() {
                     navController.navigate(NavigationDirections.navigationToTeam())
                     true
                 }
-                R.id.navigation_game -> {
-                    navController.navigate(NavigationDirections.navigationToOrder())
+                R.id.navigation_all_games -> {
+                    navController.navigate(NavigationDirections.navigationToAllGames())
                     true
                 }
                 R.id.navigation_stat -> {

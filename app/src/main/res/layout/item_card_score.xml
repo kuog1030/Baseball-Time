@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="game"
+            type="com.gillian.baseball.data.Game" />
+    </data>
 
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="@dimen/game_card_height"
         app:cardCornerRadius="@dimen/card_radius"
         app:cardElevation="@dimen/card_elevation"
-        android:layout_margin="6dp"
+        android:layout_margin="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -38,7 +42,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
-                android:text="TextView"
+                android:text="@{game.title}"
                 app:layout_constraintStart_toEndOf="@+id/text_game_end_date"
                 app:layout_constraintTop_toTopOf="@+id/text_game_end_date"
                 tools:text="全國棒球大專盃8強" />
@@ -49,8 +53,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
-                android:text="TextView"
+                android:layout_marginBottom="4dp"
+                android:text='@{String.valueOf(game.guestScore) + ":" + String.valueOf(game.homeScore)}'
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="3:2" />
@@ -69,13 +73,23 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintBottom_toBottomOf="@id/image_for_align"
                 app:layout_constraintEnd_toStartOf="@id/text_game_end_score"
                 app:layout_constraintStart_toStartOf="@id/text_game_end_your"
                 tools:listitem="@layout/item_personal_score" />
+
+            <ImageView
+                android:id="@+id/image_for_align"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/ic_baseline_date_range_24"
+                android:baselineAlignBottom="true"
+                android:visibility="invisible"
+                app:layout_constraintStart_toStartOf="@id/recycler_game_end"
+                app:layout_constraintBaseline_toBaselineOf="@id/text_game_end_score"
+                tools:visibility="visible"/>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-</androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

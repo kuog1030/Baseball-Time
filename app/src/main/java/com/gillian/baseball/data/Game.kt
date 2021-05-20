@@ -6,14 +6,20 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class Game (
-    var id: String = "",
-    var name: String = "",
-    var date: Long = -1,
-    var place: String = "",
-    var home: GameTeam = GameTeam(),
-    var guest: GameTeam = GameTeam(),
-    val box: Box = Box()
-) : Parcelable
+        var id: String = "",
+        var title: String = "",
+        var date: Long = -1,
+        var place: String = "",
+        var home: GameTeam = GameTeam(),
+        var guest: GameTeam = GameTeam(),
+        val box: Box = Box()
+) : Parcelable {
+    val homeScore : Int
+        get() = box.run[0]
+
+    val guestScore : Int
+        get() = box.run[1]
+}
 
 @Parcelize
 data class Box (
@@ -26,6 +32,7 @@ data class Box (
 @Parcelize
 data class GameTeam (
     val name: String = "",
+    val acronym : String = name,
     val teamId: String = "",
     var pitcher: EventPlayer = EventPlayer(),
     val lineUp: MutableList<EventPlayer> = mutableListOf()

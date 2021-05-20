@@ -7,7 +7,7 @@
         android:title=""/>
 
     <item
-        android:id="@+id/navigation_game"
+        android:id="@+id/navigation_all_games"
         android:icon="@drawable/ic_baseline_sports_baseball_24"
         android:title=""/>
 

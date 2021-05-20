@@ -21,7 +21,7 @@
 
     <dimen name="final_table_padding">8dp</dimen>
 
-    <dimen name="team_tab_height">56dp</dimen>
+    <dimen name="team_tab_height">48dp</dimen>
     <dimen name="team_my_card_height">200dp</dimen>
     <dimen name="teammate_height">160dp</dimen>
     <dimen name="teammate_image_size">60dp</dimen>
@@ -33,7 +33,7 @@
 
     <dimen name="game_card_height">180dp</dimen>
     <dimen name="personal_score_height">25dp</dimen>
-    <dimen name="personal_score_width">50dp</dimen>
+    <dimen name="personal_score_width">45dp</dimen>
 
     <dimen name="card_radius">15dp</dimen>
     <dimen name="card_elevation">7dp</dimen>

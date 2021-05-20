@@ -52,7 +52,7 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     fun navigateToGame() {
         val game = Game(
-                name = gameTitle.value ?: "世界第一武道大會",
+                title = gameTitle.value ?: "世界第一武道大會",
                 date = Calendar.getInstance().timeInMillis,
                 place = "")
 
