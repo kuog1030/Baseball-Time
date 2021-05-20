@@ -31,4 +31,11 @@
 
     <dimen name="player_box_width">38dp</dimen>
 
+    <dimen name="game_card_height">180dp</dimen>
+    <dimen name="personal_score_height">25dp</dimen>
+    <dimen name="personal_score_width">50dp</dimen>
+
+    <dimen name="card_radius">15dp</dimen>
+    <dimen name="card_elevation">7dp</dimen>
+
 </resources>

@@ -41,6 +41,11 @@
     <string name="box_hr">HR</string>
 
 
+    <!--   game related -->
+    <string name="your_performance">你的成績</string>
+
+
+
     <!--    game record related -->
 
     <string name="you_are">你是</string>
