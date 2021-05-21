@@ -7,7 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
-import com.gillian.baseball.data.source.EventInfo
+import com.gillian.baseball.data.EventInfo
 import kotlinx.coroutines.launch
 
 // debug用
@@ -186,7 +186,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             sendEvent(Event(player = lineUp[atBatNumber],
                     pitcher = if (isTop) homePitcher else guestPitcher,
                     inning = inningCount,
-                    result = 9,
+                    result = EventType.STRIKEOUT.number,
                     ball = ballCount.value ?: 0,
                     strike = totalStrike,
                     out = outCount.value ?: 0))
@@ -310,6 +310,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 sendEvent(Event(player = baseList[3]!!,
                         pitcher = if (isTop) homePitcher else guestPitcher,
                         run = 1,
+                        result = EventType.RUN.number,
                         out = outCount.value ?: 0,
                         inning = inningCount))
                 scored(1)
@@ -335,7 +336,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         sendEvent(Event(player = lineUp[atBatNumber],
                 pitcher = if (isTop) homePitcher else guestPitcher,
                 inning = inningCount,
-                result = 8,
+                result = EventType.WALK.number,
                 ball = 4,
                 strike = totalStrike,
                 out = outCount.value ?: 0))

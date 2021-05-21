@@ -3,7 +3,7 @@ package com.gillian.baseball.factory
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.source.BaseballRepository
-import com.gillian.baseball.data.source.EventInfo
+import com.gillian.baseball.data.EventInfo
 import com.gillian.baseball.game.dialog.EventDialogViewModel
 
 class EventViewModelFactory constructor(

@@ -64,7 +64,7 @@ class NewGameFragment : Fragment() {
 
         DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, day ->
             TimePickerDialog(requireContext(), TimePickerDialog.OnTimeSetListener { _, hour, minute ->
-                val pickedDateTime = Calendar.getInstance()
+                val pickedDateTime = Calendar.getInstance(TimeZone.getTimeZone("GMT 8"))
                 pickedDateTime.set(year, month, day, hour, minute)
                 viewModel.gameDateLong = pickedDateTime.timeInMillis
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.TAIWAN)

@@ -3,7 +3,7 @@ package com.gillian.baseball.ext
 import androidx.fragment.app.Fragment
 import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.data.*
-import com.gillian.baseball.data.source.EventInfo
+import com.gillian.baseball.data.EventInfo
 import com.gillian.baseball.factory.*
 
 fun Fragment.getVmFactory(): ViewModelFactory {

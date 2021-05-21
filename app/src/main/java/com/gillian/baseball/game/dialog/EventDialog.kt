@@ -1,25 +1,17 @@
 package com.gillian.baseball.game.dialog
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
-import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.fragment.navArgs
-import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.R
-import com.gillian.baseball.data.AtBase
-import com.gillian.baseball.data.Event
-import com.gillian.baseball.data.EventPlayer
-import com.gillian.baseball.data.source.EventInfo
+import com.gillian.baseball.data.EventInfo
 import com.gillian.baseball.databinding.DialogEventBinding
 import com.gillian.baseball.ext.getVmFactory
-import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.GameViewModel
 
 class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {

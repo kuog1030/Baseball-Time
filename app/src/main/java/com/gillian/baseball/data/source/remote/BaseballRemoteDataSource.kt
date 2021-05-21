@@ -5,6 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
 import com.gillian.baseball.ext.toHitterBox
+import com.gillian.baseball.ext.toPersonalScore
 import com.gillian.baseball.login.UserManager
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,6 +27,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
     private const val TEAMID = "teamId"
     private const val NAME = "name"
     private const val NUMBER = "number"
+    private const val RECORDED = "recordedTeamId"
 
 
     override suspend fun initTeamAndPlayer(team: Team, player: Player) {
@@ -148,6 +150,54 @@ object BaseballRemoteDataSource : BaseballDataSource {
         }
     }
 
+    override suspend fun getAllGames(teamId: String): Result<List<Game>>  = suspendCoroutine {continuation ->
+        FirebaseFirestore.getInstance()
+                .collection(GAMES)
+                .whereEqualTo(RECORDED, UserManager.teamId)
+                .get()
+                .addOnCompleteListener{ task ->
+                    if (task.isSuccessful) {
+                        val result = mutableListOf<Game>()
+                        for (document in task.result!!) {
+                            Log.i("remote", " ${document.id} -> ${document.data}")
+                            result.add(document.toObject(Game::class.java))
+                        }
+                        continuation.resume(Result.Success(result))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("get all games fail"))
+                    }
+                }
+    }
+
+    override suspend fun getAllGamesCard(teamId: String): Result<List<GameCard>> = suspendCoroutine {continuation ->
+        val games = FirebaseFirestore.getInstance().collection(GAMES)
+        games.whereEqualTo(RECORDED, UserManager.teamId)
+                .get()
+                .addOnCompleteListener{ task ->
+                    if (task.isSuccessful) {
+                        val result = mutableListOf<GameCard>()
+                        for (oneGame in task.result!!) {
+                            result.add(oneGame.toObject(Game::class.java).toGameCard())
+                        }
+                        continuation.resume(Result.Success(result))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("get all games card fail"))
+                    }
+                }
+    }
+
 
     override suspend fun getTeam(teamId: String): MutableLiveData<Team> {
         val team = MutableLiveData<Team>()
@@ -223,7 +273,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         val result = mutableListOf<EventPlayer>()
                         for (document in task.result!!) {
                             Log.i("remote", " ${document.id} -> ${document.data}")
-                            result.add(EventPlayer(userId = document[USERID].toString(), name = document[NAME].toString(), number = document[NUMBER].toString()))
+                            result.add(EventPlayer(playerId = document["id"].toString(), name = document[NAME].toString(), number = document[NUMBER].toString()))
                         }
                         continuation.resume(Result.Success(result))
                     } else {
@@ -249,7 +299,11 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         result.add(document.toObject(Event::class.java))
                         //Log.i("remote", " ${document.id} -> ${document.data}")
                     }
-                    result.toHitterBox()
+                    val boxResult = result.toHitterBox()
+                    continuation.resume(Result.Success(boxResult))
+                }
+                .addOnFailureListener{ exception ->
+                    continuation.resume(Result.Error(exception))
                 }
     }
 

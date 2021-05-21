@@ -1,6 +1,5 @@
 package com.gillian.baseball.game.dialog
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -9,7 +8,7 @@ import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.source.BaseballRepository
-import com.gillian.baseball.data.source.EventInfo
+import com.gillian.baseball.data.EventInfo
 import com.gillian.baseball.game.EventType
 import kotlinx.coroutines.launch
 
@@ -109,7 +108,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
 
     fun hbp() {
         hitterEvent.value?.let{
-            it.result = 5
+            it.result = EventType.HITBYPITCH.number
             // 之後event統一會加strike，所以先扣掉XD
             it.strike -= 1
             it.ball += 1
@@ -131,7 +130,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
 
     fun droppedThird() {
         hitterEvent.value?.let{
-            it.result = 7
+            it.result = EventType.DROPPEDTHIRD.number
         }
         atBaseList[0].base = 1
     }
@@ -178,7 +177,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
 
     fun groundOut() {
         hitterEvent.value?.let{
-            it.result = 21
+            it.result = EventType.GROUNDOUT.number
         }
         eventList.add(hitterEvent.value!!)
         atBaseList[0].base = -1
@@ -189,7 +188,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
 
     fun airOut(hasRbi: Boolean) {
         hitterEvent.value?.let{
-            it.result = if (hasRbi) 23 else 22
+            it.result = if (hasRbi) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
             //it.rbi = if (hasRbi) 1 else 0  跑者回壘得分的時候就會加進打者的event
         }
         eventList.add(hitterEvent.value!!)

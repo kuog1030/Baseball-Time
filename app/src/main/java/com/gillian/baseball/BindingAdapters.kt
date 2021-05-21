@@ -8,9 +8,10 @@ import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
-import com.gillian.baseball.data.EventPlayer
-import com.gillian.baseball.data.Player
+import com.gillian.baseball.allgames.CardScoreAdapter
+import com.gillian.baseball.data.*
 import com.gillian.baseball.team.pager.TeammateAdapter
+import com.gillian.baseball.views.HitterBoxAdapter
 
 @BindingAdapter("ballCount")
 fun bindBallCount(textView: TextView, count: Int?) {
@@ -41,6 +42,28 @@ fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: MutableList<Player>?
         recyclerView.adapter?.apply {
             when (this) {
                 is TeammateAdapter -> submitList(it)
+            }
+        }
+    }
+}
+
+@BindingAdapter("hitterBox")
+fun bindHitterBox(recyclerView: RecyclerView, hitterBox: List<HitterBox>?) {
+    hitterBox?.let{
+        recyclerView.adapter?.apply {
+            when(this) {
+                is HitterBoxAdapter -> submitList(it)
+            }
+        }
+    }
+}
+
+@BindingAdapter("scoresGames")
+fun bindScoresGames(recyclerView: RecyclerView, games: List<GameCard>?) {
+    games?.let{
+        recyclerView.adapter?.apply {
+            when(this) {
+                is CardScoreAdapter -> submitList(it)
             }
         }
     }

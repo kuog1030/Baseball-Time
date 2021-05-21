@@ -30,6 +30,7 @@
     <action android:id="@+id/navigationToAllGames" app:destination="@id/allGamesFragment" />
     <action android:id="@+id/navigationToNewPlayer" app:destination="@id/newPlayerDialog" />
     <action android:id="@+id/navigationToNewGame" app:destination="@id/newGameFragment" />
+    <action android:id="@+id/navigationToStatGame" app:destination="@id/statGameFragment" />
 
     <fragment
         android:id="@+id/orderFragment"
@@ -68,6 +69,14 @@
             android:name="myTeam"
             app:argType="com.gillian.baseball.data.Team"
             app:nullable="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/statGameFragment"
+        android:name="com.gillian.baseball.statistics.statgame.StatGameFragment"
+        android:label="StatGameFragment" >
+        <argument
+            android:name="gameId"
+            app:argType="string" />
     </fragment>
 
 </navigation>

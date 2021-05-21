@@ -1,4 +1,4 @@
-package com.gillian.baseball.data.source
+package com.gillian.baseball.data
 
 import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event

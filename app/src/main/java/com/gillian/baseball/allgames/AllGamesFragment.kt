@@ -32,12 +32,12 @@ class AllGamesFragment : Fragment() {
             }
         })
 
-        viewModel.navigateToNewGame.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                findNavController().navigate(NavigationDirections.navigationToNewGame(viewModel.myTeam.value))
-                viewModel.onNewGameCreated()
-            }
-        })
+//        viewModel.navigateToNewGame.observe(viewLifecycleOwner, Observer {
+//            it?.let {
+//                findNavController().navigate(NavigationDirections.navigationToNewGame(viewModel.myTeam.value))
+//                viewModel.onNewGameCreated()
+//            }
+//        })
 
 
         return binding.root

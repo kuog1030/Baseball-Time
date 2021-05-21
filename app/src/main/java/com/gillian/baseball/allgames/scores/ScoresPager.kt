@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.allgames.AllGamesViewModel
 import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.data.Box
@@ -17,31 +19,23 @@ import com.prolificinteractive.materialcalendarview.CalendarDay
 
 class ScoresPager : Fragment() {
 
-    private lateinit var binding : PagerScoresBinding
+    private lateinit var binding: PagerScoresBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = PagerScoresBinding.inflate(inflater, container, false)
+        binding.lifecycleOwner = viewLifecycleOwner
 
         val viewModel = ViewModelProvider(requireParentFragment()).get(AllGamesViewModel::class.java)
-        viewModel
+
+        addDot(2021, 5, 10)
 
 
-        addDot(2021,5,10)
-
-        val adapter = CardScoreAdapter()
-        binding.recyclerScores.adapter = adapter
-
-        val box1 = Box()
-        val box2 = Box()
-        val box3 = Box()
-        box1.run[0] = 5
-        box2.run[1] = 10
-        box3.run[0] = 7
-        box3.run[1] = 7
-
-        adapter.submitList(listOf(Game("01", "全國大專盃4強", box = box1),
-                Game(id = "03", title = "全國大專盃8強", box = box2),
-                Game(id = "09", title = "全國大專盃16強", box = box3)))
+        binding.recyclerScores.adapter = CardScoreAdapter(CardScoreAdapter.OnClickListener{ game ->
+            //navigation
+            //TODO() wayne的做法是call viewmodel 的navigate function 然後在同樣這個fragment去observe他
+            findNavController().navigate(NavigationDirections.navigationToStatGame(game.id))
+        })
+        binding.viewModel = viewModel
 
 
         return binding.root
@@ -49,9 +43,9 @@ class ScoresPager : Fragment() {
 
     private fun addDot(year: Int, month: Int, day: Int) {
         binding.calendarScores.addDecorators(
-            CurrentDayDecorator(
-                currentDay = CalendarDay.from(year, month, day)
-            )
+                CurrentDayDecorator(
+                        currentDay = CalendarDay.from(year, month, day)
+                )
         )
     }
 

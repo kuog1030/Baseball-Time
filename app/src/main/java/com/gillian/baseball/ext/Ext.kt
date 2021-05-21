@@ -4,6 +4,7 @@ import android.util.Log
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.HitterBox
 import com.gillian.baseball.game.EventType
+import com.gillian.baseball.login.UserManager
 
 fun List<Event>.toHitterBox(): List<HitterBox> {
 
@@ -48,7 +49,7 @@ fun List<Event>.toHitterBox(): List<HitterBox> {
         if (event.inning % 2 == 1) {
             var noHitter = true
             for (oneHitterBox in guestResult) {
-                if (oneHitterBox.playerId == event.player.userId) {
+                if (oneHitterBox.playerId == event.player.playerId) {
                     updateBox(event, oneHitterBox)
                     noHitter = false
                     break
@@ -56,17 +57,15 @@ fun List<Event>.toHitterBox(): List<HitterBox> {
             }
 
             if (noHitter) {
-                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.userId)
+                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId)
                 updateBox(event, newHitterBox)
                 guestResult.add(newHitterBox)
-                Log.i("gillian", "guest result加東西")
             }
-            Log.i("gillian", "上半局")
         } else {
             var noHitter = true
             for (oneHitterBox in homeResult) {
                 // 找到我要的欄位 已經有這個球員了更新
-                if (oneHitterBox.playerId == event.player.userId) {
+                if (oneHitterBox.playerId == event.player.playerId) {
                     updateBox(event, oneHitterBox)
                     noHitter = false
                     break
@@ -74,7 +73,7 @@ fun List<Event>.toHitterBox(): List<HitterBox> {
             }
 
             if (noHitter) {
-                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.userId)
+                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId)
                 updateBox(event, newHitterBox)
                 homeResult.add(newHitterBox)
                 Log.i("gillian", "home result加東西")
@@ -82,8 +81,42 @@ fun List<Event>.toHitterBox(): List<HitterBox> {
         }
     }
 
-    guestResult.removeAt(0)
-    homeResult.removeAt(0)
+    //guestResult.removeAt(0)
+    //homeResult.removeAt(0)
 
+    Log.i("gillian", "give me $guestResult and it size ${guestResult.size}" )
+    Log.i("gillian", "also home $homeResult and it size ${homeResult.size}")
     return guestResult
+}
+
+
+fun List<Event>.toPersonalScore() : List<String> {
+
+    val result = mutableListOf<String>()
+
+    for (event in this) {
+        if (event.player.playerId == UserManager.userId) {
+            result.add(
+                    when (event.result) {
+                        EventType.SINGLE.number -> EventType.SINGLE.letter
+                        EventType.DOUBLE.number -> EventType.DOUBLE.letter
+                        EventType.TRIPLE.number -> EventType.TRIPLE.letter
+                        EventType.HOMERUN.number -> EventType.HOMERUN.letter
+                        EventType.HITBYPITCH.number -> EventType.HITBYPITCH.letter
+                        EventType.ERRORONBASE.number -> EventType.ERRORONBASE.letter
+                        EventType.DROPPEDTHIRD.number -> EventType.DROPPEDTHIRD.letter
+                        EventType.WALK.number -> EventType.WALK.letter
+                        EventType.STRIKEOUT.number -> EventType.STRIKEOUT.letter
+                        EventType.FIELDERCHOICE.number -> EventType.FIELDERCHOICE.letter
+                        EventType.GROUNDOUT.number -> EventType.GROUNDOUT.letter
+                        EventType.AIROUT.number -> EventType.AIROUT.letter
+                        EventType.SACRIFICEFLY.number -> EventType.SACRIFICEFLY.letter
+                        EventType.SACRIFICEGO.number -> EventType.SACRIFICEGO.letter
+                        else -> ""
+                    }
+            )
+        }
+    }
+
+    return result
 }

@@ -5,7 +5,7 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class EventPlayer(
-        var userId: String = "",
+        var playerId: String = "",
         val name: String = "",
         val number: String = "",
         var pinch: EventPlayer? = null

@@ -88,14 +88,15 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
                 date = Calendar.getInstance().timeInMillis,
                 place = "")
 
+        // TODO() 這樣對手的playerid都會一樣有點危險
         for (index in 1..9) {
-            awayLineUp.add(EventPlayer(name = "第${index}棒"))
+            awayLineUp.add(EventPlayer(playerId = "$index", name = "第${index}棒"))
         }
 
         val myTeam = GameTeam(
                 name = "Android",
                 teamId = UserManager.teamId,
-                pitcher = EventPlayer(name = pitcher.value ?: "古林睿揚", number = "19", userId = "0019"),
+                pitcher = EventPlayer(name = pitcher.value ?: "古林睿揚", number = "19", playerId = "0019"),
                 lineUp = lineUp
         )
 

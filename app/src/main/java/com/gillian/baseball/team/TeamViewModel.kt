@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gillian.baseball.data.HitterBox
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.Team
@@ -24,13 +25,17 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val showNewPlayerDialog: LiveData<Boolean>
         get() = _showNewPlayerDialog
 
+
+    //TODO() 測試用 記得刪掉
+    val oneGameHitterStat = MutableLiveData<List<HitterBox>>()
+
+
     var team = MutableLiveData<Team>()
     var teamName = MutableLiveData<String>()
 
     fun getTeam() {
         viewModelScope.launch {
             team = repository.getTeam(UserManager.teamId)
-            repository.getHittersStat("mLJAsjiRThY5TgjRInpx", "")
         }
     }
 
@@ -58,9 +63,31 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
+    // TODO()測試用記得刪
+    fun getHitterStat() {
+        viewModelScope.launch {
+            val result = repository.getHittersStat("pP4lAdxbYXDHgiAhRlnI", "")
+            oneGameHitterStat.value = when (result) {
+                is Result.Success -> {
+                    Log.i("gillian", "success")
+                    result.data
+                }
+                is Result.Fail -> {
+                    null
+                }
+                is Result.Error -> {
+                    null
+                }
+                else -> {
+                    null
+                }
+            }
+        }
+    }
 
     init {
         getTeamPlayer()
+        getHitterStat()  //TODO() 測試用記得刪
         if (UserManager.teamName == null) {
             getTeam()
         } else {

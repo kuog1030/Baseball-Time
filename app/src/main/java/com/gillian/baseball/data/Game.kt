@@ -13,8 +13,21 @@ data class Game (
         var home: GameTeam = GameTeam(),
         var guest: GameTeam = GameTeam(),
         val box: Box = Box(),
-        val note: String = ""
-) : Parcelable
+        val note: String = "",
+        val recordedTeamId : String = ""
+) : Parcelable {
+
+    fun toGameCard() : GameCard{
+        return GameCard(
+                id = id,
+                title = title,
+                date = date,
+                isHome = (recordedTeamId == home.teamId),
+                homeScore = box.run[1],
+                guestScore = box.run[0]
+        )
+    }
+}
 
 @Parcelize
 data class Box (
