@@ -12,16 +12,9 @@ data class Game (
         var place: String = "",
         var home: GameTeam = GameTeam(),
         var guest: GameTeam = GameTeam(),
-        val box: Box = Box()
-) : Parcelable {
-
-    // TODO()這個也被丟到firebase上了!!!!!
-    val homeScore : Int
-        get() = box.run[0]
-
-    val guestScore : Int
-        get() = box.run[1]
-}
+        val box: Box = Box(),
+        val note: String = ""
+) : Parcelable
 
 @Parcelize
 data class Box (

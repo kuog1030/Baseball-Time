@@ -38,4 +38,6 @@
     <dimen name="card_radius">15dp</dimen>
     <dimen name="card_elevation">7dp</dimen>
 
+    <dimen name="new_game_note_height">100dp</dimen>
+
 </resources>

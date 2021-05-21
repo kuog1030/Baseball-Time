@@ -43,7 +43,7 @@ class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun sendEvent(event: Event) {
+    override suspend fun sendEvent(gameId: String, event: Event) {
         TODO("Not yet implemented")
     }
 }

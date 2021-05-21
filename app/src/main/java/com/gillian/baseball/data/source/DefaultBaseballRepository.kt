@@ -44,7 +44,7 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
         return remoteDataSource.getTeamEventPlayer(teamId)
     }
 
-    override suspend fun sendEvent(event: Event) {
-        return remoteDataSource.sendEvent(event)
+    override suspend fun sendEvent(gameId: String, event: Event) {
+        return remoteDataSource.sendEvent(gameId, event)
     }
 }

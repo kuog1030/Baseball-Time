@@ -16,6 +16,8 @@ object BaseballRemoteDataSource : BaseballDataSource {
     private const val PLAYERS = "players"
     private const val TEAMS = "teams"
     private const val GAMES = "games"
+    // sub collection
+    private const val PLAYS = "plays"
 
     private const val MEMBERS_LIST = "membersId"
     // field name
@@ -232,7 +234,23 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
-    override suspend fun sendEvent(event: Event) {
-        Log.i("remote", "event to be sent $event")
+
+    // TODO() GameViewModel, OnBaseViewModel, EventDialogViewModel
+    override suspend fun sendEvent(gameId: String, event: Event) {
+        //        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
+        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document("dkpQG98dC1uUF7eYv1Jf")
+        val document = theGame.collection(PLAYS).document()
+
+        event.id = document.id
+
+        document.set(event).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.i("remote", "send a event $event success")
+            } else {
+                task.exception?.let {
+                    Log.i("remote", "send a event fail ${it.message}")
+                }
+            }
+        }
     }
 }

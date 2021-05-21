@@ -53,6 +53,7 @@
     <string name="starting_pitcher">預計先發投手</string>
     <string name="home_or_guest">你是主客隊？</string>
     <string name="versus">VS</string>
+    <string name="add_game_note">備註</string>
 
     <!--    game record related -->
 

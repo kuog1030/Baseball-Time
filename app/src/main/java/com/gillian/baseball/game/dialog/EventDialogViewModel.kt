@@ -60,7 +60,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         scoreToBeAdded = eventList[0].rbi
         viewModelScope.launch {
             for (singleEvent in readyToSend) {
-                repository.sendEvent(singleEvent)
+                repository.sendEvent("", singleEvent)
             }
         }
 

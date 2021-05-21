@@ -10,7 +10,11 @@
             type="com.gillian.baseball.newgame.NewGameViewModel" />
     </data>
     
-    
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -89,9 +93,9 @@
             android:layout_marginTop="@dimen/double_margin"
             android:orientation="horizontal"
             android:checkedButton="@={viewModel.selectedSideRadio}"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_away"
             app:layout_constraintStart_toEndOf="@id/text_new_game_side"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_away"
             app:layout_constraintTop_toBottomOf="@id/card_new_game">
 
             <RadioButton
@@ -116,12 +120,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/away_team_name"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName2"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_new_game_away"
             app:layout_constraintStart_toStartOf="@+id/text_new_game_title"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName2" />
+            app:layout_constraintTop_toTopOf="@+id/edit_new_game_away" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName2"
+            android:id="@+id/edit_new_game_away"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
@@ -140,12 +144,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/game_title"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_new_game_title"
             app:layout_constraintStart_toStartOf="@+id/text_new_game_side"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName" />
+            app:layout_constraintTop_toTopOf="@+id/edit_new_game_title" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName"
+            android:id="@+id/edit_new_game_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
@@ -153,22 +157,22 @@
             android:ems="10"
             android:inputType="textPersonName"
             android:text="@={viewModel.gameTitle}"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_away"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName2" />
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_away"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_away" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/text_new_game_place"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/game_place"
-            app:layout_constraintBottom_toBottomOf="@+id/editTextTextPersonName3"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_new_game_place"
             app:layout_constraintStart_toStartOf="@+id/text_new_game_title"
-            app:layout_constraintTop_toTopOf="@+id/editTextTextPersonName3" />
+            app:layout_constraintTop_toTopOf="@+id/edit_new_game_place" />
 
         <EditText
-            android:id="@+id/editTextTextPersonName3"
+            android:id="@+id/edit_new_game_place"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:ems="10"
@@ -176,9 +180,9 @@
             android:background="@drawable/bg_edit_text"
             android:layout_marginTop="@dimen/double_margin"
             android:text="@={viewModel.gamePlace}"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_title"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_title"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_title" />
 
         <TextView
             android:id="@+id/text_new_game_date"
@@ -197,21 +201,45 @@
             android:layout_marginTop="@dimen/double_margin"
             android:paddingStart="15dp"
             android:text="@{viewModel.gameDate}"
-            app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName2"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_away"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName2"
-            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName3" />
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_away"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_place" />
 
         <Button
             android:id="@+id/button3"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="TODO 建立新遊戲"
+            android:layout_marginTop="@dimen/double_margin"
             android:onClick="@{()->viewModel.scheduleNewGame()}"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_note" />
+
+
+        <TextView
+            android:id="@+id/text_new_game_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_game_note"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_date"
+            app:layout_constraintTop_toTopOf="@+id/edit_new_game_note" />
+
+        <EditText
+            android:id="@+id/edit_new_game_note"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/new_game_note_height"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:background="@drawable/bg_edit_text"
+            android:layout_marginTop="@dimen/double_margin"
+            android:text="@={viewModel.gameNote}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_title"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_title"
             app:layout_constraintTop_toBottomOf="@+id/button_new_game_date" />
+
 
         <!--        <TextView-->
 <!--            android:id="@+id/text_new_game_starter"-->
@@ -233,4 +261,5 @@
 <!--            app:layout_constraintTop_toBottomOf="@+id/button_new_game_date" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 </layout>

@@ -333,7 +333,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     fun sendEvent(event: Event) {
         viewModelScope.launch {
-            repository.sendEvent(event)
+            repository.sendEvent(argument.game.id , event)
         }
     }
 

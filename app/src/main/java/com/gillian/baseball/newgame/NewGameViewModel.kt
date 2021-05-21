@@ -9,6 +9,7 @@ import com.gillian.baseball.R
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 
 class NewGameViewModel(val repository: BaseballRepository, private var myTeam: Team?) : ViewModel() {
@@ -19,8 +20,14 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
     val awayName = MutableLiveData<String>()
     val gameTitle = MutableLiveData<String>()
     val gamePlace = MutableLiveData<String>()
+    val gameNote = MutableLiveData<String>()
 
     val selectedSideRadio = MutableLiveData<Int>(R.id.radio_new_game_home)
+
+    private val _scheduleSuccess = MutableLiveData<Boolean>()
+
+    val scheduleSuccess: LiveData<Boolean>
+        get() = _scheduleSuccess
 
     private val isHome: Boolean
         get() = when (selectedSideRadio.value) {
@@ -106,7 +113,7 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
             // pithcer and lineup not yet initialized
             val myGameTeam = GameTeam( name = myTeam!!.name, acronym = myTeam!!.acronym, teamId = myTeam!!.id)
 
-            val game = Game(title = gameTitle.value!!, date = gameDateLong, place = gamePlace.value!!)
+            val game = Game(title = gameTitle.value!!, date = gameDateLong, place = gamePlace.value!!, note = gameNote.value ?: "")
 
             if (isHome) {
                 game.home = myGameTeam
@@ -122,8 +129,30 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
 
     fun uploadNewGame(game: Game) {
         viewModelScope.launch {
-            repository.createGame(game)
+            val result = repository.scheduleGame(game)
+            _scheduleSuccess.value = when (result) {
+                is Result.Success -> {
+                    _errorMessage.value = null
+                    result.data
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = result.error
+                    null
+                }
+                is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
+                    null
+                }
+                else -> {
+                    _errorMessage.value = getString(R.string.return_nothing)
+                    null
+                }
+            }
         }
+    }
+
+    fun onGameUploadedAndNavigated() {
+        _scheduleSuccess.value = null
     }
 
 

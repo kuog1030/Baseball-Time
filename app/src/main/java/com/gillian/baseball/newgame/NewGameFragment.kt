@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.databinding.FragmentNewGameBinding
 import com.gillian.baseball.ext.getVmFactory
+import java.text.SimpleDateFormat
 import java.util.*
 
 class NewGameFragment : Fragment() {
@@ -42,6 +44,12 @@ class NewGameFragment : Fragment() {
             }
         })
 
+        viewModel.scheduleSuccess.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                if (it) findNavController().popBackStack()
+                viewModel.onGameUploadedAndNavigated()
+            }
+        })
 
         return binding.root
     }
@@ -58,9 +66,9 @@ class NewGameFragment : Fragment() {
             TimePickerDialog(requireContext(), TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                 val pickedDateTime = Calendar.getInstance()
                 pickedDateTime.set(year, month, day, hour, minute)
-//                val longg = pickedDateTime.getTimeInMillis()
                 viewModel.gameDateLong = pickedDateTime.timeInMillis
-                viewModel.gameDate.value = "${year}-${month+1}-${month} ${hour}:${minute}"
+                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.TAIWAN)
+                viewModel.gameDate.value = dateFormat.format(Date(pickedDateTime.timeInMillis))
 
             }, startHour, startMinute, false).show()
         }, startYear, startMonth, startDay).show()
