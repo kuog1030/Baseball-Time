@@ -1,4 +1,4 @@
-package com.gillian.baseball.game.dialog
+package com.gillian.baseball.game.onbase
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

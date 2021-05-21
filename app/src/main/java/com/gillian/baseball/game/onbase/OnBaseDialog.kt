@@ -1,4 +1,4 @@
-package com.gillian.baseball.game.dialog
+package com.gillian.baseball.game.onbase
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,8 +8,6 @@ import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.gillian.baseball.data.AtBase
-import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.OnBaseInfo
 import com.gillian.baseball.databinding.DialogOnBaseBinding
 import com.gillian.baseball.ext.getVmFactory

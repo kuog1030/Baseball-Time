@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.gillian.baseball.game.dialog.OnBaseDialogViewModel" />
+            type="com.gillian.baseball.game.onbase.OnBaseDialogViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

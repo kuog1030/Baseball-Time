@@ -238,10 +238,9 @@ object BaseballRemoteDataSource : BaseballDataSource {
     }
 
 
-    // TODO() GameViewModel, OnBaseViewModel, EventDialogViewModel
+    // TODO() EventDialogViewModel
     override suspend fun sendEvent(gameId: String, event: Event) {
         val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
-        //val theGame = FirebaseFirestore.getInstance().collection(GAMES).document("dkpQG98dC1uUF7eYv1Jf")
         val document = theGame.collection(PLAYS).document()
 
         event.id = document.id

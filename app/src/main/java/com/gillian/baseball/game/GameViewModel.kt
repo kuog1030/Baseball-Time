@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.data.source.EventInfo
 import kotlinx.coroutines.launch
 
 // debug用
@@ -40,6 +41,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     val homeLineUp = argument.game.home.lineUp
     val guestLineUp = argument.game.guest.lineUp
+
     // 替補球員假資料
     var myBench = mutableListOf(EventPlayer(name = "Gillian", number = "22"),
             EventPlayer(name = "Wency", number = "30"),
@@ -60,8 +62,6 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     /* ---------------------------- init game info ---------------------------- */
 
 
-
-
     /* ---------------------------- 打擊相關 ----------------------------*/
     var ballCount = MutableLiveData<Int>(0)
     var strikeCount = MutableLiveData<Int>(0)
@@ -75,9 +75,9 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         } else {
             homeRun.value = homeRun.value!!.plus(score)
         }
-        game.value?.let{
-            it.box.score[inningCount-1] += score
-            it.box.run[ (inningCount-1) %2] += score
+        game.value?.let {
+            it.box.score[inningCount - 1] += score
+            it.box.run[(inningCount - 1) % 2] += score
         }
     }
 
@@ -141,16 +141,16 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         value = "第1棒 ${baseList[0]?.name}"
     }
 
-    private val _navigateToEvent = MutableLiveData<List<AtBase>>()
-    val navigateToEvent: LiveData<List<AtBase>>
+    private val _navigateToEvent = MutableLiveData<EventInfo>()
+    val navigateToEvent: LiveData<EventInfo>
         get() = _navigateToEvent
 
     private val _navigateToOnBase = MutableLiveData<OnBaseInfo>()
     val navigateToOnBase: LiveData<OnBaseInfo>
         get() = _navigateToOnBase
 
-    private val _navigateToOut = MutableLiveData<List<AtBase>>()
-    val navigateToOut: LiveData<List<AtBase>>
+    private val _navigateToOut = MutableLiveData<EventInfo>()
+    val navigateToOut: LiveData<EventInfo>
         get() = _navigateToOut
 
     private val _navigateToFinal = MutableLiveData<MyGame>()
@@ -248,12 +248,24 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         }
 
         if (isSafe) {
-            _navigateToEvent.value = atBaseList
+            _navigateToEvent.value = EventInfo(gameId = argument.game.id,
+                    atBaseList = atBaseList,
+                    isSafe = true,
+                    hitterPreEvent = hitterEvent)
         } else {
+
+            // 如果兩出局，只管打者
             if (outCount.value == 2) {
-                _navigateToOut.value = listOf(AtBase(0, baseList[0]!!))
+                _navigateToOut.value = EventInfo(gameId = argument.game.id,
+                        atBaseList = listOf(AtBase(0, baseList[0]!!)),
+                        isSafe = false,
+                        hitterPreEvent = hitterEvent)
+
             } else {
-                _navigateToOut.value = atBaseList
+                _navigateToOut.value = EventInfo(gameId = argument.game.id,
+                        atBaseList = atBaseList,
+                        isSafe = false,
+                        hitterPreEvent = hitterEvent)
             }
         }
     }
@@ -334,7 +346,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     fun sendEvent(event: Event) {
         viewModelScope.launch {
-            repository.sendEvent(argument.game.id , event)
+            repository.sendEvent(argument.game.id, event)
         }
     }
 

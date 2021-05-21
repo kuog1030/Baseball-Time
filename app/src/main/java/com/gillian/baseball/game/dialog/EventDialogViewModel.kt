@@ -9,13 +9,14 @@ import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.data.source.EventInfo
 import com.gillian.baseball.game.EventType
 import kotlinx.coroutines.launch
 
-class EventDialogViewModel(private val repository: BaseballRepository) : ViewModel() {
+class EventDialogViewModel(private val repository: BaseballRepository, private val eventInfo: EventInfo) : ViewModel() {
 
-    var atBaseList = listOf<AtBase>()
-    var hitterEvent = MutableLiveData<Event>()
+    var atBaseList = eventInfo.atBaseList
+    var hitterEvent = MutableLiveData<Event>(eventInfo.hitterPreEvent)
     var newBaseList = arrayOf<EventPlayer?>(null, null, null, null)
     var hasOut : Boolean? = null
     var hasBaseOut : Int? = null
@@ -60,7 +61,7 @@ class EventDialogViewModel(private val repository: BaseballRepository) : ViewMod
         scoreToBeAdded = eventList[0].rbi
         viewModelScope.launch {
             for (singleEvent in readyToSend) {
-                repository.sendEvent("", singleEvent)
+                repository.sendEvent(eventInfo.gameId, singleEvent)
             }
         }
 

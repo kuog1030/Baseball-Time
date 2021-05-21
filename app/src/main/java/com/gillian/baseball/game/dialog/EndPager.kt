@@ -13,7 +13,7 @@ class EndPager (val page: String) : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val binding = PagerEndBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
+        val viewModel = ViewModelProvider(requireParentFragment()).get(EventDialogViewModel::class.java)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.page = page

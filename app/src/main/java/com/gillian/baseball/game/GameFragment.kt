@@ -1,7 +1,6 @@
 package com.gillian.baseball.game
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,7 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.databinding.FragmentGameBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.game.dialog.EventDialog
-import com.gillian.baseball.game.dialog.OnBaseDialog
+import com.gillian.baseball.game.onbase.OnBaseDialog
 import com.gillian.baseball.game.pinch.PinchDialog
 
 class GameFragment : Fragment() {
@@ -31,7 +30,7 @@ class GameFragment : Fragment() {
 
         viewModel.navigateToEvent.observe(viewLifecycleOwner, Observer {
             it?.let{
-                val eventDialog = EventDialog(it, true, viewModel.hitterEvent)
+                val eventDialog = EventDialog(it)
                 eventDialog.show(childFragmentManager, "Success")
                 viewModel.onEventNavigated()
             }
@@ -39,7 +38,7 @@ class GameFragment : Fragment() {
 
         viewModel.navigateToOut.observe(viewLifecycleOwner, Observer {
             it?.let{
-                val eventDialog = EventDialog(it, false, viewModel.hitterEvent)
+                val eventDialog = EventDialog(it)
                 eventDialog.show(childFragmentManager, "Out")
                 viewModel.onOutNavigated()
             }

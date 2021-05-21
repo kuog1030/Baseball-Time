@@ -18,8 +18,6 @@ class ViewModelFactory constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
         with(modelClass) {
             when {
-                isAssignableFrom(EventDialogViewModel::class.java) ->
-                    EventDialogViewModel(repository)
                 isAssignableFrom(OrderViewModel::class.java) ->
                     OrderViewModel(repository)
                 isAssignableFrom(FirstLoginViewModel::class.java) ->

@@ -14,7 +14,7 @@ class RunnerPager(val page : String, val atBase: AtBase) : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val binding = PagerRunnerBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(requireActivity()).get(EventDialogViewModel::class.java)
+        val viewModel = ViewModelProvider(requireParentFragment()).get(EventDialogViewModel::class.java)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel

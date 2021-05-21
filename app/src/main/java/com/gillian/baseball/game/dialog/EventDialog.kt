@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
 import androidx.fragment.app.DialogFragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.navArgs
@@ -15,11 +16,13 @@ import com.gillian.baseball.R
 import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.EventPlayer
+import com.gillian.baseball.data.source.EventInfo
 import com.gillian.baseball.databinding.DialogEventBinding
+import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.game.GameViewModel
 
-class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHitterEvent: Event) : AppCompatDialogFragment() {
+class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 
 //    想要設定dialog的寬度的話，新增下面這段，並進到dialog_event.xml裡面調整長寬和背景顏色
 //    override fun onCreate(savedInstanceState: Bundle?) {
@@ -30,6 +33,10 @@ class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHit
 //        dismiss()
 //    }
 
+    private val viewModel by viewModels<EventDialogViewModel> {getVmFactory(eventInfo) }
+    private val isSafe = eventInfo.isSafe
+    private val atBaseList = eventInfo.atBaseList
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
@@ -38,14 +45,12 @@ class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHit
 //        }
 
         val binding = DialogEventBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(
-                requireActivity(),
-                ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)
-        ).get(EventDialogViewModel::class.java)
+//        val viewModel = ViewModelProvider(
+//                requireActivity(),
+//                ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)
+//        ).get(EventDialogViewModel::class.java)
 
 
-        viewModel.atBaseList = argsAtBase
-        viewModel.hitterEvent.value = argsHitterEvent
 
         fun changePage() {
             val currentPosition = binding.viewpagerEvent.currentItem
@@ -54,7 +59,7 @@ class EventDialog(val argsAtBase: List<AtBase>, val isSafe: Boolean, val argsHit
             }
         }
 
-        binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager, isSafe, argsAtBase)
+        binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager, isSafe, atBaseList)
         binding.tabsEvent.setupWithViewPager(binding.viewpagerEvent)
         binding.viewpagerEventArrow.setArrowIndicatorRes(R.drawable.ic_baseline_arrow_backward_24, R.drawable.ic_baseline_arrow_forward_24)
         binding.viewpagerEventArrow.bind(binding.viewpagerEvent)
