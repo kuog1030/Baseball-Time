@@ -9,6 +9,7 @@ import com.gillian.baseball.R
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 import java.util.*
 
@@ -35,6 +36,10 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
             else -> false
         }
 
+    private val _setUpGame = MutableLiveData<Game>()
+    val setUpGame : LiveData<Game>
+        get() = _setUpGame
+
     private val _navigateToGame = MutableLiveData<MyGame>()
     val navigateToGame : LiveData<MyGame>
         get() = _navigateToGame
@@ -44,6 +49,11 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     val showNewPlayerDialog : LiveData<Boolean>
         get() = _showNewPlayerDialog
+
+    private val _errorMessage = MutableLiveData<String>()
+
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
 
 
     init {
@@ -72,7 +82,8 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    fun navigateToGame() {
+    fun setUpAGame() {
+        // 把該有的資料準備好
         val game = Game(
                 title = gameTitle.value ?: "世界第一武道大會",
                 date = Calendar.getInstance().timeInMillis,
@@ -98,17 +109,41 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         game.home = if (isHome) myTeam else awayTeam
         game.guest = if (isHome) awayTeam else myTeam
 
+
+        // 上傳到firebase
         viewModelScope.launch {
-            repository.createGame(game)
+
+            val result = repository.createGame(game)
+
+            _setUpGame.value = when (result) {
+                is Result.Success -> {
+                    _errorMessage.value = null
+                    result.data
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = result.error
+                    null
+                }
+                is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
+                    null
+                }
+                else -> {
+                    _errorMessage.value = Util.getString(R.string.return_nothing)
+                    null
+                }
+            }
         }
-
-
-        _navigateToGame.value = MyGame(isHome = isHome, game = game)
     }
 
 
     fun showNewPlayerDialog() {
         _showNewPlayerDialog.value = true
+    }
+
+    fun navigateToGame(game: Game) {
+        _setUpGame.value = null
+        _navigateToGame.value = MyGame(isHome = isHome, game = game)
     }
 
     fun onGameNavigated() {

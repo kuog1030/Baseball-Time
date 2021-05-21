@@ -45,6 +45,12 @@ class OrderFragment : Fragment() {
         })
 
 
+        viewModel.setUpGame.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                viewModel.navigateToGame(it)
+            }
+        })
+
         viewModel.navigateToGame.observe(viewLifecycleOwner, Observer {
             it?.let{
                 findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToGameFragment(it))

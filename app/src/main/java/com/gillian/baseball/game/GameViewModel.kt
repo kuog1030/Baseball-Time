@@ -260,6 +260,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     fun toOnBaseDialog(base: Int) {
         _navigateToOnBase.value = OnBaseInfo(
+                gameId = argument.game.id,
                 inning = inningCount,
                 out = outCount.value ?: 0,
                 onClickPlayer = base,

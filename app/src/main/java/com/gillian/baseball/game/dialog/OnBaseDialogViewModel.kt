@@ -33,7 +33,7 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository, private 
     fun stealBaseSuccess() {
         _proceed.value = true
         viewModelScope.launch {
-            repository.sendEvent("", Event(player = player!!, pitcher = pitcher!!, result = EventType.STEALBASE.number))
+            repository.sendEvent(onBaseInfo.gameId, Event(player = player!!, pitcher = pitcher!!, result = EventType.STEALBASE.number))
         }
     }
 

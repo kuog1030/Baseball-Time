@@ -20,7 +20,7 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
         return remoteDataSource.createPlayer(player)
     }
 
-    override suspend fun createGame(game: Game) {
+    override suspend fun createGame(game: Game) : Result<Game> {
         return remoteDataSource.createGame(game)
     }
 

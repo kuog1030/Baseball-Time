@@ -13,6 +13,7 @@ data class AtBase (
 
 @Parcelize
 data class OnBaseInfo(
+        val gameId: String,
         val inning: Int,
         val out: Int,
         val onClickPlayer: Int,

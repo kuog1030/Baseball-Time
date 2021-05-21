@@ -127,7 +127,8 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
-    override suspend fun createGame(game: Game) {
+    // only be used when fast start up a game. will return the unique document id
+    override suspend fun createGame(game: Game) : Result<Game> = suspendCoroutine {continuation ->
         val games = FirebaseFirestore.getInstance().collection(GAMES)
         val document = games.document()
 
@@ -135,11 +136,13 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
         document.set(game).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Log.i("remote", "create a game $game success")
+                continuation.resume(Result.Success(game))
             } else {
                 task.exception?.let {
                     Log.i("remote", "create a team fail ${it.message}")
+                    continuation.resume(Result.Error(it))
                 }
+                continuation.resume(Result.Fail("fast create a game fail"))
             }
         }
     }
@@ -237,8 +240,8 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
     // TODO() GameViewModel, OnBaseViewModel, EventDialogViewModel
     override suspend fun sendEvent(gameId: String, event: Event) {
-        //        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
-        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document("dkpQG98dC1uUF7eYv1Jf")
+        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
+        //val theGame = FirebaseFirestore.getInstance().collection(GAMES).document("dkpQG98dC1uUF7eYv1Jf")
         val document = theGame.collection(PLAYS).document()
 
         event.id = document.id
