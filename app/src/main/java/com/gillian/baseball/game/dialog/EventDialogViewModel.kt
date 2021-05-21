@@ -125,7 +125,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     //TODO()
     fun error() {
         hitterEvent.value?.let{
-            it.result = 6
+            it.result = EventType.ERRORONBASE.number
         }
     }
 
@@ -151,11 +151,6 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
         changeToNextPage()
     }
 
-    fun secondBase(atBase: AtBase) {
-        atBase.base = 2
-        changeToNextPage()
-    }
-
     fun thirdBase(atBase: AtBase) {
         atBase.base = 3
         changeToNextPage()
@@ -164,7 +159,8 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     // 回壘得分
     fun run(atBase: AtBase) {
         atBase.base = -1
-        eventList.add(Event(run = 1,
+        eventList.add(Event( inning = hitterEvent.value!!.inning,
+                run = 1,
                 player = atBase.player,
                 pitcher = hitterEvent.value?.pitcher!!,
                 out = hitterEvent.value?.out ?: 0))
@@ -194,7 +190,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     fun airOut(hasRbi: Boolean) {
         hitterEvent.value?.let{
             it.result = if (hasRbi) 23 else 22
-            it.rbi = if (hasRbi) 1 else 0
+            //it.rbi = if (hasRbi) 1 else 0  跑者回壘得分的時候就會加進打者的event
         }
         eventList.add(hitterEvent.value!!)
         atBaseList[0].base = -1

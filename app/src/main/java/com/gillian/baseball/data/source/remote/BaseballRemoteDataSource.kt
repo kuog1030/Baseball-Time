@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
+import com.gillian.baseball.ext.toHitterBox
 import com.gillian.baseball.login.UserManager
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
@@ -237,8 +238,23 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
+    override suspend fun getHittersStat(gameId: String, teamId: String): Result<List<HitterBox>> = suspendCoroutine { continuation ->
+        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
 
-    // TODO() EventDialogViewModel
+        theGame.collection(PLAYS)
+                .get()
+                .addOnSuccessListener { documents ->
+                    val result = mutableListOf<Event>()
+                    for (document in documents) {
+                        result.add(document.toObject(Event::class.java))
+                        //Log.i("remote", " ${document.id} -> ${document.data}")
+                    }
+                    result.toHitterBox()
+                }
+    }
+
+
+    // TODO 回傳result?
     override suspend fun sendEvent(gameId: String, event: Event) {
         val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
         val document = theGame.collection(PLAYS).document()

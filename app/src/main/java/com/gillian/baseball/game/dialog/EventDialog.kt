@@ -78,6 +78,8 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
                 if (viewModel.hasOut != null) {
                     // 如果有出局數的話 eg. 雖然上壘safe 但是選殺，有仍然有出局數
                     gameViewModel.setNewBaseList(it)
+                    // 犧牲打也要加上分數
+                    if (viewModel.scoreToBeAdded != 0) gameViewModel.scored(viewModel.scoreToBeAdded)
                     // 如果有壘包上的出局數
                     if (viewModel.hasBaseOut != null) gameViewModel.onBaseOut(viewModel.hasBaseOut!!)
                     gameViewModel.out()

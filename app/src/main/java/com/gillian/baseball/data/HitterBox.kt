@@ -12,7 +12,7 @@ package com.gillian.baseball.data
 
 data class HitterBox (
         var name : String? = "",
-        val playerId : Long = 0L,
+        val playerId : String = "",
         var atBat : Int = 0,
         var run : Int = 0,
         var hit : Int = 0,

@@ -21,13 +21,13 @@ class RankPager : Fragment() {
 
         val adapter = HitterBoxAdapter()
         binding.recyclerHitterBox.adapter = adapter
-        adapter.submitList(listOf(HitterBox(playerId = 0L, run = 10),
-                HitterBox(name = "Gillian", playerId = 155L, run = 10),
-                HitterBox(name = "Peter", playerId = 100L, run = 5),
-                HitterBox(name = "Sean", playerId = 134L, run = 2),
-                HitterBox(name = "Chloe", playerId = 2L, run = 1),
-                HitterBox(name = "Wency", playerId = 5L, run = 7),
-                HitterBox(name = "Scolley", playerId = 9L, run = 2, hit = 28, strikeOut = 3)
+        adapter.submitList(listOf(HitterBox(playerId = "0", run = 10),
+                HitterBox(name = "Gillian", playerId = "155", run = 10),
+                HitterBox(name = "Peter", playerId = "100", run = 5),
+                HitterBox(name = "Sean", playerId = "134", run = 2),
+                HitterBox(name = "Chloe", playerId = "2", run = 1),
+                HitterBox(name = "Wency", playerId = "5", run = 7),
+                HitterBox(name = "Scolley", playerId = "9", run = 2, hit = 28, strikeOut = 3)
         ))
 
         return binding.root

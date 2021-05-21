@@ -30,6 +30,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     fun getTeam() {
         viewModelScope.launch {
             team = repository.getTeam(UserManager.teamId)
+            repository.getHittersStat("mLJAsjiRThY5TgjRInpx", "")
         }
     }
 

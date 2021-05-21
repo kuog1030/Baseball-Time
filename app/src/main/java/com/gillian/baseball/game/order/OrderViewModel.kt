@@ -1,6 +1,5 @@
 package com.gillian.baseball.game.order
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -95,7 +94,7 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
         val myTeam = GameTeam(
                 name = "Android",
-                teamId = "999",
+                teamId = UserManager.teamId,
                 pitcher = EventPlayer(name = pitcher.value ?: "古林睿揚", number = "19", userId = "0019"),
                 lineUp = lineUp
         )

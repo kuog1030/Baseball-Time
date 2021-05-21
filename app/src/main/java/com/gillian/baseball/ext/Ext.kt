@@ -1,0 +1,89 @@
+package com.gillian.baseball.ext
+
+import android.util.Log
+import com.gillian.baseball.data.Event
+import com.gillian.baseball.data.HitterBox
+import com.gillian.baseball.game.EventType
+
+fun List<Event>.toHitterBox(): List<HitterBox> {
+
+    Log.i("gillian", "list size ${this.size}")
+    val guestResult = mutableListOf<HitterBox>(HitterBox())
+    val homeResult = mutableListOf<HitterBox>(HitterBox())
+
+    fun updateBox(event: Event, box: HitterBox) {
+        val type = event.result
+        lateinit var targetEventType: EventType
+
+        for (eventType in EventType.values()) {
+            if (type == eventType.number) {
+                targetEventType = eventType
+                break
+            }
+        }
+
+        // TODO() 之後得分的result要改掉，目前傳上去是0
+        if (type == 0) targetEventType = EventType.RUN
+
+        if (targetEventType.isAtBat) box.atBat += 1
+        box.run += event.run
+        box.runsBattedIn += event.rbi
+
+        when (targetEventType) {
+            EventType.SINGLE -> box.hit += 1
+            EventType.DOUBLE -> box.hit += 1
+            EventType.TRIPLE -> box.hit += 1
+            EventType.HOMERUN -> box.hit += 1
+            EventType.DROPPEDTHIRD -> box.strikeOut += 1
+            EventType.STRIKEOUT -> box.strikeOut += 1
+            EventType.WALK -> box.baseOnBalls += 1
+            EventType.STEALBASE -> box.stealBase += 1
+            else -> null
+        }
+    }
+
+
+    for (event in this) {
+        // 上半局 打者event加進去guest那邊
+        if (event.inning % 2 == 1) {
+            var noHitter = true
+            for (oneHitterBox in guestResult) {
+                if (oneHitterBox.playerId == event.player.userId) {
+                    updateBox(event, oneHitterBox)
+                    noHitter = false
+                    break
+                }
+            }
+
+            if (noHitter) {
+                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.userId)
+                updateBox(event, newHitterBox)
+                guestResult.add(newHitterBox)
+                Log.i("gillian", "guest result加東西")
+            }
+            Log.i("gillian", "上半局")
+        } else {
+            var noHitter = true
+            for (oneHitterBox in homeResult) {
+                // 找到我要的欄位 已經有這個球員了更新
+                if (oneHitterBox.playerId == event.player.userId) {
+                    updateBox(event, oneHitterBox)
+                    noHitter = false
+                    break
+                }
+            }
+
+            if (noHitter) {
+                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.userId)
+                updateBox(event, newHitterBox)
+                homeResult.add(newHitterBox)
+                Log.i("gillian", "home result加東西")
+            }
+        }
+    }
+
+    guestResult.removeAt(0)
+    homeResult.removeAt(0)
+
+    return guestResult
+}
