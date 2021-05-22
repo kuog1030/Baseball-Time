@@ -22,5 +22,6 @@ data class Player(
     var name : String = "",
     var nickname : String? = null,
     var number : Int = -1,
-    var image: String? = null
+    var image: String? = null,
+    //var careerStat: HitterBox = HitterBox(name = name, playerId = id)
 ) : Parcelable

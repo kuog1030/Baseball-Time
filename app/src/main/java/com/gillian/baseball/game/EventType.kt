@@ -17,7 +17,7 @@ enum class EventType(val number : Int, val letter: String, val isAtBat: Boolean)
     GROUNDOUT(21, "GO", true),
     AIROUT(22, "AO", true),
     SACRIFICEFLY(23, "SF", false), // 高飛犧牲打
-    SACRIFICEGO(24, "SF", false), // 推進效果的犧牲打
+    SACRIFICEGO(24, "SAC", false), // 推進效果的犧牲打
     // 壘包上事件
     STEALBASE(31, "SB", false),
     PICKOFF(32, "PO", false),  // 牽制出局

@@ -89,7 +89,7 @@
 
     <style name="PlayerNameTable">
         <item name="android:layout_width">@dimen/player_name_box_width</item>
-        <item name="android:padding">@dimen/final_table_padding</item>
+        <item name="android:padding">4dp</item>
         <item name="android:gravity">center</item>
         <item name="android:textSize">16sp</item>
     </style>

@@ -21,14 +21,6 @@ class RankPager : Fragment() {
 
         binding.viewModel = viewModel
         binding.recyclerHitterBox.adapter = HitterBoxAdapter()
-//        adapter.submitList(listOf(HitterBox(playerId = "0", run = 10),
-//                HitterBox(name = "Gillian", playerId = "155", run = 10),
-//                HitterBox(name = "Peter", playerId = "100", run = 5),
-//                HitterBox(name = "Sean", playerId = "134", run = 2),
-//                HitterBox(name = "Chloe", playerId = "2", run = 1),
-//                HitterBox(name = "Wency", playerId = "5", run = 7),
-//                HitterBox(name = "Scolley", playerId = "9", run = 2, hit = 28, strikeOut = 3)
-//        ))
 
         return binding.root
     }

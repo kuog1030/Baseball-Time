@@ -1,4 +1,4 @@
-package com.gillian.baseball.game.order
+package com.gillian.baseball.order
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

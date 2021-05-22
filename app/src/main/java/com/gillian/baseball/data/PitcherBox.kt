@@ -13,7 +13,7 @@ package com.gillian.baseball.data
 
 data class PitcherBox(
         var name : String? = "",
-        val playerId : Long = 0L,
+        val playerId : String = "",
         var inningsPitched : Float = 0F,
         var hit : Int = 0,
         var run : Int = 0,
@@ -21,5 +21,7 @@ data class PitcherBox(
         var baseOnBalls : Int = 0,
         var strikeOut : Int = 0,
         var homerun : Int = 0,
+        var totalStrike: Int = 0,
+        var totalBall: Int = 0
 
 )

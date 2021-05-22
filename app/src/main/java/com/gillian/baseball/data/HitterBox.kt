@@ -1,5 +1,8 @@
 package com.gillian.baseball.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
 //data class HitterBox (
 //        var atBat : Int = 0,
 //        var run : Int = 0,
@@ -10,6 +13,7 @@ package com.gillian.baseball.data
 //        var sb: Int = 0
 //)
 
+@Parcelize
 data class HitterBox (
         var name : String? = "",
         val playerId : String = "",
@@ -20,7 +24,7 @@ data class HitterBox (
         var baseOnBalls : Int = 0,
         var strikeOut : Int = 0,
         var stealBase: Int = 0
-)
+) : Parcelable
 
 //
 //data class PlayerBox(val isHitter: Boolean, val hitter: HitterBox, val pitcher: PitcherBox) {

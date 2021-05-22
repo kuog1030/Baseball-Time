@@ -12,8 +12,9 @@ import com.gillian.baseball.databinding.ItemHitterBoxBinding
 class HitterBoxAdapter : ListAdapter<HitterBox, HitterBoxAdapter.ViewHolder>(DiffCallback) {
 
     class ViewHolder(private var binding: ItemHitterBoxBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(isTitle: Boolean, hitter: HitterBox) {
+        fun bind(isTitle: Boolean, isEven: Boolean, hitter: HitterBox) {
             binding.isTitle = isTitle
+            binding.isEven = isEven
             binding.hitter = hitter
             binding.executePendingBindings()
         }
@@ -27,7 +28,7 @@ class HitterBoxAdapter : ListAdapter<HitterBox, HitterBoxAdapter.ViewHolder>(Dif
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val hitter = getItem(position)
         val isTitle = (position == 0)
-        holder.bind(isTitle, hitter)
+        holder.bind(isTitle, (position % 2 == 0), hitter)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<HitterBox>() {

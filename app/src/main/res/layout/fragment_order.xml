@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.gillian.baseball.game.order.OrderViewModel" />
+            type="com.gillian.baseball.order.OrderViewModel" />
     </data>
 
     <androidx.core.widget.NestedScrollView

@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.allgames.AllGamesViewModel
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.firstlogin.FirstLoginViewModel
-import com.gillian.baseball.game.order.OrderViewModel
+import com.gillian.baseball.order.OrderViewModel
 import com.gillian.baseball.team.TeamViewModel
 import com.gillian.baseball.newplayer.NewPlayerViewModel
 import com.gillian.baseball.statistics.statgame.StatGameViewModel

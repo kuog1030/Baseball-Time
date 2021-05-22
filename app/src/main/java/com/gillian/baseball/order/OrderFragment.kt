@@ -1,4 +1,4 @@
-package com.gillian.baseball.game.order
+package com.gillian.baseball.order
 
 import android.os.Bundle
 import android.util.Log
@@ -15,6 +15,7 @@ import com.gillian.baseball.NavigationDirections
 import java.util.Collections.swap
 import com.gillian.baseball.databinding.FragmentOrderBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.order.OrderFragmentDirections
 
 class OrderFragment : Fragment() {
 

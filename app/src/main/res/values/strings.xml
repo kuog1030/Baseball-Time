@@ -42,6 +42,10 @@
     <string name="box_er">ER</string>
     <string name="box_hr">HR</string>
 
+    <!--    Stat related-->
+    <string name="hitter_performance">打擊成績</string>
+    <string name="pitcher_performance">投手成績</string>
+    <string name="game_stat_title">成績看板</string>
 
     <!--   all games related -->
     <string name="your_performance">你的成績</string>
