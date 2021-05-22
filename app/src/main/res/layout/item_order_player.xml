@@ -12,16 +12,16 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_card"
-        android:layout_margin="4dp">
+        android:background="@drawable/bg_edit_text"
+        android:layout_marginTop="@dimen/half_margin">
 
         <TextView
             style="@style/PlayerNumber"
             android:id="@+id/text_order_number"
-            android:layout_width="wrap_content"
+            android:layout_width="30dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="@dimen/quarter_margin"
+            android:layout_marginBottom="@dimen/quarter_margin"
             android:layout_marginStart="@dimen/double_margin"
             android:text="@{String.valueOf(player.number)}"
             app:layout_constraintTop_toTopOf="parent"
