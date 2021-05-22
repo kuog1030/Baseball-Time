@@ -13,7 +13,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:background="@drawable/bg_edit_text"
+        android:background="@drawable/bg_card"
         android:layout_marginBottom="@dimen/margin">
 
         <TextView
@@ -22,7 +22,7 @@
             android:layout_height="wrap_content"
             android:text='@{game.title + " - " + game.place}'
             android:textColor="?attr/colorPrimary"
-            android:layout_marginTop="@dimen/quarter_margin"
+            android:layout_marginTop="@dimen/margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -95,7 +95,7 @@
             android:id="@+id/bar_card_score"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="@dimen/half_margin"
             android:background="@color/grey_888"
             app:layout_constraintBottom_toTopOf="@+id/text_card_score_detail"
             app:layout_constraintEnd_toEndOf="parent"
@@ -105,11 +105,12 @@
             android:id="@+id/text_card_score_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="2dp"
+            android:layout_marginBottom="@dimen/half_margin"
             android:gravity="center_vertical"
             android:text="@string/more_detail"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/text_card_score_home"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/text_card_score_home" />
 
         <ImageView
@@ -119,6 +120,7 @@
             android:layout_marginEnd="@dimen/half_margin"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_score_detail"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_card_score_detail"
             app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

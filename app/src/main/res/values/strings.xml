@@ -59,6 +59,7 @@
 
     <!--    game record related -->
 
+    <string name="ready_to_start">準備開始比賽</string>
     <string name="you_are">你是</string>
     <string name="home">主隊</string>
     <string name="guest">客隊</string>

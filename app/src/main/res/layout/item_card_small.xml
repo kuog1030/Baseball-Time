@@ -14,14 +14,14 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="@drawable/bg_edit_text"
+        android:background="@drawable/bg_card"
         android:layout_marginBottom="@dimen/margin">
 
         <TextView
             android:id="@+id/text_card_small_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/quarter_margin"
+            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/half_margin"
             android:text='@{game.title + " - " + game.place}'
             android:textColor="?attr/colorPrimary"
@@ -35,7 +35,7 @@
             android:id="@+id/text_card_small_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/quarter_margin"
+            android:layout_marginEnd="@dimen/margin"
             android:text="@{game.dateString}"
             app:layout_constraintEnd_toEndOf="@+id/bar_card_small"
             app:layout_constraintTop_toTopOf="@+id/text_card_small_title"
@@ -59,7 +59,7 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_small_guest"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintHorizontal_bias="0.43"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_card_small_guest"
             tools:text="3 - 2" />
@@ -68,10 +68,10 @@
             android:id="@+id/image_card_small_guest"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="@dimen/margin"
             android:visibility="@{game.guestScore > game.homeScore? View.VISIBLE : View.INVISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_small_guest"
             app:layout_constraintEnd_toStartOf="@+id/text_card_small_guest"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_card_small_guest"
             app:srcCompat="@drawable/ic_baseline_win_24"
             tools:visibility="invisible" />
@@ -85,7 +85,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/text_card_small_score"
             app:layout_constraintTop_toBottomOf="@+id/bar_card_small"
-            app:layout_constraintVertical_bias="0.6"
+            app:layout_constraintVertical_bias="0.5"
             tools:text = "Android"/>
 
         <ImageView

@@ -12,7 +12,7 @@
             android:id="@+id/viewpager_first_login_arrow"
             android:layout_width="300dp"
             android:layout_height="400dp"
-            android:background="@drawable/bg_card"
+            android:background="@drawable/bg_card2"
             android:padding="4dp"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

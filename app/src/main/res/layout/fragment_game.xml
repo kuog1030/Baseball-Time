@@ -72,7 +72,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/margin"
-                android:background="@drawable/bg_card"
+                android:background="@drawable/bg_card2"
                 app:layout_constraintTop_toBottomOf="@id/image_batting_field"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

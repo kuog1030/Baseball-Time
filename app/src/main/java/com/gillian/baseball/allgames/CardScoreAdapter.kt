@@ -52,7 +52,7 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
     override fun getItemViewType(position: Int): Int {
         return when (position) {
             0 -> ITEM_VIEW_TYPE_FULL
-            1 -> ITEM_VIEW_TYPE_FULL
+            1 -> ITEM_VIEW_TYPE_SMALL
             else -> ITEM_VIEW_TYPE_SMALL
         }
     }

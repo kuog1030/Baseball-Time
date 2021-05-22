@@ -21,8 +21,11 @@ data class Game (
         return GameCard(
                 id = id,
                 title = title,
+                place = place,
                 date = date,
                 isHome = (recordedTeamId == home.teamId),
+                homeName = home.name,
+                guestName = guest.name,
                 homeScore = box.run[1],
                 guestScore = box.run[0]
         )

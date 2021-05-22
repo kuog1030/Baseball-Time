@@ -85,9 +85,10 @@ fun List<Event>.toHitterBox(): List<HitterBox> {
     //guestResult.removeAt(0)
     //homeResult.removeAt(0)
 
+    //TODO()
     Log.i("gillian", "give me $guestResult and it size ${guestResult.size}" )
     Log.i("gillian", "also home $homeResult and it size ${homeResult.size}")
-    return guestResult
+    return homeResult
 }
 
 

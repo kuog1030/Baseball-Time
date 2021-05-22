@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.gillian.baseball.team.newplayer.NewPlayerViewModel" />
+            type="com.gillian.baseball.newplayer.NewPlayerViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

@@ -1,10 +1,9 @@
-package com.gillian.baseball.team.newplayer
+package com.gillian.baseball.newplayer
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.R
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.data.source.BaseballRepository

@@ -54,7 +54,7 @@
         android:label="FirstLoginFragment" />
     <dialog
         android:id="@+id/newPlayerDialog"
-        android:name="com.gillian.baseball.team.newplayer.NewPlayerDialog"
+        android:name="com.gillian.baseball.newplayer.NewPlayerDialog"
         android:label="NewPlayerDialog" >
     </dialog>
     <fragment

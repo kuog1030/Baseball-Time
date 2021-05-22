@@ -10,7 +10,7 @@ import androidx.lifecycle.Observer
 import com.gillian.baseball.databinding.FragmentTeamBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.login.UserManager
-import com.gillian.baseball.team.newplayer.NewPlayerDialog
+import com.gillian.baseball.newplayer.NewPlayerDialog
 
 class TeamFragment : Fragment() {
 
