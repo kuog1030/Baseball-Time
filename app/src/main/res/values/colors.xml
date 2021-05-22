@@ -29,4 +29,8 @@
 
     <color name="color_background">@color/grey_eee</color>
 
+<!--    second -->
+    <color name="blue_navy">#1E3A52</color>
+    <color name="orange_red">#F48225</color>
+
 </resources>

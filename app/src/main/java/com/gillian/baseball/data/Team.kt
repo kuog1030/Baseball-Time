@@ -21,6 +21,6 @@ data class Player(
     var teamId : String? = null,
     var name : String = "",
     var nickname : String? = null,
-    var number : String = "",
+    var number : Int = -1,
     var image: String? = null
 ) : Parcelable

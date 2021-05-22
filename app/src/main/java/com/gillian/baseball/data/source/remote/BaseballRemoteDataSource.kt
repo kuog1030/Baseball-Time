@@ -249,6 +249,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
                             Log.i("remote", " ${document.id} -> ${document.data}")
                             result.add(document.toObject(Player::class.java))
                         }
+                        result.sortBy { it.number }
                         continuation.resume(Result.Success(result))
                     } else {
                         task.exception?.let {

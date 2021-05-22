@@ -4,6 +4,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
+        <import type="android.view.View" />
+        <variable
+            name="isChecked"
+            type="Boolean" />
         <variable
             name="player"
             type="com.gillian.baseball.data.EventPlayer" />
@@ -16,18 +20,18 @@
         android:layout_marginTop="@dimen/half_margin">
 
         <TextView
-            style="@style/PlayerNumber"
             android:id="@+id/text_order_number"
+            style="@style/PlayerNumber"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/one_half_margin"
             android:layout_marginTop="@dimen/quarter_margin"
             android:layout_marginBottom="@dimen/quarter_margin"
-            android:layout_marginStart="@dimen/double_margin"
             android:text="@{String.valueOf(player.number)}"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            tools:text="24"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="24" />
 
         <TextView
             style="@style/PlayerName"
@@ -40,5 +44,16 @@
             app:layout_constraintBottom_toBottomOf="@id/text_order_number"
             app:layout_constraintStart_toEndOf="@id/text_order_number"
             tools:text="蘇智傑"/>
+
+        <ImageView
+            android:id="@+id/image_order_checked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{isChecked ? View.VISIBLE : View.GONE}"
+            android:layout_marginEnd="@dimen/one_half_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_checked" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

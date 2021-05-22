@@ -77,6 +77,8 @@ class OrderFragment : Fragment() {
 
             swap(viewModel.lineUp, startPosition, endPosition)
             recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
+            recyclerView.adapter?.notifyItemChanged(startPosition)
+            recyclerView.adapter?.notifyItemChanged(endPosition)
             return true
         }
 

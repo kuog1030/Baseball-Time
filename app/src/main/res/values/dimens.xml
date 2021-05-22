@@ -2,11 +2,14 @@
 <resources>
 
 
+    <!--     general -->
     <dimen name="quarter_margin">4dp</dimen>
     <dimen name="half_margin">8dp</dimen>
     <dimen name="margin">16dp</dimen>
     <dimen name="one_half_margin">24dp</dimen>
     <dimen name="double_margin">32dp</dimen>
+
+    <dimen name="radio_button_padding">10dp</dimen>
 
     <dimen name="bar_height">1dp</dimen>
 

@@ -51,18 +51,22 @@
                 app:layout_constraintTop_toTopOf="@+id/text_order_you">
 
                 <RadioButton
-                    android:id="@+id/radio_order_home"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/home" />
-
-                <RadioButton
                     android:id="@+id/radio_order_guest"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:paddingStart="@dimen/radio_button_padding"
+                    android:paddingEnd="@dimen/radio_button_padding"
                     android:text="@string/guest" />
+
+                <RadioButton
+                    android:id="@+id/radio_order_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="@dimen/radio_button_padding"
+                    android:paddingEnd="@dimen/radio_button_padding"
+                    android:layout_weight="1"
+                    android:text="@string/home" />
             </RadioGroup>
 
             <TextView

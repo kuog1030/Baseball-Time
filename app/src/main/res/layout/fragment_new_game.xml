@@ -102,6 +102,8 @@
                 android:id="@+id/radio_new_game_guest"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="@dimen/radio_button_padding"
+                android:paddingEnd="@dimen/radio_button_padding"
                 android:layout_weight="1"
                 android:text="@string/guest" />
 
@@ -109,6 +111,8 @@
                 android:id="@+id/radio_new_game_home"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:paddingStart="@dimen/radio_button_padding"
+                android:paddingEnd="@dimen/radio_button_padding"
                 android:layout_weight="1"
                 android:text="@string/home" />
 
@@ -207,16 +211,18 @@
             app:layout_constraintTop_toBottomOf="@+id/edit_new_game_place" />
 
         <Button
+            style="@style/GameButton"
             android:id="@+id/button3"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="TODO 建立新遊戲"
+            android:text="@string/schedule_a_game"
             android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginBottom="@dimen/margin"
             android:onClick="@{()->viewModel.scheduleNewGame()}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_note" />
-
+            app:layout_constraintEnd_toEndOf="@id/edit_new_game_note"
+            app:layout_constraintStart_toStartOf="@id/text_new_game_note"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_note"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:id="@+id/text_new_game_note"

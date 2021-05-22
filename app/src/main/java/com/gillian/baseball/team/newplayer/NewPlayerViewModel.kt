@@ -33,12 +33,14 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
             errorMessage.value = R.string.create_new_player_error
         } else {
             errorMessage.value = null
+
+            val numberInt = number.value!!.toInt()
+
             val player = Player(
                     teamId = UserManager.teamId,
                     name = name.value!!,
-                    number = number.value!!,
+                    number = numberInt,
                     nickname = nickname.value
-
             )
 
             viewModelScope.launch {

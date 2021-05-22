@@ -25,13 +25,16 @@ class FirstLoginViewModel(private val repository: BaseballRepository) : ViewMode
 
 
     fun navigateToTeam() {
-        if (teamName.value.isNullOrEmpty() || playerName.value.isNullOrEmpty() || playerNumber.value.isNullOrEmpty()) {
+        if (teamName.value.isNullOrEmpty() || playerName.value.isNullOrEmpty() || playerNumber.value == null) {
             errorMessage.value = "記得3個欄位都要填寫喔"
         } else {
             errorMessage.value = null
 
+
+            val numberInt = playerNumber.value!!.toInt()
+
             val team = Team(name = teamName.value ?: "")
-            val player = Player(name = playerName.value ?: "", number = playerNumber.value ?: "")
+            val player = Player(name = playerName.value ?: "", number = numberInt)
 
             viewModelScope.launch {
                 repository.initTeamAndPlayer(team, player)
@@ -40,7 +43,7 @@ class FirstLoginViewModel(private val repository: BaseballRepository) : ViewMode
         }
     }
 
-    // 是不是可以不用做on team navigated因為永遠不會再回來這一頁??
+    // TODO() 是不是可以不用做on team navigated因為永遠不會再回來這一頁??
 
 
 }
