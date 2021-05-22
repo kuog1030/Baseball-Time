@@ -43,8 +43,9 @@
     <string name="box_hr">HR</string>
 
 
-    <!--   game related -->
+    <!--   all games related -->
     <string name="your_performance">你的成績</string>
+    <string name="more_detail">詳細數據</string>
 
 
     <!--    schedule a new game-->

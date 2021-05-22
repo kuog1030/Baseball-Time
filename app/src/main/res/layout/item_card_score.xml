@@ -9,87 +9,120 @@
             type="com.gillian.baseball.data.GameCard" />
     </data>
 
-    <androidx.cardview.widget.CardView
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/game_card_height"
-        app:cardCornerRadius="@dimen/card_radius"
-        app:cardElevation="@dimen/card_elevation"
-        android:layout_margin="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="220dp"
+        android:background="@drawable/bg_edit_text"
+        android:layout_marginBottom="@dimen/margin">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <TextView
+            android:id="@+id/text_card_score_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{game.title + " - " + game.place}'
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginTop="@dimen/quarter_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="全國棒球大專盃8強 - 福和橋" />
+
+        <TextView
+            android:id="@+id/text_card_score_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2021/05/15 09:00"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_card_score_title"
+            tools:layout_editor_absoluteY="26dp" />
+
+        <TextView
+            android:id="@+id/text_card_score_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{String.valueOf(game.guestScore) + " - " + String.valueOf(game.homeScore)}'
+            android:textSize="45sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_score_guest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_guest"
+            tools:text="3 - 2" />
+
+        <ImageView
+            android:id="@+id/image_card_score_guest"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            android:layout_marginBottom="@dimen/margin"
+            app:layout_constraintBottom_toTopOf="@+id/text_card_score_guest"
+            app:layout_constraintEnd_toStartOf="@+id/text_card_score_score"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
+
+        <TextView
+            android:id="@+id/text_card_score_guest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="Android"
+            app:layout_constraintBottom_toTopOf="@+id/bar_card_score"
+            app:layout_constraintEnd_toStartOf="@+id/text_card_score_score"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_card_score_home"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_card_score_score"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_guest"
+            app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
+
+        <TextView
+            android:id="@+id/text_card_score_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="東園國小"
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_score_guest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_card_score_score"
+            app:layout_constraintTop_toTopOf="@+id/text_card_score_guest" />
+
+        <View
+            android:id="@+id/bar_card_score"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="0.5dp"
+            android:background="@color/grey_888"
+            android:text="TextView"
+            android:layout_marginBottom="@dimen/half_margin"
+            app:layout_constraintBottom_toTopOf="@+id/text_card_score_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
-            <TextView
-                android:id="@+id/text_game_end_date"
-                style="@style/GameCardTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
-                android:text="TextView"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="5/5" />
+        <TextView
+            android:id="@+id/text_card_score_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
+            android:gravity="center_vertical"
+            android:text="@string/more_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/text_card_score_home"
+            app:layout_constraintStart_toStartOf="@+id/text_card_score_home" />
 
-            <TextView
-                android:id="@+id/text_game_end_title"
-                style="@style/GameCardTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:text="@{game.title}"
-                app:layout_constraintStart_toEndOf="@+id/text_game_end_date"
-                app:layout_constraintTop_toTopOf="@+id/text_game_end_date"
-                tools:text="全國棒球大專盃8強" />
+        <ImageView
+            android:id="@+id/image_card_score_arrow"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/half_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bar_card_score"
+            app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
 
-            <TextView
-                android:id="@+id/text_game_end_score"
-                style="@style/GameCardScore"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin"
-                android:layout_marginBottom="4dp"
-                android:text='@{String.valueOf(game.guestScore) + ":" + String.valueOf(game.homeScore)}'
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="3:2" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-            <TextView
-                android:id="@+id/text_game_end_your"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/margin"
-                android:text="@string/your_performance"
-                app:layout_constraintBottom_toTopOf="@+id/recycler_game_end"
-                app:layout_constraintStart_toStartOf="@+id/text_game_end_date" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_game_end"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin"
-                android:orientation="horizontal"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="@id/image_for_align"
-                app:layout_constraintEnd_toStartOf="@id/text_game_end_score"
-                app:layout_constraintStart_toStartOf="@id/text_game_end_your"
-                tools:listitem="@layout/item_personal_score" />
-
-            <ImageView
-                android:id="@+id/image_for_align"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/ic_baseline_date_range_24"
-                android:baselineAlignBottom="true"
-                android:visibility="invisible"
-                app:layout_constraintStart_toStartOf="@id/recycler_game_end"
-                app:layout_constraintBaseline_toBaselineOf="@id/text_game_end_score"
-                tools:visibility="visible"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.cardview.widget.CardView>
 </layout>

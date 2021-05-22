@@ -33,7 +33,10 @@
 
     <dimen name="player_box_width">38dp</dimen>
 
+    <!--   item game card -->
     <dimen name="game_card_height">180dp</dimen>
+    <dimen name="game_card_small_height">100dp</dimen>
+    <dimen name="game_card_team_image">50dp</dimen>
     <dimen name="personal_score_height">25dp</dimen>
     <dimen name="personal_score_width">45dp</dimen>
 
