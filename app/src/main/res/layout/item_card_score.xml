@@ -95,9 +95,8 @@
             android:id="@+id/bar_card_score"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
+            android:layout_marginBottom="10dp"
             android:background="@color/grey_888"
-            android:text="TextView"
-            android:layout_marginBottom="@dimen/half_margin"
             app:layout_constraintBottom_toTopOf="@+id/text_card_score_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -106,7 +105,7 @@
             android:id="@+id/text_card_score_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
+            android:layout_marginBottom="2dp"
             android:gravity="center_vertical"
             android:text="@string/more_detail"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -118,9 +117,8 @@
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/half_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_score_detail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bar_card_score"
             app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

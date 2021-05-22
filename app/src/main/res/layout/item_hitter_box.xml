@@ -33,7 +33,7 @@
 
                 <TextView
                     android:id="@+id/row_player_box_name"
-                    style="@style/FinalTable"
+                    style="@style/PlayerNameTable"
                     boxStyle="@{isTitle}"
                     android:layout_width="110dp"
                     android:layout_height="wrap_content"
@@ -68,7 +68,6 @@
                     android:id="@+id/row_hitter_box_four"
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
-                    android:layout_width="45dp"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_rbi : String.valueOf(hitter.runsBattedIn)}"
                     tools:text="RBI"/>

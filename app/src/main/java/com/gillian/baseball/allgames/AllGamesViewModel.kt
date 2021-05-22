@@ -1,6 +1,7 @@
 package com.gillian.baseball.allgames
 
 import android.util.Log
+import android.view.animation.AnimationUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,7 @@ import com.gillian.baseball.data.Team
 import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.util.Util.getAnim
 import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 
@@ -44,8 +46,18 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
         get() = _scheduleGames
 
 
+    val clicked = MutableLiveData<Boolean>(false)
+
+
+
+
     init {
         getAllGamesCard()
+    }
+
+
+    fun expandAndClose() {
+        clicked.value = (!clicked.value!!)
     }
 
 

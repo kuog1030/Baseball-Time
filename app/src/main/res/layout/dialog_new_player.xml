@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.gillian.baseball.team.newplayer.NewPlayerViewModel" />
@@ -27,11 +28,13 @@
 
         <EditText
             android:id="@+id/edit_new_player_name"
+            style="@style/EditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
-            android:layout_marginTop="56dp"
+            android:layout_marginTop="58dp"
             android:layout_marginEnd="@dimen/margin"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/name_hint}"
             android:inputType="textPersonName"
@@ -54,9 +57,11 @@
 
         <EditText
             android:id="@+id/edit_new_player_number"
+            style="@style/EditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/number_hint}"
             android:inputType="number"
@@ -77,9 +82,11 @@
 
         <EditText
             android:id="@+id/edit_new_player_nickname"
+            style="@style/EditText"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="@string/nickname_hint"
             android:inputType="textPersonName"
@@ -92,8 +99,8 @@
             android:id="@+id/text_new_player_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/image"
             android:layout_marginTop="@dimen/margin"
+            android:text="@string/image"
             app:layout_constraintStart_toStartOf="@+id/text_new_player_nickname"
             app:layout_constraintTop_toBottomOf="@+id/edit_new_player_nickname" />
 
@@ -101,26 +108,26 @@
             android:id="@+id/imageView3"
             android:layout_width="@dimen/close_size"
             android:layout_height="@dimen/close_size"
-            android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            android:background="@drawable/ic_baseline_clear_24"
             android:onClick="@{()->viewModel.dismissDialog()}"
-            android:background="@drawable/ic_baseline_clear_24"/>
+            app:layout_constraintBottom_toTopOf="@+id/edit_new_player_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
-            style="@style/GameButton"
             android:id="@+id/button_new_player_save"
+            style="@style/GameButton"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="@string/create_a_player_button"
-            android:onClick="@{()->viewModel.createPlayer()}"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
+            android:onClick="@{()->viewModel.createPlayer()}"
+            android:text="@string/create_a_player_button"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/edit_new_player_nickname"
             app:layout_constraintStart_toStartOf="@+id/text_new_player_image"
-            app:layout_constraintTop_toBottomOf="@+id/text_new_player_image"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_new_player_image" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,9 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.gillian.baseball.allgames.AllGamesViewModel" />
@@ -14,24 +17,59 @@
         android:layout_height="match_parent">
 
         <Button
-            android:id="@+id/button"
+            android:id="@+id/fab_fast_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TODO 開始一場比賽"
+            android:layout_marginBottom="@dimen/margin"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:drawableEnd="@drawable/button_drawble_game"
+            android:drawablePadding="@dimen/half_margin"
+            android:drawableTint="?attr/colorPrimaryVariant"
             android:onClick="@{()->viewModel.startANewGame()}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:text="快速開始比賽"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="16sp"
+            android:visibility="@{viewModel.clicked ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toTopOf="@id/fab_fast_schedule_game"
+            app:layout_constraintEnd_toEndOf="@id/fab_fast_schedule_game"
+            tools:visibility="visible" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/fab_fast_schedule_game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_marginBottom="@dimen/margin"
+            android:background="@color/transparent"
+            android:clickable="true"
+            android:drawableEnd="@drawable/button_drawble_calendar"
+            android:drawablePadding="@dimen/half_margin"
+            android:drawableTint="?attr/colorPrimaryVariant"
+            android:src="@android:drawable/ic_input_add"
             android:text="安排一場比賽"
             android:onClick="@{()->viewModel.createNewGame()}"
-            app:layout_constraintEnd_toEndOf="@+id/button"
-            app:layout_constraintStart_toStartOf="@+id/button"
-            app:layout_constraintTop_toBottomOf="@+id/button" />
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="16sp"
+            android:visibility="@{viewModel.clicked ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toTopOf="@id/fab_add"
+            app:layout_constraintEnd_toEndOf="@id/fab_add"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/one_half_margin"
+            android:layout_marginBottom="@dimen/one_half_margin"
+            android:backgroundTint="?attr/colorPrimary"
+            android:clickable="true"
+            android:onClick="@{()->viewModel.expandAndClose()}"
+            android:src="@android:drawable/ic_input_add"
+            android:tint="@android:color/white"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

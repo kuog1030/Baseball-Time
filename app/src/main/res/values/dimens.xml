@@ -31,8 +31,8 @@
 
     <dimen name="close_size">32dp</dimen>
 
-
-    <dimen name="player_box_width">38dp</dimen>
+    <dimen name="player_name_box_width">105dp</dimen>
+    <dimen name="player_box_width">34dp</dimen>
 
     <!--   item game card -->
     <dimen name="game_card_height">180dp</dimen>
