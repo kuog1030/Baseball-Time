@@ -4,7 +4,7 @@
 
     </style>
 
-    <style name="AppBottomSheetDialogTheme" parent="Theme.Design.Light.BottomSheetDialog">
+    <style name="AppBottomSheetDialogTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
         <item name="bottomSheetStyle">@style/BottomSheet</item>
         <item name="android:windowIsFloating">false</item>
         <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
@@ -64,7 +64,7 @@
     <style name="GameButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textSize">18sp</item>
         <item name="android:letterSpacing">0.15</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:background">@drawable/button_radius_filled</item>
     </style>
 

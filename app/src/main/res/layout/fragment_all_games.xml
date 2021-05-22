@@ -21,6 +21,8 @@
 
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_all_games"
+                app:tabBackground="?attr/colorPrimary"
+                app:tabIndicator="?attr/colorOnPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/team_tab_height" />
 

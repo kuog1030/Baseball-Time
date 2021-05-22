@@ -11,30 +11,32 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_card">
 
         <TextView
             android:id="@+id/text_new_player_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
             android:text="@string/name_must"
             android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_new_player_name"
-            app:layout_constraintEnd_toStartOf="@+id/edit_new_player_name"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/edit_new_player_name" />
 
         <EditText
             android:id="@+id/edit_new_player_name"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="56dp"
+            android:layout_marginEnd="@dimen/margin"
             android:ems="10"
             android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/name_hint}"
+            android:inputType="textPersonName"
             android:text="@={viewModel.name}"
             android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
-            android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/text_new_player_name"
@@ -52,14 +54,15 @@
 
         <EditText
             android:id="@+id/edit_new_player_number"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
             android:ems="10"
             android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/number_hint}"
-            android:text="@={viewModel.number}"
             android:inputType="number"
+            android:text="@={viewModel.number}"
             android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_player_name"
             app:layout_constraintStart_toStartOf="@+id/edit_new_player_name"
             app:layout_constraintTop_toBottomOf="@+id/edit_new_player_name" />
 
@@ -74,13 +77,14 @@
 
         <EditText
             android:id="@+id/edit_new_player_nickname"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
             android:ems="10"
             android:hint="@string/nickname_hint"
-            android:text="@={viewModel.nickname}"
             android:inputType="textPersonName"
+            android:text="@={viewModel.nickname}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_player_number"
             app:layout_constraintStart_toStartOf="@+id/edit_new_player_number"
             app:layout_constraintTop_toBottomOf="@+id/edit_new_player_number" />
 

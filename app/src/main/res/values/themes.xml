@@ -1,18 +1,19 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
+<!--    <style name="Theme.Baseball" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">-->
     <style name="Theme.Baseball" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/slg</item>
-        <item name="colorPrimaryVariant">@color/slg</item>
+        <item name="colorPrimaryVariant">@color/slg_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->
         <item name="colorSecondary">@color/denim_blue</item>
         <item name="colorSecondaryVariant">@color/denim_blue</item>
         <item name="colorOnSecondary">@color/black</item>
         <!-- Status bar color. -->
-        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimaryVariant</item>
+        <item name="android:statusBarColor" tools:targetApi="l">?attr/colorPrimary</item>
         <!-- Customize your theme here. -->
-        <item name="android:colorBackground">@color/grey_eee</item>
+        <item name="android:colorBackground">@color/color_background</item>
         <item name="colorControlActivated">?attr/colorPrimary</item>
         <item name="bottomSheetDialogTheme">@style/AppBottomSheetDialogTheme</item>
         <item name="android:fontFamily">@font/noto_sans</item>

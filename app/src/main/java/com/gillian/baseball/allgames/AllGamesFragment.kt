@@ -9,8 +9,10 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.NavigationDirections
+import com.gillian.baseball.data.Team
 import com.gillian.baseball.databinding.FragmentAllGamesBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.login.UserManager
 
 class AllGamesFragment : Fragment() {
 
@@ -20,7 +22,8 @@ class AllGamesFragment : Fragment() {
         val binding = FragmentAllGamesBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel
+
+        val tempTeam = Team(id = UserManager.teamId, name = UserManager.teamName, acronym = UserManager.teamAcronym)
 
         binding.viewpagerAllGames.adapter = AllGamesAdapter(childFragmentManager)
         binding.tabsAllGames.setupWithViewPager(binding.viewpagerAllGames)
@@ -32,12 +35,12 @@ class AllGamesFragment : Fragment() {
             }
         })
 
-//        viewModel.navigateToNewGame.observe(viewLifecycleOwner, Observer {
-//            it?.let {
-//                findNavController().navigate(NavigationDirections.navigationToNewGame(viewModel.myTeam.value))
-//                viewModel.onNewGameCreated()
-//            }
-//        })
+        viewModel.navigateToNewGame.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                findNavController().navigate(NavigationDirections.navigationToNewGame(tempTeam))
+                viewModel.onNewGameCreated()
+            }
+        })
 
 
         return binding.root
