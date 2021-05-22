@@ -10,7 +10,7 @@
 <!--    <color name="orange">#FFffb27f</color>-->
     <color name="red_out">#bf0603</color>
     <color name="green_ball">#88ab75</color>
-    <color name="yellow_strike">#ffd400</color>
+    <color name="yellow_strike">#f9aa33</color>
     <color name="black">#FF000000</color>
     <color name="black_transparent">#99000000</color>
     <color name="transparent">#00000000</color>
@@ -18,6 +18,10 @@
     <color name="grey_888">#FF888888</color>
     <color name="grey_ddd">#FFdddddd</color>
     <color name="grey_eee">#FFeeeeee</color>
+
+    <color name="avg">#FFECB3</color>
+    <color name="obp">#FFCCBC</color>
+    <color name="slg">#D7CCC8</color>
 
     <color name="nav_icon">@color/grey_888</color>
     <color name="nav_icon_selected">@color/denim_blue</color>
