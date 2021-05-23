@@ -2,6 +2,7 @@ package com.gillian.baseball
 
 import android.graphics.Color
 import android.util.Log
+import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
@@ -69,6 +70,78 @@ fun bindScoresGames(recyclerView: RecyclerView, games: List<GameCard>?) {
     }
 }
 
+@BindingAdapter("atBaseFirst")
+fun bindAtBaseFirst(textView: TextView, atBase: AtBase?) {
+    atBase?.let{
+        if (atBase.base == 1){
+            textView.text = atBase.player.name
+            textView.visibility = View.VISIBLE
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("atBaseSecond")
+fun bindAtBaseSecond(textView: TextView, atBase: AtBase?) {
+    atBase?.let{
+        if (atBase.base == 2){
+            textView.text = atBase.player.name
+            textView.visibility = View.VISIBLE
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("atBaseThird")
+fun bindAtBaseThird(textView: TextView, atBase: AtBase?) {
+    atBase?.let{
+        if (atBase.base == 3){
+            textView.text = atBase.player.name
+            textView.visibility = View.VISIBLE
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("onBaseFirst")
+fun bindOnBaseFirst(textView: TextView, onBaseInfo: OnBaseInfo?) {
+    onBaseInfo?.let {
+        if (onBaseInfo.onClickPlayer == 1) {
+            textView.text = (onBaseInfo.baseList[1]?.name) ?: ""
+            textView.visibility = View.VISIBLE
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("onBaseSecond")
+fun bindOnBaseSecond(textView: TextView, onBaseInfo: OnBaseInfo?) {
+    onBaseInfo?.let {
+        if (onBaseInfo.onClickPlayer == 2) {
+            textView.text = (onBaseInfo.baseList[1]?.name) ?: ""
+            textView.visibility = View.VISIBLE
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+}
+
+@BindingAdapter("onBaseThird")
+fun bindOnBaseThird(textView: TextView, onBaseInfo: OnBaseInfo?) {
+    onBaseInfo?.let {
+        if (onBaseInfo.onClickPlayer == 3) {
+            textView.text = (onBaseInfo.baseList[1]?.name) ?: ""
+            textView.visibility = View.VISIBLE
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+}
+
 @BindingAdapter("imageUrl")
 fun bindProfileImage(imageView: ImageView, url: String?) {
     Glide.with(imageView.context)
@@ -77,6 +150,17 @@ fun bindProfileImage(imageView: ImageView, url: String?) {
             .apply(RequestOptions()
                     .placeholder(R.drawable.ic_baseline_sports_baseball_24)
                     .error(R.drawable.ic_baseline_sports_baseball_24))
+            .into(imageView)
+}
+
+@BindingAdapter("teamImageUrl")
+fun bindTeamImage(imageView: ImageView, url: String?) {
+    Glide.with(imageView.context)
+            .load(url)
+            .circleCrop()
+            .apply(RequestOptions()
+                    .placeholder(R.drawable.baseball_glove)
+                    .error(R.drawable.baseball_glove))
             .into(imageView)
 }
 

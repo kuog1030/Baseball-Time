@@ -5,6 +5,7 @@ data class GameCard(
         val title: String = "",
         val place: String = "",
         var date: Long = -1,
+        var status: Int = 0,
         var isHome: Boolean = false,
         var homeName: String = "",
         var guestName: String = "",

@@ -53,15 +53,16 @@
             app:layout_constraintTop_toBottomOf="@+id/button_out_air" />
 
         <TextView
-            style="@style/EventPage"
             android:id="@+id/textView"
+            style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/margin"
             android:text="@{String.valueOf(viewModel.hitterEvent.player.name)}"
-            tools:text="陳傑憲"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="陳傑憲" />
 
         <View
             android:id="@+id/bar_out"
@@ -69,7 +70,7 @@
             android:layout_height="2dp"
             android:layout_marginStart="@dimen/double_margin"
             android:layout_marginEnd="@dimen/double_margin"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="@dimen/event_dialog_bar_margin"
             android:background="@color/grey_888"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -80,8 +81,8 @@
             style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
             android:text="@{page}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/bar_out"
             app:layout_constraintStart_toStartOf="@id/bar_out"
             app:layout_constraintTop_toBottomOf="@id/bar_out"

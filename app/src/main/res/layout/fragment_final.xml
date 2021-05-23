@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.gillian.baseball.game.finalgame.FinalViewModel" />
+            type="com.gillian.baseball.finalgame.FinalViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

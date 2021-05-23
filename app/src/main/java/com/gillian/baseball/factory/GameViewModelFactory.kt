@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.MyGame
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.game.GameViewModel
-import com.gillian.baseball.game.finalgame.FinalViewModel
+import com.gillian.baseball.finalgame.FinalViewModel
 
 class GameViewModelFactory constructor(
     private val repository: BaseballRepository,

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.DialogFragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -16,11 +17,10 @@ import com.gillian.baseball.game.GameViewModel
 
 class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 
-//    想要設定dialog的寬度的話，新增下面這段，並進到dialog_event.xml裡面調整長寬和背景顏色
-//    override fun onCreate(savedInstanceState: Bundle?) {
-//        super.onCreate(savedInstanceState)
-//        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.Dialog)
-//    }
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.GameDialog)
+    }
 //    binding.layoutEventOutside.setOnClickListener{
 //        dismiss()
 //    }
@@ -87,6 +87,7 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 
                 // 更新安打的box
                 if (viewModel.hitToBeAdded != 0) gameViewModel.addHitToBox(viewModel.hitToBeAdded)
+                gameViewModel.addPitchCount()
                 dismiss()
                 viewModel.onDialogDismiss()
             }

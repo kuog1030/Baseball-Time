@@ -19,78 +19,77 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <ImageView
             android:id="@+id/image_runner_field"
             android:layout_width="wrap_content"
-            android:layout_height="200dp"
+            android:layout_height="140dp"
             android:layout_marginTop="40dp"
-            app:layout_constraintBottom_toTopOf="@+id/button_runner_second"
+            app:layout_constraintBottom_toTopOf="@+id/bar_hitter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:srcCompat="@drawable/field" />
+            app:layout_constraintVertical_bias="0.26"
+            app:srcCompat="@drawable/diamond_field" />
 
         <Button
             android:id="@+id/button_runner_first"
             style="@style/GameButton"
-            android:layout_width="@dimen/hitter_button_width"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/half_margin"
             android:onClick="@{()->viewModel.toBase(atBase, 1)}"
             android:text="@string/first_base"
+            app:layout_constraintBottom_toBottomOf="@+id/image_runner_field"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_runner_third"
-            app:layout_constraintTop_toTopOf="@+id/button_runner_third" />
+            app:layout_constraintTop_toTopOf="@+id/image_runner_field" />
 
         <Button
             android:id="@+id/button_runner_second"
             style="@style/GameButton"
-            android:layout_width="@dimen/hitter_button_width"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:onClick="@{()->viewModel.toBase(atBase, 2)}"
             android:text="@string/second_base"
-            app:layout_constraintBottom_toBottomOf="@+id/bar_hitter"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintBottom_toTopOf="@+id/image_runner_field"
+            app:layout_constraintEnd_toEndOf="@+id/text_runner_second_player"
+            app:layout_constraintStart_toStartOf="@+id/text_runner_second_player" />
 
         <Button
             android:id="@+id/button_runner_third"
             style="@style/GameButton"
-            android:layout_width="@dimen/hitter_button_width"
+            android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginStart="@dimen/half_margin"
             android:onClick="@{()->viewModel.thirdBase(atBase)}"
             android:text="@string/third_base"
-            app:layout_constraintEnd_toStartOf="@+id/button_runner_first"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_runner_second" />
+            app:layout_constraintTop_toTopOf="@+id/button_runner_first" />
 
         <Button
             android:id="@+id/button_runner_run"
             style="@style/GameButton"
             android:layout_width="@dimen/hitter_button_width"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
             android:onClick="@{()->viewModel.run(atBase)}"
             android:text="@string/get_run"
-            app:layout_constraintEnd_toEndOf="@+id/button_runner_second"
-            app:layout_constraintStart_toStartOf="@+id/button_runner_second"
-            app:layout_constraintTop_toBottomOf="@+id/button_runner_third" />
+            app:layout_constraintBottom_toTopOf="@+id/button_runner_out"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_runner_field" />
 
         <Button
             android:id="@+id/button_runner_out"
             style="@style/GameButton"
             android:layout_width="@dimen/hitter_button_width"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
             android:onClick="@{()->viewModel.fielderChoiceOut(atBase)}"
             android:text="@string/out_field_choice"
+            app:layout_constraintBottom_toTopOf="@+id/bar_hitter"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_run"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/button_runner_run"
             app:layout_constraintTop_toBottomOf="@+id/button_runner_run" />
 
@@ -100,6 +99,7 @@
             style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
             android:text="@{atBase.runnerString}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -112,7 +112,7 @@
             android:layout_height="2dp"
             android:layout_marginStart="@dimen/double_margin"
             android:layout_marginEnd="@dimen/double_margin"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="@dimen/event_dialog_bar_margin"
             android:background="@color/grey_888"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -123,8 +123,8 @@
             style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
             android:text="@{page}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/bar_hitter"
             app:layout_constraintStart_toStartOf="@id/bar_hitter"
             app:layout_constraintTop_toBottomOf="@id/bar_hitter"
@@ -134,29 +134,28 @@
             android:id="@+id/text_runner_first_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintEnd_toEndOf="@id/image_runner_field"
-            app:layout_constraintHorizontal_bias="0.9"
-            app:layout_constraintStart_toStartOf="@+id/image_runner_field"
+            app:atBaseFirst="@{atBase}"
+            app:layout_constraintEnd_toEndOf="@+id/button_runner_first"
+            app:layout_constraintStart_toStartOf="@+id/button_runner_first"
             app:layout_constraintTop_toTopOf="@+id/text_runner_third_player" />
 
         <TextView
             android:id="@+id/text_runner_third_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toBottomOf="@+id/image_runner_field"
-            app:layout_constraintEnd_toEndOf="@+id/image_runner_field"
-            app:layout_constraintHorizontal_bias="0.1"
-            app:layout_constraintStart_toStartOf="@+id/image_runner_field"
+            app:atBaseThird="@{atBase}"
+            app:layout_constraintBottom_toTopOf="@+id/button_runner_third"
+            app:layout_constraintEnd_toEndOf="@+id/button_runner_third"
+            app:layout_constraintStart_toStartOf="@+id/button_runner_third"
             app:layout_constraintTop_toTopOf="@+id/image_runner_field" />
 
         <TextView
             android:id="@+id/text_runner_second_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@id/image_runner_field"
+            android:layout_marginBottom="4dp"
+            app:atBaseSecond="@{atBase}"
+            app:layout_constraintBottom_toTopOf="@+id/button_runner_second"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
 

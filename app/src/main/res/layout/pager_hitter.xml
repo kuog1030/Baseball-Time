@@ -15,100 +15,98 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="match_parent">
 
         <Button
             android:id="@+id/button_hitter_single"
             style="@style/GameButton"
-            android:layout_width="@dimen/hitter_button_width"
+            android:layout_width="@dimen/hitter_button_width2"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
             android:onClick="@{()->viewModel.hit(1)}"
             android:text="@string/Single"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginEnd="@dimen/margin"
+            app:layout_constraintBottom_toTopOf="@+id/button_hitter_triple"
+            app:layout_constraintEnd_toStartOf="@+id/button_hitter_double"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/textView" />
 
         <Button
             android:id="@+id/button_hitter_double"
             style="@style/GameButton"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/hitter_button_width2"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginEnd="@dimen/double_margin"
             android:onClick="@{()->viewModel.hit(2)}"
             android:text="@string/Double"
-            app:layout_constraintEnd_toEndOf="@+id/button_hitter_single"
-            app:layout_constraintStart_toStartOf="@+id/button_hitter_single"
-            app:layout_constraintTop_toBottomOf="@+id/button_hitter_single" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_hitter_single"
+            app:layout_constraintTop_toTopOf="@+id/button_hitter_single" />
 
         <Button
             android:id="@+id/button_hitter_triple"
             style="@style/GameButton"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/hitter_button_width2"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
             android:onClick="@{()->viewModel.hit(3)}"
             android:text="@string/Triple"
-            app:layout_constraintEnd_toEndOf="@+id/button_hitter_single"
+            app:layout_constraintBottom_toTopOf="@+id/button_hitter_hbp"
             app:layout_constraintStart_toStartOf="@+id/button_hitter_single"
-            app:layout_constraintTop_toBottomOf="@+id/button_hitter_double" />
+            app:layout_constraintTop_toBottomOf="@+id/button_hitter_single" />
 
         <Button
             android:id="@+id/button_hitter_homerun"
             style="@style/GameButton"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/hitter_button_width2"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
             android:onClick="@{()->viewModel.homerun()}"
             android:text="@string/homerun"
-            app:layout_constraintEnd_toEndOf="@+id/button_hitter_single"
-            app:layout_constraintStart_toStartOf="@+id/button_hitter_single"
-            app:layout_constraintTop_toBottomOf="@+id/button_hitter_triple" />
+            app:layout_constraintDimensionRatio="1"
+            app:layout_constraintEnd_toEndOf="@+id/button_hitter_double"
+            app:layout_constraintTop_toTopOf="@+id/button_hitter_triple" />
 
         <Button
             android:id="@+id/button_hitter_hbp"
-            style="@style/GameButton"
-            android:layout_width="@dimen/hitter_button_width2"
+            style="@style/GameButtonWhite"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/double_margin"
-            android:layout_marginTop="@dimen/double_margin"
-            android:layout_marginEnd="@dimen/margin"
             android:onClick="@{()->viewModel.hbp()}"
             android:text="@string/hit_by_pitch"
-            app:layout_constraintEnd_toStartOf="@+id/button_hitter_fc"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_hitter_homerun" />
+            app:layout_constraintBottom_toTopOf="@+id/button_hitter_error"
+            app:layout_constraintEnd_toEndOf="@+id/button_hitter_triple"
+            app:layout_constraintStart_toStartOf="@+id/button_hitter_triple"
+            app:layout_constraintTop_toBottomOf="@+id/button_hitter_triple" />
 
         <Button
             android:id="@+id/button_hitter_fc"
-            style="@style/GameButton"
-            android:layout_width="@dimen/hitter_button_width2"
+            style="@style/GameButtonWhite"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/double_margin"
             android:onClick="@{()->viewModel.fielderChoice()}"
             android:text="@string/field_choice"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_hitter_hbp"
+            app:layout_constraintEnd_toEndOf="@+id/button_hitter_homerun"
+            app:layout_constraintStart_toStartOf="@+id/button_hitter_homerun"
             app:layout_constraintTop_toTopOf="@+id/button_hitter_hbp" />
 
         <Button
             android:id="@+id/button_hitter_error"
-            style="@style/GameButton"
+            style="@style/GameButtonWhite"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
             android:onClick="@{()->viewModel.error()}"
             android:text="@string/error"
+            app:layout_constraintBottom_toTopOf="@+id/bar_hitter"
             app:layout_constraintEnd_toEndOf="@+id/button_hitter_hbp"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/button_hitter_hbp"
             app:layout_constraintTop_toBottomOf="@+id/button_hitter_hbp" />
 
         <Button
             android:id="@+id/button_hitter_drop"
-            style="@style/GameButton"
+            style="@style/GameButtonWhite"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:onClick="@{()->viewModel.droppedThird()}"
@@ -122,6 +120,7 @@
             style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
             android:text="@{String.valueOf(viewModel.hitterEvent.player.name)}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -132,7 +131,7 @@
             android:id="@+id/bar_hitter"
             android:layout_width="0dp"
             android:layout_height="2dp"
-            android:layout_marginBottom="60dp"
+            android:layout_marginBottom="@dimen/event_dialog_bar_margin"
             android:background="@color/grey_888"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/button_hitter_drop"
@@ -143,8 +142,8 @@
             style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
             android:text="@{page}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@id/bar_hitter"
             app:layout_constraintStart_toStartOf="@id/bar_hitter"
             app:layout_constraintTop_toBottomOf="@id/bar_hitter"

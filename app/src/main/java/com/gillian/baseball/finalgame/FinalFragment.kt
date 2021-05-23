@@ -1,4 +1,4 @@
-package com.gillian.baseball.game.finalgame
+package com.gillian.baseball.finalgame
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.gillian.baseball.databinding.FragmentFinalBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.finalgame.FinalFragmentArgs
 import com.gillian.baseball.views.BoxAdapter
 
 

@@ -16,12 +16,30 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            app:scoresGames="@{viewModel.scoresGames}"
+            android:overScrollMode="never"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:listitem="@layout/item_card_small"
+            tools:itemCount="3">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+
+
         <Button
             android:id="@+id/fab_fast_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin"
-            android:background="@color/transparent"
+            android:background="@drawable/bg_card"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
             android:clickable="true"
             android:drawableEnd="@drawable/button_drawble_game"
             android:drawablePadding="@dimen/margin"
@@ -41,7 +59,9 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="6dp"
             android:layout_marginBottom="@dimen/margin"
-            android:background="@color/transparent"
+            android:background="@drawable/bg_card"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
             android:clickable="true"
             android:drawableEnd="@drawable/button_drawble_calendar"
             android:drawablePadding="@dimen/margin"

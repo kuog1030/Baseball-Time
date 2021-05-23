@@ -5,12 +5,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDialogFragment
+import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
+import com.gillian.baseball.R
 import com.gillian.baseball.databinding.DialogPinchBinding
 import com.gillian.baseball.game.GameViewModel
 import com.gillian.baseball.game.order.PinchAdapter
 
 class PinchDialog(private val isDefense: Boolean) : AppCompatDialogFragment() {
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setStyle(DialogFragment.STYLE_NO_FRAME, R.style.GameDialog)
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 

@@ -44,7 +44,7 @@
 
     <fragment
         android:id="@+id/finalFragment"
-        android:name="com.gillian.baseball.game.finalgame.FinalFragment"
+        android:name="com.gillian.baseball.finalgame.FinalFragment"
         android:label="FinalFragment" >
         <argument android:name="endGame"
             app:argType="com.gillian.baseball.data.MyGame" />

@@ -76,4 +76,9 @@ class GameFragment : Fragment() {
         super.onStop()
         (activity as MainActivity).setBottomNavigation(true)
     }
+
+    override fun onResume() {
+        super.onResume()
+        (activity as MainActivity).setBottomNavigation(false)
+    }
 }

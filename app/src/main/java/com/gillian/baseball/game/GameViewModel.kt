@@ -183,8 +183,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
 
     fun ball() {
-        liveBallCount.value = liveBallCount.value!!.plus(1)
-
+        addPitchCount()
         ballCount.value = ballCount.value!!.plus(1)
         if (ballCount.value == 4) {
             // single
@@ -193,7 +192,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun strike() {
-        liveBallCount.value = liveBallCount.value!!.plus(1)
+        addPitchCount()
         strikeCount.value = strikeCount.value!!.plus(1)
         totalStrike += 1
 
@@ -210,7 +209,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun foul() {
-        liveBallCount.value = liveBallCount.value!!.plus(1)
+        addPitchCount()
         if (strikeCount.value!! < 2) {
             strikeCount.value = strikeCount.value!!.plus(1)
         }
@@ -225,6 +224,11 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         } else {
             nextPlayer()
         }
+    }
+
+
+    fun addPitchCount() {
+        liveBallCount.value = liveBallCount.value!!.plus(1)
     }
 
     fun onBaseOut(base: Int) {

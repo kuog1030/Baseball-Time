@@ -8,8 +8,11 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.R
 import com.gillian.baseball.allgames.AllGamesViewModel
+import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.databinding.PagerScheduleBinding
 import com.gillian.baseball.util.Util
 
@@ -24,6 +27,10 @@ class SchedulePager : Fragment() {
         viewModel = ViewModelProvider(requireParentFragment()).get(AllGamesViewModel::class.java)
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+        binding.recyclerSchedule.adapter = CardScoreAdapter(CardScoreAdapter.OnClickListener{ it ->
+            Log.i("gillian", "to be changed")
+        })
 
 
         val rotateOpen = Util.getAnim(R.anim.rotate_open_anim)

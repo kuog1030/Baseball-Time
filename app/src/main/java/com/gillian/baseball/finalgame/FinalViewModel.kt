@@ -1,9 +1,8 @@
-package com.gillian.baseball.game.finalgame
+package com.gillian.baseball.finalgame
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.gillian.baseball.data.Box
 import com.gillian.baseball.data.BoxView
 import com.gillian.baseball.data.MyGame
 import com.gillian.baseball.data.source.BaseballRepository

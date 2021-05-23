@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="isDefense"
             type="Boolean" />
@@ -14,61 +16,72 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <Button
-            android:id="@+id/button_pinch_hitter"
-            style="@style/GameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@{isDefense ? @string/pinch_pitcher : @string/pinch_hitter}"
-            app:layout_constraintBottom_toTopOf="@+id/recycler_pinch_bench"
-            app:layout_constraintEnd_toStartOf="@+id/button_pinch_error"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_chainStyle="packed" />
-
-        <Button
-            android:id="@+id/button_pinch_error"
-            style="@style/GameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/record_error"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_pinch_hitter"
-            app:layout_constraintTop_toTopOf="@+id/button_pinch_hitter" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_pinch_bench"
-            android:layout_width="350dp"
-            android:layout_height="500dp"
-            android:layout_marginTop="@dimen/margin"
-            android:padding="@dimen/margin"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/bg_dialog"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/button_pinch_hitter">
+            app:layout_constraintTop_toTopOf="parent">
 
-        </androidx.recyclerview.widget.RecyclerView>
+            <Button
+                android:id="@+id/button_pinch_hitter"
+                style="@style/GameButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/one_half_margin"
+                android:text="@{isDefense ? @string/pinch_pitcher : @string/pinch_hitter}"
+                app:layout_constraintEnd_toStartOf="@+id/button_pinch_error"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_chainStyle="packed" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_pinch_on_field"
-            android:layout_width="350dp"
-            android:layout_height="500dp"
-            android:padding="@dimen/margin"
-            android:visibility="invisible"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="@+id/recycler_pinch_bench"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/recycler_pinch_bench">
-
-        </androidx.recyclerview.widget.RecyclerView>
+            <Button
+                android:id="@+id/button_pinch_error"
+                style="@style/GameButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/record_error"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/button_pinch_hitter"
+                app:layout_constraintTop_toTopOf="@+id/button_pinch_hitter" />
 
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_pinch_bench"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin"
+                android:visibility="invisible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_pinch_hitter">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_pinch_on_field"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/margin"
+                android:visibility="invisible"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/button_pinch_hitter">
+
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

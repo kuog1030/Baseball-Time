@@ -17,6 +17,9 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
     val homeName = MutableLiveData<String>()
     val guestName = MutableLiveData<String>()
 
+    val homeImage = MutableLiveData<String>()
+    val guestImage = MutableLiveData<String>()
+
     val awayName = MutableLiveData<String>()
     val gameTitle = MutableLiveData<String>()
     val gamePlace = MutableLiveData<String>()
@@ -52,12 +55,16 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
     fun updateCard() {
         when (selectedSideRadio.value) {
             R.id.radio_new_game_home -> {
+                homeImage.value = UserManager.teamImage
+                guestImage.value = ""
                 homeName.value = UserManager.teamName
                 guestName.value = awayName.value
             }
             else -> {
                 homeName.value = awayName.value
+                homeImage.value = ""
                 guestName.value = UserManager.teamName
+                guestImage.value = UserManager.teamImage
             }
 
         }

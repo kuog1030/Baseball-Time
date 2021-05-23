@@ -51,24 +51,41 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.guestName}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/team_new_game_home"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                    app:layout_constraintStart_toStartOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="@+id/team_new_game_home"
                     tools:text="客隊" />
 
                 <TextView
                     android:id="@+id/team_new_game_home"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
                     android:text="@{viewModel.homeName}"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.5"
-                    app:layout_constraintStart_toEndOf="@+id/text_new_game_guest"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                    app:layout_constraintStart_toStartOf="@+id/imageView6"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView6"
                     tools:text="主隊" />
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="65dp"
+                    android:layout_height="64dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_new_game_versus"
+                    app:layout_constraintTop_toTopOf="@+id/imageView5"
+                    app:teamImageUrl="@{viewModel.homeImage}"/>
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/text_new_game_versus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.4"
+                    app:teamImageUrl="@{viewModel.guestImage}"/>
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
