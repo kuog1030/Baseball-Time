@@ -38,7 +38,8 @@
         android:label="OrderFragment" >
         <action
             android:id="@+id/action_orderFragment_to_gameFragment"
-            app:destination="@id/gameFragment" />
+            app:destination="@id/gameFragment"
+            app:popUpTo="@id/allGamesFragment" />
     </fragment>
 
     <fragment

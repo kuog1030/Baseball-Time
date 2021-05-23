@@ -34,10 +34,11 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var guestRun = MutableLiveData<Int>(0)
 
     var inningCount = 1
-    var inningShow = MutableLiveData<String>("1上")
+    var inningShow = MutableLiveData<String>("1")
 
     val isHome = argument.isHome ?: true
     var isTop = true
+    val liveIsTop = MutableLiveData<Boolean>(true)
 
     val homeLineUp = argument.game.home.lineUp
     val guestLineUp = argument.game.guest.lineUp
@@ -101,13 +102,13 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 atBatNumber = homeABNumber   // 開始下一局的人次
                 lineUp = homeLineUp          // 下半局換主隊進攻
                 pitcher.value = guestPitcher.name
-                inningShow.value = "${(inningCount / 2)} 下"
+                inningShow.value = "${(inningCount / 2)}"
             } else {
                 homeABNumber = atBatNumber
                 atBatNumber = guestABNumber
                 lineUp = guestLineUp
                 pitcher.value = homePitcher.name
-                inningShow.value = "${(inningCount / 2) + 1} 上"
+                inningShow.value = "${(inningCount / 2) + 1}"
             }
 
 
@@ -117,6 +118,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
             game.value!!.box.score.add(0)
             isTop = !isTop
+            liveIsTop.value = isTop
             baseList = arrayOf(lineUp[atBatNumber], null, null, null)
             atBatName.value = "第${atBatNumber + 1}棒 ${baseList[0]?.name}"
             Log.i("at base", "*-------------change!------------*")

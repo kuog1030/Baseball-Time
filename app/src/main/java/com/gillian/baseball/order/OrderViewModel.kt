@@ -1,5 +1,6 @@
 package com.gillian.baseball.order
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -28,7 +29,6 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
     val submitList = MutableLiveData<Boolean>()
 
 
-
     private val isHome: Boolean
         get() = when (selectedSideRadio.value) {
             R.id.radio_order_home -> true
@@ -36,17 +36,17 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
 
     private val _setUpGame = MutableLiveData<Game>()
-    val setUpGame : LiveData<Game>
+    val setUpGame: LiveData<Game>
         get() = _setUpGame
 
     private val _navigateToGame = MutableLiveData<MyGame>()
-    val navigateToGame : LiveData<MyGame>
+    val navigateToGame: LiveData<MyGame>
         get() = _navigateToGame
 
 
     private val _showNewPlayerDialog = MutableLiveData<Boolean>()
 
-    val showNewPlayerDialog : LiveData<Boolean>
+    val showNewPlayerDialog: LiveData<Boolean>
         get() = _showNewPlayerDialog
 
     private val _errorMessage = MutableLiveData<String>()
@@ -54,26 +54,38 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
+    private val _status = MutableLiveData<LoadStatus>()
+
+    val status: LiveData<LoadStatus>
+        get() = _status
+
 
     init {
         getTeamPlayer()
     }
 
     fun getTeamPlayer() {
+
+        _status.value = LoadStatus.LOADING
+
         viewModelScope.launch {
 
             val result = repository.getTeamEventPlayer(UserManager.teamId)
             lineUp = when (result) {
                 is Result.Success -> {
+                    _status.value = LoadStatus.DONE
                     result.data
                 }
                 is Result.Fail -> {
+                    _status.value = LoadStatus.ERROR
                     mutableListOf()
                 }
                 is Result.Error -> {
+                    _status.value = LoadStatus.ERROR
                     mutableListOf()
                 }
                 else -> {
+                    _status.value = LoadStatus.ERROR
                     mutableListOf()
                 }
             }
@@ -96,7 +108,8 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         val myTeam = GameTeam(
                 name = "Android",
                 teamId = UserManager.teamId,
-                pitcher = EventPlayer(name = pitcher.value ?: "古林睿揚", number = "19", playerId = "0019"),
+                pitcher = EventPlayer(name = pitcher.value
+                        ?: "古林睿揚", number = "19", playerId = "0019"),
                 lineUp = lineUp
         )
 
@@ -113,28 +126,26 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         // 上傳到firebase
         viewModelScope.launch {
 
-            _setUpGame.value = game
-            // TODO() debugging 這邊記得放回來
-//            val result = repository.createGame(game)
-//
-//            _setUpGame.value = when (result) {
-//                is Result.Success -> {
-//                    _errorMessage.value = null
-//                    result.data
-//                }
-//                is Result.Fail -> {
-//                    _errorMessage.value = result.error
-//                    null
-//                }
-//                is Result.Error -> {
-//                    _errorMessage.value = result.exception.toString()
-//                    null
-//                }
-//                else -> {
-//                    _errorMessage.value = Util.getString(R.string.return_nothing)
-//                    null
-//                }
-//            }
+            val result = repository.createGame(game)
+
+            _setUpGame.value = when (result) {
+                is Result.Success -> {
+                    _errorMessage.value = null
+                    result.data
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = result.error
+                    null
+                }
+                is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
+                    null
+                }
+                else -> {
+                    _errorMessage.value = Util.getString(R.string.return_nothing)
+                    null
+                }
+            }
         }
     }
 
@@ -144,8 +155,10 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
     }
 
     fun navigateToGame(game: Game) {
-        _setUpGame.value = null
-        _navigateToGame.value = MyGame(isHome = isHome, game = game)
+        if (_status.value == LoadStatus.DONE) {
+            _setUpGame.value = null
+            _navigateToGame.value = MyGame(isHome = isHome, game = game)
+        }
     }
 
     fun onGameNavigated() {

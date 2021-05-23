@@ -137,17 +137,18 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
         game.id = document.id
 
-        document.set(game).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                continuation.resume(Result.Success(game))
-            } else {
-                task.exception?.let {
-                    Log.i("remote", "create a team fail ${it.message}")
-                    continuation.resume(Result.Error(it))
-                }
-                continuation.resume(Result.Fail("fast create a game fail"))
-            }
-        }
+        continuation.resume(Result.Success(game))
+//        document.set(game).addOnCompleteListener { task ->
+//            if (task.isSuccessful) {
+//                continuation.resume(Result.Success(game))
+//            } else {
+//                task.exception?.let {
+//                    Log.i("remote", "create a team fail ${it.message}")
+//                    continuation.resume(Result.Error(it))
+//                }
+//                continuation.resume(Result.Fail("fast create a game fail"))
+//            }
+//        }
     }
 
     override suspend fun getAllGames(teamId: String): Result<List<Game>>  = suspendCoroutine {continuation ->

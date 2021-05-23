@@ -14,30 +14,64 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/text_game_title"
-            style="@style/GameTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@{viewModel.game.title}"
+        <View
+            android:id="@+id/card_title"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_margin="@dimen/margin"
+            android:background="@drawable/bg_card"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            tools:text="AppWorks School世界盃總冠軍賽" />
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_game_top"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.liveIsTop ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/text_game_inning"
+            app:layout_constraintEnd_toEndOf="@+id/text_game_inning"
+            app:layout_constraintStart_toStartOf="@+id/text_game_inning"
+            app:srcCompat="@drawable/ic_triangle_up" />
+
+        <ImageView
+            android:id="@+id/image_game_bottom"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="@{viewModel.liveIsTop ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="@+id/text_game_inning"
+            app:layout_constraintStart_toStartOf="@+id/text_game_inning"
+            app:layout_constraintTop_toBottomOf="@+id/text_game_inning"
+            app:srcCompat="@drawable/ic_triangle_down" />
+
+        <TextView
+            android:id="@+id/text_game_inning"
+            style="@style/GameInning"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:autoSizeTextType="uniform"
+            android:letterSpacing="0.4"
+            android:text="@{viewModel.inningShow}"
+            app:layout_constraintBottom_toBottomOf="@id/card_title"
+            app:layout_constraintStart_toStartOf="@id/card_title"
+            app:layout_constraintTop_toTopOf="@id/card_title"
+            tools:text="9" />
+
 
         <TextView
             android:id="@+id/text_game_guest"
             style="@style/GameScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginEnd="@dimen/double_margin"
             android:text="@{viewModel.game.guest.name}"
+            app:layout_constraintBottom_toBottomOf="@id/text_game_inning"
             app:layout_constraintEnd_toStartOf="@+id/text_game_score"
-            app:layout_constraintTop_toBottomOf="@+id/text_game_title"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_game_inning"
+            app:layout_constraintTop_toTopOf="@id/text_game_inning"
+            app:layout_constraintVertical_bias="1.0"
             tools:text="Flutter" />
-
 
         <TextView
             android:id="@+id/text_game_score"
@@ -45,8 +79,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text='@{viewModel.guestRun + " : " + viewModel.homeRun}'
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_game_home"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_game_guest"
             app:layout_constraintTop_toTopOf="@+id/text_game_guest"
             tools:text="5:5" />
 
@@ -55,8 +90,9 @@
             style="@style/GameScore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/double_margin"
             android:text="@{viewModel.game.home.name}"
+            app:layout_constraintEnd_toStartOf="@+id/button_game_more"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/text_game_score"
             app:layout_constraintTop_toTopOf="@+id/text_game_score"
             tools:text="Android" />
@@ -65,7 +101,7 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_game_home">
+            app:layout_constraintTop_toBottomOf="@id/card_title">
 
             <View
                 android:id="@+id/card_batting"
@@ -181,17 +217,6 @@
                 app:layout_constraintTop_toTopOf="@+id/button_batting_out" />
 
             <TextView
-                android:id="@+id/text_game_inning"
-                style="@style/GameInning"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
-                android:text="@{viewModel.inningShow}"
-                app:layout_constraintBottom_toTopOf="@+id/card_batting"
-                app:layout_constraintEnd_toEndOf="@+id/card_batting"
-                tools:text="9up" />
-
-            <TextView
                 android:id="@+id/text_batting_ball_sign"
                 style="@style/BallSign"
                 android:layout_width="wrap_content"
@@ -278,7 +303,7 @@
                 android:visibility="@{viewModel.thirdBaseVisible? View.VISIBLE : View.GONE}"
                 app:layout_constraintBottom_toTopOf="@+id/text_batting_hitter"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/text_batting_second"
+                app:layout_constraintTop_toTopOf="@+id/image_batting_field"
                 tools:text="No.28 Peter" />
 
             <Button
@@ -298,12 +323,12 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
                 android:layout_marginBottom="4dp"
-                android:text='@{"投手："+ viewModel.pitcher}'
+                android:text='@{"P  "+ viewModel.pitcher}'
                 app:layout_constraintBottom_toTopOf="@id/card_batting"
-                app:layout_constraintStart_toStartOf="@+id/card_batting"
-                tools:text="投手：潘威倫" />
+                app:layout_constraintEnd_toEndOf="@id/card_batting"
+                tools:text="P  潘威倫" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -313,9 +338,9 @@
             android:layout_height="wrap_content"
             android:backgroundTint="@color/transparent"
             android:onClick="@{()->viewModel.navigateToPinch()}"
-            app:layout_constraintBottom_toBottomOf="@+id/text_game_score"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_game_title"
+            app:layout_constraintBottom_toBottomOf="@+id/card_title"
+            app:layout_constraintEnd_toEndOf="@id/card_title"
+            app:layout_constraintTop_toTopOf="@+id/card_title"
             app:srcCompat="@drawable/ic_baseline_more_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
