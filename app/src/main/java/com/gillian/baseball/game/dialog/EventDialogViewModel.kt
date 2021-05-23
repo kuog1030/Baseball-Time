@@ -1,5 +1,6 @@
 package com.gillian.baseball.game.dialog
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -18,7 +19,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     var hitterEvent = MutableLiveData<Event>(eventInfo.hitterPreEvent)
     var newBaseList = arrayOf<EventPlayer?>(null, null, null, null)
     var hasOut : Boolean? = null
-    var hasBaseOut : Int? = null
+    var hasBaseOut = mutableListOf<Int>()
 
 
     var eventList = mutableListOf<Event>()
@@ -49,7 +50,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
 
     fun onDialogDismiss() {
         _dismiss.value = null
-        hasBaseOut = null
+        hasBaseOut.clear()
         hasOut = null
     }
 
@@ -170,7 +171,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     }
 
     fun fielderChoiceOut(atBase: AtBase) {
-        hasBaseOut = atBase.base
+        hasBaseOut.add(atBase.base)
         atBase.base = -1
         changeToNextPage()
     }

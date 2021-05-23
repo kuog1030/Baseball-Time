@@ -1,6 +1,7 @@
 package com.gillian.baseball.game.dialog
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -25,7 +26,7 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 //        dismiss()
 //    }
 
-    private val viewModel by viewModels<EventDialogViewModel> {getVmFactory(eventInfo) }
+    private val viewModel by viewModels<EventDialogViewModel> { getVmFactory(eventInfo) }
     private val isSafe = eventInfo.isSafe
     private val atBaseList = eventInfo.atBaseList
 
@@ -41,7 +42,6 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 //                requireActivity(),
 //                ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)
 //        ).get(EventDialogViewModel::class.java)
-
 
 
         fun changePage() {
@@ -66,14 +66,18 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
         viewModel.dismiss.observe(viewLifecycleOwner, Observer {
             it?.let {
                 val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
-
+                gameViewModel.addPitchCount()
                 if (viewModel.hasOut != null) {
                     // 如果有出局數的話 eg. 雖然上壘safe 但是選殺，有仍然有出局數
+
+                    // 如果有壘包上的出局數 // 要先處理不然baselist被清空了 例如雙殺打就不會記錄到
+                    if (!viewModel.hasBaseOut.isEmpty()) gameViewModel.onBaseOut(viewModel.hasBaseOut)
+
+
                     gameViewModel.setNewBaseList(it)
                     // 犧牲打也要加上分數
                     if (viewModel.scoreToBeAdded != 0) gameViewModel.scored(viewModel.scoreToBeAdded)
-                    // 如果有壘包上的出局數
-                    if (viewModel.hasBaseOut != null) gameViewModel.onBaseOut(viewModel.hasBaseOut!!)
+
                     gameViewModel.out()
                 } else {
                     // 如果沒有出局數的話 is safe = true
@@ -83,11 +87,8 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
                     gameViewModel.nextPlayer()
                 }
 
-                //Log.i("gillian", "in event dialog $gameViewModel")
-
                 // 更新安打的box
                 if (viewModel.hitToBeAdded != 0) gameViewModel.addHitToBox(viewModel.hitToBeAdded)
-                gameViewModel.addPitchCount()
                 dismiss()
                 viewModel.onDialogDismiss()
             }

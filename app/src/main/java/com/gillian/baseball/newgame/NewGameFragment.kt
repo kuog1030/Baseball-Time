@@ -67,6 +67,7 @@ class NewGameFragment : Fragment() {
                 val pickedDateTime = Calendar.getInstance()
                 pickedDateTime.set(year, month, day, hour, minute)
                 viewModel.gameDateLong = pickedDateTime.timeInMillis
+
                 val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.TAIWAN)
                 viewModel.gameDate.value = dateFormat.format(Date(pickedDateTime.timeInMillis))
 

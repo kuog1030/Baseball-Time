@@ -231,20 +231,25 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         liveBallCount.value = liveBallCount.value!!.plus(1)
     }
 
-    fun onBaseOut(base: Int) {
-        sendEvent(Event(
-                inning = inningCount,
-                out = outCount.value ?: 0,
-                player = baseList[base]!!,
-                result = EventType.PICKOFF.number,
-                pitcher = if (isTop) homePitcher else guestPitcher
-        ))
-        outCount.value = outCount.value!!.plus(1)
+
+    // 1. 單純點跑者的出局(on base dialog) 2. 打者出局後連帶跑者出局(event dialog)
+    fun onBaseOut(outBaseList: List<Int>) {
+        for (base in outBaseList) {
+            sendEvent(Event(
+                    inning = inningCount,
+                    out = outCount.value ?: 0,
+                    player = baseList[base]!!,
+                    result = EventType.PICKOFF.number,
+                    pitcher = if (isTop) homePitcher else guestPitcher
+            ))
+        }
+
+        outCount.value = outCount.value!!.plus(outBaseList.size)
         if (outCount.value!! == 3) {
             // three out! switch
             switch()
         } else {
-            baseList[base] = null
+            baseList[outBaseList[0]] = null
         }
         updateRunnerUI()
     }
