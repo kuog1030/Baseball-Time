@@ -16,6 +16,7 @@ import com.gillian.baseball.data.Game
 import com.gillian.baseball.databinding.PagerScoresBinding
 import com.gillian.baseball.util.CurrentDayDecorator
 import com.prolificinteractive.materialcalendarview.CalendarDay
+import com.prolificinteractive.materialcalendarview.CalendarMode
 
 class ScoresPager : Fragment() {
 
@@ -28,6 +29,7 @@ class ScoresPager : Fragment() {
         val viewModel = ViewModelProvider(requireParentFragment()).get(AllGamesViewModel::class.java)
 
         addDot(2021, 5, 10)
+        //binding.calendarScores.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit()
 
 
         binding.recyclerScores.adapter = CardScoreAdapter(CardScoreAdapter.OnClickListener{ game ->
