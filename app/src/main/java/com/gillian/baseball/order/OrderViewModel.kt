@@ -113,26 +113,28 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         // 上傳到firebase
         viewModelScope.launch {
 
-            val result = repository.createGame(game)
-
-            _setUpGame.value = when (result) {
-                is Result.Success -> {
-                    _errorMessage.value = null
-                    result.data
-                }
-                is Result.Fail -> {
-                    _errorMessage.value = result.error
-                    null
-                }
-                is Result.Error -> {
-                    _errorMessage.value = result.exception.toString()
-                    null
-                }
-                else -> {
-                    _errorMessage.value = Util.getString(R.string.return_nothing)
-                    null
-                }
-            }
+            _setUpGame.value = game
+            // TODO() debugging 這邊記得放回來
+//            val result = repository.createGame(game)
+//
+//            _setUpGame.value = when (result) {
+//                is Result.Success -> {
+//                    _errorMessage.value = null
+//                    result.data
+//                }
+//                is Result.Fail -> {
+//                    _errorMessage.value = result.error
+//                    null
+//                }
+//                is Result.Error -> {
+//                    _errorMessage.value = result.exception.toString()
+//                    null
+//                }
+//                else -> {
+//                    _errorMessage.value = Util.getString(R.string.return_nothing)
+//                    null
+//                }
+//            }
         }
     }
 

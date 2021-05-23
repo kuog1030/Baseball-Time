@@ -9,6 +9,7 @@ data class Team (
     var name : String = "",
     var acronym : String = name,
     var color : String = "",
+    var image : String = "",
     var member : MutableList<Player> = mutableListOf(),
     var membersId : MutableList<String> = mutableListOf()
 ) : Parcelable
@@ -23,5 +24,6 @@ data class Player(
     var nickname : String? = null,
     var number : Int = -1,
     var image: String? = null,
-    //var careerStat: HitterBox = HitterBox(name = name, playerId = id)
+    //var hitStat: HitterBox = HitterBox(name = name, playerId = id)
+    //var pitchStat: PitcherBox = PitcherBox()
 ) : Parcelable

@@ -20,7 +20,8 @@
     <style name="BallSign">
         <item name="android:textSize">35sp</item>
 <!--        <item name="android:letterSpacing">0.4</item>-->
-        <item name="android:layout_marginStart">@dimen/margin</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
     </style>
 
     <style name="PlayerNumber">
@@ -62,10 +63,15 @@
     </style>
 
     <style name="GameButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:textSize">18sp</item>
+        <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.15</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:background">@drawable/button_radius_filled</item>
+    </style>
+
+    <style name="GameButton2" parent="GameButton">
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/color_background</item>
     </style>
 
     <style name="EditText">

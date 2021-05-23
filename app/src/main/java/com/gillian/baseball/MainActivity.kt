@@ -2,6 +2,8 @@ package com.gillian.baseball
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View.GONE
+import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.gillian.baseball.databinding.ActivityMainBinding
@@ -33,5 +35,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+    }
+
+
+    fun setBottomNavigation(visible: Boolean) {
+        if (visible) {
+            binding.bottomNavView.visibility = VISIBLE
+        } else {
+            binding.bottomNavView.visibility = GONE
+        }
     }
 }

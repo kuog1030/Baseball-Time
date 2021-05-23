@@ -19,10 +19,21 @@
     <color name="grey_ddd">#FFdddddd</color>
     <color name="grey_eee">#FFeeeeee</color>
 
-    <color name="avg">#FFECB3</color>
-    <color name="obp">#FFCCBC</color>
-    <color name="slg">#D7CCC8</color>
-    <color name="slg_dark">#5D4037</color>
+<!--    <color name="avg">#FFECB3</color>-->
+<!--    <color name="obp">#FFCCBC</color>-->
+<!--    <color name="slg">#D7CCC8</color>-->
+<!--    <color name="slg_dark">#5D4037</color>-->
+
+<!--    這其實也蠻好看的-->
+<!--    <color name="avg">#7B838C</color>-->
+<!--    <color name="obp">#D8D9D7</color>-->
+<!--    <color name="slg">#9FADBF</color>-->
+<!--    <color name="slg_dark">#40362E</color>-->
+
+    <color name="avg">#5EA4BF</color>
+    <color name="obp">#F2BD1D</color>
+    <color name="slg">#D94C1A</color>
+    <color name="slg_dark">#40362E</color>
 
     <color name="nav_icon">@color/grey_888</color>
     <color name="nav_icon_selected">@color/denim_blue</color>
@@ -30,7 +41,8 @@
     <color name="color_background">@color/grey_eee</color>
 
 <!--    second -->
-    <color name="blue_navy">#1E3A52</color>
-    <color name="orange_red">#F48225</color>
+    <color name="blue_navy">#364959</color>
+<!--    這個列入考慮-->
+    <color name="blue_dark">#403C35</color>
 
 </resources>

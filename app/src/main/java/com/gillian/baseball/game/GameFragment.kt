@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.MainActivity
 import com.gillian.baseball.databinding.FragmentGameBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.game.dialog.EventDialog
@@ -23,10 +24,10 @@ class GameFragment : Fragment() {
         val binding = FragmentGameBinding.inflate(inflater, container, false)
 
         binding.viewModel = viewModel
-        //Log.i("gillian", "in game : game View Model $viewModel")
-
-
         binding.lifecycleOwner = viewLifecycleOwner
+
+        (activity as MainActivity).setBottomNavigation(false)
+
 
         viewModel.navigateToEvent.observe(viewLifecycleOwner, Observer {
             it?.let{
@@ -69,5 +70,10 @@ class GameFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onStop() {
+        super.onStop()
+        (activity as MainActivity).setBottomNavigation(true)
     }
 }

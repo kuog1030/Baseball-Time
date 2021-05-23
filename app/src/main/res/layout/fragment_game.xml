@@ -64,27 +64,28 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toBottomOf="@id/text_game_home"
-            app:layout_constraintBottom_toBottomOf="parent">
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_game_home">
 
             <View
                 android:id="@+id/card_batting"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_margin="@dimen/margin"
-                android:background="@drawable/bg_card2"
-                app:layout_constraintTop_toBottomOf="@id/image_batting_field"
+                android:background="@drawable/bg_card"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/image_batting_field" />
 
             <TextView
                 android:id="@+id/text_batting_ball"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/quarter_margin"
                 android:layout_marginTop="@dimen/margin"
                 android:text="@string/B"
+                app:layout_constraintBottom_toTopOf="@+id/button_batting_ball"
                 app:layout_constraintStart_toStartOf="@+id/button_batting_ball"
                 app:layout_constraintTop_toTopOf="@+id/card_batting" />
 
@@ -92,6 +93,7 @@
                 android:id="@+id/text_batting_strike"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two_third_margin"
                 android:text="@string/S"
                 app:layout_constraintStart_toStartOf="@+id/button_batting_strike"
                 app:layout_constraintTop_toTopOf="@+id/text_batting_ball" />
@@ -100,28 +102,36 @@
                 android:id="@+id/text_batting_foul"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/two_third_margin"
                 android:text="@string/O"
                 app:layout_constraintStart_toStartOf="@+id/button_batting_foul"
                 app:layout_constraintTop_toTopOf="@+id/text_batting_strike" />
 
             <Button
                 android:id="@+id/button_batting_ball"
-                android:layout_width="wrap_content"
+                style="@style/GameButton2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:text="@string/ball"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/quarter_margin"
                 android:onClick="@{()->viewModel.ball()}"
+                android:text="@string/ball"
+                app:layout_constraintBottom_toTopOf="@+id/button_batting_out"
                 app:layout_constraintEnd_toStartOf="@+id/button_batting_strike"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintStart_toStartOf="@+id/card_batting"
                 app:layout_constraintTop_toBottomOf="@+id/text_batting_ball" />
 
             <Button
                 android:id="@+id/button_batting_strike"
-                android:layout_width="wrap_content"
+                style="@style/GameButton2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/strike"
+                android:layout_marginStart="@dimen/quarter_margin"
+                android:layout_marginEnd="@dimen/quarter_margin"
                 android:onClick="@{()->viewModel.strike()}"
+                android:text="@string/strike"
                 app:layout_constraintEnd_toStartOf="@+id/button_batting_foul"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_batting_ball"
@@ -129,24 +139,28 @@
 
             <Button
                 android:id="@+id/button_batting_foul"
-                android:layout_width="wrap_content"
+                style="@style/GameButton2"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/foul"
+                android:layout_marginStart="@dimen/quarter_margin"
+                android:layout_marginEnd="@dimen/margin"
                 android:onClick="@{()->viewModel.foul()}"
-                app:layout_constraintEnd_toEndOf="parent"
+                android:text="@string/foul"
+                app:layout_constraintEnd_toEndOf="@+id/card_batting"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_batting_strike"
                 app:layout_constraintTop_toTopOf="@+id/button_batting_strike" />
 
             <Button
-                style="@style/GameButton"
                 android:id="@+id/button_batting_out"
+                style="@style/GameButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:text="@string/out"
-                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginEnd="@dimen/quarter_margin"
+                android:layout_marginBottom="@dimen/margin"
                 android:onClick="@{()->viewModel.toEventDialog(false)}"
+                android:text="@string/out"
+                app:layout_constraintBottom_toBottomOf="@+id/card_batting"
                 app:layout_constraintEnd_toStartOf="@+id/button_batting_safe"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintHorizontal_chainStyle="spread_inside"
@@ -154,13 +168,13 @@
                 app:layout_constraintTop_toBottomOf="@+id/button_batting_ball" />
 
             <Button
-                style="@style/GameButton"
                 android:id="@+id/button_batting_safe"
+                style="@style/GameButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="@string/safe"
+                android:layout_marginStart="@dimen/quarter_margin"
                 android:onClick="@{()->viewModel.toEventDialog(true)}"
-                android:layout_marginStart="@dimen/margin"
+                android:text="@string/safe"
                 app:layout_constraintEnd_toEndOf="@+id/button_batting_foul"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_batting_out"
@@ -171,8 +185,8 @@
                 style="@style/GameInning"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@{viewModel.inningShow}"
                 android:layout_marginEnd="8dp"
+                android:text="@{viewModel.inningShow}"
                 app:layout_constraintBottom_toTopOf="@+id/card_batting"
                 app:layout_constraintEnd_toEndOf="@+id/card_batting"
                 tools:text="9up" />
@@ -195,10 +209,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/yellow_strike"
-                app:twoCount="@{viewModel.strikeCount}"
                 app:layout_constraintBottom_toBottomOf="@+id/text_batting_strike"
                 app:layout_constraintStart_toEndOf="@+id/text_batting_strike"
                 app:layout_constraintTop_toTopOf="@+id/text_batting_strike"
+                app:twoCount="@{viewModel.strikeCount}"
                 tools:text="@string/two_one" />
 
             <TextView
@@ -206,11 +220,11 @@
                 style="@style/BallSign"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:twoCount="@{viewModel.outCount}"
                 android:textColor="@color/red_out"
                 app:layout_constraintBottom_toBottomOf="@+id/text_batting_foul"
                 app:layout_constraintStart_toEndOf="@+id/text_batting_foul"
                 app:layout_constraintTop_toTopOf="@+id/text_batting_foul"
+                app:twoCount="@{viewModel.outCount}"
                 tools:text="@string/two_two" />
 
             <ImageView
@@ -236,11 +250,11 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/image_batting_field"
-                tools:text="No.19 Sean"/>
+                tools:text="No.19 Sean" />
 
             <Button
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/button_batting_first"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
@@ -254,8 +268,8 @@
                 tools:text="No.15 Sam" />
 
             <Button
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/text_batting_third"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
@@ -265,31 +279,31 @@
                 app:layout_constraintBottom_toTopOf="@+id/text_batting_hitter"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/text_batting_second"
-                tools:text="No.28 Peter"/>
+                tools:text="No.28 Peter" />
 
             <Button
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/text_batting_second"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{()->viewModel.toOnBaseDialog(2)}"
                 android:text="@{viewModel.secondBaseName}"
                 android:visibility="@{viewModel.secondBaseVisible? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toTopOf="@+id/image_batting_field"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toTopOf="@+id/image_batting_field"
-                tools:text="No.99 Wency"/>
+                tools:text="No.99 Wency" />
 
             <TextView
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text='@{"投手："+ viewModel.pitcher}'
-                android:layout_marginBottom="4dp"
                 android:layout_marginStart="@dimen/margin"
+                android:layout_marginBottom="4dp"
+                android:text='@{"投手："+ viewModel.pitcher}'
                 app:layout_constraintBottom_toTopOf="@id/card_batting"
                 app:layout_constraintStart_toStartOf="@+id/card_batting"
-                tools:text="投手：潘威倫"/>
+                tools:text="投手：潘威倫" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
