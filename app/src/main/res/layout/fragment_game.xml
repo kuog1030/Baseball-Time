@@ -323,12 +323,22 @@
                 android:id="@+id/textView2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginEnd="@dimen/half_margin"
                 android:layout_marginBottom="4dp"
                 android:text='@{"P  "+ viewModel.pitcher}'
                 app:layout_constraintBottom_toTopOf="@id/card_batting"
-                app:layout_constraintEnd_toEndOf="@id/card_batting"
+                app:layout_constraintEnd_toStartOf="@+id/text_game_total_count"
                 tools:text="P  潘威倫" />
+
+            <TextView
+                android:id="@+id/text_game_total_count"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/half_margin"
+                android:text="@{String.valueOf(viewModel.liveBallCount)}"
+                app:layout_constraintEnd_toEndOf="@+id/card_batting"
+                app:layout_constraintTop_toTopOf="@+id/textView2"
+                tools:text="22"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

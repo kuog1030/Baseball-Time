@@ -63,6 +63,10 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     /* ---------------------------- init game info ---------------------------- */
 
 
+    var homePitchCount = 0
+    var guestPitchCount = 0
+    val liveBallCount = MutableLiveData<Int>(0)
+
     /* ---------------------------- 打擊相關 ----------------------------*/
     var ballCount = MutableLiveData<Int>(0)
     var strikeCount = MutableLiveData<Int>(0)
@@ -98,12 +102,18 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             inningCount += 1
             if (isTop) {
                 // 目前上半局
+                homePitchCount = liveBallCount.value!!  // 紀錄這次投球數
+                liveBallCount.value = guestPitchCount
+
                 guestABNumber = atBatNumber  // 記錄下這次打席的最後人次+1
                 atBatNumber = homeABNumber   // 開始下一局的人次
                 lineUp = homeLineUp          // 下半局換主隊進攻
                 pitcher.value = guestPitcher.name
                 inningShow.value = "${(inningCount / 2)}"
             } else {
+                guestPitchCount += liveBallCount.value!!
+                liveBallCount.value = homePitchCount
+
                 homeABNumber = atBatNumber
                 atBatNumber = guestABNumber
                 lineUp = guestLineUp
@@ -173,6 +183,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
 
     fun ball() {
+        liveBallCount.value = liveBallCount.value!!.plus(1)
+
         ballCount.value = ballCount.value!!.plus(1)
         if (ballCount.value == 4) {
             // single
@@ -181,6 +193,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun strike() {
+        liveBallCount.value = liveBallCount.value!!.plus(1)
         strikeCount.value = strikeCount.value!!.plus(1)
         totalStrike += 1
 
@@ -197,6 +210,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun foul() {
+        liveBallCount.value = liveBallCount.value!!.plus(1)
         if (strikeCount.value!! < 2) {
             strikeCount.value = strikeCount.value!!.plus(1)
         }
@@ -425,11 +439,14 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun nextPitcher(next: EventPlayer, position: Int) {
         if (isTop) {
             next.pinch = homePitcher
+            homePitchCount = 0
             homePitcher = next
         } else {
             next.pinch = guestPitcher
+            guestPitchCount = 0
             guestPitcher = next
         }
+        liveBallCount.value = 0
         pitcher.value = next.name
         myBench.removeAt(position)
     }
