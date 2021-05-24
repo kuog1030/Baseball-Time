@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
+import com.gillian.baseball.ext.toGameStat
 import com.gillian.baseball.ext.toHitterBox
 import com.gillian.baseball.ext.toPersonalScore
 import com.gillian.baseball.login.UserManager
@@ -319,8 +320,34 @@ object BaseballRemoteDataSource : BaseballDataSource {
     }
 
 
+    // TODO teamID是為了判斷我是is home嗎?
+    override suspend fun getGameStat(gameId: String, teamId: String): Result<Statistic> = suspendCoroutine { continuation ->
+        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
+
+        theGame.collection(PLAYS)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val eventList = mutableListOf<Event>()
+                        for (document in task.result!!) {
+                            eventList.add(document.toObject(Event::class.java))
+                        }
+                        val result = eventList.toGameStat()
+                        continuation.resume(Result.Success(result))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("get all stats fail"))
+                    }
+                }
+    }
+
+
     // TODO 回傳result?
-    // TODO 5/23測試用 "BYOOYUQck8ck9r6aKczU"
     override suspend fun sendEvent(gameId: String, event: Event) {
         val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
         val document = theGame.collection(PLAYS).document()

@@ -6,14 +6,40 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.HitterBox
 import com.gillian.baseball.data.Result
+import com.gillian.baseball.data.Statistic
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.login.UserManager
 import kotlinx.coroutines.launch
 
 class StatGameViewModel(private val repository: BaseballRepository) : ViewModel() {
 
+    val allStat = MutableLiveData<Statistic>()
+
     val oneGameHitterStat = MutableLiveData<List<HitterBox>>()
 
     var gameId = MutableLiveData<String>()
+
+    fun getAllStat() {
+        viewModelScope.launch {
+            val result = repository.getGameStat(gameId.value!!, UserManager.teamId)
+            allStat.value = when (result) {
+                is Result.Success -> {
+                    Log.i("gillian", "all stat")
+                    result.data
+                }
+                is Result.Fail -> {
+                    null
+                }
+                is Result.Error -> {
+                    null
+                }
+                else -> {
+                    null
+                }
+            }
+        }
+    }
+
 
     fun getHitterStat() {
         viewModelScope.launch {

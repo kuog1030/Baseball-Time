@@ -33,6 +33,8 @@ interface BaseballDataSource {
 
     suspend fun getHittersStat(gameId: String, teamId: String) : Result<List<HitterBox>>
 
+    suspend fun getGameStat(gameId: String, teamId: String) : Result<Statistic>
+
     suspend fun sendEvent(gameId: String, event: Event)
 
 }

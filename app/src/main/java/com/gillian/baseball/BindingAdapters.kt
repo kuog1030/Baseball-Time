@@ -13,6 +13,7 @@ import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.data.*
 import com.gillian.baseball.team.pager.TeammateAdapter
 import com.gillian.baseball.views.HitterBoxAdapter
+import com.gillian.baseball.views.PitcherBoxAdapter
 
 @BindingAdapter("ballCount")
 fun bindBallCount(textView: TextView, count: Int?) {
@@ -58,6 +59,18 @@ fun bindHitterBox(recyclerView: RecyclerView, hitterBox: List<HitterBox>?) {
         }
     }
 }
+
+@BindingAdapter("pitcherBox")
+fun bindPitcherBox(recyclerView: RecyclerView, pitcherBox: List<PitcherBox>?) {
+    pitcherBox?.let{
+        recyclerView.adapter?.apply {
+            when(this) {
+                is PitcherBoxAdapter -> submitList(it)
+            }
+        }
+    }
+}
+
 
 @BindingAdapter("scoresGames")
 fun bindScoresGames(recyclerView: RecyclerView, games: List<GameCard>?) {

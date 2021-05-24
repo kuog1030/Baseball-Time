@@ -12,6 +12,7 @@ import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.databinding.FragmentStatGameBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.views.HitterBoxAdapter
+import com.gillian.baseball.views.PitcherBoxAdapter
 
 class StatGameFragment : Fragment() {
 
@@ -25,9 +26,12 @@ class StatGameFragment : Fragment() {
         binding.viewModel = viewModel
 
         binding.recyclerGameStatHitter.adapter = HitterBoxAdapter()
+        binding.recyclerGameStatPitcher.adapter = PitcherBoxAdapter()
+        binding.recyclerGameStatHitterG.adapter = HitterBoxAdapter()
+        binding.recyclerGameStatPitcherG.adapter = PitcherBoxAdapter()
 
         viewModel.gameId.observe(viewLifecycleOwner, Observer {
-            viewModel.getHitterStat()
+            viewModel.getAllStat()
             Log.i("gillian", "game id change")
         })
 

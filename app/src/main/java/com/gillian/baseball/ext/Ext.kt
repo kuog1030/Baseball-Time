@@ -4,6 +4,7 @@ import android.util.Log
 import com.gillian.baseball.data.Event
 import com.gillian.baseball.data.HitterBox
 import com.gillian.baseball.data.PitcherBox
+import com.gillian.baseball.data.Statistic
 import com.gillian.baseball.game.EventType
 import com.gillian.baseball.login.UserManager
 
@@ -124,7 +125,7 @@ fun List<Event>.toPersonalScore() : List<String> {
 }
 
 
-fun List<Event>.toGameStat(isHome: Boolean) {
+fun List<Event>.toGameStat(isHome: Boolean = true) : Statistic {
 
 
     val guestPitcher = mutableListOf(PitcherBox())
@@ -173,6 +174,9 @@ fun List<Event>.toGameStat(isHome: Boolean) {
                 break
             }
         }
+
+        // TODO() 之後得分的result要改掉，目前傳上去是0
+        if (type == 0) targetEventType = EventType.SACRIFICEFLY
 
         box.run += event.run
 
@@ -278,4 +282,9 @@ fun List<Event>.toGameStat(isHome: Boolean) {
 
     //guestResult.removeAt(0)
     //homeResult.removeAt(0)
+
+    return Statistic(guestPitcher = guestPitcher,
+            homePitcher = homePitcher,
+            guestHitter = guestHitter,
+            homeHitter = homeHitter)
 }
