@@ -190,6 +190,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         for (oneGame in task.result!!) {
                             result.add(oneGame.toObject(Game::class.java).toGameCard())
                         }
+                        result.sortByDescending { it.date }
                         continuation.resume(Result.Success(result))
                     } else {
                         task.exception?.let {

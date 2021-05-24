@@ -14,6 +14,7 @@ data class Game (
         var guest: GameTeam = GameTeam(),
         val box: Box = Box(),
         val note: String = "",
+        var status: Int = GameStatus.SCHEDULED.number,
         val recordedTeamId : String = ""
 ) : Parcelable {
 
@@ -23,6 +24,7 @@ data class Game (
                 title = title,
                 place = place,
                 date = date,
+                status = status,
                 isHome = (recordedTeamId == home.teamId),
                 homeName = home.name,
                 guestName = guest.name,

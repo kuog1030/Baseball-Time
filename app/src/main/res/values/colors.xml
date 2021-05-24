@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="color_background">@color/grey_eee</color>
+    <color name="color_primary_light">#5EA4BF</color>
+
+
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
     <color name="purple_700">#FF3700B3</color>
@@ -38,7 +42,7 @@
     <color name="nav_icon">@color/grey_888</color>
     <color name="nav_icon_selected">@color/denim_blue</color>
 
-    <color name="color_background">@color/grey_eee</color>
+
 
 <!--    second -->
     <color name="blue_navy">#364959</color>

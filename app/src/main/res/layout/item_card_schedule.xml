@@ -1,31 +1,100 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/text_game_coming_date"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="52dp"
-        tools:layout_editor_absoluteY="67dp" />
+    <data>
+        <variable
+            name="game"
+            type="com.gillian.baseball.data.GameCard" />
+    </data>
 
-    <TextView
-        android:id="@+id/text_game_coming_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="151dp"
-        tools:layout_editor_absoluteY="67dp" />
 
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        tools:layout_editor_absoluteX="304dp"
-        tools:layout_editor_absoluteY="120dp" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="190dp"
+        android:background="@drawable/bg_card"
+        android:layout_marginBottom="@dimen/margin">
+
+        <TextView
+            android:id="@+id/text_card_score_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{game.title}"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="全國棒球大專盃8強" />
+
+        <TextView
+            android:id="@+id/text_card_score_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.1"
+            android:text='@{game.place + " | " + game.dateString}'
+            android:textColor="?attr/colorPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_card_score_title"
+            tools:layout_editor_absoluteY="26dp"
+            tools:text="福和橋 | 2021-05-15 09:00"/>
+
+        <TextView
+            android:id="@+id/text_card_score_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="45sp"
+            android:letterSpacing="0.3"
+            android:text="@string/versus"
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_score_guest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_guest"/>
+
+        <ImageView
+            android:id="@+id/image_card_score_guest"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            android:layout_marginBottom="@dimen/margin"
+            app:layout_constraintBottom_toTopOf="@+id/text_card_score_guest"
+            app:layout_constraintEnd_toStartOf="@+id/text_card_score_score"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
+
+        <TextView
+            android:id="@+id/text_card_score_guest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/one_half_margin"
+            android:text="@{game.guestName}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/text_card_score_score"
+            app:layout_constraintStart_toStartOf="parent"
+            tools:text="Android"/>
+
+        <ImageView
+            android:id="@+id/image_card_score_home"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_card_score_score"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_guest"
+            app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
+
+        <TextView
+            android:id="@+id/text_card_score_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{game.homeName}"
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_score_guest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_card_score_score"
+            app:layout_constraintTop_toTopOf="@+id/text_card_score_guest"
+            tools:text="iOS"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

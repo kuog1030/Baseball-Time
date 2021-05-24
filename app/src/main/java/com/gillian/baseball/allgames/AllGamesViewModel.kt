@@ -8,10 +8,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.R
-import com.gillian.baseball.data.Game
-import com.gillian.baseball.data.GameCard
-import com.gillian.baseball.data.Team
-import com.gillian.baseball.data.Result
+import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
 import com.gillian.baseball.util.Util.getAnim
@@ -35,14 +32,19 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
+    private val _allGameCards = MutableLiveData<List<GameCard>>()
+
+    val allGameCards : LiveData<List<GameCard>>
+        get() = _allGameCards
+
     private val _scoresGames = MutableLiveData<List<GameCard>>()
 
     val scoresGames : LiveData<List<GameCard>>
         get() = _scoresGames
 
-    private val _scheduleGames = MutableLiveData<List<Game>>()
+    private val _scheduleGames = MutableLiveData<List<GameCard>>()
 
-    val scheduleGames : LiveData<List<Game>>
+    val scheduleGames : LiveData<List<GameCard>>
         get() = _scheduleGames
 
 
@@ -65,10 +67,9 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
         viewModelScope.launch {
             val result = repository.getAllGamesCard("")
 
-            _scoresGames.value = when (result) {
+            _allGameCards.value = when (result) {
                 is Result.Success -> {
                     _errorMessage.value = null
-                    Log.i("gillian", "wow ${result.data}")
                     result.data
                 }
                 is Result.Fail -> {
@@ -85,6 +86,20 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
                 }
             }
         }
+    }
+
+    fun seperateFinishedGame() {
+        val endGames = mutableListOf<GameCard>()
+        val yetGames = mutableListOf<GameCard>()
+        for (game in _allGameCards.value!!) {
+            if (game.status == GameStatus.FINAL.number) {
+                endGames.add(game)
+            } else {
+                yetGames.add(game)
+            }
+        }
+        _scoresGames.value = endGames
+        _scheduleGames.value = yetGames
     }
 
 

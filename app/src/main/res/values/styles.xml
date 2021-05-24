@@ -124,4 +124,8 @@
         <item name="android:windowBackground">@color/black_transparent</item>
     </style>
 
+    <style name="dateTimePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/color_primary_light</item>
+    </style>
+
 </resources>

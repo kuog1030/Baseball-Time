@@ -32,24 +32,27 @@
             android:id="@+id/text_card_score_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2021/05/15 09:00"
+            android:letterSpacing="0.15"
+            android:text="@{game.dateString}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_card_score_title"
-            tools:layout_editor_absoluteY="26dp" />
+            tools:layout_editor_absoluteY="26dp"
+            tools:text="2021/05/15 09:00"/>
 
         <TextView
             android:id="@+id/text_card_score_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{String.valueOf(game.guestScore) + " - " + String.valueOf(game.homeScore)}'
             android:textSize="45sp"
+            android:letterSpacing="0.4"
+            android:text='@{String.valueOf(game.guestScore) + "-" + String.valueOf(game.homeScore)}'
             app:layout_constraintBottom_toBottomOf="@+id/text_card_score_guest"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_card_score_guest"
-            tools:text="3 - 2" />
+            tools:text="3-2" />
 
         <ImageView
             android:id="@+id/image_card_score_guest"
@@ -67,7 +70,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin"
-            android:text="Android"
+            android:text="@{game.guestName}"
             app:layout_constraintBottom_toTopOf="@+id/bar_card_score"
             app:layout_constraintEnd_toStartOf="@+id/text_card_score_score"
             app:layout_constraintStart_toStartOf="parent" />
@@ -85,7 +88,7 @@
             android:id="@+id/text_card_score_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="東園國小"
+            android:text="@{game.homeName}"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_score_guest"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_card_score_score"

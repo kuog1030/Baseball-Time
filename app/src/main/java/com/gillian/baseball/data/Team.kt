@@ -12,7 +12,15 @@ data class Team (
     var image : String = "",
     var member : MutableList<Player> = mutableListOf(),
     var membersId : MutableList<String> = mutableListOf()
-) : Parcelable
+) : Parcelable {
+    fun toGameTeam() : GameTeam {
+        return GameTeam(
+                name = name,
+                acronym = acronym,
+                teamId = id
+        )
+    }
+}
 
 
 @Parcelize

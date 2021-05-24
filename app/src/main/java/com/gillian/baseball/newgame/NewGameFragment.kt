@@ -12,6 +12,8 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.R
+import com.gillian.baseball.data.Team
 import com.gillian.baseball.databinding.FragmentNewGameBinding
 import com.gillian.baseball.ext.getVmFactory
 import java.text.SimpleDateFormat
@@ -62,14 +64,11 @@ class NewGameFragment : Fragment() {
         val startHour = currentDateTime.get(Calendar.HOUR_OF_DAY)
         val startMinute = currentDateTime.get(Calendar.MINUTE)
 
-        DatePickerDialog(requireContext(), DatePickerDialog.OnDateSetListener { _, year, month, day ->
-            TimePickerDialog(requireContext(), TimePickerDialog.OnTimeSetListener { _, hour, minute ->
+        DatePickerDialog(requireContext(), R.style.dateTimePickerDialog, DatePickerDialog.OnDateSetListener { _, year, month, day ->
+            TimePickerDialog(requireContext(), R.style.dateTimePickerDialog, TimePickerDialog.OnTimeSetListener { _, hour, minute ->
                 val pickedDateTime = Calendar.getInstance()
                 pickedDateTime.set(year, month, day, hour, minute)
-                viewModel.gameDateLong = pickedDateTime.timeInMillis
-
-                val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.TAIWAN)
-                viewModel.gameDate.value = dateFormat.format(Date(pickedDateTime.timeInMillis))
+                viewModel.setUpDate(pickedDateTime.timeInMillis)
 
             }, startHour, startMinute, false).show()
         }, startYear, startMonth, startDay).show()

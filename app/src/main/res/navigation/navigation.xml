@@ -68,8 +68,7 @@
         android:label="NewGameFragment" >
         <argument
             android:name="myTeam"
-            app:argType="com.gillian.baseball.data.Team"
-            app:nullable="true" />
+            app:argType="com.gillian.baseball.data.Team" />
     </fragment>
     <fragment
         android:id="@+id/statGameFragment"

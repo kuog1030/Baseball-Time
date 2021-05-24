@@ -6,6 +6,8 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.gillian.baseball.data.GameCard
+import com.gillian.baseball.data.GameStatus
+import com.gillian.baseball.databinding.ItemCardScheduleBinding
 import com.gillian.baseball.databinding.ItemCardScoreBinding
 import com.gillian.baseball.databinding.ItemCardSmallBinding
 
@@ -24,6 +26,13 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
         }
     }
 
+    class ScheduleViewHolder(private var binding: ItemCardScheduleBinding) : RecyclerView.ViewHolder(binding.root) {
+        fun bind(game: GameCard) {
+            binding.game = game
+            binding.executePendingBindings()
+        }
+    }
+
     class ViewHolder(private var binding: ItemCardScoreBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(game: GameCard, onClickListener: OnClickListener) {
             binding.game = game
@@ -35,8 +44,9 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
         return when (viewType) {
-            ITEM_VIEW_TYPE_FULL -> ViewHolder(ItemCardScoreBinding.inflate(LayoutInflater.from(parent.context), parent, false))
-            ITEM_VIEW_TYPE_SMALL -> SmallViewHolder(ItemCardSmallBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            TYPE_SCHEDULE -> ScheduleViewHolder(ItemCardScheduleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            TYPE_FULL -> ViewHolder(ItemCardScoreBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+            TYPE_SMALL -> SmallViewHolder(ItemCardSmallBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             else -> throw ClassCastException("Unknown viewType $viewType")
         }
     }
@@ -46,14 +56,18 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
         when (holder) {
             is ViewHolder -> holder.bind(game, onClickListener)
             is SmallViewHolder -> holder.bind(game, onClickListener)
+            is ScheduleViewHolder -> holder.bind(game)
         }
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (position) {
-            0 -> ITEM_VIEW_TYPE_FULL
-            1 -> ITEM_VIEW_TYPE_SMALL
-            else -> ITEM_VIEW_TYPE_SMALL
+        return when (getItem(position).status) {
+            GameStatus.SCHEDULED.number -> TYPE_SCHEDULE
+            else -> when (position) {
+                0 -> TYPE_FULL
+                1 -> TYPE_SMALL
+                else -> TYPE_SMALL
+            }
         }
     }
 
@@ -66,8 +80,9 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
             return oldItem.id == newItem.id
         }
 
-        private const val ITEM_VIEW_TYPE_FULL = 0x00
-        private const val ITEM_VIEW_TYPE_SMALL = 0x01
+        private const val TYPE_SCHEDULE = 0x00
+        private const val TYPE_FULL     = 0x01
+        private const val TYPE_SMALL    = 0x02
     }
 }
 

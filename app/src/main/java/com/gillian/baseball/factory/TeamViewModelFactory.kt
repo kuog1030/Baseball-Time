@@ -8,7 +8,7 @@ import com.gillian.baseball.newgame.NewGameViewModel
 
 class TeamViewModelFactory constructor(
     private val repository: BaseballRepository,
-    private val team: Team?
+    private val team: Team
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>) =

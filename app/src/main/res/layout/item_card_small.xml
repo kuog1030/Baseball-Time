@@ -24,7 +24,6 @@
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/half_margin"
             android:text='@{game.title + " - " + game.place}'
-            android:textColor="?attr/colorPrimary"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.012"
             app:layout_constraintStart_toStartOf="@+id/bar_card_small"
@@ -55,14 +54,15 @@
             android:id="@+id/text_card_small_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{String.valueOf(game.guestScore) + " - " + String.valueOf(game.homeScore)}'
+            android:text='@{String.valueOf(game.guestScore) + "-" + String.valueOf(game.homeScore)}'
+            android:letterSpacing="0.4"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_small_guest"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.43"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_card_small_guest"
-            tools:text="3 - 2" />
+            tools:text="3-2" />
 
         <ImageView
             android:id="@+id/image_card_small_guest"

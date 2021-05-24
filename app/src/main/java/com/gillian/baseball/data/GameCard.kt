@@ -1,5 +1,8 @@
 package com.gillian.baseball.data
 
+import java.text.SimpleDateFormat
+import java.util.*
+
 data class GameCard(
         var id: String = "",
         val title: String = "",
@@ -13,16 +16,11 @@ data class GameCard(
         var guestScore: Int = -1,
         val myScore: List<String> = listOf()
 ) {
-    val dateString: String = ""
-}
+    val dateString: String
+        get() = toDateString(date)
 
-//@Parcelize
-//data class Game (
-//    var id: String = "",
-//    var name: String = "",
-//    var date: Long = -1,
-//    var place: String = "",
-//    var home: GameTeam = GameTeam(),
-//    var guest: GameTeam = GameTeam(),
-//    val box: Box = Box()
-//) : Parcelable
+    private fun toDateString(dateLong: Long): String {
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.TAIWAN)
+        return dateFormat.format(Date(dateLong))
+    }
+}

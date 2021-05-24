@@ -21,7 +21,7 @@ fun Fragment.getVmFactory(onBaseInfo: OnBaseInfo): OnBaseViewModelFactory {
     return OnBaseViewModelFactory(repository, onBaseInfo)
 }
 
-fun Fragment.getVmFactory(team: Team?): TeamViewModelFactory {
+fun Fragment.getVmFactory(team: Team): TeamViewModelFactory {
     val repository = (requireContext().applicationContext as BaseballApplication).repository
     return TeamViewModelFactory(repository, team)
 }

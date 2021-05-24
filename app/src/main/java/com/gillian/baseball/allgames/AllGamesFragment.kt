@@ -23,7 +23,6 @@ class AllGamesFragment : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val tempTeam = Team(id = UserManager.teamId, name = UserManager.teamName, acronym = UserManager.teamAcronym)
 
         binding.viewpagerAllGames.adapter = AllGamesAdapter(childFragmentManager)
         binding.tabsAllGames.setupWithViewPager(binding.viewpagerAllGames)
@@ -37,11 +36,16 @@ class AllGamesFragment : Fragment() {
 
         viewModel.navigateToNewGame.observe(viewLifecycleOwner, Observer {
             it?.let {
-                findNavController().navigate(NavigationDirections.navigationToNewGame(tempTeam))
+                findNavController().navigate(NavigationDirections.navigationToNewGame(UserManager.team ?: Team()))
                 viewModel.onNewGameCreated()
             }
         })
 
+        viewModel.allGameCards.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                viewModel.seperateFinishedGame()
+            }
+        })
 
         return binding.root
     }
