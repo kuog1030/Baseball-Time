@@ -11,7 +11,7 @@ import com.gillian.baseball.data.EventInfo
 import kotlinx.coroutines.launch
 
 // debug用
-val totalInning = 6
+val totalInning = 2
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
@@ -30,49 +30,75 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     val game: LiveData<Game>
         get() = _game
 
+    val isHome = argument.isHome ?: true
+
+
+
+    /* ------------------------------------------------------------------------
+           主客隊的資訊
+    --------------------------------------------------------------------------- */
+
     var homeRun = MutableLiveData<Int>(0)
     var guestRun = MutableLiveData<Int>(0)
-
-    var inningCount = 1
-    var inningShow = MutableLiveData<String>("1")
-
-    val isHome = argument.isHome ?: true
-    var isTop = true
-    val liveIsTop = MutableLiveData<Boolean>(true)
 
     val homeLineUp = argument.game.home.lineUp
     val guestLineUp = argument.game.guest.lineUp
 
-    // 替補球員假資料
+    var homePitcher = argument.game.home.pitcher
+    var guestPitcher = argument.game.guest.pitcher
+
+    var homePitchCount = 0
+    var guestPitchCount = 0
+
+    var homeABNumber = 0
+    var guestABNumber = 0
+
+    // TODO()替補球員假資料
     var myBench = mutableListOf(EventPlayer(name = "Gillian", number = "22"),
             EventPlayer(name = "Wency", number = "30"),
             EventPlayer(name = "Chloe", number = "2"))
 
-    // 開賽由主隊投手先投
-    val pitcher = MutableLiveData<String>(argument.game.home.pitcher.name)
-    var homePitcher = argument.game.home.pitcher
-    var guestPitcher = argument.game.guest.pitcher
+    /* ------------------------------------------------------------------------
+                    兩隊共同使用的東西，會被更新
+    --------------------------------------------------------------------------- */
 
-    // 初始化lineup是客隊先攻
+
+    var isTop = true
+    val liveIsTop = MutableLiveData<Boolean>(true)
+
+    var inningCount = 1
+    var inningShow = MutableLiveData<String>("1")
+
+    val liveBallCount = MutableLiveData<Int>(0)
+
+    // 開賽由主隊投手先投，客隊打者先攻
+    val pitcher = MutableLiveData<String>(argument.game.home.pitcher.name)
     var lineUp = mutableListOf(EventPlayer())
+
+    var ballCount = MutableLiveData<Int>(0)
+    var strikeCount = MutableLiveData<Int>(0)
+    var outCount = MutableLiveData<Int>(0)
+    var totalStrike = 0
+
 
     init {
         lineUp = guestLineUp
     }
+    // 進到dialog的時候帶過去的用球數
+    lateinit var hitterEvent: Event
 
-    /* ---------------------------- init game info ---------------------------- */
+    var baseList = arrayOf<EventPlayer?>(lineUp[0], null, null, null)
+    var atBaseList = mutableListOf<AtBase>()
+
+    var atBatNumber = 0
+    var atBatName = MutableLiveData<String>().apply {
+        value = "第1棒 ${baseList[0]?.name}"
+    }
 
 
-    var homePitchCount = 0
-    var guestPitchCount = 0
-    val liveBallCount = MutableLiveData<Int>(0)
-
-    /* ---------------------------- 打擊相關 ----------------------------*/
-    var ballCount = MutableLiveData<Int>(0)
-    var strikeCount = MutableLiveData<Int>(0)
-    var totalStrike = 0
-    var outCount = MutableLiveData<Int>(0)
-
+    /* ------------------------------------------------------------------------
+                                    init done
+    --------------------------------------------------------------------------- */
 
     fun scored(score: Int) {
         if (isTop) {
@@ -91,14 +117,14 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         if (inningCount == totalInning) {
             _navigateToFinal.value = MyGame(isHome = isHome, game = game.value!!)
         } else {
+            // 比賽還沒結束
             if (atBatNumber == (lineUp.size - 1)) {
                 atBatNumber = 0
             } else {
                 atBatNumber += 1
             }
 
-            clearCount()
-            outCount.value = 0
+            clearCount(includeOut = true)
             inningCount += 1
             if (isTop) {
                 // 目前上半局
@@ -138,20 +164,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
 
-    // 進到dialog的時候帶過去的用球數
-    lateinit var hitterEvent: Event
 
-    var baseList = arrayOf<EventPlayer?>(lineUp[0], null, null, null)
-    var atBaseList = mutableListOf<AtBase>()
-
-
-    var homeABNumber = 0
-    var guestABNumber = 0
-
-    var atBatNumber = 0
-    var atBatName = MutableLiveData<String>().apply {
-        value = "第1棒 ${baseList[0]?.name}"
-    }
 
     private val _navigateToEvent = MutableLiveData<EventInfo>()
     val navigateToEvent: LiveData<EventInfo>
@@ -366,7 +379,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 strike = totalStrike,
                 out = outCount.value ?: 0))
         advanceBase(0)
-        clearCount()
+        clearCount(includeOut = false)
         nextPlayer()
     }
 
@@ -377,7 +390,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun nextPlayer() {
-        clearCount()
+        clearCount(includeOut = false)
         // if current at bat is the last player of line up
         if (atBatNumber == (lineUp.size - 1)) {
             atBatNumber = 0
@@ -467,13 +480,14 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         baseList = newList
     }
 
-    fun clearCount() {
+    fun clearCount(includeOut: Boolean) {
         totalStrike = 0
         ballCount.value = 0
         strikeCount.value = 0
+        if (includeOut) outCount.value = 0
     }
 
-    fun clearBase() {
+    fun clearBaseList() {
         baseList = arrayOf<EventPlayer?>(null, null, null, null)
     }
 }

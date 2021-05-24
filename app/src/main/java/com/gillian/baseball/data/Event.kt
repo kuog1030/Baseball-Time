@@ -14,7 +14,8 @@ data class Event(
     var rbi: Int = 0,
     var run: Int = 0,
     val player: EventPlayer = EventPlayer(),
-    val pitcher: EventPlayer = EventPlayer()
+    val pitcher: EventPlayer = EventPlayer(),
+    var time: Long = -1
 ) : Parcelable {
 
 //    override fun toString(): String {

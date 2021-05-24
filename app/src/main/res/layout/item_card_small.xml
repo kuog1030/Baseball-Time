@@ -95,7 +95,7 @@
             android:layout_marginStart="@dimen/margin"
             app:layout_constraintStart_toEndOf="@+id/text_card_small_home"
             app:layout_constraintTop_toTopOf="@+id/image_card_small_guest"
-            android:visibility="@{game.guestScore > game.homeScore? View.INVISIBLE : View.VISIBLE}"
+            android:visibility="@{game.guestScore >= game.homeScore? View.INVISIBLE : View.VISIBLE}"
             app:srcCompat="@drawable/ic_baseline_win_24" />
 
         <TextView

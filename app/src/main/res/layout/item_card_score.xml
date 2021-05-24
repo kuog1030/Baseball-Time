@@ -108,13 +108,12 @@
             android:id="@+id/text_card_score_detail"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="@dimen/half_margin"
             android:gravity="center_vertical"
             android:text="@string/more_detail"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/text_card_score_home"
-            app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toStartOf="@+id/text_card_score_home" />
+            app:layout_constraintEnd_toStartOf="@+id/image_card_score_arrow" />
 
         <ImageView
             android:id="@+id/image_card_score_arrow"

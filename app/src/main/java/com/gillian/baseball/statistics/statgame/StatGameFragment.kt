@@ -11,6 +11,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.databinding.FragmentStatGameBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.views.BoxAdapter
 import com.gillian.baseball.views.HitterBoxAdapter
 import com.gillian.baseball.views.PitcherBoxAdapter
 
@@ -25,6 +26,9 @@ class StatGameFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        val boxAdapter = BoxAdapter()
+
+        binding.recyclerGameStatBox.adapter = boxAdapter
         binding.recyclerGameStatHitter.adapter = HitterBoxAdapter()
         binding.recyclerGameStatPitcher.adapter = PitcherBoxAdapter()
         binding.recyclerGameStatHitterG.adapter = HitterBoxAdapter()
@@ -32,9 +36,15 @@ class StatGameFragment : Fragment() {
 
         viewModel.gameId.observe(viewLifecycleOwner, Observer {
             viewModel.getAllStat()
+            viewModel.getGameBox()
             Log.i("gillian", "game id change")
         })
 
+        viewModel.gameBox.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                boxAdapter.submitList(it)
+            }
+        })
 
         viewModel.gameId.value = args.gameId
 

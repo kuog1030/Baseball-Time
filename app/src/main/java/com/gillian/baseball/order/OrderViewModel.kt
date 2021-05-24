@@ -126,8 +126,9 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
                 status = GameStatus.PLAYING.number)
 
         // TODO() 這樣對手的playerid都會一樣有點危險
-        for (index in 1..9) {
-            awayLineUp.add(EventPlayer(playerId = "$index", name = "第${index}棒"))
+        for (index in 1..minOf(9, lineUp.size)) {
+            awayLineUp.add(EventPlayer(playerId = "$index", name = "第${index}棒", order = (index*100)))
+            lineUp[index-1].order = index*100
         }
 
         val myTeam = GameTeam(
@@ -135,7 +136,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
                 acronym = UserManager.teamAcronym,
                 teamId = UserManager.teamId,
                 pitcher = startingPitcher ?: pitcherList[0],
-                lineUp = lineUp
+                lineUp = lineUp.subList(0, minOf(9, lineUp.size))
         )
 
         val awayTeam = GameTeam(
@@ -187,7 +188,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
             _setUpGame.value = when (result) {
                 is Result.Success -> {
                     _errorMessage.value = null
-                    result.data
+                    readyToSent
                 }
                 is Result.Fail -> {
                     _errorMessage.value = result.error

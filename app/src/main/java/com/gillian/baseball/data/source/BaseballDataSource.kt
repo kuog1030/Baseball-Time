@@ -15,7 +15,7 @@ interface BaseballDataSource {
 
     suspend fun scheduleGame(game: Game) : Result<Boolean>
 
-    suspend fun updateGame(game: Game) : Result<Game>
+    suspend fun updateGame(game: Game) : Result<Boolean>
 
     suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean>
 
@@ -32,6 +32,8 @@ interface BaseballDataSource {
     suspend fun getTeamEventPlayer(teamId: String): Result<MutableList<EventPlayer>>
 
     suspend fun getHittersStat(gameId: String, teamId: String) : Result<List<HitterBox>>
+
+    suspend fun getGameBox(gameId: String) : Result<Box>
 
     suspend fun getGameStat(gameId: String, teamId: String) : Result<Statistic>
 

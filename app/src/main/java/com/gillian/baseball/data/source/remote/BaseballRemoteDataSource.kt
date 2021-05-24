@@ -10,6 +10,7 @@ import com.gillian.baseball.ext.toPersonalScore
 import com.gillian.baseball.login.UserManager
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -152,13 +153,46 @@ object BaseballRemoteDataSource : BaseballDataSource {
         }
     }
 
-    override suspend fun updateGame(game: Game): Result<Game> {
-        TODO("Not yet implemented")
+    override suspend fun updateGame(game: Game): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(GAMES)
+                .document(game.id)
+                .set(game)
+                .addOnCompleteListener{task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error updating game. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("update game fail"))
+                    }
+
+                }
     }
 
 
-    override suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean> {
-        TODO("Not yet implemented")
+    override suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(GAMES)
+                .document(gameId)
+                .update("box", box,
+                        "status", 2)
+                .addOnCompleteListener{task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error updating game box. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("update game box fail"))
+                    }
+
+                }
     }
 
     override suspend fun getAllGames(teamId: String): Result<List<Game>>  = suspendCoroutine {continuation ->
@@ -319,6 +353,23 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
+    override suspend fun getGameBox(gameId: String): Result<Box> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(GAMES)
+                .document(gameId)
+                .get()
+                .addOnSuccessListener { documents ->
+                    if (documents != null) {
+                        val gameResult = documents.toObject(Game::class.java)
+                        continuation.resume(Result.Success(gameResult!!.box))
+                    } else {
+                        continuation.resume(Result.Fail("get game box fail"))
+                    }
+                }
+                .addOnFailureListener{ exception ->
+                    continuation.resume(Result.Error(exception))
+                }
+    }
+
 
     // TODO teamID是為了判斷我是is home嗎?
     override suspend fun getGameStat(gameId: String, teamId: String): Result<Statistic> = suspendCoroutine { continuation ->
@@ -353,6 +404,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
         val document = theGame.collection(PLAYS).document()
 
         event.id = document.id
+        event.time = Calendar.getInstance().timeInMillis
 
         document.set(event).addOnCompleteListener { task ->
             if (task.isSuccessful) {

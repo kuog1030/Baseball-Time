@@ -4,9 +4,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gillian.baseball.data.HitterBox
-import com.gillian.baseball.data.Result
-import com.gillian.baseball.data.Statistic
+import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
 import kotlinx.coroutines.launch
@@ -15,9 +13,31 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
 
     val allStat = MutableLiveData<Statistic>()
 
-    val oneGameHitterStat = MutableLiveData<List<HitterBox>>()
+    val gameBox = MutableLiveData<List<BoxView>>()
 
     var gameId = MutableLiveData<String>()
+
+    fun getGameBox() {
+        viewModelScope.launch {
+            val boxResult = repository.getGameBox(gameId.value!!)
+            gameBox.value = when (boxResult) {
+                is Result.Success -> {
+                    Log.i("gillian", "game box")
+                    boxResult.data.toBoxViewList()
+                }
+                is Result.Fail -> {
+                    null
+                }
+                is Result.Error -> {
+                    null
+                }
+                else -> {
+                    null
+                }
+            }
+        }
+    }
+
 
     fun getAllStat() {
         viewModelScope.launch {
@@ -40,26 +60,5 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
         }
     }
 
-
-    fun getHitterStat() {
-        viewModelScope.launch {
-            val result = repository.getHittersStat( gameId.value!! , "")
-            oneGameHitterStat.value = when (result) {
-                is Result.Success -> {
-                    Log.i("gillian", "success")
-                    result.data
-                }
-                is Result.Fail -> {
-                    null
-                }
-                is Result.Error -> {
-                    null
-                }
-                else -> {
-                    null
-                }
-            }
-        }
-    }
 
 }
