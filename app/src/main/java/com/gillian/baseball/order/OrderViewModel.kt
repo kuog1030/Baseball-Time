@@ -10,11 +10,12 @@ import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
 import com.gillian.baseball.util.Util
+import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 import java.util.*
 
 
-class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
+class OrderViewModel(private val repository: BaseballRepository, private val gameCard: GameCard?) : ViewModel() {
 
     val selectedSideRadio = MutableLiveData<Int>()
     val gameTitle = MutableLiveData<String>()
@@ -27,9 +28,7 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     val awayLineUp = mutableListOf<EventPlayer>()
 
-    // TODO() 到時候要改成livedata
     val submitList = MutableLiveData<Boolean>()
-
 
     private val isHome: Boolean
         get() = when (selectedSideRadio.value) {
@@ -63,7 +62,16 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     init {
+        fillInfo()
         getTeamPlayer()
+    }
+
+    fun fillInfo() {
+        gameCard?.let{
+            selectedSideRadio.value = if (it.isHome) R.id.radio_order_home else R.id.radio_order_guest
+            gameTitle.value = it.title
+            awayTeamName.value = if (it.isHome) it.guestName else it.homeName
+        }
     }
 
     fun getTeamPlayer() {
@@ -94,14 +102,28 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
             }
             submitList.value = true
         }
+        Log.i("gillian", "pitcher $startingPitcher")
+    }
+
+    // check if all filled -> set up a game -> (either) create / update game in firebase
+    //   -> set up game -> navigate to game
+    fun checkIfAllFilled() {
+        if (selectedSideRadio.value == null || gameTitle.value == null || awayTeamName.value == null || startingPitcher == null) {
+            _errorMessage.value = getString(R.string.error_order)
+        } else {
+            _errorMessage.value = null
+            setUpAGame()
+        }
     }
 
     fun setUpAGame() {
-        // 把該有的資料準備好
+        _errorMessage.value = null
         val game = Game(
-                title = gameTitle.value ?: "世界第一武道大會",
+                title = gameTitle.value!!,
                 date = Calendar.getInstance().timeInMillis,
-                place = "")
+                place = gameCard?.place ?: "",
+                recordedTeamId = UserManager.teamId,
+                status = GameStatus.PLAYING.number)
 
         // TODO() 這樣對手的playerid都會一樣有點危險
         for (index in 1..9) {
@@ -109,14 +131,15 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
 
         val myTeam = GameTeam(
-                name = "Android",
+                name = UserManager.teamName,
+                acronym = UserManager.teamAcronym,
                 teamId = UserManager.teamId,
                 pitcher = startingPitcher ?: pitcherList[0],
                 lineUp = lineUp
         )
 
         val awayTeam = GameTeam(
-                name = awayTeamName.value ?: "iOS",
+                name = awayTeamName.value!!,
                 pitcher = EventPlayer(name = "對方投手"),
                 lineUp = awayLineUp
         )
@@ -124,11 +147,17 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         game.home = if (isHome) myTeam else awayTeam
         game.guest = if (isHome) awayTeam else myTeam
 
+        if (gameCard == null) {
+            createGameInFirebase(game)
+        } else {
+            updateGameInFirebase(game)
+        }
+    }
 
-        // 上傳到firebase
+    fun createGameInFirebase(readyToSent: Game) {
         viewModelScope.launch {
 
-            val result = repository.createGame(game)
+            val result = repository.createGame(readyToSent)
 
             _setUpGame.value = when (result) {
                 is Result.Success -> {
@@ -150,6 +179,32 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
             }
         }
     }
+
+    fun updateGameInFirebase(readyToSent: Game) {
+        viewModelScope.launch {
+            val result = repository.updateGame(readyToSent)
+
+            _setUpGame.value = when (result) {
+                is Result.Success -> {
+                    _errorMessage.value = null
+                    result.data
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = result.error
+                    null
+                }
+                is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
+                    null
+                }
+                else -> {
+                    _errorMessage.value = getString(R.string.return_nothing)
+                    null
+                }
+            }
+        }
+    }
+
 
     fun selectPitcher(position: Int) {
         startingPitcher = pitcherList[position]
@@ -173,6 +228,11 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     fun onNewPlayerDialogShowed() {
         _showNewPlayerDialog.value = null
+    }
+
+    fun refresh() {
+        getTeamPlayer()
+        startingPitcher = null
     }
 
 }

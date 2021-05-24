@@ -19,9 +19,9 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
 
     var currentTime = System.currentTimeMillis()
 
-    private val _navigateToOrder = MutableLiveData<Boolean>()
-    val navigateToOrder : LiveData<Boolean>
-        get() = _navigateToOrder
+    private val _startNewGame = MutableLiveData<Boolean>()
+    val startNewGame : LiveData<Boolean>
+        get() = _startNewGame
 
     private val _navigateToNewGame = MutableLiveData<Boolean>()
     val navigateToNewGame : LiveData<Boolean>
@@ -98,6 +98,8 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
                 yetGames.add(game)
             }
         }
+        endGames.sortByDescending { it.date }
+        yetGames.sortBy { it.date }
         _scoresGames.value = endGames
         _scheduleGames.value = yetGames
     }
@@ -106,11 +108,11 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
 
     fun startANewGame() {
         //TODO()這邊應該要傳個東西過去
-        _navigateToOrder.value = true
+        _startNewGame.value = true
     }
 
     fun onNewGameStarted() {
-        _navigateToOrder.value = null
+        _startNewGame.value = null
     }
 
     fun createNewGame() {

@@ -27,9 +27,10 @@ class AllGamesFragment : Fragment() {
         binding.viewpagerAllGames.adapter = AllGamesAdapter(childFragmentManager)
         binding.tabsAllGames.setupWithViewPager(binding.viewpagerAllGames)
 
-        viewModel.navigateToOrder.observe(viewLifecycleOwner, Observer {
+        // fast start a new game
+        viewModel.startNewGame.observe(viewLifecycleOwner, Observer {
             it?.let {
-                findNavController().navigate(NavigationDirections.navigationToOrder())
+                findNavController().navigate(NavigationDirections.navigationToOrder(null))
                 viewModel.onNewGameStarted()
             }
         })

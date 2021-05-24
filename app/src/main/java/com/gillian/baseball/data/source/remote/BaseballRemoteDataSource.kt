@@ -151,6 +151,11 @@ object BaseballRemoteDataSource : BaseballDataSource {
         }
     }
 
+    override suspend fun updateGame(game: Game): Result<Game> {
+        TODO("Not yet implemented")
+    }
+
+
     override suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean> {
         TODO("Not yet implemented")
     }
@@ -190,7 +195,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         for (oneGame in task.result!!) {
                             result.add(oneGame.toObject(Game::class.java).toGameCard())
                         }
-                        result.sortByDescending { it.date }
                         continuation.resume(Result.Success(result))
                     } else {
                         task.exception?.let {

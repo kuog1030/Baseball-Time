@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.gillian.baseball.NavigationDirections
@@ -17,11 +18,13 @@ import com.gillian.baseball.data.EventPlayer
 import java.util.Collections.swap
 import com.gillian.baseball.databinding.FragmentOrderBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.newplayer.NewPlayerDialog
 import com.gillian.baseball.order.OrderFragmentDirections
 
 class OrderFragment : Fragment() {
 
-    private val viewModel by viewModels<OrderViewModel> {getVmFactory() }
+    val args: OrderFragmentArgs by navArgs()
+    private val viewModel by viewModels<OrderViewModel> {getVmFactory(args.scheduleGame) }
     lateinit var binding : FragmentOrderBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -65,7 +68,8 @@ class OrderFragment : Fragment() {
 
         viewModel.showNewPlayerDialog.observe(viewLifecycleOwner, Observer {
             it?.let{
-                findNavController().navigate(NavigationDirections.navigationToNewPlayer())
+                val newPlayerDialog = NewPlayerDialog(false)
+                newPlayerDialog.show(childFragmentManager, "")
                 viewModel.onNewPlayerDialogShowed()
             }
         })

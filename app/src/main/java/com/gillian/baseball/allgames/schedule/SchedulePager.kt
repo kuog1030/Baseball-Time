@@ -29,7 +29,7 @@ class SchedulePager : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
         binding.recyclerSchedule.adapter = CardScoreAdapter(CardScoreAdapter.OnClickListener{ it ->
-            Log.i("gillian", "to be changed")
+            findNavController().navigate(NavigationDirections.navigationToOrder(it))
         })
 
 

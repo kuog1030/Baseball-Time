@@ -1,6 +1,7 @@
 package com.gillian.baseball.newplayer
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.databinding.DialogNewPlayerBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.order.OrderViewModel
 import com.gillian.baseball.team.TeamViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -27,15 +29,18 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
 
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             it?.let {
-                try {
-                    if (fromTeamFragment && viewModel.needRefresh) {
-                        ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java)
-                            .refresh()
+                if (viewModel.needRefresh) {
+                    try{
+                        if (fromTeamFragment) {
+                            ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java).refresh()
+                        } else {
+                            ViewModelProvider(requireParentFragment()).get(OrderViewModel::class.java).refresh()
+                        }
+                    } finally {
                     }
-                } finally {
-                    dismiss()
-                    viewModel.onDialogDismiss()
                 }
+                dismiss()
+                viewModel.onDialogDismiss()
             }
         })
 

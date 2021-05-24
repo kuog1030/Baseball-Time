@@ -40,6 +40,10 @@
             android:id="@+id/action_orderFragment_to_gameFragment"
             app:destination="@id/gameFragment"
             app:popUpTo="@id/allGamesFragment" />
+        <argument
+            android:name="scheduleGame"
+            app:argType="com.gillian.baseball.data.GameCard"
+            app:nullable="true" />
     </fragment>
 
     <fragment

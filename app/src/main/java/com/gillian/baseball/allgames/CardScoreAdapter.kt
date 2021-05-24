@@ -27,8 +27,9 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
     }
 
     class ScheduleViewHolder(private var binding: ItemCardScheduleBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(game: GameCard) {
+        fun bind(game: GameCard, onClickListener: OnClickListener) {
             binding.game = game
+            binding.root.setOnClickListener { onClickListener.onClick(game) }
             binding.executePendingBindings()
         }
     }
@@ -56,7 +57,7 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
         when (holder) {
             is ViewHolder -> holder.bind(game, onClickListener)
             is SmallViewHolder -> holder.bind(game, onClickListener)
-            is ScheduleViewHolder -> holder.bind(game)
+            is ScheduleViewHolder -> holder.bind(game, onClickListener)
         }
     }
 

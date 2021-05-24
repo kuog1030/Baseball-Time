@@ -1,8 +1,11 @@
 package com.gillian.baseball.data
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
 import java.text.SimpleDateFormat
 import java.util.*
 
+@Parcelize
 data class GameCard(
         var id: String = "",
         val title: String = "",
@@ -13,9 +16,9 @@ data class GameCard(
         var homeName: String = "",
         var guestName: String = "",
         var homeScore: Int = -1,
-        var guestScore: Int = -1,
-        val myScore: List<String> = listOf()
-) {
+        var guestScore: Int = -1
+        //val myScore: List<String> = listOf()
+) : Parcelable {
     val dateString: String
         get() = toDateString(date)
 

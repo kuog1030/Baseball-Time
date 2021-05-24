@@ -88,11 +88,8 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     init {
         getTeamPlayer()
         getHitterStat()  //TODO() 測試用記得刪
-        if (UserManager.teamName == null) {
-            getTeam()
-        } else {
-            teamName.value = UserManager.teamName
-        }
+        teamName.value = UserManager.teamName
+
     }
 
 
@@ -105,6 +102,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     }
 
     fun refresh() {
+        Log.i("gillian", "team view model refresh")
         getTeamPlayer()
     }
 
