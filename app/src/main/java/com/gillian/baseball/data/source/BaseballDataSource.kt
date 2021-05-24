@@ -15,6 +15,8 @@ interface BaseballDataSource {
 
     suspend fun scheduleGame(game: Game) : Result<Boolean>
 
+    suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean>
+
     suspend fun getAllGames(teamId: String) : Result<List<Game>>
 
     suspend fun getAllGamesCard(teamId: String) : Result<List<GameCard>>

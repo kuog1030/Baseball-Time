@@ -20,8 +20,10 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
     val gameTitle = MutableLiveData<String>()
     val awayTeamName = MutableLiveData<String>()
     val pitcher = MutableLiveData<String>()
+    var startingPitcher : EventPlayer? = null
 
     var lineUp = mutableListOf<EventPlayer>()
+    var pitcherList = mutableListOf<EventPlayer>()
 
     val awayLineUp = mutableListOf<EventPlayer>()
 
@@ -74,6 +76,7 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
             lineUp = when (result) {
                 is Result.Success -> {
                     _status.value = LoadStatus.DONE
+                    pitcherList = result.data
                     result.data
                 }
                 is Result.Fail -> {
@@ -108,8 +111,7 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
         val myTeam = GameTeam(
                 name = "Android",
                 teamId = UserManager.teamId,
-                pitcher = EventPlayer(name = pitcher.value
-                        ?: "古林睿揚", number = "19", playerId = "0019"),
+                pitcher = startingPitcher ?: pitcherList[0],
                 lineUp = lineUp
         )
 
@@ -147,6 +149,10 @@ class OrderViewModel(private val repository: BaseballRepository) : ViewModel() {
                 }
             }
         }
+    }
+
+    fun selectPitcher(position: Int) {
+        startingPitcher = pitcherList[position]
     }
 
 

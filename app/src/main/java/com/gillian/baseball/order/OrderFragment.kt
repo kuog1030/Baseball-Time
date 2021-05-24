@@ -5,6 +5,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
 import com.gillian.baseball.NavigationDirections
+import com.gillian.baseball.data.EventPlayer
 import java.util.Collections.swap
 import com.gillian.baseball.databinding.FragmentOrderBinding
 import com.gillian.baseball.ext.getVmFactory
@@ -19,11 +21,11 @@ import com.gillian.baseball.order.OrderFragmentDirections
 
 class OrderFragment : Fragment() {
 
-
     private val viewModel by viewModels<OrderViewModel> {getVmFactory() }
+    lateinit var binding : FragmentOrderBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentOrderBinding.inflate(inflater, container, false)
+        binding = FragmentOrderBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -41,6 +43,8 @@ class OrderFragment : Fragment() {
                 Log.i("gillian", "success and ${viewModel.lineUp}")
 
                 adapter.submitList(viewModel.lineUp)
+                setUpSpinnerAdapter(viewModel.pitcherList)
+
                 viewModel.submitList.value = null
             }
         })
@@ -86,5 +90,19 @@ class OrderFragment : Fragment() {
         override fun onSwiped(viewHolder: RecyclerView.ViewHolder, direction: Int) {
         }
 
+    }
+
+    private fun setUpSpinnerAdapter(list: List<EventPlayer>) {
+        val spinnerAdapter = PitcherSpinnerAdapter(requireContext(), list)
+        binding.spinnerOrderPitcher.adapter = spinnerAdapter
+        binding.spinnerOrderPitcher.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                TODO("Not yet implemented")
+            }
+
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                viewModel.selectPitcher(position)
+            }
+        }
     }
 }

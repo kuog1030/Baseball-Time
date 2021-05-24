@@ -72,7 +72,7 @@
     <string name="pitcher_name">我方先發投手</string>
     <string name="order_hitter">先發打序 - 長按球員拖移更改打序</string>
     <string name="order_hint">長按球員拖移更改打序</string>
-    <string name="add_new_player">新增球員</string>
+    <string name="add_new_player">新建立球員</string>
     <string name="game_start">開始比賽</string>
 
 

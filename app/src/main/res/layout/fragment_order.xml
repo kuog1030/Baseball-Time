@@ -120,19 +120,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pitcher_name"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_order_pitcher"
+                app:layout_constraintBottom_toBottomOf="@+id/spinner_order_pitcher"
                 app:layout_constraintStart_toStartOf="@id/text_order_game_title"
-                app:layout_constraintTop_toTopOf="@+id/edit_order_pitcher" />
+                app:layout_constraintTop_toTopOf="@+id/spinner_order_pitcher" />
 
-            <EditText
-                android:id="@+id/edit_order_pitcher"
+            <Spinner
+                android:id="@+id/spinner_order_pitcher"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:background="@drawable/bg_edit_text"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@={viewModel.pitcher}"
                 app:layout_constraintEnd_toEndOf="@+id/edit_order_away"
                 app:layout_constraintStart_toStartOf="@+id/edit_order_away"
                 app:layout_constraintTop_toBottomOf="@+id/edit_order_away" />
@@ -145,7 +142,7 @@
                 android:layout_marginTop="@dimen/double_margin"
                 android:text="@string/order_hitter"
                 android:gravity="center"
-                app:layout_constraintEnd_toEndOf="@+id/edit_order_pitcher"
+                app:layout_constraintEnd_toEndOf="@+id/spinner_order_pitcher"
                 app:layout_constraintStart_toStartOf="@+id/text_order_pitcher"
                 app:layout_constraintTop_toBottomOf="@+id/text_order_pitcher" />
 
@@ -154,7 +151,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="@+id/edit_order_pitcher"
+                app:layout_constraintEnd_toEndOf="@+id/spinner_order_pitcher"
                 app:layout_constraintStart_toStartOf="@+id/text_order"
                 app:layout_constraintTop_toBottomOf="@+id/text_order"
                 android:overScrollMode="never"
@@ -190,6 +187,16 @@
                 app:layout_constraintStart_toStartOf="@id/text_order_game_title"
                 app:layout_constraintEnd_toEndOf="@id/edit_order_game_title"
                 app:layout_constraintTop_toBottomOf="@id/button_order_new_player"/>
+
+            <ImageView
+                android:id="@+id/image_order_spinner"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin"
+                app:layout_constraintBottom_toBottomOf="@+id/spinner_order_pitcher"
+                app:layout_constraintEnd_toEndOf="@+id/spinner_order_pitcher"
+                app:layout_constraintTop_toTopOf="@+id/spinner_order_pitcher"
+                app:srcCompat="@drawable/ic_triangle_spinner" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

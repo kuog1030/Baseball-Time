@@ -445,6 +445,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         Log.i("gillian", "移除掉替補球員，應該要剩下 $myBench")
     }
 
+
+    // pinchDialog -> 換投
     fun nextPitcher(next: EventPlayer, position: Int) {
         if (isTop) {
             next.pinch = homePitcher
