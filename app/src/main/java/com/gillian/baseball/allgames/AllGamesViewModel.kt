@@ -32,6 +32,16 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
+    private val _status = MutableLiveData<LoadStatus>()
+
+    val status: LiveData<LoadStatus>
+        get() = _status
+
+    private val _refreshStatus = MutableLiveData<Boolean>()
+
+    val refreshStatus: LiveData<Boolean>
+        get() = _refreshStatus
+
     private val _allGameCards = MutableLiveData<List<GameCard>>()
 
     val allGameCards : LiveData<List<GameCard>>
@@ -65,23 +75,30 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
 
     fun getAllGamesCard() {
         viewModelScope.launch {
+
+            _status.value = LoadStatus.LOADING
+
             val result = repository.getAllGamesCard("")
 
             _allGameCards.value = when (result) {
                 is Result.Success -> {
                     _errorMessage.value = null
+                    _status.value = LoadStatus.DONE
                     result.data
                 }
                 is Result.Fail -> {
                     _errorMessage.value = result.error
+                    _status.value = LoadStatus.ERROR
                     null
                 }
                 is Result.Error -> {
                     _errorMessage.value = result.exception.toString()
+                    _status.value = LoadStatus.ERROR
                     null
                 }
                 else -> {
                     _errorMessage.value = getString(R.string.return_nothing)
+                    _status.value = LoadStatus.ERROR
                     null
                 }
             }
@@ -102,8 +119,16 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
         yetGames.sortBy { it.date }
         _scoresGames.value = endGames
         _scheduleGames.value = yetGames
+        _refreshStatus.value = false
+
     }
 
+    fun refresh() {
+        if (_status.value != LoadStatus.LOADING) {
+            _refreshStatus.value = true
+            getAllGamesCard()
+        }
+    }
 
 
     fun startANewGame() {

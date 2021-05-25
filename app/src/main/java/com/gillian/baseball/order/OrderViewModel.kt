@@ -118,7 +118,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
 
     fun setUpAGame() {
         _errorMessage.value = null
-        val game = Game(
+        val readyToSent = Game(
                 id = gameCard?.id ?: "",
                 title = gameTitle.value!!,
                 date = Calendar.getInstance().timeInMillis,
@@ -146,13 +146,13 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
                 lineUp = awayLineUp
         )
 
-        game.home = if (isHome) myTeam else awayTeam
-        game.guest = if (isHome) awayTeam else myTeam
+        readyToSent.home = if (isHome) myTeam else awayTeam
+        readyToSent.guest = if (isHome) awayTeam else myTeam
 
         if (gameCard == null) {
-            createGameInFirebase(game)
+            createGameInFirebase(readyToSent)
         } else {
-            updateGameInFirebase(game)
+            updateGameInFirebase(readyToSent)
         }
     }
 

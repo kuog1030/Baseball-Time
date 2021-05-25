@@ -32,6 +32,9 @@ class SchedulePager : Fragment() {
             findNavController().navigate(NavigationDirections.navigationToOrder(it))
         })
 
+        binding.layoutScheduleSwipe.setOnRefreshListener {
+            viewModel.refresh()
+        }
 
         val rotateOpen = Util.getAnim(R.anim.rotate_open_anim)
         val rotateClose = Util.getAnim(R.anim.rotate_close_anim)
@@ -54,6 +57,12 @@ class SchedulePager : Fragment() {
                         binding.fabFastStart.startAnimation(toBottom)
                     }
                 }
+            }
+        })
+
+        viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                binding.layoutScheduleSwipe.isRefreshing = it
             }
         })
 
