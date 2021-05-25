@@ -1,5 +1,6 @@
 package com.gillian.baseball.newplayer
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -47,6 +48,15 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
 
         return binding.root
     }
+
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply{
+            type = "image/*"
+        }
+        startActivityForResult(intent, 1)
+
+    }
+
 }
 
 //                Toast.makeText(context, "新增球員成功", Toast.LENGTH_SHORT).show()

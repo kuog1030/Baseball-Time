@@ -1,6 +1,7 @@
 package com.gillian.baseball.data
 
 import android.os.Parcelable
+import android.util.Log
 import kotlinx.android.parcel.Parcelize
 
 
@@ -12,10 +13,14 @@ data class Box (
         val error: MutableList<Int> = mutableListOf(0, 0)
 ) : Parcelable {
 
-    // TODO 處理沒有九下之類的情況
     fun toBoxViewList() : List<BoxView> {
         var inning = 1
+        var isOdd = false
         val result = mutableListOf<BoxView>()
+
+        if (this.score.size % 2 == 1) {
+            isOdd = true
+            this.score.add(-1)}
 
         for ( i in 1 .. this.score.size step 2 ) {
             result.add ( BoxView(type = "$inning",
@@ -24,6 +29,8 @@ data class Box (
             inning += 1
         }
 
+        if (isOdd) result[result.size-1].home = "X"
+
         if ( this.score.size < 18 ) {
             val end = inning
             for (i in end .. 9) {
@@ -31,6 +38,8 @@ data class Box (
                 inning += 1
             }
         }
+
+
 
         result.add( BoxView(type = "R", guest = this.run[0].toString(), home = this.run[1].toString()))
         result.add( BoxView(type = "H", guest = this.hit[0].toString(), home = this.hit[1].toString()))

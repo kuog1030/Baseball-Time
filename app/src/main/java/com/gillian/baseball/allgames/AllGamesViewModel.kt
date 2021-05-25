@@ -125,7 +125,6 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
 
     fun refresh() {
         if (_status.value != LoadStatus.LOADING) {
-            _refreshStatus.value = true
             getAllGamesCard()
         }
     }
