@@ -2,6 +2,7 @@
 <resources>
     <color name="color_background">@color/grey_eee</color>
     <color name="color_primary">#D94C1A</color>
+    <color name="color_primary_sub">#F2BD1D</color>
     <color name="color_primary_light">#5EA4BF</color>
 
 
@@ -18,6 +19,7 @@
     <color name="yellow_strike">#f9aa33</color>
     <color name="black">#FF000000</color>
     <color name="black_transparent">#99000000</color>
+    <color name="grey_transparent">#44000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey_888">#FF888888</color>

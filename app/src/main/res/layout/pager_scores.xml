@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View"/>
         <variable
             name="viewModel"
             type="com.gillian.baseball.allgames.AllGamesViewModel" />
@@ -106,6 +107,17 @@
                 tools:listitem="@layout/item_card_small">
 
             </androidx.recyclerview.widget.RecyclerView>
+
+            <TextView
+                android:id="@+id/text_scores_no_game"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text='@{viewModel.scheduleGames != null ? @string/no_game_hint : ""}'
+                android:visibility="@{viewModel.scoresGames.size == 0 ? View.VISIBLE : View.GONE}"
+                app:layout_constraintTop_toBottomOf="@id/text_scores_rate_title"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -126,6 +126,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="NoGameHint">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
 
     <style name="GameDialog">
         <item name="android:windowBackground">@color/black_transparent</item>
