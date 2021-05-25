@@ -1,6 +1,7 @@
 package com.gillian.baseball.data.source.local
 
 import android.content.Context
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
@@ -24,6 +25,10 @@ class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
     }
 
     override suspend fun scheduleGame(game: Game) : Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun uploadImage(uri: Uri): Result<String> {
         TODO("Not yet implemented")
     }
 

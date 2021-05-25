@@ -109,7 +109,8 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
         val endGames = mutableListOf<GameCard>()
         val yetGames = mutableListOf<GameCard>()
         for (game in _allGameCards.value!!) {
-            if (game.status == GameStatus.FINAL.number) {
+            if (game.status >= GameStatus.FINAL.number) {
+                // including final and final with stat
                 endGames.add(game)
             } else {
                 yetGames.add(game)

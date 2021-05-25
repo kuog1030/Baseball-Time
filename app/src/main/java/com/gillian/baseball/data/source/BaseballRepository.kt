@@ -1,5 +1,6 @@
 package com.gillian.baseball.data.source
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 
@@ -14,6 +15,8 @@ interface BaseballRepository {
     suspend fun createGame(game: Game) : Result<Game>
 
     suspend fun scheduleGame(game: Game) : Result<Boolean>
+
+    suspend fun uploadImage(uri: Uri) : Result<String>
 
     suspend fun updateGame(game: Game) : Result<Boolean>
 

@@ -1,6 +1,8 @@
 package com.gillian.baseball.newplayer
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -15,18 +17,28 @@ import com.gillian.baseball.order.OrderViewModel
 import com.gillian.baseball.team.TeamViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
+const val REQUEST_IMAGE_OPEN = 1
+
 class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialogFragment() {
 
     private val viewModel by viewModels<NewPlayerViewModel> { getVmFactory() }
+    private lateinit var binding: DialogNewPlayerBinding
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
-        val binding = DialogNewPlayerBinding.inflate(inflater, container, false)
+        binding = DialogNewPlayerBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        binding.imageNewPlayerPhoto.setOnClickListener{
+            pickImageFromGallery()
+        }
+
+        viewModel.photoUrl.observe(viewLifecycleOwner, Observer {
+            Log.i("gillian", "upload success ma $it")
+        })
 
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -50,11 +62,22 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
     }
 
     private fun pickImageFromGallery() {
-        val intent = Intent(Intent.ACTION_GET_CONTENT).apply{
+        val intent = Intent(Intent.ACTION_PICK).apply{
             type = "image/*"
+            //addCategory(Intent.CATEGORY_OPENABLE)
         }
-        startActivityForResult(intent, 1)
+        startActivityForResult(intent, REQUEST_IMAGE_OPEN)
+    }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_IMAGE_OPEN && resultCode == Activity.RESULT_OK && data != null) {
+            val fullPhotoUri  = data.data
+            binding.imageNewPlayerPhoto.setImageURI(data.data)
+            Log.i("gillian", "ready to send")
+            viewModel.uploadPhoto(fullPhotoUri!!)
+        }
     }
 
 }

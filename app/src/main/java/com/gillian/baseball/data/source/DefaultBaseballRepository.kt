@@ -1,5 +1,6 @@
 package com.gillian.baseball.data.source
 
+import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 
@@ -26,6 +27,10 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
 
     override suspend fun scheduleGame(game: Game) : Result<Boolean> {
         return remoteDataSource.scheduleGame(game)
+    }
+
+    override suspend fun uploadImage(uri: Uri): Result<String> {
+        return remoteDataSource.uploadImage(uri)
     }
 
     override suspend fun updateGame(game: Game): Result<Boolean> {

@@ -1,5 +1,6 @@
 package com.gillian.baseball.data.source.remote
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
@@ -8,14 +9,17 @@ import com.gillian.baseball.ext.toGameStat
 import com.gillian.baseball.ext.toHitterBox
 import com.gillian.baseball.ext.toPersonalScore
 import com.gillian.baseball.login.UserManager
+import com.google.common.io.Files.getFileExtension
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
 object BaseballRemoteDataSource : BaseballDataSource {
 
+    private const val FIRESTORE_IMAGE = "images/"
     // collections name
     private const val PLAYERS = "players"
     private const val TEAMS = "teams"
@@ -151,6 +155,28 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 continuation.resume(Result.Fail("fast create a game fail"))
             }
         }
+    }
+
+    override suspend fun uploadImage(uri: Uri): Result<String> = suspendCoroutine { continuation ->
+        val storageReference = FirebaseStorage.getInstance()
+        val filename = UUID.randomUUID().toString()
+        val fileReference = storageReference.reference.child(
+            "images/$filename"
+        )
+        fileReference.putFile(uri)
+            .continueWithTask{task ->
+                if (!task.isSuccessful) {
+                    task.exception?.let {
+                        throw it
+                    }
+                }
+                fileReference.downloadUrl
+            }
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful){
+                    continuation.resume(Result.Success(task.result.toString()))
+                }
+            }
     }
 
     override suspend fun updateGame(game: Game): Result<Boolean> = suspendCoroutine { continuation ->
