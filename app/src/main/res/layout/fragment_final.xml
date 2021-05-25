@@ -38,5 +38,33 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+        <TextView
+            android:id="@+id/textView9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            android:text="@string/add_game_note"
+            android:paddingStart="@dimen/half_margin"
+            android:textSize="18sp"
+            app:drawableEndCompat="@drawable/ic_edit_24"
+            app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLine"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_final_box" />
+
+        <EditText
+            android:id="@+id/editTextTextMultiLine"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:background="@drawable/bg_edit_text"
+            android:layout_marginTop="@dimen/margin"
+            android:ems="10"
+            android:gravity="start|top"
+            android:inputType="textMultiLine"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

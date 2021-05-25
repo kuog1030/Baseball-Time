@@ -119,6 +119,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
     fun setUpAGame() {
         _errorMessage.value = null
         val game = Game(
+                id = gameCard?.id ?: "",
                 title = gameTitle.value!!,
                 date = Calendar.getInstance().timeInMillis,
                 place = gameCard?.place ?: "",
