@@ -64,6 +64,11 @@
     <string name="versus">VS</string>
     <string name="add_game_note">備註</string>
 
+    <!--    game final -->
+    <string name="game_final">比賽結束</string>
+    <string name="score_win">累積勝場</string>
+    <string name="score_rate">目前勝率</string>
+
     <!--    game record related -->
 
     <string name="ready_to_start">準備開始比賽</string>

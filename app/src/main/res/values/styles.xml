@@ -120,6 +120,13 @@
         <item name="android:textSize">22sp</item>
     </style>
 
+    <!--   pager score -->
+    <style name="ScoreNumber">
+        <item name="android:textSize">45sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+
     <style name="GameDialog">
         <item name="android:windowBackground">@color/black_transparent</item>
     </style>

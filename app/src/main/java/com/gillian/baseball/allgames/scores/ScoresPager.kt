@@ -28,7 +28,7 @@ class ScoresPager : Fragment() {
 
         val viewModel = ViewModelProvider(requireParentFragment()).get(AllGamesViewModel::class.java)
 
-        addDot(2021, 5, 10)
+//        addDot(2021, 5, 10)
         //binding.calendarScores.state().edit().setCalendarDisplayMode(CalendarMode.WEEKS).commit()
 
 
@@ -43,12 +43,12 @@ class ScoresPager : Fragment() {
         return binding.root
     }
 
-    private fun addDot(year: Int, month: Int, day: Int) {
-        binding.calendarScores.addDecorators(
-                CurrentDayDecorator(
-                        currentDay = CalendarDay.from(year, month, day)
-                )
-        )
-    }
+//    private fun addDot(year: Int, month: Int, day: Int) {
+//        binding.calendarScores.addDecorators(
+//                CurrentDayDecorator(
+//                        currentDay = CalendarDay.from(year, month, day)
+//                )
+//        )
+//    }
 
 }

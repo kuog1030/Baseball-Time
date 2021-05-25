@@ -18,7 +18,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     var atBaseList = eventInfo.atBaseList
     var hitterEvent = MutableLiveData<Event>(eventInfo.hitterPreEvent)
     var newBaseList = arrayOf<EventPlayer?>(null, null, null, null)
-    var hasOut : Boolean? = null
+    var hasOut: Boolean? = null
     var hasBaseOut = mutableListOf<Int>()
 
 
@@ -56,8 +56,12 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
 
     fun saveAndDismiss() {
         val readyToSend = eventList
-        // 好球會在真正要送出前才記錄
-        readyToSend[0].strike += 1
+        // 好壞球會在真正要送出前才記錄
+        if (eventList[0].result == EventType.HITBYPITCH.number) {
+            readyToSend[0].ball += 1
+        } else {
+            readyToSend[0].strike += 1
+        }
         scoreToBeAdded = eventList[0].rbi
         viewModelScope.launch {
             for (singleEvent in readyToSend) {
@@ -66,7 +70,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
         }
 
         // 安打數加上去box
-        hitToBeAdded = when ( eventList[0].result ) {
+        hitToBeAdded = when (eventList[0].result) {
             EventType.SINGLE.number -> 1
             EventType.DOUBLE.number -> 1
             EventType.TRIPLE.number -> 1
@@ -86,7 +90,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     }
 
     fun hit(baseCount: Int) {
-        hitterEvent.value?.let{
+        hitterEvent.value?.let {
             it.result = baseCount
         }
         eventList.add(hitterEvent.value!!)
@@ -97,7 +101,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     }
 
     fun homerun() {
-        hitterEvent.value?.let{
+        hitterEvent.value?.let {
             it.result = EventType.HOMERUN.number
             it.run = 1
             it.rbi = 1
@@ -108,7 +112,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     }
 
     fun hbp() {
-        hitterEvent.value?.let{
+        hitterEvent.value?.let {
             it.result = EventType.HITBYPITCH.number
             // 之後event統一會加strike，所以先扣掉XD
             it.strike -= 1
@@ -124,21 +128,21 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     // 一安+失誤?????好可怕
     //TODO()
     fun error() {
-        hitterEvent.value?.let{
+        hitterEvent.value?.let {
             it.result = EventType.ERRORONBASE.number
         }
     }
 
     fun droppedThird() {
-        hitterEvent.value?.let{
+        hitterEvent.value?.let {
             it.result = EventType.DROPPEDTHIRD.number
         }
         atBaseList[0].base = 1
     }
 
-    fun fielderChoice(){
+    fun fielderChoice() {
         // default single
-        hitterEvent.value?.let{
+        hitterEvent.value?.let {
             it.result = EventType.FIELDERCHOICE.number
         }
         eventList.add(hitterEvent.value!!)
@@ -159,7 +163,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     // 回壘得分
     fun run(atBase: AtBase) {
         atBase.base = -1
-        eventList.add(Event( inning = hitterEvent.value!!.inning,
+        eventList.add(Event(inning = hitterEvent.value!!.inning,
                 run = 1,
                 player = atBase.player,
                 pitcher = hitterEvent.value?.pitcher!!,
@@ -177,7 +181,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     }
 
     fun groundOut() {
-        hitterEvent.value?.let{
+        hitterEvent.value?.let {
             it.result = EventType.GROUNDOUT.number
         }
         eventList.add(hitterEvent.value!!)
@@ -188,7 +192,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
 
 
     fun airOut(hasRbi: Boolean) {
-        hitterEvent.value?.let{
+        hitterEvent.value?.let {
             it.result = if (hasRbi) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
             //it.rbi = if (hasRbi) 1 else 0  跑者回壘得分的時候就會加進打者的event
         }

@@ -129,7 +129,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
-                android:background="@drawable/bg_edit_text"
+                android:background="@drawable/bg_card"
                 app:layout_constraintEnd_toEndOf="@+id/edit_order_away"
                 app:layout_constraintStart_toStartOf="@+id/edit_order_away"
                 app:layout_constraintTop_toBottomOf="@+id/edit_order_away" />

@@ -42,6 +42,7 @@
             android:layout_marginEnd="@dimen/half_margin"
             android:onClick="@{()->viewModel.toBase(atBase, 1)}"
             android:text="@string/first_base"
+            android:backgroundTint="@{atBase.base > 1 ? @color/grey_888 : @color/color_primary}"
             app:layout_constraintBottom_toBottomOf="@+id/image_runner_field"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_runner_field" />
@@ -53,6 +54,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{()->viewModel.toBase(atBase, 2)}"
             android:text="@string/second_base"
+            android:backgroundTint="@{atBase.base > 2 ? @color/grey_888 : @color/color_primary}"
             app:layout_constraintBottom_toTopOf="@+id/image_runner_field"
             app:layout_constraintEnd_toEndOf="@+id/text_runner_second_player"
             app:layout_constraintStart_toStartOf="@+id/text_runner_second_player" />
@@ -134,6 +136,7 @@
             android:id="@+id/text_runner_first_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
             app:atBaseFirst="@{atBase}"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_first"
             app:layout_constraintStart_toStartOf="@+id/button_runner_first"
@@ -143,17 +146,20 @@
             android:id="@+id/text_runner_third_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="18sp"
             app:atBaseThird="@{atBase}"
             app:layout_constraintBottom_toTopOf="@+id/button_runner_third"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_third"
             app:layout_constraintStart_toStartOf="@+id/button_runner_third"
-            app:layout_constraintTop_toTopOf="@+id/image_runner_field" />
+            app:layout_constraintTop_toTopOf="@+id/image_runner_field"
+            tools:text="3壘"/>
 
         <TextView
             android:id="@+id/text_runner_second_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="4dp"
+            android:textSize="18sp"
             app:atBaseSecond="@{atBase}"
             app:layout_constraintBottom_toTopOf="@+id/button_runner_second"
             app:layout_constraintEnd_toEndOf="parent"

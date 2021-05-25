@@ -141,7 +141,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
 
         val awayTeam = GameTeam(
                 name = awayTeamName.value!!,
-                pitcher = EventPlayer(name = "對方投手"),
+                pitcher = EventPlayer(name = "對方投手", playerId = "10"),
                 lineUp = awayLineUp
         )
 
