@@ -5,15 +5,20 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gillian.baseball.data.HitterBox
-import com.gillian.baseball.data.Player
-import com.gillian.baseball.data.Result
-import com.gillian.baseball.data.Team
+import com.gillian.baseball.R
+import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 
 class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
+
+
+    val myself = MutableLiveData<Player>()
+    val myAvg = MutableLiveData<String>()
+    val myObp = MutableLiveData<String>()
+    val mySlg = MutableLiveData<String>()
 
     private val _teamPlayers = MutableLiveData<MutableList<Player>>()
 
@@ -25,19 +30,19 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val showNewPlayerDialog: LiveData<Boolean>
         get() = _showNewPlayerDialog
 
+    private val _statusMe = MutableLiveData<LoadStatus>()
 
-    //TODO() 測試用 記得刪掉
-    val oneGameHitterStat = MutableLiveData<List<HitterBox>>()
+    val statusMe: LiveData<LoadStatus>
+        get() = _statusMe
+
+    private val _statusTeam = MutableLiveData<LoadStatus>()
+
+    val statusTeam: LiveData<LoadStatus>
+        get() = _statusTeam
 
 
     var team = MutableLiveData<Team>()
     var teamName = MutableLiveData<String>()
-
-    fun getTeam() {
-        viewModelScope.launch {
-            team = repository.getTeam(UserManager.teamId)
-        }
-    }
 
 
     fun getTeamPlayer() {
@@ -63,38 +68,49 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    // TODO()測試用記得刪
-    fun getHitterStat() {
+    init {
+        getMyPlayerInfo()
+        getTeamPlayer()
+        teamName.value = UserManager.teamName
+
+    }
+
+    fun getMyPlayerInfo() {
         viewModelScope.launch {
-            val result = repository.getHittersStat("pP4lAdxbYXDHgiAhRlnI", "")
-            oneGameHitterStat.value = when (result) {
+            _statusMe.value = LoadStatus.LOADING
+            val myResult = repository.getOnePlayer(UserManager.playerId)
+            myself.value = when (myResult) {
                 is Result.Success -> {
-                    Log.i("gillian", "success")
-                    result.data
+                    _statusMe.value = LoadStatus.DONE
+                    myResult.data
                 }
                 is Result.Fail -> {
+                    _statusMe.value = LoadStatus.ERROR
                     null
                 }
                 is Result.Error -> {
+                    _statusMe.value = LoadStatus.ERROR
                     null
                 }
                 else -> {
+                    _statusMe.value = LoadStatus.ERROR
                     null
                 }
             }
         }
     }
 
-    init {
-        getTeamPlayer()
-        getHitterStat()  //TODO() 測試用記得刪
-        teamName.value = UserManager.teamName
-
-    }
-
-
     fun addNewPlayer() {
         _showNewPlayerDialog.value = true
+    }
+
+    fun updateMyStatUi() {
+        val statFormat = "%.2f"
+        myself.value?.let {
+            myAvg.value = statFormat.format(it.hitStat.myAverage() ?: 0F)
+            myObp.value = statFormat.format(it.hitStat.myObp() ?: 0F)
+            mySlg.value = statFormat.format(it.hitStat.mySlg() ?: 0F)
+        }
     }
 
     fun onNewPlayerDialogShowed() {

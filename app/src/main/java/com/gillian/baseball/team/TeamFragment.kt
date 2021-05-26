@@ -45,6 +45,12 @@ class TeamFragment : Fragment() {
             }
         })
 
+        viewModel.myself.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                viewModel.updateMyStatUi()
+            }
+        })
+
         return binding.root
     }
 }

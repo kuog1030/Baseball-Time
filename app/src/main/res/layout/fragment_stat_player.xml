@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.statistics.statplayer.StatPlayerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/image_stat_player"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginTop="@dimen/double_margin"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_sports_baseball_24"
+            app:imageUrl="@{viewModel.player.image}"/>
+
+        <TextView
+            android:id="@+id/text_stat_player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:text="@{viewModel.player.name}"
+            app:layout_constraintStart_toEndOf="@+id/image_stat_player"
+            app:layout_constraintTop_toTopOf="@+id/image_stat_player"
+            tools:text="陳鏞基"/>
+
+        <TextView
+            android:id="@+id/text_stat_player_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:text="TextView"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_player_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_name"
+            tools:text="#13"/>
+
+        <TextView
+            android:id="@+id/text_stat_player_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:text="@{viewModel.player.nickname}"
+            app:layout_constraintStart_toEndOf="@+id/text_stat_player_number"
+            app:layout_constraintTop_toTopOf="@+id/text_stat_player_number"
+            tools:text="轟炸機"/>
+
+        <TextView
+            android:id="@+id/text_stat_player_hit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:text="@string/hitter_performance"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_stat_player" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_stat_player_hit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintEnd_toEndOf="@+id/text_stat_player_hit"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_player_hit"
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_hit" />
+
+        <TextView
+            android:id="@+id/text_stat_player_pitch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:text="@string/pitcher_performance"
+            app:layout_constraintEnd_toEndOf="@+id/text_stat_player_hit"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_player_hit"
+            app:layout_constraintTop_toBottomOf="@+id/recycler_stat_player_hit" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_stat_player_pitch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintEnd_toEndOf="@+id/text_stat_player_pitch"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_player_pitch"
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_pitch" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

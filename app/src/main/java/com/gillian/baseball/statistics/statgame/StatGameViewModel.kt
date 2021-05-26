@@ -11,8 +11,6 @@ import kotlinx.coroutines.launch
 
 class StatGameViewModel(private val repository: BaseballRepository) : ViewModel() {
 
-    val allStat = MutableLiveData<Statistic>()
-
     val myStat = MutableLiveData<MyStatistic>()
 
     val gameBox = MutableLiveData<List<BoxView>>()
@@ -42,28 +40,6 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
     }
 
 
-//    fun getAllStat() {
-//        viewModelScope.launch {
-//            val result = repository.getGameStat(gameId.value!!, UserManager.teamId)
-//            allStat.value = when (result) {
-//                is Result.Success -> {
-//                    Log.i("gillian", "all stat")
-//                    result.data
-//                }
-//                is Result.Fail -> {
-//                    null
-//                }
-//                is Result.Error -> {
-//                    null
-//                }
-//                else -> {
-//                    null
-//                }
-//            }
-//        }
-//    }
-
-
     fun getMyTeamStat() {
         viewModelScope.launch {
             val result = repository.getMyGameStat(gameId.value!!, isHome.value ?: false)
@@ -84,7 +60,30 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
             }
         }
     }
-
-
-
 }
+
+/*
+    val allStat = MutableLiveData<Statistic>()
+
+    fun getAllStat() {
+        viewModelScope.launch {
+            val result = repository.getGameStat(gameId.value!!, UserManager.teamId)
+            allStat.value = when (result) {
+                is Result.Success -> {
+                    Log.i("gillian", "all stat")
+                    result.data
+                }
+                is Result.Fail -> {
+                    null
+                }
+                is Result.Error -> {
+                    null
+                }
+                else -> {
+                    null
+                }
+            }
+        }
+    }
+
+ */

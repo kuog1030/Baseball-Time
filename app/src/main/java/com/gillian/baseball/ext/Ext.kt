@@ -304,17 +304,33 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
         }
 
         // TODO() 之後得分的result要改掉，目前傳上去是0
-        if (type == 0) targetEventType = EventType.RUN
+        if (type == 0) {
+            Log.i("gillian extension", "type = 0 and it shouldn't be print.")
+            targetEventType = EventType.RUN
+        }
 
         if (targetEventType.isAtBat) box.atBat += 1
         box.run += event.run
         box.runsBattedIn += event.rbi
 
         when (targetEventType) {
-            EventType.SINGLE -> box.hit += 1
-            EventType.DOUBLE -> box.hit += 1
-            EventType.TRIPLE -> box.hit += 1
-            EventType.HOMERUN -> box.hit += 1
+            EventType.SINGLE -> {
+                box.hit += 1
+                box.single += 1
+            }
+            EventType.DOUBLE -> {
+                box.hit += 1
+                box.double += 1
+            }
+            EventType.TRIPLE -> {
+                box.hit += 1
+                box.triple += 1
+            }
+            EventType.HOMERUN -> {
+                box.hit += 1
+                box.homerun += 1
+            }
+            EventType.SACRIFICEFLY -> box.sacrificeFly += 1
             EventType.DROPPEDTHIRD -> box.strikeOut += 1
             EventType.STRIKEOUT -> box.strikeOut += 1
             EventType.WALK -> box.baseOnBalls += 1

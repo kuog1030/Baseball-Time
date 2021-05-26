@@ -30,13 +30,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/team_my_card_height"
                 android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
+                android:layout_marginTop="@dimen/half_margin"
                 android:layout_marginEnd="@dimen/margin"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="parent">
+                app:layout_constraintTop_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -46,25 +47,25 @@
                         android:id="@+id/imageView4"
                         android:layout_width="@dimen/my_image_size"
                         android:layout_height="@dimen/my_image_size"
-                        app:layout_constraintBottom_toTopOf="@+id/textView4"
-                        app:layout_constraintEnd_toEndOf="@+id/textView4"
-                        app:layout_constraintStart_toStartOf="@+id/textView4"
+                        app:layout_constraintBottom_toTopOf="@+id/text_team_avg"
+                        app:layout_constraintEnd_toEndOf="@+id/text_team_avg"
+                        app:layout_constraintStart_toStartOf="@+id/text_team_avg"
                         app:layout_constraintTop_toTopOf="parent"
-                        app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
+                        imageUrl="@{viewModel.myself.image}"/>
 
                     <TextView
                         android:id="@+id/textView8"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="郭芷沄"
+                        android:text="@{viewModel.myself.name}"
                         android:textSize="18sp"
                         app:layout_constraintBottom_toBottomOf="@+id/imageView4"
-                        app:layout_constraintStart_toStartOf="@+id/textView5"
+                        app:layout_constraintStart_toStartOf="@+id/text_team_obp"
                         app:layout_constraintTop_toTopOf="@+id/imageView4"
                         app:layout_constraintVertical_bias="0.5" />
 
                     <TextView
-                        android:id="@+id/textView4"
+                        android:id="@+id/text_team_avg"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:layout_marginBottom="@dimen/margin"
@@ -72,12 +73,12 @@
                         android:backgroundTint="@color/avg"
                         android:text="AVG"
                         app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintEnd_toStartOf="@+id/textView5"
+                        app:layout_constraintEnd_toStartOf="@+id/text_team_obp"
                         app:layout_constraintHorizontal_bias="0.5"
                         app:layout_constraintStart_toStartOf="parent" />
 
                     <TextView
-                        android:id="@+id/textView5"
+                        android:id="@+id/text_team_obp"
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:background="@drawable/bg_edit_text"
@@ -85,8 +86,8 @@
                         android:text="OBP"
                         app:layout_constraintEnd_toStartOf="@+id/textView7"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textView4"
-                        app:layout_constraintTop_toTopOf="@+id/textView4" />
+                        app:layout_constraintStart_toEndOf="@+id/text_team_avg"
+                        app:layout_constraintTop_toTopOf="@+id/text_team_avg" />
 
                     <TextView
                         android:id="@+id/textView7"
@@ -97,8 +98,44 @@
                         android:text="SLG"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.5"
-                        app:layout_constraintStart_toEndOf="@+id/textView5"
-                        app:layout_constraintTop_toTopOf="@+id/textView5" />
+                        app:layout_constraintStart_toEndOf="@+id/text_team_obp"
+                        app:layout_constraintTop_toTopOf="@+id/text_team_obp" />
+
+                    <TextView
+                        style="@style/HitOverallNumber"
+                        android:id="@+id/text_pager_my_avg"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.myAvg}"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_team_avg"
+                        app:layout_constraintEnd_toEndOf="@+id/text_team_avg"
+                        app:layout_constraintStart_toStartOf="@+id/text_team_avg"
+                        app:layout_constraintTop_toTopOf="@+id/text_team_avg"
+                        tools:text="0.388" />
+
+                    <TextView
+                        android:id="@+id/text_pager_my_obp"
+                        style="@style/HitOverallNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.myObp}"
+                        app:layout_constraintBottom_toBottomOf="@+id/text_team_obp"
+                        app:layout_constraintEnd_toEndOf="@+id/text_team_obp"
+                        app:layout_constraintStart_toStartOf="@+id/text_team_obp"
+                        app:layout_constraintTop_toTopOf="@+id/text_team_obp"
+                        tools:text="0.556" />
+
+                    <TextView
+                        android:id="@+id/text_pager_my_slg"
+                        style="@style/HitOverallNumber"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@{viewModel.mySlg}"
+                        app:layout_constraintBottom_toBottomOf="@+id/textView7"
+                        app:layout_constraintEnd_toEndOf="@+id/textView7"
+                        app:layout_constraintStart_toStartOf="@+id/textView7"
+                        app:layout_constraintTop_toTopOf="@+id/textView7"
+                        tools:text="0.999" />
                 </androidx.constraintlayout.widget.ConstraintLayout>
 
             </androidx.cardview.widget.CardView>

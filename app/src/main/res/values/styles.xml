@@ -140,4 +140,12 @@
         <item name="colorAccent">@color/color_primary_light</item>
     </style>
 
+    <style name="HitOverallNumber">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="layout_constraintHorizontal_bias">0.7</item>
+        <item name="layout_constraintVertical_bias">0.7</item>
+    </style>
+
 </resources>

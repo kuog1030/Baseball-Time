@@ -34,6 +34,8 @@ interface BaseballRepository {
 
     suspend fun getTeam2(teamId: String): Result<Team>
 
+    suspend fun getOnePlayer(playerId: String) : Result<Player>
+
     suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>>
 
     suspend fun getTeamEventPlayer(teamId: String): Result<MutableList<EventPlayer>>

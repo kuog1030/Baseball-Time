@@ -368,6 +368,28 @@ object BaseballRemoteDataSource : BaseballDataSource {
             }
     }
 
+    override suspend fun getOnePlayer(playerId: String): Result<Player> = suspendCoroutine {continuation ->
+        FirebaseFirestore.getInstance()
+                .collection(PLAYERS)
+                .document(playerId)
+                .get()
+                .addOnCompleteListener{ task ->
+                    if (task.isSuccessful) {
+                        val result = task.result!!.toObject(Player::class.java)
+                        continuation.resume(Result.Success(result!!))
+
+                    } else {
+                        task.exception?.let {
+                            Log.w("remote", "[${this::class.simpleName}] Error getting one player. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("get one player fail"))
+                    }
+                }
+    }
+
+
     //TODO() 目前這個function沒有用到teamId欸
     override suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>> = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()

@@ -20,7 +20,6 @@ class RankPager : Fragment() {
         val viewModel = ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java)
 
         binding.viewModel = viewModel
-        binding.recyclerHitterBox.adapter = HitterBoxAdapter()
 
         return binding.root
     }

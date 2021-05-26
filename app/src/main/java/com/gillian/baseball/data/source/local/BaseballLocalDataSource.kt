@@ -64,6 +64,10 @@ class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun getOnePlayer(playerId: String): Result<Player> {
+        TODO("Not yet implemented")
+    }
+
     override suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>> {
         TODO("Not yet implemented")
     }

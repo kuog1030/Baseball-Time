@@ -80,6 +80,11 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
         }
     }
 
+    override fun onStop() {
+        super.onStop()
+        Log.i("gillian", "new player dialog on stop")
+    }
+
 }
 
 //                Toast.makeText(context, "新增球員成功", Toast.LENGTH_SHORT).show()
