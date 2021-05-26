@@ -37,6 +37,14 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
         return remoteDataSource.updateGame(game)
     }
 
+    override suspend fun updateHitStat(playerId: String, hitterBox: HitterBox): Result<Boolean> {
+        return remoteDataSource.updateHitStat(playerId, hitterBox)
+    }
+
+    override suspend fun updatePitchStat(playerId: String, pitcherBox: PitcherBox): Result<Boolean> {
+        return remoteDataSource.updatePitchStat(playerId, pitcherBox)
+    }
+
     override suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean> {
         return remoteDataSource.updateGameBox(gameId, box)
     }

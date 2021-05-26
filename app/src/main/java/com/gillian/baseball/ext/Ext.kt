@@ -212,7 +212,7 @@ fun List<Event>.toBothGameStat() : Statistic {
             }
 
             if (noHitter) {
-                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId)
+                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId, order = event.player.order)
                 updateHitterBox(event, newHitterBox)
                 guestHitter.add(newHitterBox)
             }
@@ -228,7 +228,7 @@ fun List<Event>.toBothGameStat() : Statistic {
             }
 
             if (noPitcher) {
-                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId)
+                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId, order = event.player.order)
                 updatePitcherBox(event, newPitcherBox)
                 homePitcher.add(newPitcherBox)
             }
@@ -252,7 +252,7 @@ fun List<Event>.toBothGameStat() : Statistic {
             }
 
             if (noHitter) {
-                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId)
+                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId, order = event.player.order)
                 updateHitterBox(event, newHitterBox)
                 homeHitter.add(newHitterBox)
             }
@@ -268,7 +268,7 @@ fun List<Event>.toBothGameStat() : Statistic {
             }
 
             if (noPitcher) {
-                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId)
+                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId, order = event.player.order)
                 updatePitcherBox(event, newPitcherBox)
                 guestPitcher.add(newPitcherBox)
             }
@@ -357,6 +357,9 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
 
 
     for (event in this) {
+        // home team offense (hitting) during bottom inning (for example 3 bottom),
+        // which total inning is even ( 3 bottom = 6 )
+        // home hitting -> false xor true -> true
         if ((event.inning % 2 == 1) xor (isHome)) {
 
             Log.i("gillian", "inning ${event.inning} and is Home 紀錄hitter")
@@ -371,7 +374,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
                 }
 
                 if (noHitter) {
-                    val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId)
+                    val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId, order = event.player.order)
                     updateHitterBox(event, newHitterBox)
                     myHitter.add(newHitterBox)
                 }
@@ -388,7 +391,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             }
 
             if (noPitcher) {
-                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId)
+                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId, order = event.player.order)
                 updatePitcherBox(event, newPitcherBox)
                 myPitcher.add(newPitcherBox)
             }

@@ -31,6 +31,8 @@ object BaseballRemoteDataSource : BaseballDataSource {
     private const val TEAMID = "teamId"
     private const val NAME = "name"
     private const val NUMBER = "number"
+    private const val HITSTAT = "hitStat"
+    private const val PITCHSTAT = "pitchStat"
     private const val RECORDED = "recordedTeamId"
 
 
@@ -194,6 +196,66 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         continuation.resume(Result.Fail("update game fail"))
                     }
 
+                }
+    }
+
+    override suspend fun updateHitStat(playerId: String, hitterBox: HitterBox) : Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(PLAYERS)
+                .document(playerId)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val player = task.result!!.toObject(Player::class.java)
+                        val oldBox = player!!.hitStat
+                        oldBox.addNewBox(hitterBox)
+                        FirebaseFirestore.getInstance().collection(PLAYERS)
+                                .document(playerId)
+                                .update(HITSTAT, oldBox)
+                                .addOnCompleteListener{ task2 ->
+                                    if (task2.isSuccessful) {
+                                        continuation.resume(Result.Success(true))
+                                    } else {
+                                        task2.exception?.let {
+
+                                            Log.w("remote", "[${this::class.simpleName}] Error updating hit stat. ${it.message}")
+                                            continuation.resume( Result.Error(it) )
+                                        }
+                                        continuation.resume(Result.Fail("update hit stat fail"))
+                                    }
+                                }
+                    } else {
+                        continuation.resume(Result.Fail("update hit stat fail"))
+                    }
+                }
+    }
+
+    override suspend fun updatePitchStat(playerId: String, pitcherBox: PitcherBox): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(PLAYERS)
+                .document(playerId)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val player = task.result!!.toObject(Player::class.java)
+                        val oldBox = player!!.pitchStat
+                        oldBox.addNewBox(pitcherBox)
+                        FirebaseFirestore.getInstance().collection(PLAYERS)
+                                .document(playerId)
+                                .update(PITCHSTAT, oldBox)
+                                .addOnCompleteListener{ task2 ->
+                                    if (task2.isSuccessful) {
+                                        continuation.resume(Result.Success(true))
+                                    } else {
+                                        task2.exception?.let {
+
+                                            Log.w("remote", "[${this::class.simpleName}] Error updating pitch stat. ${it.message}")
+                                            continuation.resume( Result.Error(it) )
+                                        }
+                                        continuation.resume(Result.Fail("update pitch sta fail"))
+                                    }
+                                }
+                    } else {
+                        continuation.resume(Result.Fail("update pitch sta fail"))
+                    }
                 }
     }
 
