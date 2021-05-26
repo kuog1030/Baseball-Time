@@ -39,11 +39,3 @@ data class HitterBox (
         }
     }
 }
-
-//
-//data class PlayerBox(val isHitter: Boolean, val hitter: HitterBox, val pitcher: PitcherBox) {
-//    val name = if (isHitter) hitter.name else pitcher.name
-//    val abOrIp : Float = if (isHitter) hitter.atBat.toFloat() else pitcher.inningsPitched
-//    val hit = if (isHitter) hitter.hit else pitcher.hit
-//    val run = if (isHitter) hitter.run else pitcher.run
-//}

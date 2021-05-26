@@ -6,6 +6,6 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class MyGame (
-        val isHome : Boolean? = null,
+        val isHome : Boolean,
         val game : Game
 ) : Parcelable

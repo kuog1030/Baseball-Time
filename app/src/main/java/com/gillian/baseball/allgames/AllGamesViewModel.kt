@@ -60,6 +60,9 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
 
     val clicked = MutableLiveData<Boolean>(false)
 
+    val totalWins = MutableLiveData<Int>(0)
+    val totalLose = MutableLiveData<Int>(0)
+
 
 
 
@@ -118,6 +121,9 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
         }
         endGames.sortByDescending { it.date }
         yetGames.sortBy { it.date }
+        totalWins.value = endGames.filter {it.gameResult == GameResult.WIN}.size
+        totalLose.value = endGames.filter {it.gameResult == GameResult.LOSE}.size
+
         _scoresGames.value = endGames
         _scheduleGames.value = yetGames
         _refreshStatus.value = false

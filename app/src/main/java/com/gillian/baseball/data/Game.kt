@@ -1,6 +1,7 @@
 package com.gillian.baseball.data
 
 import android.os.Parcelable
+import com.gillian.baseball.login.UserManager
 import kotlinx.android.parcel.Parcelize
 
 

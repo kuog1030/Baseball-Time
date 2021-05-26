@@ -208,6 +208,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         val player = task.result!!.toObject(Player::class.java)
                         val oldBox = player!!.hitStat
                         oldBox.addNewBox(hitterBox)
+                        Log.i("gillian", "inside success")
                         FirebaseFirestore.getInstance().collection(PLAYERS)
                                 .document(playerId)
                                 .update(HITSTAT, oldBox)

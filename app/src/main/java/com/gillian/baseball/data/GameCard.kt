@@ -22,6 +22,17 @@ data class GameCard(
     val dateString: String
         get() = toDateString(date)
 
+    val gameResult : GameResult
+        get() {
+            if (homeScore > guestScore) {
+                return (if (isHome) GameResult.WIN else GameResult.LOSE)
+            } else if (homeScore == guestScore) {
+                return (GameResult.TIE)
+            } else {
+                return (if (isHome) GameResult.LOSE else GameResult.WIN)
+            }
+        }
+
     private fun toDateString(dateLong: Long): String {
         val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.TAIWAN)
         return dateFormat.format(Date(dateLong))

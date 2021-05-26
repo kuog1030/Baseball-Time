@@ -186,6 +186,16 @@ fun bindStyleForBox(textView: TextView, isTitle: Boolean) {
     }
 }
 
+@BindingAdapter("overallTeamStat")
+fun bindTextAndTeamStat(textView: TextView, number: Int?) {
+    number?.let{
+        if (number == 0) {
+            textView.text = "-"
+        } else {
+            textView.text = number.toString()
+        }
+    }
+}
 
 //
 //@BindingAdapter("onFirstBase")

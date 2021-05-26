@@ -68,7 +68,7 @@
     <!--    game final -->
     <string name="game_final">比賽結束</string>
     <string name="score_win">累積勝場</string>
-    <string name="score_rate">目前勝率</string>
+    <string name="score_rate">累積敗場</string>
 
     <!--    game record related -->
 

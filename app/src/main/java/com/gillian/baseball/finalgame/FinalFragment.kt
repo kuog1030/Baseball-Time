@@ -33,6 +33,13 @@ class FinalFragment : Fragment() {
             }
         })
 
+        viewModel.myStat.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                viewModel.updateHitStat()
+                viewModel.updatePitchStat()
+            }
+        })
+
 
         return binding.root
     }
