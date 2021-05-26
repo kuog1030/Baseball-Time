@@ -16,6 +16,12 @@ import kotlinx.coroutines.launch
 
 class FinalViewModel(private val repository: BaseballRepository, private val myGame: MyGame) : ViewModel() {
 
+    // 1. 更新box
+    // 2. 更新每個球員的成績
+    // 3. ->所以我的stat要有player id有!我好棒XD
+    // 4. -> 看過所有的stat的player id 一個一個執行repository上傳
+
+
     var box = myGame.game.box
     //var boxViewList = mutableListOf<BoxView>()
 

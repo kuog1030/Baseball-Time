@@ -81,6 +81,9 @@
         <argument
             android:name="gameId"
             app:argType="string" />
+        <argument
+            android:name="isHome"
+            app:argType="boolean" />
     </fragment>
 
 </navigation>

@@ -38,8 +38,9 @@ interface BaseballDataSource {
 
     suspend fun getGameBox(gameId: String) : Result<Box>
 
-    //suspend fun getGameStat(gameId: String, teamId: String) : Result<Statistic>
-    suspend fun getGameStat(gameId: String, teamId: String) : Result<MyStatistic>
+    suspend fun getMyGameStat(gameId: String, isHome: Boolean) : Result<MyStatistic>
+
+    suspend fun getBothGameStat(gameId: String) : Result<Statistic>
 
     suspend fun sendEvent(gameId: String, event: Event)
 

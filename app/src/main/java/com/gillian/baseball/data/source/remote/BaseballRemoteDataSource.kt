@@ -396,7 +396,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
 
     // TODO teamID是為了判斷我是is home嗎?
-    override suspend fun getGameStat(gameId: String, teamId: String): Result<MyStatistic> = suspendCoroutine { continuation ->
+    override suspend fun getMyGameStat(gameId: String, isHome: Boolean): Result<MyStatistic> = suspendCoroutine { continuation ->
         val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
 
         theGame.collection(PLAYS)
@@ -408,7 +408,32 @@ object BaseballRemoteDataSource : BaseballDataSource {
                             eventList.add(document.toObject(Event::class.java))
                         }
                         //val result = eventList.toBothGameStat()
-                        val result = eventList.toMyGameStat(true)
+                        val result = eventList.toMyGameStat(isHome)
+                        continuation.resume(Result.Success(result))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("get all stats fail"))
+                    }
+                }
+    }
+
+    override suspend fun getBothGameStat(gameId: String): Result<Statistic> = suspendCoroutine { continuation ->
+        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
+
+        theGame.collection(PLAYS)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val eventList = mutableListOf<Event>()
+                        for (document in task.result!!) {
+                            eventList.add(document.toObject(Event::class.java))
+                        }
+                        val result = eventList.toBothGameStat()
                         continuation.resume(Result.Success(result))
                     } else {
                         task.exception?.let {

@@ -6,8 +6,3 @@ data class Statistic (
     val guestHitter : List<HitterBox>,
     val homeHitter : List<HitterBox>
 )
-
-data class MyStatistic (
-        val myPitcher: List<PitcherBox>,
-        val myHitter: List<HitterBox>
-)

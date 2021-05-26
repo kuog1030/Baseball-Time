@@ -28,6 +28,9 @@ class StatGameFragment : Fragment() {
 
         val boxAdapter = BoxAdapter()
 
+        viewModel.isHome.value = args.isHome
+        viewModel.gameId.value = args.gameId
+
         binding.recyclerGameStatBox.adapter = boxAdapter
         binding.recyclerGameStatHitter.adapter = HitterBoxAdapter()
         binding.recyclerGameStatPitcher.adapter = PitcherBoxAdapter()
@@ -46,7 +49,7 @@ class StatGameFragment : Fragment() {
             }
         })
 
-        viewModel.gameId.value = args.gameId
+
 
 
         return binding.root

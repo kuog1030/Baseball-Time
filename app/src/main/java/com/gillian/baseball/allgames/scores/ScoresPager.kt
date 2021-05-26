@@ -35,7 +35,7 @@ class ScoresPager : Fragment() {
         binding.recyclerScores.adapter = CardScoreAdapter(CardScoreAdapter.OnClickListener{ game ->
             //navigation
             //TODO() wayne的做法是call viewmodel 的navigate function 然後在同樣這個fragment去observe他
-            findNavController().navigate(NavigationDirections.navigationToStatGame(game.id))
+            findNavController().navigate(NavigationDirections.navigationToStatGame(game.id, game.isHome))
         })
         binding.viewModel = viewModel
 
