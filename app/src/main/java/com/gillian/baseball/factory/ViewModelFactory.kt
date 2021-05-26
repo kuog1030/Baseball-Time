@@ -9,6 +9,7 @@ import com.gillian.baseball.order.OrderViewModel
 import com.gillian.baseball.team.TeamViewModel
 import com.gillian.baseball.newplayer.NewPlayerViewModel
 import com.gillian.baseball.statistics.statgame.StatGameViewModel
+import com.gillian.baseball.statistics.statplayer.StatPlayerViewModel
 
 class ViewModelFactory constructor(
     private val repository: BaseballRepository
@@ -27,6 +28,8 @@ class ViewModelFactory constructor(
                     AllGamesViewModel(repository)
                 isAssignableFrom(StatGameViewModel::class.java) ->
                     StatGameViewModel(repository)
+                isAssignableFrom(StatPlayerViewModel::class.java) ->
+                    StatPlayerViewModel(repository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

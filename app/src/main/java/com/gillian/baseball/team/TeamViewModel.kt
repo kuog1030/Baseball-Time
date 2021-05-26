@@ -105,7 +105,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     }
 
     fun updateMyStatUi() {
-        val statFormat = "%.2f"
+        val statFormat = "%.3f"
         myself.value?.let {
             myAvg.value = statFormat.format(it.hitStat.myAverage() ?: 0F)
             myObp.value = statFormat.format(it.hitStat.myObp() ?: 0F)
@@ -118,7 +118,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     }
 
     fun refresh() {
-        Log.i("gillian", "team view model refresh")
         getTeamPlayer()
     }
 

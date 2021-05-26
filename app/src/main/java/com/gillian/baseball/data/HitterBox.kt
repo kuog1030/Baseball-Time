@@ -12,7 +12,7 @@ data class HitterBox (
         var run : Int = 0,
         var hit : Int = 0,
         var single: Int = 0,
-        var double: Int = 0,
+        var douBle: Int = 0,
         var triple: Int = 0,
         var homerun: Int = 0,
         var runsBattedIn : Int = 0,
@@ -26,7 +26,7 @@ data class HitterBox (
         this.apply {
             atBat += newBox.atBat
             single += newBox.single
-            double += newBox.double
+            douBle += newBox.douBle
             triple += newBox.triple
             homerun += newBox.homerun
             run += newBox.run
@@ -57,10 +57,19 @@ data class HitterBox (
         }
     }
 
-    // 長打率
+    // Slugging Percentage
     fun mySlg() : Float? {
         if (atBat != 0) {
-            return ((single + (2*double) + (3*triple) + (4*homerun)) / atBat.toFloat())
+            return ((single + (2*douBle) + (3*triple) + (4*homerun)) / atBat.toFloat())
+        } else {
+            return null
+        }
+    }
+
+    // On-base Plus Slugging
+    fun myOps() : Float? {
+        if (atBat != 0) {
+            return (myObp()!! + mySlg()!!)
         } else {
             return null
         }

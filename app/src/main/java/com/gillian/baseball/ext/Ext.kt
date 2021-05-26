@@ -320,7 +320,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             }
             EventType.DOUBLE -> {
                 box.hit += 1
-                box.double += 1
+                box.douBle += 1
             }
             EventType.TRIPLE -> {
                 box.hit += 1

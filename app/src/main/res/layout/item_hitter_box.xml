@@ -38,7 +38,7 @@
                     android:id="@+id/row_player_box_name"
                     style="@style/PlayerNameTable"
                     boxStyle="@{isTitle}"
-                    android:layout_width="110dp"
+                    android:layout_width="@dimen/box_name_width"
                     android:layout_height="wrap_content"
                     android:text="@{hitter.name}"
                     tools:text="陳俊秀"/>

@@ -32,6 +32,7 @@
     <string name="image">圖片</string>
 
     <!--   box related -->
+    <string name="box_g">G</string>
     <string name="box_ab">AB</string>
     <string name="box_r">R</string>
     <string name="box_h">H</string>
@@ -42,6 +43,13 @@
     <string name="box_ip">IP</string>
     <string name="box_er">ER</string>
     <string name="box_hr">HR</string>
+    <string name="box_single">1B</string>
+    <string name="box_double">2B</string>
+    <string name="box_triple">3B</string>
+    <string name="box_sf">SF</string>
+    <string name="box_avg">AVG</string>
+    <string name="box_obp">OBP</string>
+    <string name="box_slg">SLG</string>
 
     <!--    Stat related-->
     <string name="hitter_performance">打擊成績</string>

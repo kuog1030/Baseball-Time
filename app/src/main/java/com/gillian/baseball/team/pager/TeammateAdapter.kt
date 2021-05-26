@@ -11,8 +11,8 @@ import com.gillian.baseball.databinding.ItemTeammateBinding
 
 class TeammateAdapter(val onClickListener: OnClickListener) : ListAdapter<Player, TeammateAdapter.ViewHolder>(DiffCallback) {
 
-    class OnClickListener(val clickListener: (player: Player, position: Int) -> Unit) {
-        fun onClick(player: Player, position: Int) = clickListener(player, position)
+    class OnClickListener(val clickListener: (player: Player) -> Unit) {
+        fun onClick(player: Player) = clickListener(player)
     }
 
     class ViewHolder(private var binding: ItemTeammateBinding) : RecyclerView.ViewHolder(binding.root) {
@@ -30,7 +30,7 @@ class TeammateAdapter(val onClickListener: OnClickListener) : ListAdapter<Player
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val player = getItem(position)
         holder.itemView.setOnClickListener{
-            onClickListener.onClick(player, position)
+            onClickListener.onClick(player)
         }
         holder.bind(player)
     }

@@ -33,9 +33,9 @@
 
                 <TextView
                     android:id="@+id/row_player_box_name"
-                    style="@style/FinalTable"
+                    style="@style/PlayerNameTable"
                     boxStyle="@{isTitle}"
-                    android:layout_width="110dp"
+                    android:layout_width="@dimen/box_name_width"
                     android:layout_height="wrap_content"
                     android:text="@{pitcher.name}"
                     tools:text="潘威倫"/>
@@ -68,7 +68,6 @@
                     android:id="@+id/row_pitcher_box_four"
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
-                    android:layout_width="45dp"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_er : String.valueOf(pitcher.earnedRuns)}"
                     tools:text="ER"/>

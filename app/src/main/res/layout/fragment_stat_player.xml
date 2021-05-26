@@ -5,6 +5,12 @@
 
     <data>
         <variable
+            name="hitStat"
+            type="com.gillian.baseball.data.HitterBox" />
+        <variable
+            name="pitchStat"
+            type="com.gillian.baseball.data.PitcherBox" />
+        <variable
             name="viewModel"
             type="com.gillian.baseball.statistics.statplayer.StatPlayerViewModel" />
     </data>
@@ -19,10 +25,10 @@
             android:layout_height="80dp"
             android:layout_marginStart="@dimen/double_margin"
             android:layout_marginTop="@dimen/double_margin"
+            app:imageUrl="@{viewModel.player.image}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_sports_baseball_24"
-            app:imageUrl="@{viewModel.player.image}"/>
+            app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
 
         <TextView
             android:id="@+id/text_stat_player_name"
@@ -32,7 +38,7 @@
             android:text="@{viewModel.player.name}"
             app:layout_constraintStart_toEndOf="@+id/image_stat_player"
             app:layout_constraintTop_toTopOf="@+id/image_stat_player"
-            tools:text="陳鏞基"/>
+            tools:text="陳鏞基" />
 
         <TextView
             android:id="@+id/text_stat_player_number"
@@ -42,7 +48,7 @@
             android:text="TextView"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_name"
             app:layout_constraintTop_toBottomOf="@+id/text_stat_player_name"
-            tools:text="#13"/>
+            tools:text="#13" />
 
         <TextView
             android:id="@+id/text_stat_player_nickname"
@@ -52,7 +58,7 @@
             android:text="@{viewModel.player.nickname}"
             app:layout_constraintStart_toEndOf="@+id/text_stat_player_number"
             app:layout_constraintTop_toTopOf="@+id/text_stat_player_number"
-            tools:text="轟炸機"/>
+            tools:text="轟炸機" />
 
         <TextView
             android:id="@+id/text_stat_player_hit"
@@ -66,14 +72,147 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_stat_player" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_stat_player_hit"
+
+        <TableLayout
+            android:id="@+id/table_stat_player_hit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            app:layout_constraintEnd_toEndOf="@+id/text_stat_player_hit"
-            app:layout_constraintStart_toStartOf="@+id/text_stat_player_hit"
-            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_hit" />
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="@dimen/one_half_margin"
+            app:layout_constraintEnd_toEndOf="@id/text_stat_player_hit"
+            app:layout_constraintStart_toStartOf="@id/text_stat_player_hit"
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_slg_number">
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/quarter_margin"
+                android:paddingBottom="@dimen/quarter_margin"
+                android:background="@color/grey_888">
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_ab"
+                    tools:text="AB" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_r"
+                    tools:text="R" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_single" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_double" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_triple" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_hr" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_rbi"
+                    tools:text="RBI" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_bb"
+                    tools:text="BB" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_so"
+                    tools:text="SO" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_sb"
+                    tools:text="SB" />
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/quarter_margin"
+                android:paddingBottom="@dimen/quarter_margin"
+                android:backgroundTint="@color/white"
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.atBat)}"
+                    tools:text="1" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.run)}"
+                    tools:text="R" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.single)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.douBle)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.triple)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.homerun)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.runsBattedIn)}"
+                    tools:text="12" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.baseOnBalls)}"
+                    tools:text="6" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.strikeOut)}"
+                    tools:text="1" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:text="@{String.valueOf(hitStat.stealBase)}"
+                    tools:text="3" />
+            </TableRow>
+        </TableLayout>
 
         <TextView
             android:id="@+id/text_stat_player_pitch"
@@ -83,15 +222,201 @@
             android:text="@string/pitcher_performance"
             app:layout_constraintEnd_toEndOf="@+id/text_stat_player_hit"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_hit"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_stat_player_hit" />
+            app:layout_constraintTop_toBottomOf="@+id/table_stat_player_hit" />
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_stat_player_pitch"
+
+        <TableLayout
+            android:id="@+id/table_stat_player_pitch"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintEnd_toEndOf="@id/text_stat_player_pitch"
+            app:layout_constraintStart_toStartOf="@id/text_stat_player_pitch"
+            app:layout_constraintTop_toBottomOf="@id/text_stat_player_pitch">
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/quarter_margin"
+                android:paddingBottom="@dimen/quarter_margin"
+                android:background="@color/grey_888">
+
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/box_g" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/box_ip" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/box_h" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:text="@string/box_r"
+                    android:layout_weight="1"
+                    tools:text="R" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/box_er" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/box_bb" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/box_so" />
+
+                <TextView
+                    style="@style/PlayerTableLargeTitle"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/box_hr" />
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingTop="@dimen/quarter_margin"
+                android:paddingBottom="@dimen/quarter_margin"
+                android:backgroundTint="@color/white"
+                android:background="@color/white">
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(hitStat.atBat)}"
+                    tools:text="TO DO" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(pitchStat.inningsPitched)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(pitchStat.hit)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(pitchStat.run)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(pitchStat.earnedRuns)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(pitchStat.baseOnBalls)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(pitchStat.strikeOut)}" />
+
+                <TextView
+                    style="@style/PlayerTableLarge"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@{String.valueOf(pitchStat.homerun)}"
+                    tools:text="2" />
+            </TableRow>
+        </TableLayout>
+
+        <TextView
+            android:id="@+id/text_stat_player_avg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/box_avg"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintEnd_toStartOf="@+id/text_stat_player_obp"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_hit" />
+
+        <TextView
+            android:id="@+id/text_stat_player_obp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/box_obp"
+            app:layout_constraintEnd_toStartOf="@+id/text_stat_player_slg"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_stat_player_avg"
+            app:layout_constraintTop_toTopOf="@+id/text_stat_player_avg" />
+
+        <TextView
+            android:id="@+id/text_stat_player_slg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/box_slg"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_stat_player_obp"
+            app:layout_constraintTop_toTopOf="@+id/text_stat_player_obp" />
+
+        <TextView
+            android:id="@+id/text_stat_avg_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
-            app:layout_constraintEnd_toEndOf="@+id/text_stat_player_pitch"
-            app:layout_constraintStart_toStartOf="@+id/text_stat_player_pitch"
-            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_pitch" />
+            android:text="@{viewModel.myAvg}"
+            app:layout_constraintEnd_toEndOf="@+id/text_stat_player_avg"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_player_avg"
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_avg"
+            tools:text="0.373"/>
+
+        <TextView
+            android:id="@+id/text_stat_obp_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.myObp}"
+            app:layout_constraintEnd_toEndOf="@+id/text_stat_player_obp"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_player_obp"
+            app:layout_constraintTop_toTopOf="@+id/text_stat_avg_number"
+            tools:text="0.582"/>
+
+        <TextView
+            android:id="@+id/text_stat_slg_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.mySlg}"
+            app:layout_constraintEnd_toEndOf="@+id/text_stat_player_slg"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_player_slg"
+            app:layout_constraintTop_toTopOf="@+id/text_stat_obp_number"
+            tools:text="0.999"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -7,6 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.databinding.PagerTeammateBinding
 import com.gillian.baseball.team.TeamViewModel
 
@@ -20,8 +22,8 @@ class TeammatePager : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.recyclerTeamTeammate.adapter = TeammateAdapter(TeammateAdapter.OnClickListener{ player, position ->
-            Log.i("gillian", "eee do something")
+        binding.recyclerTeamTeammate.adapter = TeammateAdapter(TeammateAdapter.OnClickListener{ player ->
+            findNavController().navigate(NavigationDirections.navigationToStatPlayer(player.id))
         })
 
 
