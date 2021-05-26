@@ -38,7 +38,8 @@ interface BaseballRepository {
 
     suspend fun getGameBox(gameId: String) : Result<Box>
 
-    suspend fun getGameStat(gameId: String, teamId: String) : Result<Statistic>
+    //suspend fun getGameStat(gameId: String, teamId: String) : Result<Statistic>
+    suspend fun getGameStat(gameId: String, teamId: String) : Result<MyStatistic>
 
     suspend fun sendEvent(gameId: String, event: Event)
 

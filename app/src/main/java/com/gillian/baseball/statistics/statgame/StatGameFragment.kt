@@ -35,7 +35,7 @@ class StatGameFragment : Fragment() {
         binding.recyclerGameStatPitcherG.adapter = PitcherBoxAdapter()
 
         viewModel.gameId.observe(viewLifecycleOwner, Observer {
-            viewModel.getAllStat()
+            viewModel.getMyTeamStat()
             viewModel.getGameBox()
             Log.i("gillian", "game id change")
         })

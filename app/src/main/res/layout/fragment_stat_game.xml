@@ -65,7 +65,7 @@
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
-                app:hitterBox="@{viewModel.allStat.homeHitter}"
+                app:hitterBox="@{viewModel.myStat.myHitter}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -84,7 +84,7 @@
                 app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintTop_toBottomOf="@+id/textView11"
-                app:pitcherBox="@{viewModel.allStat.homePitcher}"
+                app:pitcherBox="@{viewModel.myStat.myPitcher}"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_hitter_box">
 
@@ -105,7 +105,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
-                app:hitterBox="@{viewModel.allStat.guestHitter}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
@@ -124,7 +123,6 @@
                 app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_hitter_g"
-                app:pitcherBox="@{viewModel.allStat.guestPitcher}"
                 tools:itemCount="2"
                 tools:listitem="@layout/item_hitter_box">
 

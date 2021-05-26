@@ -19,6 +19,9 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
     var box = myGame.game.box
     //var boxViewList = mutableListOf<BoxView>()
 
+    val gameNote = MutableLiveData<String>()
+
+
     private val _submitAdapter = MutableLiveData<List<BoxView>>()
     val submitAdapter : LiveData<List<BoxView>>
         get() = _submitAdapter

@@ -1,10 +1,7 @@
 package com.gillian.baseball.ext
 
 import android.util.Log
-import com.gillian.baseball.data.Event
-import com.gillian.baseball.data.HitterBox
-import com.gillian.baseball.data.PitcherBox
-import com.gillian.baseball.data.Statistic
+import com.gillian.baseball.data.*
 import com.gillian.baseball.game.EventType
 import com.gillian.baseball.login.UserManager
 
@@ -125,7 +122,7 @@ fun List<Event>.toPersonalScore() : List<String> {
 }
 
 
-fun List<Event>.toGameStat(isHome: Boolean = true) : Statistic {
+fun List<Event>.toBothGameStat() : Statistic {
 
 
     val guestPitcher = mutableListOf(PitcherBox())
@@ -287,4 +284,117 @@ fun List<Event>.toGameStat(isHome: Boolean = true) : Statistic {
             homePitcher = homePitcher,
             guestHitter = guestHitter,
             homeHitter = homeHitter)
+}
+
+fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
+
+
+    val myPitcher = mutableListOf(PitcherBox())
+    val myHitter = mutableListOf(HitterBox())
+
+    fun updateHitterBox(event: Event, box: HitterBox) {
+        val type = event.result
+        lateinit var targetEventType: EventType
+
+        for (eventType in EventType.values()) {
+            if (type == eventType.number) {
+                targetEventType = eventType
+                break
+            }
+        }
+
+        // TODO() 之後得分的result要改掉，目前傳上去是0
+        if (type == 0) targetEventType = EventType.RUN
+
+        if (targetEventType.isAtBat) box.atBat += 1
+        box.run += event.run
+        box.runsBattedIn += event.rbi
+
+        when (targetEventType) {
+            EventType.SINGLE -> box.hit += 1
+            EventType.DOUBLE -> box.hit += 1
+            EventType.TRIPLE -> box.hit += 1
+            EventType.HOMERUN -> box.hit += 1
+            EventType.DROPPEDTHIRD -> box.strikeOut += 1
+            EventType.STRIKEOUT -> box.strikeOut += 1
+            EventType.WALK -> box.baseOnBalls += 1
+            EventType.STEALBASE -> box.stealBase += 1
+            else -> null
+        }
+    }
+
+    fun updatePitcherBox(event: Event, box: PitcherBox) {
+        val type = event.result
+        lateinit var targetEventType: EventType
+
+        for (eventType in EventType.values()) {
+            if (type == eventType.number) {
+                targetEventType = eventType
+                break
+            }
+        }
+
+        // TODO() 之後得分的result要改掉，目前傳上去是0
+        if (type == 0) targetEventType = EventType.SACRIFICEFLY
+
+        box.run += event.run
+
+        when (targetEventType) {
+            EventType.SINGLE -> box.hit += 1
+            EventType.DOUBLE -> box.hit += 1
+            EventType.TRIPLE -> box.hit += 1
+            EventType.HOMERUN -> {
+                box.hit += 1
+                box.homerun += 1
+            }
+            EventType.RUN -> box.run += 1
+            EventType.DROPPEDTHIRD -> box.strikeOut += 1
+            EventType.STRIKEOUT -> box.strikeOut += 1
+            EventType.WALK -> box.baseOnBalls += 1
+            else -> null // 可能要throw error
+        }
+    }
+
+
+    for (event in this) {
+        if ((event.inning % 2 == 1) xor (isHome)) {
+
+            Log.i("gillian", "inning ${event.inning} and is Home 紀錄hitter")
+            var noHitter = true
+
+                for (oneHitterBox in myHitter) {
+                    if (oneHitterBox.playerId == event.player.playerId) {
+                        updateHitterBox(event, oneHitterBox)
+                        noHitter = false
+                        break
+                    }
+                }
+
+                if (noHitter) {
+                    val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId)
+                    updateHitterBox(event, newHitterBox)
+                    myHitter.add(newHitterBox)
+                }
+
+        } else {
+            Log.i("gillian", "inning ${event.inning} and is Home 紀錄pitcher")
+            var noPitcher = true
+            for (onePitcherBox in myPitcher) {
+                if (onePitcherBox.playerId == event.pitcher.playerId) {
+                    updatePitcherBox(event, onePitcherBox)
+                    noPitcher = false
+                    break
+                }
+            }
+
+            if (noPitcher) {
+                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId)
+                updatePitcherBox(event, newPitcherBox)
+                myPitcher.add(newPitcherBox)
+            }
+
+        }
+    }
+
+    return MyStatistic(myPitcher = myPitcher, myHitter = myHitter)
 }

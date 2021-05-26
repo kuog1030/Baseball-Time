@@ -13,6 +13,8 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
 
     val allStat = MutableLiveData<Statistic>()
 
+    val myStat = MutableLiveData<MyStatistic>()
+
     val gameBox = MutableLiveData<List<BoxView>>()
 
     var gameId = MutableLiveData<String>()
@@ -39,10 +41,32 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
     }
 
 
-    fun getAllStat() {
+//    fun getAllStat() {
+//        viewModelScope.launch {
+//            val result = repository.getGameStat(gameId.value!!, UserManager.teamId)
+//            allStat.value = when (result) {
+//                is Result.Success -> {
+//                    Log.i("gillian", "all stat")
+//                    result.data
+//                }
+//                is Result.Fail -> {
+//                    null
+//                }
+//                is Result.Error -> {
+//                    null
+//                }
+//                else -> {
+//                    null
+//                }
+//            }
+//        }
+//    }
+
+
+    fun getMyTeamStat() {
         viewModelScope.launch {
             val result = repository.getGameStat(gameId.value!!, UserManager.teamId)
-            allStat.value = when (result) {
+            myStat.value = when (result) {
                 is Result.Success -> {
                     Log.i("gillian", "all stat")
                     result.data

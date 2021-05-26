@@ -5,9 +5,7 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
-import com.gillian.baseball.ext.toGameStat
-import com.gillian.baseball.ext.toHitterBox
-import com.gillian.baseball.ext.toPersonalScore
+import com.gillian.baseball.ext.*
 import com.gillian.baseball.login.UserManager
 import com.google.common.io.Files.getFileExtension
 import com.google.firebase.firestore.FieldValue
@@ -398,7 +396,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
 
     // TODO teamID是為了判斷我是is home嗎?
-    override suspend fun getGameStat(gameId: String, teamId: String): Result<Statistic> = suspendCoroutine { continuation ->
+    override suspend fun getGameStat(gameId: String, teamId: String): Result<MyStatistic> = suspendCoroutine { continuation ->
         val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
 
         theGame.collection(PLAYS)
@@ -409,7 +407,8 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         for (document in task.result!!) {
                             eventList.add(document.toObject(Event::class.java))
                         }
-                        val result = eventList.toGameStat()
+                        //val result = eventList.toBothGameStat()
+                        val result = eventList.toMyGameStat(true)
                         continuation.resume(Result.Success(result))
                     } else {
                         task.exception?.let {
