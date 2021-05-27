@@ -11,6 +11,7 @@ import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.databinding.PagerTeammateBinding
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.team.TeamFragmentDirections
 import com.gillian.baseball.team.TeamViewModel
 
 class TeammatePager : Fragment() {
@@ -24,11 +25,11 @@ class TeammatePager : Fragment() {
         binding.viewModel = viewModel
 
         binding.recyclerTeamTeammate.adapter = TeammateAdapter(TeammateAdapter.OnClickListener{ player ->
-            findNavController().navigate(NavigationDirections.navigationToStatPlayer(player.id))
+            findNavController().navigate(TeamFragmentDirections.actionTeamFragmentToStatPlayerFragment(player.id))
         })
 
         binding.layoutTeamMyCard.setOnClickListener{
-            findNavController().navigate(NavigationDirections.navigationToStatPlayer(UserManager.playerId))
+            findNavController().navigate(TeamFragmentDirections.actionTeamFragmentToStatPlayerFragment(UserManager.playerId))
         }
 
 

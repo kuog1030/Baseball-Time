@@ -10,7 +10,9 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.databinding.FragmentStatPlayerBinding
 import com.gillian.baseball.editplayer.EditPlayerDialog
 import com.gillian.baseball.ext.getVmFactory
@@ -54,6 +56,11 @@ class StatPlayerFragment : Fragment() {
             }
         })
 
+//        viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
+//            it?.let{
+//                findNavController().navigate(NavigationDirections.navigationToTeam())
+//            }
+//        })
 
         return binding.root
     }

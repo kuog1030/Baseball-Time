@@ -32,6 +32,10 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
     val navigateToEdit: LiveData<Player>
         get() = _navigateToEdit
 
+    private val _navigateToTeam = MutableLiveData<Boolean>()
+
+    val navigateToTeam: LiveData<Boolean>
+        get() = _navigateToTeam
 
     val myAvg = MutableLiveData<String>()
 
@@ -87,6 +91,14 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
 
     fun onEditNavigated() {
         _navigateToEdit.value = null
+    }
+
+    fun navigateToTeam() {
+        _navigateToTeam.value = true
+    }
+
+    fun onTeamNavigated() {
+        _navigateToTeam.value = null
     }
 
     fun refresh() {

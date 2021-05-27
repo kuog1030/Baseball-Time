@@ -112,36 +112,23 @@
         <Button
             android:id="@+id/button_edit_player_remove"
             style="@style/GameButton"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/one_half_margin"
-            android:text="從球隊移除"
+            android:backgroundTint="@color/grey_888"
+            android:onClick="@{()->viewModel.deletePlayer()}"
             android:paddingStart="@dimen/half_margin"
             android:paddingEnd="@dimen/half_margin"
-            android:onClick="@{()->viewModel.removeFromTeam()}"
-            app:layout_constraintEnd_toStartOf="@+id/button_edit_player_delete"
+            android:text="從球隊移除"
+            app:layout_constraintEnd_toStartOf="@+id/button_edit_player_save"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_edit_player_nickname" />
 
         <Button
-            android:id="@+id/button_edit_player_delete"
-            style="@style/GameButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="刪除球員"
-            android:paddingStart="@dimen/half_margin"
-            android:paddingEnd="@dimen/half_margin"
-            android:onClick="@{()->viewModel.deletePlayer()}"
-            app:layout_constraintEnd_toStartOf="@+id/button_edit_player_save"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_edit_player_remove"
-            app:layout_constraintTop_toTopOf="@+id/button_edit_player_remove" />
-
-        <Button
             android:id="@+id/button_edit_player_save"
             style="@style/GameButton"
-            android:layout_width="wrap_content"
+            android:layout_width="130dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/double_margin"
             android:onClick="@{()->viewModel.checkIfInfoFilled()}"
@@ -151,8 +138,8 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_edit_player_delete"
-            app:layout_constraintTop_toTopOf="@+id/button_edit_player_delete" />
+            app:layout_constraintStart_toEndOf="@+id/button_edit_player_remove"
+            app:layout_constraintTop_toTopOf="@+id/button_edit_player_remove" />
 
 
         <ImageView
@@ -160,8 +147,8 @@
             imageUrl="@{viewModel.photoUrl}"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:visibility="@{newPhoto ? View.INVISIBLE : View.VISIBLE}"
             android:layout_marginTop="@dimen/double_margin"
+            android:visibility="@{newPhoto ? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -169,11 +156,11 @@
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:loadingStatus="@{viewModel.status}"/>
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadingStatus="@{viewModel.status}" />
 
         <ImageView
             android:id="@+id/image_edit_player_new_photo"

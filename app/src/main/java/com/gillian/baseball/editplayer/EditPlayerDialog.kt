@@ -10,10 +10,13 @@ import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.databinding.DialogEditPlayerBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.newplayer.NewPlayerViewModel
+import com.gillian.baseball.statistics.statplayer.StatPlayerFragmentDirections
 import com.gillian.baseball.statistics.statplayer.StatPlayerViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
@@ -62,6 +65,13 @@ class EditPlayerDialog(val player: Player) : BottomSheetDialogFragment() {
             }
         })
 
+
+        viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
+            if (it == true) {
+                findNavController().navigate(StatPlayerFragmentDirections.actionStatPlayerFragmentToTeamFragment())
+                viewModel.onTeamNavigated()
+            }
+        })
 
         return binding.root
     }

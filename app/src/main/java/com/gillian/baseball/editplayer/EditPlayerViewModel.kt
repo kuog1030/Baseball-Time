@@ -39,6 +39,11 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
     val status: LiveData<LoadStatus>
         get() = _status
 
+    private val _navigateToTeam = MutableLiveData<Boolean>()
+
+    val navigateToTeam : LiveData<Boolean>
+        get() = _navigateToTeam
+
     private val _dismissDialog = MutableLiveData<Boolean>()
 
     val dismissDialog : LiveData<Boolean>
@@ -133,10 +138,18 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    fun deletePlayer() {}
+    fun deletePlayer() {
+        viewModelScope.launch {
+            _navigateToTeam.value = when (repository.deletePlayer(oldPlayer.id)) {
+                is Result.Success -> true
+                else -> null
+            }
+        }
+    }
 
-    fun removeFromTeam() {}
-
+    fun onTeamNavigated() {
+        _navigateToTeam.value = null
+    }
 
     fun dismissAndDontSave() {
         _dismissDialog.value = false

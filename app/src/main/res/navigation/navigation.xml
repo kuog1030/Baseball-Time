@@ -22,7 +22,11 @@
     <fragment
         android:id="@+id/teamFragment"
         android:name="com.gillian.baseball.team.TeamFragment"
-        android:label="TeamFragment" />
+        android:label="TeamFragment" >
+        <action
+            android:id="@+id/action_teamFragment_to_statPlayerFragment"
+            app:destination="@id/statPlayerFragment" />
+    </fragment>
 
     <action android:id="@+id/navigationToStat" app:destination="@id/statFragment" />
     <action android:id="@+id/navigationToTeam" app:destination="@id/teamFragment" />
@@ -31,7 +35,6 @@
     <action android:id="@+id/navigationToNewPlayer" app:destination="@id/newPlayerDialog" />
     <action android:id="@+id/navigationToNewGame" app:destination="@id/newGameFragment" />
     <action android:id="@+id/navigationToStatGame" app:destination="@id/statGameFragment" />
-    <action android:id="@+id/navigationToStatPlayer" app:destination="@id/statPlayerFragment" />
 
     <fragment
         android:id="@+id/orderFragment"
@@ -93,6 +96,11 @@
         <argument
             android:name="playerId"
             app:argType="string" />
+        <action
+            android:id="@+id/action_statPlayerFragment_to_teamFragment"
+            app:destination="@id/teamFragment"
+            app:popUpTo="@id/teamFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
 </navigation>
