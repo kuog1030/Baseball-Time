@@ -27,16 +27,9 @@ class FinalFragment : Fragment() {
         val boxAdapter = BoxAdapter()
         binding.recyclerFinalBox.adapter = boxAdapter
 
-        viewModel.submitAdapter.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                boxAdapter.submitList(it)
-            }
-        })
-
         viewModel.myStat.observe(viewLifecycleOwner, Observer {
             it?.let{
-                viewModel.updateHitStat()
-                viewModel.updatePitchStat()
+                viewModel.updatePlayerStat()
             }
         })
 

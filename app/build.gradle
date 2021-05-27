@@ -67,6 +67,9 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore-ktx'
     implementation 'com.google.firebase:firebase-storage-ktx'
 
+    // version_lottie
+    implementation "com.airbnb.android:lottie:$version_lottie"
+
 
     implementation 'com.github.sembozdemir:ViewPagerArrowIndicator:1.0.0'
 

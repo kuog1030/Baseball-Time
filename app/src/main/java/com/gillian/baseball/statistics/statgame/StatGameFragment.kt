@@ -43,13 +43,6 @@ class StatGameFragment : Fragment() {
             Log.i("gillian", "game id change")
         })
 
-        viewModel.gameBox.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                boxAdapter.submitList(it)
-            }
-        })
-
-
 
 
         return binding.root

@@ -13,11 +13,10 @@ import kotlinx.coroutines.launch
 
 class FinalViewModel(private val repository: BaseballRepository, private val myGame: MyGame) : ViewModel() {
 
-    // 1. 更新box                                                        uploadBox()
-    // 2. 更新每個球員的成績
-    // 3. ->所以我的stat要有player id有!我好棒XD
-    // 4. -> 看過所有的stat的player id 一個一個執行repository上傳          getMyStat() -> observe -> upload hit and pitch
-    // 拿到所有event -> 算完得到boxex -> 回傳
+    // 1. 更新box               uploadBox()
+    // 2. 更新球員成績          getMyStat() -> observe -> upload hit and pitch
+    // 如果我要讓使用者能確認資料，(調整打點資訊等) 可能就要按下按鈕才上船
+    // 按下按鈕 -> 上傳 -> 上傳完才navigate
 
 
     // get my stat ( including my hitters and my pitchers ) -> for loop update players boxes
@@ -38,9 +37,11 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
     val gameNote = MutableLiveData<String>(myGame.game.note)
 
 
-    private val _submitAdapter = MutableLiveData<List<BoxView>>()
-    val submitAdapter : LiveData<List<BoxView>>
-        get() = _submitAdapter
+    private val _gameBox = MutableLiveData<List<BoxView>>()
+    val gameBox : LiveData<List<BoxView>>
+        get() = _gameBox
+
+    val loading = MutableLiveData<Boolean>(true)
 
     private val _status = MutableLiveData<LoadStatus>()
 
@@ -58,11 +59,12 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
         getMyStat()
     }
 
-    // 拿到所有event -> 轉換成my stat
+
     fun getMyStat() {
         viewModelScope.launch {
 
             _status.value = LoadStatus.LOADING
+            loading.value = true
 
             val result = repository.getMyGameStat(myGame.game.id, myGame.isHome)
             myStat.value = when (result) {
@@ -89,7 +91,7 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
         }
     }
 
-    fun updateHitStat() {
+    fun updatePlayerStat() {
         myStat.value?.let{
             viewModelScope.launch {
                 for (hitter in it.myHitter) {
@@ -97,25 +99,21 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
                         hitterResult = repository.updateHitStat(hitter.playerId, hitter)
                     }
                 }
-                _status.value = LoadStatus.DONE
-            }
-        }
-    }
 
-    fun updatePitchStat() {
-        myStat.value?.let {
-            viewModelScope.launch {
                 for (pitcher in it.myPitcher) {
                     if (pitcher.playerId != "") {
                         pitcherResult = repository.updatePitchStat(pitcher.playerId, pitcher)
                     }
                 }
+
+                _status.value = LoadStatus.DONE
+                loading.value = false
             }
         }
     }
 
     fun createBoxViewList() {
-        _submitAdapter.value = box.toBoxViewList()
+        _gameBox.value = box.toBoxViewList()
     }
 
     fun uploadBox () {
@@ -147,11 +145,11 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
                         noteResult.data
                     }
                     is Result.Fail -> {
-                        _errorMessage.value = result.error
+                        _errorMessage.value = noteResult.error
                         null
                     }
                     is Result.Error -> {
-                        _errorMessage.value = result.exception.toString()
+                        _errorMessage.value = noteResult.exception.toString()
                         null
                     }
                     else -> {

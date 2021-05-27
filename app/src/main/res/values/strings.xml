@@ -77,6 +77,7 @@
     <string name="game_final">比賽結束</string>
     <string name="score_win">累積勝場</string>
     <string name="score_rate">累積敗場</string>
+    <string name="data_uploading">資料上傳中 ^^ </string>
 
     <!--    game record related -->
 

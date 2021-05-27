@@ -6,6 +6,7 @@ buildscript {
         jcenter()
     }
     ext {
+        version_lottie = "3.6.0"
         version_lifecycle_extensions = "2.2.0"
         version_navigation = "2.3.5"
         version_recyclerview = "1.2.0-alpha06"

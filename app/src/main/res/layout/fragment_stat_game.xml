@@ -31,22 +31,22 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_game_stat_box"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginEnd="@dimen/margin"
+                android:layout_marginTop="32dp"
                 android:orientation="horizontal"
+                app:gameBox="@{viewModel.gameBox}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_hitter"
+                app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintTop_toBottomOf="@id/text_game_stat_title"
+                tools:itemCount="3"
                 tools:listitem="@layout/item_box">
 
             </androidx.recyclerview.widget.RecyclerView>
-
 
             <TextView
                 android:id="@+id/textView10"

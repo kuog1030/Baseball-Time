@@ -12,6 +12,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.data.*
 import com.gillian.baseball.team.pager.TeammateAdapter
+import com.gillian.baseball.views.BoxAdapter
 import com.gillian.baseball.views.HitterBoxAdapter
 import com.gillian.baseball.views.PitcherBoxAdapter
 
@@ -66,6 +67,17 @@ fun bindPitcherBox(recyclerView: RecyclerView, pitcherBox: List<PitcherBox>?) {
         recyclerView.adapter?.apply {
             when(this) {
                 is PitcherBoxAdapter -> submitList(it)
+            }
+        }
+    }
+}
+
+@BindingAdapter("gameBox")
+fun bindGameBox(recyclerView: RecyclerView, gameBox: List<BoxView>?) {
+    gameBox?.let{
+        recyclerView.adapter?.apply {
+            when(this) {
+                is BoxAdapter -> submitList(it)
             }
         }
     }
