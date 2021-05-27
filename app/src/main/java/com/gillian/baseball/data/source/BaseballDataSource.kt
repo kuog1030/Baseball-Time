@@ -42,8 +42,6 @@ interface BaseballDataSource {
 
     suspend fun getTeamEventPlayer(teamId: String): Result<MutableList<EventPlayer>>
 
-    suspend fun getHittersStat(gameId: String, teamId: String) : Result<List<HitterBox>>
-
     suspend fun getGameBox(gameId: String) : Result<Box>
 
     suspend fun getMyGameStat(gameId: String, isHome: Boolean) : Result<MyStatistic>

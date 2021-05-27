@@ -14,6 +14,7 @@
     <string name="team_name">球隊名稱</string>
     <string name="create_a_player">新增你自己吧</string>
     <string name="create_a_player_button">新增球員</string>
+    <string name="edit_player_save">儲存變更</string>
     <string name="player_name">球員名稱</string>
     <string name="player_number">球員背號</string>
     <string name="you">你</string>
@@ -23,6 +24,8 @@
     <string name="rank">排行榜</string>
 
     <string name="please_enter">這是必填喔</string>
+    <string name="name">姓名</string>
+    <string name="number">背號</string>
     <string name="name_must">姓名（必填）</string>
     <string name="name_hint">潘威倫</string>
     <string name="number_must">背號（必填）</string>

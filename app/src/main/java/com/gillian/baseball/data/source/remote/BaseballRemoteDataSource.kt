@@ -463,25 +463,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
-    override suspend fun getHittersStat(gameId: String, teamId: String): Result<List<HitterBox>> = suspendCoroutine { continuation ->
-        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
-
-        theGame.collection(PLAYS)
-                .get()
-                .addOnSuccessListener { documents ->
-                    val result = mutableListOf<Event>()
-                    for (document in documents) {
-                        result.add(document.toObject(Event::class.java))
-                        //Log.i("remote", " ${document.id} -> ${document.data}")
-                    }
-                    val boxResult = result.toHitterBox()
-                    continuation.resume(Result.Success(boxResult))
-                }
-                .addOnFailureListener{ exception ->
-                    continuation.resume(Result.Error(exception))
-                }
-    }
-
     override suspend fun getGameBox(gameId: String): Result<Box> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(GAMES)
                 .document(gameId)

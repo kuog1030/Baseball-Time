@@ -42,7 +42,7 @@
     <dimen name="final_table_padding">8dp</dimen>
 
     <dimen name="team_tab_height">40dp</dimen>
-    <dimen name="team_my_card_height">210dp</dimen>
+    <dimen name="team_my_card_height">220dp</dimen>
     <dimen name="teammate_height">140dp</dimen>
     <dimen name="my_image_size">55dp</dimen>
     <dimen name="teammate_image_size">50dp</dimen>

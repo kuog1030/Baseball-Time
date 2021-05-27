@@ -1,5 +1,6 @@
 package com.gillian.baseball.statistics.statplayer
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -19,6 +20,15 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
 
     val player = MutableLiveData<Player>()
 
+    val name = MutableLiveData<String>()
+
+    val number = MutableLiveData<String>()
+
+    val nickname = MutableLiveData<String>()
+
+    val photoUrl = MutableLiveData<String>()
+
+    val editable = MutableLiveData<Boolean>(false)
 
     private val _errorMessage = MutableLiveData<String>()
 
@@ -63,12 +73,47 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
     fun updateMoreHitStat() {
         val statFormat = "%.3f"
         player.value?.let{
+
+            name.value = it.name
+            number.value = it.number.toString()
+            nickname.value = it.nickname
+            photoUrl.value = it.image
+
             myAvg.value = statFormat.format(it.hitStat.myAverage() ?: 0F)
             myObp.value = statFormat.format(it.hitStat.myObp() ?: 0F)
             mySlg.value = statFormat.format(it.hitStat.mySlg() ?: 0F)
         }
     }
 
+    fun startEditing() {
+        editable.value = !(editable.value)!!
+    }
+
+
+    fun uploadPhoto(uri: Uri) {
+        viewModelScope.launch {
+
+            val result = repository.uploadImage(uri)
+
+            photoUrl.value = when (result) {
+                is Result.Success -> {
+                    Log.i("gillian", "stat player success")
+                    result.data
+                }
+                is Result.Fail -> {
+                    Log.i("gillian", "stat player fail ${result.error}")
+                    null
+                }
+                is Result.Error -> {
+                    Log.i("gillian", "stat player error ${result.exception}")
+                    null
+                }
+                else -> {
+                    null
+                }
+            }
+        }
+    }
 
 //    fun createBox() {
 //        // only triggered when player value is not null
