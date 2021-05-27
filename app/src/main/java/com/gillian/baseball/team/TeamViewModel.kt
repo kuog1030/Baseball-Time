@@ -113,6 +113,11 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
+
+    fun navigate() {
+        Log.i("gillian", " onclick yes!")
+    }
+
     fun onNewPlayerDialogShowed() {
         _showNewPlayerDialog.value = null
     }

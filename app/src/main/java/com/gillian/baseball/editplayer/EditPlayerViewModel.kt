@@ -138,8 +138,8 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
     fun removeFromTeam() {}
 
 
-    fun dismissDialog() {
-        _dismissDialog.value = true
+    fun dismissAndDontSave() {
+        _dismissDialog.value = false
     }
 
     fun onDialogDismiss() {

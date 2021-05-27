@@ -9,10 +9,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.databinding.DialogEditPlayerBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.newplayer.NewPlayerViewModel
+import com.gillian.baseball.statistics.statplayer.StatPlayerViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -52,6 +54,9 @@ class EditPlayerDialog(val player: Player) : BottomSheetDialogFragment() {
 
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             it?.let{
+                if (it) {
+                    ViewModelProvider(requireParentFragment()).get(StatPlayerViewModel::class.java).refresh()
+                }
                 dismiss()
                 viewModel.onDialogDismiss()
             }

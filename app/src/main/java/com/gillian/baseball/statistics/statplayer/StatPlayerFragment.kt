@@ -37,10 +37,12 @@ class StatPlayerFragment : Fragment() {
         viewModel.getPlayerStat(args.playerId)
 
         viewModel.player.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                binding.hitStat = it.hitStat
-                binding.pitchStat = it.pitchStat
-                viewModel.updateMoreHitStat()
+            it?.let {
+                if (viewModel.isInit) {
+                    binding.hitStat = it.hitStat
+                    binding.pitchStat = it.pitchStat
+                    viewModel.updateMoreHitStat()
+                }
             }
         })
 

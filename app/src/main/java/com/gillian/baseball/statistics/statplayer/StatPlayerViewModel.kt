@@ -39,6 +39,8 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
 
     val mySlg = MutableLiveData<String>()
 
+    var isInit = true
+
 
 
     fun getPlayerStat(playerId: String) {
@@ -87,6 +89,12 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
         _navigateToEdit.value = null
     }
 
+    fun refresh() {
+        player.value?.let {
+            isInit = false
+            getPlayerStat(it.id)
+        }
+    }
 
 //    fun createBox() {
 //        // only triggered when player value is not null

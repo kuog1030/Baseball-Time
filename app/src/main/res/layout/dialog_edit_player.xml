@@ -105,7 +105,7 @@
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:background="@drawable/ic_baseline_clear_24"
-            android:onClick="@{()->viewModel.dismissDialog()}"
+            android:onClick="@{()->viewModel.dismissAndDontSave()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
