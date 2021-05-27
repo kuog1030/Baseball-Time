@@ -13,6 +13,7 @@ import com.gillian.baseball.databinding.FragmentStatGameBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.views.BoxAdapter
 import com.gillian.baseball.views.HitterBoxAdapter
+import com.gillian.baseball.views.PersonalScoreAdapter
 import com.gillian.baseball.views.PitcherBoxAdapter
 
 class StatGameFragment : Fragment() {
@@ -32,10 +33,10 @@ class StatGameFragment : Fragment() {
         viewModel.gameId.value = args.gameId
 
         binding.recyclerGameStatBox.adapter = boxAdapter
+        binding.recyclerGameStatMy.adapter = PersonalScoreAdapter()
         binding.recyclerGameStatHitter.adapter = HitterBoxAdapter()
         binding.recyclerGameStatPitcher.adapter = PitcherBoxAdapter()
-        binding.recyclerGameStatHitterG.adapter = HitterBoxAdapter()
-        binding.recyclerGameStatPitcherG.adapter = PitcherBoxAdapter()
+
 
         viewModel.gameId.observe(viewLifecycleOwner, Observer {
             viewModel.getMyTeamStat()

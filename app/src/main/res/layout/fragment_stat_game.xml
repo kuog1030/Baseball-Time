@@ -49,14 +49,39 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/text_game_stat_my"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
-                android:text="@string/hitter_performance"
+                android:text="@string/my_performance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_box" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_game_stat_my"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/margin"
+                android:orientation="horizontal"
+                app:personalBox="@{viewModel.myStat.myPersonalScore}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_game_stat_my"
+                tools:itemCount="5"
+                tools:listitem="@layout/item_personal_score" />
+
+
+            <TextView
+                android:id="@+id/textView10"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/one_half_margin"
+                android:text="@string/hitter_performance"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_my" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_game_stat_hitter"
@@ -94,39 +119,11 @@
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
+                android:layout_marginTop="@dimen/one_half_margin"
                 android:text="@string/pitcher_performance"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_hitter" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_game_stat_hitter_g"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_hitter"
-                app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_pitcher"
-                tools:itemCount="2"
-                tools:listitem="@layout/item_hitter_box">
-
-            </androidx.recyclerview.widget.RecyclerView>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_game_stat_pitcher_g"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_hitter"
-                app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
-                app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_hitter_g"
-                tools:itemCount="2"
-                tools:listitem="@layout/item_hitter_box">
-
-            </androidx.recyclerview.widget.RecyclerView>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

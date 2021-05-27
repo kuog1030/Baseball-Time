@@ -2,8 +2,8 @@
 <layout>
     <data>
         <variable
-            name="result"
-            type="String" />
+            name="score"
+            type="com.gillian.baseball.data.PersonalScore" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,7 +19,7 @@
             android:layout_height="@dimen/personal_score_height"
             android:background="@color/grey_ddd"
             android:gravity="center"
-            android:text="@{result}"
+            android:text="@{score.type}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

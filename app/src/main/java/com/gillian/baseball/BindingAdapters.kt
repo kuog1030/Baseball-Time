@@ -15,6 +15,7 @@ import com.gillian.baseball.data.*
 import com.gillian.baseball.team.pager.TeammateAdapter
 import com.gillian.baseball.views.BoxAdapter
 import com.gillian.baseball.views.HitterBoxAdapter
+import com.gillian.baseball.views.PersonalScoreAdapter
 import com.gillian.baseball.views.PitcherBoxAdapter
 
 @BindingAdapter("ballCount")
@@ -46,6 +47,17 @@ fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: MutableList<Player>?
         recyclerView.adapter?.apply {
             when (this) {
                 is TeammateAdapter -> submitList(it)
+            }
+        }
+    }
+}
+
+@BindingAdapter("personalBox")
+fun bindPersonalBox(recyclerView: RecyclerView, myScore: List<PersonalScore>?) {
+    myScore?.let{
+        recyclerView.adapter?.apply {
+            when(this) {
+                is PersonalScoreAdapter -> submitList(it)
             }
         }
     }

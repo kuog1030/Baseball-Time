@@ -206,6 +206,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
 
     val myPitcher = mutableListOf(PitcherBox())
     val myHitter = mutableListOf(HitterBox())
+    val myScore = mutableListOf<PersonalScore>()
 
     fun updateHitterBox(event: Event, box: HitterBox) {
         val type = event.result
@@ -286,6 +287,25 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
         }
     }
 
+    fun updateMyPerformance(event: Event) {
+            when (event.result) {
+                EventType.SINGLE.number -> myScore.add(PersonalScore(EventType.SINGLE.letter, event.time))
+                EventType.DOUBLE.number -> myScore.add(PersonalScore(EventType.DOUBLE.letter, event.time))
+                EventType.TRIPLE.number -> myScore.add(PersonalScore(EventType.TRIPLE.letter, event.time))
+                EventType.HOMERUN.number -> myScore.add(PersonalScore(EventType.HOMERUN.letter, event.time))
+                EventType.HITBYPITCH.number -> myScore.add(PersonalScore(EventType.HITBYPITCH.letter, event.time))
+                EventType.ERRORONBASE.number -> myScore.add(PersonalScore(EventType.ERRORONBASE.letter, event.time))
+                EventType.DROPPEDTHIRD.number -> myScore.add(PersonalScore(EventType.DROPPEDTHIRD.letter, event.time))
+                EventType.WALK.number -> myScore.add(PersonalScore(EventType.WALK.letter, event.time))
+                EventType.STRIKEOUT.number -> myScore.add(PersonalScore(EventType.STRIKEOUT.letter, event.time))
+                EventType.FIELDERCHOICE.number -> myScore.add(PersonalScore(EventType.FIELDERCHOICE.letter, event.time))
+                EventType.GROUNDOUT.number -> myScore.add(PersonalScore(EventType.GROUNDOUT.letter, event.time))
+                EventType.AIROUT.number -> myScore.add(PersonalScore(EventType.AIROUT.letter, event.time))
+                EventType.SACRIFICEFLY.number -> myScore.add(PersonalScore(EventType.SACRIFICEFLY.letter, event.time))
+                EventType.SACRIFICEGO.number -> myScore.add(PersonalScore(EventType.SACRIFICEGO.letter, event.time))
+            }
+    }
+
 
     for (event in this) {
         // home team offense (hitting) during bottom inning (for example 3 bottom),
@@ -296,19 +316,23 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             Log.i("gillian", "inning ${event.inning} and is Home 紀錄hitter")
             var noHitter = true
 
-                for (oneHitterBox in myHitter) {
-                    if (oneHitterBox.playerId == event.player.playerId) {
-                        updateHitterBox(event, oneHitterBox)
-                        noHitter = false
-                        break
-                    }
+            for (oneHitterBox in myHitter) {
+                if (oneHitterBox.playerId == event.player.playerId) {
+                    updateHitterBox(event, oneHitterBox)
+                    noHitter = false
+                    break
                 }
+            }
 
-                if (noHitter) {
-                    val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId, order = event.player.order)
-                    updateHitterBox(event, newHitterBox)
-                    myHitter.add(newHitterBox)
-                }
+            if (noHitter) {
+                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId, order = event.player.order)
+                updateHitterBox(event, newHitterBox)
+                myHitter.add(newHitterBox)
+            }
+
+            if (event.player.playerId == UserManager.playerId) {
+                updateMyPerformance(event)
+            }
 
         } else {
             Log.i("gillian", "inning ${event.inning} and is Home 紀錄pitcher")
@@ -332,6 +356,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
 
     myPitcher.sortBy {it.order}
     myHitter.sortBy {it.order}
+    myScore.sortBy {it.time}
 
-    return MyStatistic(myPitcher = myPitcher, myHitter = myHitter)
+    return MyStatistic(myPitcher = myPitcher, myHitter = myHitter, myPersonalScore = myScore)
 }
