@@ -41,6 +41,8 @@
     <color name="obp">#F2BD1D</color>
     <color name="slg">#D94C1A</color>
     <color name="slg_dark">#40362E</color>
+    <color name="hit_block">#D94C1A</color>
+    <color name="out_block">#dddddd</color>
 
     <color name="nav_icon">@color/grey_888</color>
     <color name="nav_icon_selected">@color/denim_blue</color>

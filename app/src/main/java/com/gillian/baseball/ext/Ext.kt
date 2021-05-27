@@ -288,22 +288,16 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
     }
 
     fun updateMyPerformance(event: Event) {
-            when (event.result) {
-                EventType.SINGLE.number -> myScore.add(PersonalScore(EventType.SINGLE.letter, event.time))
-                EventType.DOUBLE.number -> myScore.add(PersonalScore(EventType.DOUBLE.letter, event.time))
-                EventType.TRIPLE.number -> myScore.add(PersonalScore(EventType.TRIPLE.letter, event.time))
-                EventType.HOMERUN.number -> myScore.add(PersonalScore(EventType.HOMERUN.letter, event.time))
-                EventType.HITBYPITCH.number -> myScore.add(PersonalScore(EventType.HITBYPITCH.letter, event.time))
-                EventType.ERRORONBASE.number -> myScore.add(PersonalScore(EventType.ERRORONBASE.letter, event.time))
-                EventType.DROPPEDTHIRD.number -> myScore.add(PersonalScore(EventType.DROPPEDTHIRD.letter, event.time))
-                EventType.WALK.number -> myScore.add(PersonalScore(EventType.WALK.letter, event.time))
-                EventType.STRIKEOUT.number -> myScore.add(PersonalScore(EventType.STRIKEOUT.letter, event.time))
-                EventType.FIELDERCHOICE.number -> myScore.add(PersonalScore(EventType.FIELDERCHOICE.letter, event.time))
-                EventType.GROUNDOUT.number -> myScore.add(PersonalScore(EventType.GROUNDOUT.letter, event.time))
-                EventType.AIROUT.number -> myScore.add(PersonalScore(EventType.AIROUT.letter, event.time))
-                EventType.SACRIFICEFLY.number -> myScore.add(PersonalScore(EventType.SACRIFICEFLY.letter, event.time))
-                EventType.SACRIFICEGO.number -> myScore.add(PersonalScore(EventType.SACRIFICEGO.letter, event.time))
+        for (type in EventType.values()) {
+            if ((event.result == type.number) && type.isBatting) {
+                myScore.add( PersonalScore(
+                    type = type.letter,
+                    time = event.time,
+                    color = type.color
+                ) )
+                break
             }
+        }
     }
 
 
