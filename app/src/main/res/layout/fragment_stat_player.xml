@@ -20,150 +20,48 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_stat_player_info"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <ImageView
+            android:id="@+id/image_stat_player"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginTop="@dimen/double_margin"
+            app:imageUrl="@{viewModel.player.image}"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
 
-            <ImageView
-                android:id="@+id/image_stat_player"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_marginStart="@dimen/double_margin"
-                app:imageUrl="@{viewModel.player.image}"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_stat_player_number"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edit_stat_player_name"
-                app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
+        <TextView
+            android:id="@+id/text_stat_player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:text="@{viewModel.player.name}"
+            android:textSize="20sp"
+            app:layout_constraintBottom_toTopOf="@+id/text_stat_player_number"
+            app:layout_constraintStart_toEndOf="@+id/image_stat_player"
+            app:layout_constraintTop_toTopOf="@+id/image_stat_player"
+            tools:text="陳鏞基" />
 
-            <ImageButton
-                android:id="@+id/button_stat_player_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="@dimen/double_margin"
-                android:background="@color/transparent"
-                android:onClick="@{()->viewModel.startEditing()}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/image_stat_player"
-                app:srcCompat="@drawable/ic_edit_24" />
+        <TextView
+            android:id="@+id/text_stat_player_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="TextView"
+            app:layout_constraintBottom_toBottomOf="@+id/image_stat_player"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_player_name"
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_name"
+            tools:text="#13" />
 
-            <TextView
-                android:id="@+id/text_stat_player_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/half_margin"
-                android:text="@{viewModel.player.name}"
-                android:textSize="20sp"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_stat_player_name"
-                app:layout_constraintStart_toStartOf="@+id/edit_stat_player_name"
-                app:layout_constraintTop_toTopOf="@+id/edit_stat_player_name"
-                tools:text="陳鏞基" />
-
-            <TextView
-                android:id="@+id/text_stat_player_number"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/half_margin"
-                android:text="@{String.valueOf(viewModel.player.number)}"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_stat_player_number"
-                app:layout_constraintStart_toStartOf="@+id/edit_stat_player_number"
-                app:layout_constraintTop_toTopOf="@+id/edit_stat_player_number"
-                tools:text="#13" />
-
-            <TextView
-                android:id="@+id/text_stat_player_nickname"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/half_margin"
-                android:text="@{viewModel.player.nickname}"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_stat_player_nickname"
-                app:layout_constraintStart_toStartOf="@+id/edit_stat_player_nickname"
-                app:layout_constraintTop_toTopOf="@+id/edit_stat_player_nickname"
-                tools:text="轟炸機" />
-
-            <EditText
-                android:id="@+id/edit_stat_player_name"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/one_half_margin"
-                android:layout_marginTop="@dimen/double_margin"
-                android:layout_marginEnd="@dimen/margin"
-                android:background="@drawable/bg_edit_text_small"
-                android:ems="10"
-                android:inputType="textPersonName"
-                android:text="@={viewModel.name}"
-                android:visibility="@{viewModel.editable ? View.VISIBLE : View.INVISIBLE}"
-                app:layout_constraintEnd_toStartOf="@+id/button_stat_player_edit"
-                app:layout_constraintStart_toEndOf="@+id/image_stat_player"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <EditText
-                android:id="@+id/edit_stat_player_number"
-                android:layout_width="60dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:background="@drawable/bg_edit_text_small"
-                android:ems="10"
-                android:text="@={viewModel.number}"
-                android:inputType="number"
-                android:visibility="@{viewModel.editable ? View.VISIBLE : View.INVISIBLE}"
-                app:layout_constraintStart_toStartOf="@+id/edit_stat_player_name"
-                app:layout_constraintTop_toBottomOf="@+id/edit_stat_player_name" />
-
-            <EditText
-                android:id="@+id/edit_stat_player_nickname"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/margin"
-                android:background="@drawable/bg_edit_text_small"
-                android:ems="10"
-                android:hint="綽號"
-                android:inputType="textPersonName"
-                android:text="@={viewModel.nickname}"
-                android:visibility="@{viewModel.editable ? View.VISIBLE : View.INVISIBLE}"
-                app:layout_constraintEnd_toEndOf="@+id/button_stat_player_edit"
-                app:layout_constraintStart_toEndOf="@+id/edit_stat_player_number"
-                app:layout_constraintTop_toTopOf="@+id/edit_stat_player_number" />
-
-            <Button
-                android:id="@+id/button6"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/one_half_margin"
-                android:text="從球隊移除"
-                android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toStartOf="@+id/button7"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_stat_player" />
-
-            <Button
-                android:id="@+id/button7"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="刪除球員"
-                android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toStartOf="@+id/button8"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button6"
-                app:layout_constraintTop_toTopOf="@+id/button6" />
-
-            <Button
-                android:id="@+id/button8"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="儲存變更"
-                android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button7"
-                app:layout_constraintTop_toTopOf="@+id/button7" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-
+        <TextView
+            android:id="@+id/text_stat_player_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:text="@{viewModel.player.nickname}"
+            app:layout_constraintStart_toEndOf="@+id/text_stat_player_number"
+            app:layout_constraintTop_toTopOf="@+id/text_stat_player_number"
+            tools:text="轟炸機" />
 
         <TextView
             android:id="@+id/text_stat_player_hit"
@@ -175,7 +73,7 @@
             android:text="@string/hitter_performance"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/layout_stat_player_info" />
+            app:layout_constraintTop_toBottomOf="@+id/image_stat_player" />
 
 
         <TableLayout
@@ -186,8 +84,7 @@
             android:layout_marginTop="@dimen/one_half_margin"
             app:layout_constraintEnd_toEndOf="@id/text_stat_player_hit"
             app:layout_constraintStart_toStartOf="@id/text_stat_player_hit"
-            app:layout_constraintTop_toBottomOf="@+id/text_stat_slg_number"
-            tools:visibility="invisible">
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_slg_number">
 
 
             <TableRow
@@ -339,8 +236,7 @@
             android:layout_marginTop="@dimen/margin"
             app:layout_constraintEnd_toEndOf="@id/text_stat_player_pitch"
             app:layout_constraintStart_toStartOf="@id/text_stat_player_pitch"
-            app:layout_constraintTop_toBottomOf="@id/text_stat_player_pitch"
-            tools:visibility="invisible">
+            app:layout_constraintTop_toBottomOf="@id/text_stat_player_pitch">
 
 
             <TableRow
@@ -524,6 +420,21 @@
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_slg"
             app:layout_constraintTop_toTopOf="@+id/text_stat_obp_number"
             tools:text="0.999" />
+
+        <Button
+            android:id="@+id/button_stat_player_edit"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
+            android:onClick="@{()->viewModel.navigateToEdit()}"
+            android:text="編輯球員"
+            android:drawableRight="@drawable/ic_edit_24"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -4,6 +4,7 @@ import android.graphics.Color
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -206,6 +207,14 @@ fun bindTextAndTeamStat(textView: TextView, number: Int?) {
         } else {
             textView.text = number.toString()
         }
+    }
+}
+
+@BindingAdapter("loadingStatus")
+fun bindLoadingStatus(view: ProgressBar, status: LoadStatus?) {
+    view.visibility = when (status) {
+        LoadStatus.LOADING -> View.VISIBLE
+        else -> View.GONE
     }
 }
 

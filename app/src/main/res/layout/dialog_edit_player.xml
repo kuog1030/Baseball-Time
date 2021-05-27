@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View"/>
+        <variable
+            name="newPhoto"
+            type="Boolean" />
         <variable
             name="viewModel"
-            type="com.gillian.baseball.newplayer.NewPlayerViewModel" />
+            type="com.gillian.baseball.editplayer.EditPlayerViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -23,7 +26,7 @@
             android:text="@string/name"
             android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_edit_player_name"
-            app:layout_constraintStart_toEndOf="@+id/image_edit_player_photo"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/edit_edit_player_name" />
 
         <EditText
@@ -32,7 +35,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/one_half_margin"
-            android:layout_marginTop="58dp"
+            android:layout_marginTop="@dimen/double_margin"
             android:layout_marginEnd="@dimen/margin"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
@@ -43,7 +46,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/text_edit_player_name"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/image_edit_player_photo" />
 
         <TextView
             android:id="@+id/text_edit_player_number"
@@ -99,37 +102,88 @@
             android:id="@+id/imageView3"
             android:layout_width="@dimen/close_size"
             android:layout_height="@dimen/close_size"
+            android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
             android:background="@drawable/ic_baseline_clear_24"
             android:onClick="@{()->viewModel.dismissDialog()}"
-            app:layout_constraintBottom_toTopOf="@+id/edit_edit_player_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
         <Button
+            android:id="@+id/button_edit_player_remove"
+            style="@style/GameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:text="從球隊移除"
+            android:paddingStart="@dimen/half_margin"
+            android:paddingEnd="@dimen/half_margin"
+            android:onClick="@{()->viewModel.removeFromTeam()}"
+            app:layout_constraintEnd_toStartOf="@+id/button_edit_player_delete"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_edit_player_nickname" />
+
+        <Button
+            android:id="@+id/button_edit_player_delete"
+            style="@style/GameButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="刪除球員"
+            android:paddingStart="@dimen/half_margin"
+            android:paddingEnd="@dimen/half_margin"
+            android:onClick="@{()->viewModel.deletePlayer()}"
+            app:layout_constraintEnd_toStartOf="@+id/button_edit_player_save"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_edit_player_remove"
+            app:layout_constraintTop_toTopOf="@+id/button_edit_player_remove" />
+
+        <Button
             android:id="@+id/button_edit_player_save"
             style="@style/GameButton"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:layout_marginBottom="@dimen/margin"
-            android:onClick="@{()->viewModel.createPlayer()}"
+            android:layout_marginBottom="@dimen/double_margin"
+            android:onClick="@{()->viewModel.checkIfInfoFilled()}"
+            android:paddingStart="@dimen/half_margin"
+            android:paddingEnd="@dimen/half_margin"
             android:text="@string/edit_player_save"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="@+id/edit_edit_player_nickname"
-            app:layout_constraintStart_toStartOf="@+id/image_edit_player_photo"
-            app:layout_constraintTop_toBottomOf="@+id/edit_edit_player_nickname" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_edit_player_delete"
+            app:layout_constraintTop_toTopOf="@+id/button_edit_player_delete" />
 
 
         <ImageView
             android:id="@+id/image_edit_player_photo"
+            imageUrl="@{viewModel.photoUrl}"
             android:layout_width="120dp"
             android:layout_height="120dp"
-            android:layout_marginStart="@dimen/margin"
-            app:layout_constraintBottom_toBottomOf="@+id/text_edit_player_nickname"
+            android:visibility="@{newPhoto ? View.INVISIBLE : View.VISIBLE}"
+            android:layout_marginTop="@dimen/double_margin"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_edit_player_name"
-            imageUrl="@{viewModel.photoUrl}"/>
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:loadingStatus="@{viewModel.status}"/>
+
+        <ImageView
+            android:id="@+id/image_edit_player_new_photo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{newPhoto ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/image_edit_player_photo"
+            app:layout_constraintEnd_toEndOf="@+id/image_edit_player_photo"
+            app:layout_constraintStart_toStartOf="@+id/image_edit_player_photo"
+            app:layout_constraintTop_toTopOf="@+id/image_edit_player_photo" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

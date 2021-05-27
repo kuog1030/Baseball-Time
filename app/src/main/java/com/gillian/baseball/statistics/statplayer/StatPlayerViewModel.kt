@@ -20,20 +20,17 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
 
     val player = MutableLiveData<Player>()
 
-    val name = MutableLiveData<String>()
-
-    val number = MutableLiveData<String>()
-
-    val nickname = MutableLiveData<String>()
-
-    val photoUrl = MutableLiveData<String>()
-
     val editable = MutableLiveData<Boolean>(false)
 
     private val _errorMessage = MutableLiveData<String>()
 
     val errorMessage: LiveData<String>
         get() = _errorMessage
+
+    private val _navigateToEdit = MutableLiveData<Player>()
+
+    val navigateToEdit: LiveData<Player>
+        get() = _navigateToEdit
 
 
     val myAvg = MutableLiveData<String>()
@@ -74,10 +71,7 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
         val statFormat = "%.3f"
         player.value?.let{
 
-            name.value = it.name
-            number.value = it.number.toString()
-            nickname.value = it.nickname
-            photoUrl.value = it.image
+            editable.value = (it.userId.isNullOrEmpty())  // 如果這個球員沒人認領 user id is null才可以修改
 
             myAvg.value = statFormat.format(it.hitStat.myAverage() ?: 0F)
             myObp.value = statFormat.format(it.hitStat.myObp() ?: 0F)
@@ -85,35 +79,14 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
         }
     }
 
-    fun startEditing() {
-        editable.value = !(editable.value)!!
+    fun navigateToEdit() {
+        _navigateToEdit.value = player.value
     }
 
-
-    fun uploadPhoto(uri: Uri) {
-        viewModelScope.launch {
-
-            val result = repository.uploadImage(uri)
-
-            photoUrl.value = when (result) {
-                is Result.Success -> {
-                    Log.i("gillian", "stat player success")
-                    result.data
-                }
-                is Result.Fail -> {
-                    Log.i("gillian", "stat player fail ${result.error}")
-                    null
-                }
-                is Result.Error -> {
-                    Log.i("gillian", "stat player error ${result.exception}")
-                    null
-                }
-                else -> {
-                    null
-                }
-            }
-        }
+    fun onEditNavigated() {
+        _navigateToEdit.value = null
     }
+
 
 //    fun createBox() {
 //        // only triggered when player value is not null

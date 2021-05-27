@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.allgames.AllGamesViewModel
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.editplayer.EditPlayerViewModel
 import com.gillian.baseball.firstlogin.FirstLoginViewModel
 import com.gillian.baseball.order.OrderViewModel
 import com.gillian.baseball.team.TeamViewModel
@@ -30,6 +31,8 @@ class ViewModelFactory constructor(
                     StatGameViewModel(repository)
                 isAssignableFrom(StatPlayerViewModel::class.java) ->
                     StatPlayerViewModel(repository)
+                isAssignableFrom(EditPlayerViewModel::class.java)->
+                    EditPlayerViewModel(repository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

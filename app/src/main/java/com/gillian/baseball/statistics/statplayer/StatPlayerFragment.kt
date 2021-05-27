@@ -12,7 +12,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.databinding.FragmentStatPlayerBinding
+import com.gillian.baseball.editplayer.EditPlayerDialog
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.newplayer.NewPlayerDialog
 import com.gillian.baseball.newplayer.REQUEST_IMAGE_OPEN
 import com.gillian.baseball.views.HitterBoxAdapter
 import com.gillian.baseball.views.PitcherBoxAdapter
@@ -42,31 +44,15 @@ class StatPlayerFragment : Fragment() {
             }
         })
 
-        binding.imageStatPlayer.setOnClickListener{
-            if (viewModel.editable.value!!) {
-                pickImageFromGallery()
+        viewModel.navigateToEdit.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                val editPlayerDialog = EditPlayerDialog(it)
+                editPlayerDialog.show(childFragmentManager, "edit")
+                viewModel.onEditNavigated()
             }
-        }
+        })
 
 
         return binding.root
     }
-
-    private fun pickImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK).apply{
-            type = "image/*"
-            //addCategory(Intent.CATEGORY_OPENABLE)
-        }
-        startActivityForResult(intent, REQUEST_IMAGE_OPEN)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-
-        if (requestCode == REQUEST_IMAGE_OPEN && resultCode == Activity.RESULT_OK && data != null) {
-            val fullPhotoUri  = data.data
-            binding.imageStatPlayer.setImageURI(data.data)
-        }
-    }
-
 }
