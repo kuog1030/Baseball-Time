@@ -20,5 +20,6 @@ enum class EventType(val number : Int, val letter: String, val isAtBat: Boolean,
     // 壘包上事件
     STEALBASE(31, "SB", false, false, -1),
     PICKOFF(32, "PO", false, false, -1),  // 牽制出局
-    INNINGSPITCHED(50, "IP", false, false, -1)
+    INNINGSPITCHED(50, "IP", false, false, -1),
+    PINCHPITCHER(61, "", false, false, -1)
 }

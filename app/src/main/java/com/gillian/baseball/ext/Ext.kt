@@ -36,6 +36,9 @@ fun List<Event>.toPersonalScore() : List<String> {
     return result
 }
 
+fun Int.toInningCount() : String {
+    return ("${this/3}.${this%3}")
+}
 
 fun List<Event>.toBothGameStat() : Statistic {
 
@@ -283,7 +286,9 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             EventType.DROPPEDTHIRD -> box.strikeOut += 1
             EventType.STRIKEOUT -> box.strikeOut += 1
             EventType.WALK -> box.baseOnBalls += 1
-            else -> null // 可能要throw error
+            // inning pitched is put into out while recording event
+            EventType.PINCHPITCHER -> box.inningsPitched = event.out
+            else -> null // TODO() 可能要throw error
         }
     }
 

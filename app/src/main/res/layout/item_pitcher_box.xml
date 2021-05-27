@@ -45,7 +45,7 @@
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    android:text="@{isTitle ? @string/box_ip : String.valueOf(pitcher.inningsPitched)}"
+                    android:text="@{isTitle ? @string/box_ip : pitcher.inningsFormat}"
                     tools:text="IP"/>
 
                 <TextView

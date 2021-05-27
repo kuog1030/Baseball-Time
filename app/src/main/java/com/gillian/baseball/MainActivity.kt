@@ -2,11 +2,13 @@ package com.gillian.baseball
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.gillian.baseball.databinding.ActivityMainBinding
+import com.gillian.baseball.ext.toInningCount
 
 class MainActivity : AppCompatActivity() {
 

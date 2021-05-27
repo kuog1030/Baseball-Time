@@ -1,6 +1,7 @@
 package com.gillian.baseball.data
 
 import android.os.Parcelable
+import com.gillian.baseball.ext.toInningCount
 import kotlinx.android.parcel.Parcelize
 
 //data class PitcherBox(
@@ -19,7 +20,7 @@ data class PitcherBox(
         var name : String? = "",
         var order : Int = -1,
         val playerId : String = "",
-        var inningsPitched : Float = 0F,
+        var inningsPitched : Int = 0,
         var hit : Int = 0,
         var run : Int = 0,
         var earnedRuns : Int = 0,
@@ -30,6 +31,9 @@ data class PitcherBox(
         var totalBall: Int = 0
 
 ) : Parcelable {
+
+    val inningsFormat : String
+        get() = inningsPitched.toInningCount()
 
     fun addNewBox(newBox: PitcherBox) {
         this.apply {

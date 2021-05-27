@@ -461,6 +461,18 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     // pinchDialog -> 換投
     fun nextPitcher(next: EventPlayer, position: Int) {
+        val totalInningPitched = ((inningCount-1) * 3 + outCount.value!!)
+
+        Log.i("game", "換投中 event送達~")
+        sendEvent(
+            Event(
+                pitcher = if (isTop) homePitcher else guestPitcher,
+                inning = inningCount,
+                result = EventType.PINCHPITCHER.number,
+                out = totalInningPitched
+            )
+        )
+
         if (isTop) {
             next.pinch = homePitcher
             homePitchCount = 0
