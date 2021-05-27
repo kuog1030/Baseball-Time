@@ -20,11 +20,13 @@ interface BaseballDataSource {
 
     suspend fun updateGame(game: Game) : Result<Boolean>
 
+    suspend fun updateGameNote(gameId: String, note: String) : Result<Boolean>
+
+    suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean>
+
     suspend fun updateHitStat(playerId: String, hitterBox: HitterBox) : Result<Boolean>
 
     suspend fun updatePitchStat(playerId: String, pitcherBox: PitcherBox) : Result<Boolean>
-
-    suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean>
 
     suspend fun getAllGames(teamId: String) : Result<List<Game>>
 

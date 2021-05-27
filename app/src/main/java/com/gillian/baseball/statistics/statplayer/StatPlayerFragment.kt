@@ -26,9 +26,6 @@ class StatPlayerFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        //binding.isTitle = false
-
-        Log.i("gillian", "player id ${args.playerId}")
         viewModel.getPlayerStat(args.playerId)
 
         viewModel.player.observe(viewLifecycleOwner, Observer {

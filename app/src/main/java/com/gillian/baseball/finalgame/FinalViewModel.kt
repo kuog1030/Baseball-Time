@@ -13,24 +13,29 @@ import kotlinx.coroutines.launch
 
 class FinalViewModel(private val repository: BaseballRepository, private val myGame: MyGame) : ViewModel() {
 
-    // 1. 更新box
+    // 1. 更新box                                                        uploadBox()
     // 2. 更新每個球員的成績
     // 3. ->所以我的stat要有player id有!我好棒XD
-    // 4. -> 看過所有的stat的player id 一個一個執行repository上傳
+    // 4. -> 看過所有的stat的player id 一個一個執行repository上傳          getMyStat() -> observe -> upload hit and pitch
     // 拿到所有event -> 算完得到boxex -> 回傳
 
 
     // get my stat ( including my hitters and my pitchers ) -> for loop update players boxes
 
-    var box = myGame.game.box
+    val box = myGame.game.box
     lateinit var gameResult : GameResult
     //var boxViewList = mutableListOf<BoxView>()
     val myStat = MutableLiveData<MyStatistic>()
 
+    private val _saveAndNavigate = MutableLiveData<Boolean>()
+
+    val saveAndNavigate : LiveData<Boolean>
+        get() = _saveAndNavigate
+
     lateinit var hitterResult : Result<Boolean>
     lateinit var pitcherResult : Result<Boolean>
 
-    val gameNote = MutableLiveData<String>()
+    val gameNote = MutableLiveData<String>(myGame.game.note)
 
 
     private val _submitAdapter = MutableLiveData<List<BoxView>>()
@@ -53,6 +58,7 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
         getMyStat()
     }
 
+    // 拿到所有event -> 轉換成my stat
     fun getMyStat() {
         viewModelScope.launch {
 
@@ -127,6 +133,31 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
                 }
                 else -> {
                     _errorMessage.value = Util.getString(R.string.return_nothing)
+                }
+            }
+        }
+    }
+
+    fun updateNote() {
+        gameNote.value?.let { note ->
+            viewModelScope.launch {
+                val noteResult = repository.updateGameNote(myGame.game.id, note)
+                _saveAndNavigate.value = when (noteResult) {
+                    is Result.Success -> {
+                        noteResult.data
+                    }
+                    is Result.Fail -> {
+                        _errorMessage.value = result.error
+                        null
+                    }
+                    is Result.Error -> {
+                        _errorMessage.value = result.exception.toString()
+                        null
+                    }
+                    else -> {
+                        _errorMessage.value = Util.getString(R.string.return_nothing)
+                        null
+                    }
                 }
             }
         }

@@ -29,6 +29,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
     // field name
     private const val USERID = "userId"
     private const val TEAMID = "teamId"
+    private const val NOTE = "note"
     private const val NAME = "name"
     private const val NUMBER = "number"
     private const val HITSTAT = "hitStat"
@@ -260,6 +261,25 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
+    override suspend fun updateGameNote(gameId: String, note: String): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(GAMES)
+                .document(gameId)
+                .update(NOTE, note)
+                .addOnCompleteListener{task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error updating game note. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("update game note fail"))
+                    }
+
+                }
+    }
 
     override suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(GAMES)
