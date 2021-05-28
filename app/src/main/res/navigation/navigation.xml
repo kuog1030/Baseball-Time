@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
-    app:startDestination="@id/firstLoginFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/gameFragment"
@@ -102,5 +102,9 @@
             app:popUpTo="@id/teamFragment"
             app:popUpToInclusive="true" />
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.gillian.baseball.login.LoginFragment"
+        android:label="LoginFragment" />
 
 </navigation>

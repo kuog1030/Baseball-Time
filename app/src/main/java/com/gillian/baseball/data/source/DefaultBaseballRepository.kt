@@ -3,10 +3,19 @@ package com.gillian.baseball.data.source
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
+import com.google.firebase.auth.FirebaseUser
 
 class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource,
                                 private val localDataSource: BaseballDataSource
 ) : BaseballRepository {
+
+    override suspend fun signInWithGoogle(idToken: String) : Result<FirebaseUser>{
+        return remoteDataSource.signInWithGoogle(idToken)
+    }
+
+    override suspend fun signUpUser(user: User): Result<Boolean> {
+        return remoteDataSource.signUpUser(user)
+    }
 
     override suspend fun initTeamAndPlayer(team: Team, player: Player) {
         return remoteDataSource.initTeamAndPlayer(team, player)

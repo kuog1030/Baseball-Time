@@ -3,8 +3,13 @@ package com.gillian.baseball.data.source
 import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
+import com.google.firebase.auth.FirebaseUser
 
 interface BaseballRepository {
+
+    suspend fun signInWithGoogle(idToken: String) : Result<FirebaseUser>
+
+    suspend fun signUpUser(user: User): Result<Boolean>
 
     suspend fun initTeamAndPlayer(team: Team, player: Player)
 

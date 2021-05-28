@@ -5,8 +5,17 @@ import android.net.Uri
 import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
+import com.google.firebase.auth.FirebaseUser
 
 class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
+
+    override suspend fun signInWithGoogle(idToken: String) : Result<FirebaseUser> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun signUpUser(user: User): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
 
     override suspend fun initTeamAndPlayer(team: Team, player: Player) {
         TODO("Not yet implemented")

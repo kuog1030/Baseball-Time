@@ -8,8 +8,12 @@ import com.gillian.baseball.data.source.BaseballDataSource
 import com.gillian.baseball.ext.*
 import com.gillian.baseball.login.UserManager
 import com.google.common.io.Files.getFileExtension
+import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.auth.GoogleAuthProvider
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
 import kotlin.coroutines.resume
@@ -17,11 +21,14 @@ import kotlin.coroutines.suspendCoroutine
 
 object BaseballRemoteDataSource : BaseballDataSource {
 
+    private val auth = Firebase.auth
+
     private const val FIRESTORE_IMAGE = "images/"
     // collections name
     private const val PLAYERS = "players"
     private const val TEAMS = "teams"
     private const val GAMES = "games"
+    private const val USERS = "users"
     // sub collection
     private const val PLAYS = "plays"
 
@@ -38,6 +45,46 @@ object BaseballRemoteDataSource : BaseballDataSource {
     private const val PITCHSTAT = "pitchStat"
     private const val RECORDED = "recordedTeamId"
 
+    override suspend fun signInWithGoogle(idToken: String) : Result<FirebaseUser> = suspendCoroutine { continuation ->
+        val credential = GoogleAuthProvider.getCredential(idToken, null)
+        auth.signInWithCredential(credential)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d("gillianlog", "signInWithCredential:success")
+                    val user = auth.currentUser
+                    continuation.resume(Result.Success(user!!))
+                } else {
+                    task.exception?.let{
+                        Log.w("gillianlog", "signInWithCredential:failure", task.exception)
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    Log.i("gillianlog", "sign in fail")
+                    continuation.resume(Result.Fail("sign in fail"))
+                }
+            }
+    }
+
+    override suspend fun signUpUser(user: User): Result<Boolean> = suspendCoroutine { continuation ->
+        val users = FirebaseFirestore.getInstance().collection(USERS)
+        val document = users.document()
+
+        user.id = document.id
+        document.set(user).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.i("gillianlog", "create user success")
+                continuation.resume(Result.Success(true))
+            } else {
+                task.exception?.let{
+                    Log.w("gillianlog", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                    continuation.resume(Result.Error(it))
+                    return@addOnCompleteListener
+                }
+                Log.i("gillianlog", "create user")
+                continuation.resume(Result.Fail("sign in fail"))
+            }
+        }
+    }
 
     override suspend fun initTeamAndPlayer(team: Team, player: Player) {
         val teams = FirebaseFirestore.getInstance().collection(TEAMS)

@@ -37,6 +37,14 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            if (destination.id == R.id.gameFragment) {
+                setBottomNavigation(false)
+            } else {
+                setBottomNavigation(true)
+            }
+        }
+
     }
 
 
