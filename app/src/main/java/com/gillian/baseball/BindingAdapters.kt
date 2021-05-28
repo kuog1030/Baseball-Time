@@ -211,6 +211,16 @@ fun bindStyleForBox(textView: TextView, isTitle: Boolean) {
     }
 }
 
+@BindingAdapter("personalScoreStyle")
+fun bindStyleForPersonalScore(textView: TextView, color: Int) {
+    when (color) {
+        0 -> textView.setBackgroundColor(BaseballApplication.instance.getColor(R.color.hit_block))
+        1 -> textView.setBackgroundColor(BaseballApplication.instance.getColor(R.color.out_block))
+        2 -> textView.setBackgroundColor(BaseballApplication.instance.getColor(R.color.safe_block))
+        else -> textView.setBackgroundColor(BaseballApplication.instance.getColor(R.color.out_block))
+    }
+}
+
 @BindingAdapter("overallTeamStat")
 fun bindTextAndTeamStat(textView: TextView, number: Int?) {
     number?.let{
