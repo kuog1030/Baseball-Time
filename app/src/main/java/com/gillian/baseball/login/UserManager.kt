@@ -1,16 +1,44 @@
 package com.gillian.baseball.login
 
+import android.content.Context
 import android.os.Parcelable
+import androidx.lifecycle.MutableLiveData
+import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.data.Team
 import kotlinx.android.parcel.Parcelize
 
 object UserManager {
 
-    // mock data
-    var userId: String = "eNNuZztIQCNLwRI6sSZl"
-    var playerId: String = "oZKeTwJrrDbrfFRt6TWI"
-    var teamId: String = "qyjO8rziwuMz7O0oUfIo"
+    val prefs = BaseballApplication.instance.getSharedPreferences("Baseball", Context.MODE_PRIVATE)
+    var userId: String
+        get() {
+            return ( prefs.getString("user", "")!! )
+            //return ( prefs.getString("user", "eNNuZztIQCNLwRI6sSZl")!! )
+        }
+        set(id) {
+            prefs.edit().putString("user", id).apply()
+        }
+
+    var playerId: String
+        get() {
+            return ( prefs.getString("player", "")!! )
+            //return ( prefs.getString("player", "oZKeTwJrrDbrfFRt6TWI")!! )
+        }
+        set(id) {
+            prefs.edit().putString("player", id).apply()
+        }
+
+    var teamId: String
+        get() {
+            return ( prefs.getString("team", "")!! )
+            //return ( prefs.getString("team", "qyjO8rziwuMz7O0oUfIo")!! )
+        }
+        set(id) {
+            prefs.edit().putString("team", id).apply()
+        }
+
+    //var teamId: String = "qyjO8rziwuMz7O0oUfIo"
     var teamImage: String = "https://api.appworks-school.tw/assets/201807242234/0.jpg"
     var teamName : String = "Android"
     var teamAcronym : String = "AD"

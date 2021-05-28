@@ -19,6 +19,7 @@
     <color name="yellow_strike">#f9aa33</color>
     <color name="black">#FF000000</color>
     <color name="black_transparent">#99000000</color>
+    <color name="black_login">#555555</color>
     <color name="grey_transparent">#44000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFFFF</color>

@@ -37,7 +37,8 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.502"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.39" />
 
         <EditText
             android:id="@+id/edit_create_player_number"
@@ -58,11 +59,21 @@
             android:id="@+id/button_create_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="儲存"
-            android:onClick="@{()->viewModel.navigateToTeam()}"
+            android:text="到Team Page"
+            android:onClick="@{()->viewModel.navigateToTeam(true)}"
             app:layout_constraintEnd_toEndOf="@+id/edit_create_player_number"
             app:layout_constraintStart_toStartOf="@+id/edit_create_player_number"
             app:layout_constraintTop_toBottomOf="@+id/edit_create_player_number" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="快速開始比賽"
+            android:layout_marginTop="@dimen/quarter_margin"
+            app:layout_constraintEnd_toEndOf="@+id/edit_create_player_number"
+            app:layout_constraintStart_toStartOf="@+id/edit_create_player_number"
+            app:layout_constraintTop_toBottomOf="@+id/button_create_player" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

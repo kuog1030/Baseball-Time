@@ -80,7 +80,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin"
             android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}"
-            android:text="Button"
+            android:text="@string/game_end_dinner_time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>

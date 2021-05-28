@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.databinding.FragmentLoginBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.team.TeamViewModel
@@ -31,9 +32,9 @@ class LoginFragment : Fragment() {
         auth = Firebase.auth
         val currentUser = auth.currentUser
         Log.i("gillianlog", "auth $auth currentUser $currentUser")
-        // if no user sign in
+        // if google account is already in firebase authentication
         currentUser?.let {
-            //viewModel.getUser()
+            viewModel.getUser()
         }
     }
 
@@ -54,7 +55,16 @@ class LoginFragment : Fragment() {
 
         viewModel.firebaseUser.observe(viewLifecycleOwner, Observer {
             it?.let{
-                viewModel.singUpUserInFirebase()
+                viewModel.createUserInFirebase()
+            }
+        })
+
+        viewModel.signUpResult.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                UserManager.userId = it.id
+                Log.i("gillian", "usermanager id set ${UserManager.userId}")
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFirstLoginFragment())
+                viewModel.onFirstLoginNavigated()
             }
         })
 

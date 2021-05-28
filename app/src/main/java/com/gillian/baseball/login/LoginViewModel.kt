@@ -1,6 +1,7 @@
 package com.gillian.baseball.login
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -14,7 +15,10 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     val firebaseUser = MutableLiveData<FirebaseUser>()
 
-    val signUpResult = MutableLiveData<Boolean>()
+    private val _signUpResult = MutableLiveData<User>()
+
+    val signUpResult : LiveData<User>
+        get() = _signUpResult
 
 
     fun signInWithGoogle(token: String?) {
@@ -40,14 +44,13 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    fun singUpUserInFirebase() {
+    fun createUserInFirebase() {
         firebaseUser.value?.let{
             val user = User(email = it.email!!)
             viewModelScope.launch {
                 val result = repository.signUpUser(user)
-                signUpResult.value = when (result) {
+                _signUpResult.value = when (result) {
                     is Result.Success -> {
-                        //TODO() 跳轉
                         Log.i("gillianlog", "in viewmodel success")
                         result.data
                     }
@@ -58,6 +61,14 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
                 }
             }
         }
+    }
+
+    // 如果已經授權過 拿到的firebase user會是一樣的
+
+    fun getUser() {}
+
+    fun onFirstLoginNavigated() {
+        _signUpResult.value = null
     }
 
 }

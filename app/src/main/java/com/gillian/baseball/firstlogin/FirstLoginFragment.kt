@@ -13,10 +13,11 @@ import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.R
 import com.gillian.baseball.databinding.FragmentFirstLoginBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.login.UserManager
 
 class FirstLoginFragment : Fragment() {
 
-    private val viewModel by viewModels<FirstLoginViewModel> {getVmFactory() }
+    private val viewModel by viewModels<FirstLoginViewModel> { getVmFactory() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -32,7 +33,20 @@ class FirstLoginFragment : Fragment() {
         binding.viewpagerFirstLoginArrow.bind(binding.viewpagerFirstLogin)
 
         viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
-            findNavController().navigate(NavigationDirections.navigationToTeam())
+            it?.let {
+                Log.i("gillian", "usermanager team set ${UserManager.team}")
+                Log.i("gillian", "usermanager team id set ${UserManager.teamId}")
+                findNavController().navigate(NavigationDirections.navigationToTeam())
+                viewModel.onNavigatedDone()
+            }
+        })
+
+        viewModel.navigateToOrder.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                // 先取得team id
+                findNavController().navigate(NavigationDirections.navigationToOrder(null))
+                viewModel.onNavigatedDone()
+            }
         })
 
 

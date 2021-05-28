@@ -96,6 +96,15 @@ fun bindGameBox(recyclerView: RecyclerView, gameBox: List<BoxView>?) {
     }
 }
 
+@BindingAdapter("orderText")
+fun bindOrderToText(textView: TextView, order: Int?) {
+    order?.let{
+        textView.text = when (order % 100) {
+            0 -> (order / 100).toString()
+            else -> ""
+        }
+    }
+}
 
 @BindingAdapter("scoresGames")
 fun bindScoresGames(recyclerView: RecyclerView, games: List<GameCard>?) {

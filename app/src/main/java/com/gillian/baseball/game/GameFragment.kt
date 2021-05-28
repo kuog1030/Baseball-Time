@@ -26,9 +26,6 @@ class GameFragment : Fragment() {
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        (activity as MainActivity).setBottomNavigation(false)
-
-
         viewModel.navigateToEvent.observe(viewLifecycleOwner, Observer {
             it?.let{
                 val eventDialog = EventDialog(it)
@@ -71,14 +68,4 @@ class GameFragment : Fragment() {
 
         return binding.root
     }
-
-//    override fun onStop() {
-//        super.onStop()
-//        (activity as MainActivity).setBottomNavigation(true)
-//    }
-//
-//    override fun onResume() {
-//        super.onResume()
-//        (activity as MainActivity).setBottomNavigation(false)
-//    }
 }

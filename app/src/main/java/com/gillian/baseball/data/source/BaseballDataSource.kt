@@ -9,9 +9,9 @@ interface BaseballDataSource {
 
     suspend fun signInWithGoogle(idToken: String) : Result<FirebaseUser>
 
-    suspend fun signUpUser(user: User): Result<Boolean>
+    suspend fun signUpUser(user: User): Result<User>
 
-    suspend fun initTeamAndPlayer(team: Team, player: Player)
+    suspend fun initTeamAndPlayer(team: Team, player: Player) : Result<Boolean>
 
     suspend fun createTeam(team: Team)
 
@@ -39,9 +39,9 @@ interface BaseballDataSource {
 
     suspend fun getAllGamesCard(teamId: String) : Result<List<GameCard>>
 
-    suspend fun getTeam(teamId: String): MutableLiveData<Team>
+    //suspend fun getTeam(teamId: String): MutableLiveData<Team>
 
-    suspend fun getTeam2(teamId: String): Result<Team>
+    suspend fun getTeam(teamId: String): Result<Team>
 
     suspend fun getOnePlayer(playerId: String) : Result<Player>
 

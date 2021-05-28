@@ -1,13 +1,14 @@
 package com.gillian.baseball.firstlogin
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gillian.baseball.data.MyGame
-import com.gillian.baseball.data.Player
-import com.gillian.baseball.data.Team
+import com.gillian.baseball.R
+import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 
 class FirstLoginViewModel(private val repository: BaseballRepository) : ViewModel () {
@@ -17,14 +18,20 @@ class FirstLoginViewModel(private val repository: BaseballRepository) : ViewMode
     val playerNumber = MutableLiveData<String>()
 
     private val _navigateToTeam = MutableLiveData<Boolean>()
+
     val navigateToTeam : LiveData<Boolean>
         get() = _navigateToTeam
+
+    private val _navigateToOrder = MutableLiveData<Boolean>()
+
+    val navigateToOrder : LiveData<Boolean>
+        get() = _navigateToOrder
 
     var errorMessage = MutableLiveData<String>()
 
 
 
-    fun navigateToTeam() {
+    fun navigateToTeam(toTeam: Boolean) {
         if (teamName.value.isNullOrEmpty() || playerName.value.isNullOrEmpty() || playerNumber.value == null) {
             errorMessage.value = "記得3個欄位都要填寫喔"
         } else {
@@ -37,13 +44,31 @@ class FirstLoginViewModel(private val repository: BaseballRepository) : ViewMode
             val player = Player(name = playerName.value ?: "", number = numberInt)
 
             viewModelScope.launch {
-                repository.initTeamAndPlayer(team, player)
+                val result = repository.initTeamAndPlayer(team, player)
+                Log.i("gillian", "view model scope called")
+                if (toTeam) {
+                    _navigateToTeam.value = when (result) {
+                        is Result.Success -> {
+                            result.data
+                        }
+                        is Result.Fail -> {
+                            null
+                        }
+                        is Result.Error -> {
+                            null
+                        }
+                        else -> {
+                            null
+                        }
+                    }
+                }
             }
-            _navigateToTeam.value = true
         }
     }
 
-    // TODO() 是不是可以不用做on team navigated因為永遠不會再回來這一頁??
-
+    fun onNavigatedDone() {
+        //_navigateToOrder.value = null
+        _navigateToTeam.value = null
+    }
 
 }

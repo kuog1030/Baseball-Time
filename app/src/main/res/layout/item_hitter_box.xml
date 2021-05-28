@@ -35,6 +35,16 @@
                 android:background="@{isTitle? @color/grey_888 : isEven? @color/grey_ddd : @color/white}">
 
                 <TextView
+                    android:id="@+id/row_player_box_order"
+                    style="@style/PlayerNameTable"
+                    android:layout_width="25dp"
+                    android:gravity="end"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_888"
+                    app:orderText="@{hitter.order}"
+                    tools:text="1"/>
+
+                <TextView
                     android:id="@+id/row_player_box_name"
                     style="@style/PlayerNameTable"
                     boxStyle="@{isTitle}"

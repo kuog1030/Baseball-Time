@@ -65,7 +65,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
             }
     }
 
-    override suspend fun signUpUser(user: User): Result<Boolean> = suspendCoroutine { continuation ->
+    override suspend fun signUpUser(user: User): Result<User> = suspendCoroutine { continuation ->
         val users = FirebaseFirestore.getInstance().collection(USERS)
         val document = users.document()
 
@@ -73,7 +73,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
         document.set(user).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Log.i("gillianlog", "create user success")
-                continuation.resume(Result.Success(true))
+                continuation.resume(Result.Success(user))
             } else {
                 task.exception?.let{
                     Log.w("gillianlog", "[${this::class.simpleName}] Error getting documents. ${it.message}")
@@ -86,7 +86,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
         }
     }
 
-    override suspend fun initTeamAndPlayer(team: Team, player: Player) {
+    override suspend fun initTeamAndPlayer(team: Team, player: Player) : Result<Boolean> = suspendCoroutine { continuation ->
         val teams = FirebaseFirestore.getInstance().collection(TEAMS)
         val document = teams.document()
 
@@ -96,27 +96,36 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
         team.id = document.id
         player.id = playerDocument.id
-        player.userId = UserManager.userId
+        player.userId = UserManager.userId  // 這時候已經有user id了
         team.membersId.add(playerDocument.id)
+        //TODO() 這邊要賦值嗎
         UserManager.teamId = document.id
+        UserManager.playerId = playerDocument.id
 
         document.set(team).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-
                 player.teamId = UserManager.teamId
                 playerDocument.set(player).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Log.i("remote", "first create team $team and player $player success")
+                        UserManager.team = team
+                        continuation.resume(Result.Success(true))
+                        Log.i("remote", "init create team $team and player $player success")
                     } else {
                         task.exception?.let {
-                            Log.i("remote", "first create a player fail ${it.message}")
+                            Log.i("remote", "init create a player fail ${it.message}")
+                            continuation.resume(Result.Error(it))
                         }
+                        Log.i("remote", "init create player fail")
+                        continuation.resume(Result.Fail("initTeamAndPlayer_player fail"))
                     }
                 }
             } else {
                 task.exception?.let {
-                    Log.i("remote", "first create a team fail ${it.message}")
+                    continuation.resume(Result.Error(it))
+                    Log.i("remote", "init create a team exception ${it.message}")
                 }
+                Log.i("remote", "init create team fail")
+                continuation.resume(Result.Fail("initTeamAndPlayer_team fail"))
             }
         }
 
@@ -423,28 +432,27 @@ object BaseballRemoteDataSource : BaseballDataSource {
     }
 
 
-    override suspend fun getTeam(teamId: String): MutableLiveData<Team> {
-        val team = MutableLiveData<Team>()
-        FirebaseFirestore.getInstance().collection(TEAMS)
-            .document(teamId)
-            .get()
-            .addOnCompleteListener {task ->
-                task.result?.let{
-                    team.value = it.toObject(Team::class.java)
-                }
-            }
-        return team
-    }
+//    override suspend fun getTeam(teamId: String): MutableLiveData<Team> {
+//        val team = MutableLiveData<Team>()
+//        FirebaseFirestore.getInstance().collection(TEAMS)
+//            .document(teamId)
+//            .get()
+//            .addOnCompleteListener {task ->
+//                task.result?.let{
+//                    team.value = it.toObject(Team::class.java)
+//                }
+//            }
+//        return team
+//    }
 
 
-    override suspend fun getTeam2(teamId: String): Result<Team> = suspendCoroutine {continuation ->
+    override suspend fun getTeam(teamId: String): Result<Team> = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
             .collection(TEAMS)
             .document(teamId)
             .get()
             .addOnCompleteListener{ task ->
                 if (task.isSuccessful) {
-                    //TODO()這邊可能是空的嗎??
                     var result = task.result!!.toObject(Team::class.java)
                     continuation.resume(Result.Success(result!!))
 

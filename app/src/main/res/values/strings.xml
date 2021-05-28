@@ -81,6 +81,7 @@
     <!--    game final -->
     <string name="game_final">比賽結束</string>
     <string name="data_uploading">資料上傳中 ^^ </string>
+    <string name="game_end_dinner_time">比完賽去吃飯</string>
 
     <!--    game record related -->
 

@@ -38,17 +38,15 @@ class MainActivity : AppCompatActivity() {
         }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.gameFragment) {
-                setBottomNavigation(false)
-            } else {
-                setBottomNavigation(true)
+            when (destination.id) {
+                R.id.gameFragment -> setBottomNavigation(false)
+                else -> setBottomNavigation(true)
             }
         }
 
     }
 
-
-    fun setBottomNavigation(visible: Boolean) {
+    private fun setBottomNavigation(visible: Boolean) {
         if (visible) {
             binding.bottomNavView.visibility = VISIBLE
         } else {
