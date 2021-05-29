@@ -74,7 +74,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         getMyPlayerInfo()
         getTeamPlayer()
         teamName.value = UserManager.teamName
-        getTestingEvent()
+        getTestingEvent() // TODO()測試用
 
     }
 

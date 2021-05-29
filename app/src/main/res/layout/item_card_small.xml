@@ -13,7 +13,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="90dp"
         android:background="@drawable/bg_card"
         android:layout_marginBottom="@dimen/margin">
 
@@ -54,61 +54,39 @@
             android:id="@+id/text_card_small_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{String.valueOf(game.guestScore) + "-" + String.valueOf(game.homeScore)}'
             android:letterSpacing="0.4"
+            android:text='@{String.valueOf(game.guestScore) + "-" + String.valueOf(game.homeScore)}'
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_small_guest"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.43"
+            app:layout_constraintEnd_toStartOf="@+id/image_card_small_arrow"
+            app:layout_constraintHorizontal_bias="0.4"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_card_small_guest"
+            app:layout_constraintVertical_bias="0.5"
             tools:text="3-2" />
-
-        <ImageView
-            android:id="@+id/image_card_small_guest"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:visibility="@{game.guestScore > game.homeScore? View.VISIBLE : View.INVISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@+id/text_card_small_guest"
-            app:layout_constraintEnd_toStartOf="@+id/text_card_small_guest"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_card_small_guest"
-            app:srcCompat="@drawable/ic_baseline_win_24"
-            tools:visibility="invisible" />
 
         <TextView
             android:id="@+id/text_card_small_guest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
             android:text="@{game.guestName}"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/text_card_small_score"
+            app:layout_constraintStart_toStartOf="@+id/text_card_small_title"
             app:layout_constraintTop_toBottomOf="@+id/bar_card_small"
             app:layout_constraintVertical_bias="0.5"
-            tools:text = "Android"/>
-
-        <ImageView
-            android:id="@+id/image_card_small_home"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="@dimen/margin"
-            app:layout_constraintStart_toEndOf="@+id/text_card_small_home"
-            app:layout_constraintTop_toTopOf="@+id/image_card_small_guest"
-            android:visibility="@{game.guestScore >= game.homeScore? View.INVISIBLE : View.VISIBLE}"
-            app:srcCompat="@drawable/ic_baseline_win_24" />
+            tools:text="Android" />
 
         <TextView
             android:id="@+id/text_card_small_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/one_half_margin"
             android:text="@{game.homeName}"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_small_score"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.08"
             app:layout_constraintStart_toEndOf="@+id/text_card_small_score"
             app:layout_constraintTop_toTopOf="@+id/text_card_small_score"
-            tools:text="東園國小"/>
+            tools:text="東園國小" />
 
 
         <ImageView
@@ -116,10 +94,22 @@
             android:layout_width="20dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/half_margin"
-            app:layout_constraintBottom_toBottomOf="@+id/image_card_small_home"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_card_small_home"
+            app:layout_constraintTop_toBottomOf="@+id/bar_card_small"
             app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+
+        <TextView
+            android:id="@+id/text_card_small_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin"
+            android:textSize="18sp"
+            app:gameResult="@{game.gameResult}"
+            app:layout_constraintBottom_toBottomOf="@+id/image_card_small_arrow"
+            app:layout_constraintEnd_toStartOf="@+id/image_card_small_arrow"
+            app:layout_constraintTop_toTopOf="@+id/image_card_small_arrow"
+            tools:text="L" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -61,5 +61,15 @@
             app:layout_constraintEnd_toEndOf="@+id/textView5"
             app:layout_constraintStart_toEndOf="@+id/textView12"
             app:layout_constraintTop_toTopOf="@+id/textView12" />
+
+<!--        Testing custom view-->
+        <com.gillian.baseball.views.CustomBaseView
+            android:id="@+id/my_custom_base"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

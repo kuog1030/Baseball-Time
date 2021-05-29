@@ -158,4 +158,9 @@
         <item name="layout_constraintVertical_bias">0.7</item>
     </style>
 
+<!--    testing custom view-->
+    <declare-styleable name="CustomBaseView">
+        <attr name="onBase" format="integer" />
+    </declare-styleable>
+
 </resources>

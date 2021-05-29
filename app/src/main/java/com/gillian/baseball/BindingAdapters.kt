@@ -117,6 +117,17 @@ fun bindScoresGames(recyclerView: RecyclerView, games: List<GameCard>?) {
     }
 }
 
+@BindingAdapter("gameResult")
+fun bindGameResultToText(textView: TextView, result: GameResult) {
+    result?.let{
+        textView.text = when (result) {
+            GameResult.WIN -> "勝"
+            GameResult.LOSE -> "敗"
+            else -> "和"
+        }
+    }
+}
+
 @BindingAdapter("atBaseFirst")
 fun bindAtBaseFirst(textView: TextView, atBase: AtBase?) {
     atBase?.let{
