@@ -7,5 +7,6 @@ import kotlinx.android.parcel.Parcelize
 @Parcelize
 data class MyGame (
         val isHome : Boolean,
+        val benchPlayer: MutableList<EventPlayer>,
         val game : Game
 ) : Parcelable

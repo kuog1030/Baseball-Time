@@ -24,6 +24,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
     var startingPitcher : EventPlayer? = null
 
     var lineUp = mutableListOf<EventPlayer>()
+    lateinit var myBench : MutableList<EventPlayer>
     var pitcherList = mutableListOf<EventPlayer>()
 
     val awayLineUp = mutableListOf<EventPlayer>()
@@ -140,6 +141,9 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
                 lineUp = lineUp.subList(0, minOf(9, lineUp.size))
         )
 
+        // 先發九人以外的那些
+        myBench = lineUp.subList(minOf(9, lineUp.size), lineUp.size)
+
         val awayTeam = GameTeam(
                 name = awayTeamName.value!!,
                 pitcher = EventPlayer(name = "對方投手", playerId = "10"),
@@ -220,7 +224,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
     fun navigateToGame(game: Game) {
         if (_status.value == LoadStatus.DONE) {
             _setUpGame.value = null
-            _navigateToGame.value = MyGame(isHome = isHome, game = game)
+            _navigateToGame.value = MyGame(isHome = isHome, game = game, benchPlayer = myBench)
         }
     }
 

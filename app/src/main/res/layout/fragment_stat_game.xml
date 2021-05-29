@@ -74,7 +74,7 @@
 
 
             <TextView
-                android:id="@+id/textView10"
+                android:id="@+id/text_game_stat_bat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one_half_margin"
@@ -94,7 +94,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView10"
+                app:layout_constraintTop_toBottomOf="@+id/text_game_stat_bat"
                 tools:itemCount="2"
                 android:overScrollMode="never"
                 tools:listitem="@layout/item_hitter_box">
@@ -110,7 +110,7 @@
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
-                app:layout_constraintTop_toBottomOf="@+id/textView11"
+                app:layout_constraintTop_toBottomOf="@+id/text_game_stat_pitch"
                 app:pitcherBox="@{viewModel.myStat.myPitcher}"
                 tools:itemCount="2"
                 android:overScrollMode="never"
@@ -119,7 +119,7 @@
             </androidx.recyclerview.widget.RecyclerView>
 
             <TextView
-                android:id="@+id/textView11"
+                android:id="@+id/text_game_stat_pitch"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one_half_margin"

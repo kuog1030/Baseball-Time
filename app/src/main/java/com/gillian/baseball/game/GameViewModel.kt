@@ -54,9 +54,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var guestABNumber = 0
 
     // TODO()替補球員假資料
-    var myBench = mutableListOf(EventPlayer(name = "Gillian", number = "22"),
-            EventPlayer(name = "Wency", number = "30"),
-            EventPlayer(name = "Chloe", number = "2"))
+    var myBench = argument.benchPlayer
 
     /* ------------------------------------------------------------------------
                     兩隊共同使用的東西，會被更新
@@ -115,7 +113,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun switch() {
 
         if (inningCount == totalInning) {
-            _navigateToFinal.value = MyGame(isHome = isHome, game = game.value!!)
+            _navigateToFinal.value = MyGame(isHome = isHome, game = game.value!!, benchPlayer = myBench)
         } else {
             // 比賽還沒結束
             if (atBatNumber == (lineUp.size - 1)) {
@@ -340,11 +338,13 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
 
-    fun advanceBase(myself: Int) {
+    fun advanceBase(myself: Int) : Boolean {
+        var hasRbi = false
         var end = myself
         while (baseList[end] != null) {
             if (end == 3) {
                 // 擠壘事件造成的得分
+                hasRbi = true
                 sendEvent(Event(player = baseList[3]!!,
                         pitcher = if (isTop) homePitcher else guestPitcher,
                         run = 1,
@@ -368,17 +368,22 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 //        }
 //        Log.i("at base ", "--------------壘上事件結束-------------")
         updateRunnerUI() // 放這邊合理嗎?
+        return (hasRbi)
     }
 
     fun ballFour() {
-        sendEvent(Event(player = lineUp[atBatNumber],
+        val toBeSend = Event(player = lineUp[atBatNumber],
                 pitcher = if (isTop) homePitcher else guestPitcher,
                 inning = inningCount,
                 result = EventType.WALK.number,
                 ball = 4,
                 strike = totalStrike,
-                out = outCount.value ?: 0))
-        advanceBase(0)
+                out = outCount.value ?: 0)
+        val hasRbi = advanceBase(0)
+        if (hasRbi) {
+            toBeSend.rbi = 1
+        }
+        sendEvent(toBeSend)
         clearCount(includeOut = false)
         nextPlayer()
     }
