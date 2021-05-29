@@ -20,6 +20,8 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val myObp = MutableLiveData<String>()
     val mySlg = MutableLiveData<String>()
 
+    val testAllEvent = MutableLiveData<List<Event>>()
+
     private val _teamPlayers = MutableLiveData<MutableList<Player>>()
 
     val teamPlayers: LiveData<MutableList<Player>>
@@ -72,6 +74,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         getMyPlayerInfo()
         getTeamPlayer()
         teamName.value = UserManager.teamName
+        getTestingEvent()
 
     }
 
@@ -112,6 +115,18 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
             mySlg.value = statFormat.format(it.hitStat.mySlg() ?: 0F)
         }
     }
+
+
+    // TODO()測試用
+    fun getTestingEvent() {
+        viewModelScope.launch {
+            testAllEvent.value = repository.getAllEvents("TMOL9zMb3V6dLCVacojC")
+        }
+    }
+
+
+
+
 
 
     fun navigate() {

@@ -131,7 +131,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
     }
 
-
     override suspend fun scheduleGame(game: Game) : Result<Boolean> = suspendCoroutine { continuation ->
 
         val games = FirebaseFirestore.getInstance().collection(GAMES)
@@ -155,7 +154,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         }
                     }
     }
-
 
     override suspend fun createTeam(team: Team) {
         val teams = FirebaseFirestore.getInstance().collection(TEAMS)
@@ -515,7 +513,9 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         val result = mutableListOf<Player>()
                         for (document in task.result!!) {
                             Log.i("remote", " ${document.id} -> ${document.data}")
-                            result.add(document.toObject(Player::class.java))
+                            if (document.data["userId"] != UserManager.userId) {
+                                result.add(document.toObject(Player::class.java))
+                            }
                         }
                         result.sortBy { it.number }
                         continuation.resume(Result.Success(result))
@@ -638,13 +638,38 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
         document.set(event).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Log.i("remote", "send a event $event success")
+                Log.i("remote", "send a event ${event.toLiveString()}")
             } else {
                 task.exception?.let {
                     Log.i("remote", "send a event fail ${it.message}")
                 }
             }
         }
+    }
+
+    override suspend fun getAllEvents(gameId: String): List<Event> = suspendCoroutine { continuation ->
+        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
+
+        theGame.collection(PLAYS)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        val eventList = mutableListOf<Event>()
+                        for (document in task.result!!) {
+                            eventList.add(document.toObject(Event::class.java))
+                        }
+                        Log.i("remote", "get all event list success")
+                        continuation.resume(eventList)
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(emptyList())
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(emptyList())
+                    }
+                }
     }
 
     override suspend fun deletePlayer(playerId: String): Result<Boolean> = suspendCoroutine { continuation ->

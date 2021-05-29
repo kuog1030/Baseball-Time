@@ -64,6 +64,7 @@
     <!--   all games related -->
     <string name="more_detail">詳細數據</string>
     <string name="start_game">開始比賽</string>
+    <string name="no_schedule_hint">還沒有安排好的比賽喔</string>
     <string name="no_game_hint">還沒有球賽紀錄喔</string>
     <string name="score_win">累積勝場</string>
     <string name="score_rate">累積敗場</string>

@@ -13,6 +13,7 @@ import com.gillian.baseball.data.PitcherBox
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.login.UserManager
 import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 
@@ -77,7 +78,7 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
         val statFormat = "%.3f"
         player.value?.let{
 
-            editable.value = (it.userId.isNullOrEmpty())  // 如果這個球員沒人認領 user id is null才可以修改
+            editable.value = (it.userId.isNullOrEmpty() || it.userId == UserManager.userId)  // 如果這個球員沒人認領 user id is null才可以修改
 
             myAvg.value = statFormat.format(it.hitStat.myAverage() ?: 0F)
             myObp.value = statFormat.format(it.hitStat.myObp() ?: 0F)

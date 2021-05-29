@@ -40,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
                 R.id.gameFragment -> setBottomNavigation(false)
+                R.id.finalFragment -> setBottomNavigation(false)
+                R.id.loginFragment -> setBottomNavigation(false)
+                R.id.firstLoginFragment -> setBottomNavigation(false)
                 else -> setBottomNavigation(true)
             }
         }

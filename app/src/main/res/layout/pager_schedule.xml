@@ -105,7 +105,7 @@
             android:id="@+id/text_schedule_no_game"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{viewModel.scheduleGames != null ? @string/no_game_hint : ""}'
+            android:text='@{viewModel.scheduleGames != null ? @string/no_schedule_hint : ""}'
             android:visibility="@{viewModel.scheduleGames.size == 0 ? View.VISIBLE : View.GONE}"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

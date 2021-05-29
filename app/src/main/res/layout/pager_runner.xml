@@ -24,8 +24,8 @@
 
         <ImageView
             android:id="@+id/image_runner_field"
-            android:layout_width="wrap_content"
-            android:layout_height="140dp"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:layout_marginTop="40dp"
             app:layout_constraintBottom_toTopOf="@+id/bar_hitter"
             app:layout_constraintEnd_toEndOf="parent"
@@ -39,10 +39,10 @@
             style="@style/GameButton"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/half_margin"
+            android:layout_marginEnd="16dp"
+            android:backgroundTint="@{atBase.base > 1 ? @color/grey_888 : @color/color_primary}"
             android:onClick="@{()->viewModel.toBase(atBase, 1)}"
             android:text="@string/first_base"
-            android:backgroundTint="@{atBase.base > 1 ? @color/grey_888 : @color/color_primary}"
             app:layout_constraintBottom_toBottomOf="@+id/image_runner_field"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_runner_field" />
@@ -64,7 +64,7 @@
             style="@style/GameButton"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/half_margin"
+            android:layout_marginStart="16dp"
             android:onClick="@{()->viewModel.thirdBase(atBase)}"
             android:text="@string/third_base"
             app:layout_constraintStart_toStartOf="parent"
@@ -146,19 +146,20 @@
             android:id="@+id/text_runner_third_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/half_margin"
             android:textSize="18sp"
             app:atBaseThird="@{atBase}"
             app:layout_constraintBottom_toTopOf="@+id/button_runner_third"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_third"
             app:layout_constraintStart_toStartOf="@+id/button_runner_third"
             app:layout_constraintTop_toTopOf="@+id/image_runner_field"
-            tools:text="3壘"/>
+            tools:text="3壘" />
 
         <TextView
             android:id="@+id/text_runner_second_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="4dp"
+            android:layout_marginBottom="@dimen/half_margin"
             android:textSize="18sp"
             app:atBaseSecond="@{atBase}"
             app:layout_constraintBottom_toTopOf="@+id/button_runner_second"

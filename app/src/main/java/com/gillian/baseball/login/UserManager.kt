@@ -13,8 +13,7 @@ object UserManager {
     val prefs = BaseballApplication.instance.getSharedPreferences("Baseball", Context.MODE_PRIVATE)
     var userId: String
         get() {
-            return ( prefs.getString("user", "")!! )
-            //return ( prefs.getString("user", "eNNuZztIQCNLwRI6sSZl")!! )
+            return ( prefs.getString("user", "a5n9NOoKGAsLbEb0oyH8")!! )
         }
         set(id) {
             prefs.edit().putString("user", id).apply()
@@ -22,8 +21,7 @@ object UserManager {
 
     var playerId: String
         get() {
-            return ( prefs.getString("player", "")!! )
-            //return ( prefs.getString("player", "oZKeTwJrrDbrfFRt6TWI")!! )
+            return ( prefs.getString("player", "kWOBrCuTTB7e4ncz6xb4")!! )
         }
         set(id) {
             prefs.edit().putString("player", id).apply()
@@ -31,8 +29,7 @@ object UserManager {
 
     var teamId: String
         get() {
-            return ( prefs.getString("team", "")!! )
-            //return ( prefs.getString("team", "qyjO8rziwuMz7O0oUfIo")!! )
+            return ( prefs.getString("team", "pmZ3TH0DWvlaXJ3qtAIy")!! )
         }
         set(id) {
             prefs.edit().putString("team", id).apply()

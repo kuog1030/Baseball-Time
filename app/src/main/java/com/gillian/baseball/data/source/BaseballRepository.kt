@@ -35,6 +35,8 @@ interface BaseballRepository {
 
     suspend fun updatePitchStat(playerId: String, pitcherBox: PitcherBox) : Result<Boolean>
 
+    suspend fun getAllEvents(gameId: String): List<Event>
+
     suspend fun getAllGames(teamId: String) : Result<List<Game>>
 
     suspend fun getAllGamesCard(teamId: String) : Result<List<GameCard>>
