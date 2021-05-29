@@ -34,8 +34,6 @@ class FirstLoginFragment : Fragment() {
 
         viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
             it?.let {
-                Log.i("gillian", "usermanager team set ${UserManager.team}")
-                Log.i("gillian", "usermanager team id set ${UserManager.teamId}")
                 findNavController().navigate(NavigationDirections.navigationToTeam())
                 viewModel.onNavigatedDone()
             }

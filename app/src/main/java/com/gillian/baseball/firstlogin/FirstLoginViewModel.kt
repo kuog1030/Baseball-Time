@@ -9,6 +9,7 @@ import com.gillian.baseball.R
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.util.Util
+import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 
 class FirstLoginViewModel(private val repository: BaseballRepository) : ViewModel () {
@@ -33,7 +34,7 @@ class FirstLoginViewModel(private val repository: BaseballRepository) : ViewMode
 
     fun navigateToTeam(toTeam: Boolean) {
         if (teamName.value.isNullOrEmpty() || playerName.value.isNullOrEmpty() || playerNumber.value == null) {
-            errorMessage.value = "記得3個欄位都要填寫喔"
+            errorMessage.value = getString(R.string.error_init_team_player)
         } else {
             errorMessage.value = null
 

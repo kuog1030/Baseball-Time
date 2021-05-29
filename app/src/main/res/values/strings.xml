@@ -7,6 +7,7 @@
     <string name="create_new_player_error">姓名和背號都是必填的喔</string>
     <string name="create_new_player_success">新增成功</string>
     <string name="error_schedule_game">除了備註欄都是必填喔</string>
+    <string name="error_init_team_player">記得3個欄位都要填寫喔</string>
     <string name="return_nothing">不好意思，神秘力量發生了</string>
 
     <!--    team related -->
