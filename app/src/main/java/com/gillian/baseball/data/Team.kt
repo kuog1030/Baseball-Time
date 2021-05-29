@@ -9,9 +9,7 @@ data class Team (
     var name : String = "",
     var acronym : String = name,
     var color : String = "",
-    var image : String = "",
-    var member : MutableList<Player> = mutableListOf(),
-    var membersId : MutableList<String> = mutableListOf()
+    var image : String = ""
 ) : Parcelable {
     fun toGameTeam() : GameTeam {
         return GameTeam(

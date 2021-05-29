@@ -120,6 +120,7 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
             _dismissDialog.value = when (uploadResult) {
                 is Result.Success -> {
                     _status.value = LoadStatus.DONE
+                    proceedToSave.value = null
                     uploadResult.data
                 }
                 is Result.Fail -> {

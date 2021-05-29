@@ -97,7 +97,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
         team.id = document.id
         player.id = playerDocument.id
         player.userId = UserManager.userId  // 這時候已經有user id了
-        team.membersId.add(playerDocument.id)
+        //team.membersId.add(playerDocument.id)
         //TODO() 這邊要賦值嗎
         UserManager.teamId = document.id
         UserManager.playerId = playerDocument.id
@@ -173,7 +173,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
         }
     }
 
-    override suspend fun createPlayer(player: Player) {
+    override suspend fun createPlayer(player: Player) : Result<Boolean> = suspendCoroutine {continuation ->
         val players = FirebaseFirestore.getInstance().collection(PLAYERS)
         val document = players.document()
 
@@ -181,18 +181,32 @@ object BaseballRemoteDataSource : BaseballDataSource {
         player.teamId = UserManager.teamId
 
         document.set(player)
-                .addOnSuccessListener {
-                    // update teams member list
-                    FirebaseFirestore.getInstance().collection(TEAMS)
-                            .document(UserManager.teamId)
-                            .update(MEMBERS_LIST, FieldValue.arrayUnion(player.id))
-                            .addOnFailureListener {
-                                Log.w("remote", "Error updating team member list $it")
-                            }
+                .addOnCompleteListener{ task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+                            Log.w("remote", "[${this::class.simpleName}] Error creating new player. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("create new player fail"))
+                    }
                 }
-                .addOnFailureListener { exception ->
-                    Log.w("remote", "Error creating new player $exception")
-                }
+
+//        document.set(player)
+//                .addOnSuccessListener {
+//                    // update teams member list
+//                    FirebaseFirestore.getInstance().collection(TEAMS)
+//                            .document(UserManager.teamId)
+//                            .update(MEMBERS_LIST, FieldValue.arrayUnion(player.id))
+//                            .addOnFailureListener {
+//                                Log.w("remote", "Error updating team member list $it")
+//                            }
+//                }
+//                .addOnFailureListener { exception ->
+//                    Log.w("remote", "Error creating new player $exception")
+//                }
     }
 
     // only be used when fast start up a game. will return the unique document id

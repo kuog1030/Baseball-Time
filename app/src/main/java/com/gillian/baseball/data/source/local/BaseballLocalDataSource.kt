@@ -25,7 +25,7 @@ class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun createPlayer(player: Player) {
+    override suspend fun createPlayer(player: Player) : Result<Boolean> {
         TODO("Not yet implemented")
     }
 

@@ -15,7 +15,7 @@ interface BaseballRepository {
 
     suspend fun createTeam(team: Team)
 
-    suspend fun createPlayer(player: Player)
+    suspend fun createPlayer(player: Player) : Result<Boolean>
 
     suspend fun createGame(game: Game) : Result<Game>
 

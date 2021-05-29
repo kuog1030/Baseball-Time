@@ -26,6 +26,10 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     val errorMessage = MutableLiveData<Int>()
 
+    val readyToSentPhoto = MutableLiveData<Uri>()
+
+    val proceedToSave = MutableLiveData<Boolean>(false)
+
     private val _status = MutableLiveData<LoadStatus>()
 
     val status: LiveData<LoadStatus>
@@ -39,45 +43,69 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
         get() = _dismissDialog
 
     fun createPlayer() {
-        if (name.value.isNullOrEmpty() || number.value.isNullOrEmpty()) {
-            errorMessage.value = R.string.create_new_player_error
-        } else {
+        errorMessage.value = null
 
-            if (_status.value != LoadStatus.LOADING) {
-                errorMessage.value = null
+        val numberInt = number.value!!.toInt()
 
-                val numberInt = number.value!!.toInt()
+        val player = Player(
+                teamId = UserManager.teamId,
+                name = name.value!!,
+                number = numberInt,
+                nickname = nickname.value,
+                image = photoUrl.value
+        )
 
-                val player = Player(
-                        teamId = UserManager.teamId,
-                        name = name.value!!,
-                        number = numberInt,
-                        nickname = nickname.value,
-                        image = photoUrl.value
-                )
-
-                viewModelScope.launch {
-                    repository.createPlayer(player)
+        viewModelScope.launch {
+            val result = repository.createPlayer(player)
+            _dismissDialog.value = when (result) {
+                is Result.Success -> {
                     Log.i("gillian", "in coroutine create success")
+                    _status.value = LoadStatus.DONE
+                    needRefresh = true
+                    proceedToSave.value = null
+                    result.data
                 }
-                needRefresh = true
-                _dismissDialog.value = true
+                is Result.Fail -> {
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+                is Result.Error -> {
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+                else -> {
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
             }
         }
     }
 
+    // with photo -> upload Photo -> proceed to Save -> createPlayer
+    // no photo -> createPlayer
+    fun checkIfInfoFilled() {
+        if (name.value.isNullOrEmpty() || number.value.isNullOrEmpty()) {
+            errorMessage.value = R.string.create_new_player_error
+        } else {
+            errorMessage.value = null
+            _status.value = LoadStatus.LOADING
+            if (readyToSentPhoto.value != null) {
+                uploadPhoto(readyToSentPhoto.value!!)  // 有照片的話等照片上傳
+            } else {
+                createPlayer()
+            }
+        }
+    }
+
+
+
     fun uploadPhoto(uri: Uri) {
         Log.i("gillian", "upload photo")
         viewModelScope.launch {
-
-            _status.value = LoadStatus.LOADING
-
             val result = repository.uploadImage(uri)
-
             photoUrl.value = when (result) {
                 is Result.Success -> {
-                    _status.value = LoadStatus.DONE
-                    Log.i("gillian", "success")
+                    proceedToSave.value = true
                     result.data
                 }
                 is Result.Fail -> {

@@ -122,7 +122,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginBottom="@dimen/margin"
-            android:onClick="@{()->viewModel.createPlayer()}"
+            android:onClick="@{()->viewModel.checkIfInfoFilled()}"
             android:text="@string/create_a_player_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/edit_new_player_nickname"
@@ -137,6 +137,20 @@
             app:layout_constraintStart_toStartOf="@+id/text_new_player_nickname"
             app:layout_constraintTop_toBottomOf="@+id/text_new_player_image"
             app:srcCompat="@drawable/button_drawble_game" />
+
+        <ProgressBar
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorPrimary"
+            android:indeterminateTint="@color/white"
+            android:padding="10dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            app:layout_constraintBottom_toBottomOf="@id/button_new_player_save"
+            app:layout_constraintEnd_toEndOf="@id/button_new_player_save"
+            app:layout_constraintStart_toStartOf="@id/button_new_player_save"
+            app:layout_constraintTop_toTopOf="@id/button_new_player_save"
+            app:loadingStatus="@{viewModel.status}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

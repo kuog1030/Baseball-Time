@@ -37,8 +37,14 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
         }
 
         viewModel.photoUrl.observe(viewLifecycleOwner, Observer {
-            Log.i("gillian", "upload success ma $it")
+            it?.let{
+                if (viewModel.proceedToSave.value!!) {
+                    Log.i("gillian", "upload success ma $it")
+                    viewModel.createPlayer()
+                }
+            }
         })
+
 
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             it?.let {
@@ -73,10 +79,9 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_OPEN && resultCode == Activity.RESULT_OK && data != null) {
-            val fullPhotoUri  = data.data
             binding.imageNewPlayerPhoto.setImageURI(data.data)
-            Log.i("gillian", "ready to send")
-            viewModel.uploadPhoto(fullPhotoUri!!)
+            viewModel.readyToSentPhoto.value = data.data
+            Log.i("gillian", "ready to send photo is not null ${viewModel.readyToSentPhoto.value}")
         }
     }
 
@@ -86,13 +91,3 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
     }
 
 }
-
-//                Toast.makeText(context, "新增球員成功", Toast.LENGTH_SHORT).show()
-//                val timer = object : CountDownTimer(500, 500){
-//                    override fun onTick(millisUntilFinished: Long) {
-//                    }
-//                    override fun onFinish() {
-//                        dismiss()
-//                    }
-//                }
-//                timer.start()
