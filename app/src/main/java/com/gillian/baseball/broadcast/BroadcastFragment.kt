@@ -19,18 +19,25 @@ class BroadcastFragment : Fragment() {
         val binding = FragmentBroadcastBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
+        Log.i("gillian", "view model liveevent1 ${viewModel.liveEvents}")
         viewModel
         val adapter = BroadcastAdapter()
 
         binding.recyclerLive.adapter = adapter
 
-        Log.i("gillian", "view model liveevent ${viewModel.liveEvents}")
+        Log.i("gillian", "view model liveevent2 ${viewModel.liveEvents}")
+        binding.viewModel = viewModel
+        Log.i("gillian", "view model liveevent3 ${viewModel.liveEvents}")
+
+
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer {
-            Log.i("gillian", "in obser live event ${viewModel.liveEvents}")
+            Log.i("gillian", "view model liveevent4 ${viewModel.liveEvents}")
             it?.let{
 
                 Log.i("gillian", "i get new event size = ${it.size} event ${it}")
-                //adapter.submitList(it)
+                adapter.notifyDataSetChanged()
+//                adapter.submitList(it)
+//                adapter.notifyDataSetChanged()
             }
         })
 

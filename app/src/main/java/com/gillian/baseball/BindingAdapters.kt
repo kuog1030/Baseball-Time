@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
 import com.gillian.baseball.allgames.CardScoreAdapter
+import com.gillian.baseball.broadcast.BroadcastAdapter
 import com.gillian.baseball.data.*
 import com.gillian.baseball.team.pager.TeammateAdapter
 import com.gillian.baseball.views.BoxAdapter
@@ -117,13 +118,31 @@ fun bindScoresGames(recyclerView: RecyclerView, games: List<GameCard>?) {
     }
 }
 
+@BindingAdapter("liveEvents")
+fun bindLiveEvents(recyclerView: RecyclerView, events: List<Event>?) {
+    events?.let{
+        recyclerView.adapter?.apply {
+            when(this) {
+                is BroadcastAdapter -> submitList(it)
+            }
+        }
+    }
+}
+
 @BindingAdapter("gameResult")
-fun bindGameResultToText(textView: TextView, result: GameResult) {
+fun bindGameResultToText(textView: TextView, result: GameResult?) {
     result?.let{
-        textView.text = when (result) {
-            GameResult.WIN -> "勝"
-            GameResult.LOSE -> "敗"
-            else -> "和"
+        when (result) {
+            GameResult.WIN -> {
+                textView.text = "勝"
+                textView.setTextColor(BaseballApplication.instance.getColor(R.color.hit_block))
+            }
+            GameResult.LOSE -> {
+                textView.text = "敗"
+            }
+            else -> {
+                textView.text = "和"
+            }
         }
     }
 }

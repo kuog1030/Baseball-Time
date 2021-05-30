@@ -23,7 +23,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/half_margin"
-            android:text='@{game.title + " - " + game.place}'
+            android:text='@{game.title + "  " + game.place}'
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.012"
             app:layout_constraintStart_toStartOf="@+id/bar_card_small"
@@ -35,10 +35,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin"
-            android:text="@{game.dateString}"
+            android:text="@{game.dateStringShort}"
             app:layout_constraintEnd_toEndOf="@+id/bar_card_small"
             app:layout_constraintTop_toTopOf="@+id/text_card_small_title"
-            tools:text="2021/05/15 09:00" />
+            tools:text="2021/05/15 週六" />
 
         <View
             android:id="@+id/bar_card_small"
@@ -106,10 +106,26 @@
             android:layout_marginEnd="@dimen/margin"
             android:textSize="18sp"
             app:gameResult="@{game.gameResult}"
+            android:visibility="@{game.status == 1 ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/image_card_small_arrow"
             app:layout_constraintEnd_toStartOf="@+id/image_card_small_arrow"
             app:layout_constraintTop_toTopOf="@+id/image_card_small_arrow"
             tools:text="L" />
+
+        <TextView
+            style="@style/GameTag"
+            android:id="@+id/text_card_small_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_playing"
+            android:layout_marginEnd="@dimen/quarter_margin"
+            android:background="@color/red_out"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:visibility="@{game.status == 1 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/image_card_small_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/image_card_small_arrow"
+            app:layout_constraintTop_toTopOf="@+id/image_card_small_arrow"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

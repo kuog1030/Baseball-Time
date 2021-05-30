@@ -45,6 +45,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
     private const val HITSTAT = "hitStat"
     private const val PITCHSTAT = "pitchStat"
     private const val RECORDED = "recordedTeamId"
+    private const val STATUS = "status"
 
     override suspend fun signInWithGoogle(idToken: String) : Result<FirebaseUser> = suspendCoroutine { continuation ->
         val credential = GoogleAuthProvider.getCredential(idToken, null)
@@ -421,6 +422,32 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
+
+    override suspend fun getAllLiveGamesCard(): Result<List<GameCard>> = suspendCoroutine {continuation ->
+        FirebaseFirestore.getInstance()
+                .collection(GAMES)
+                .whereEqualTo(STATUS, 1) // GameStatus.PLAYING.number = 1
+                .get()
+                .addOnCompleteListener{ task ->
+                    if (task.isSuccessful) {
+                        val result = mutableListOf<GameCard>()
+                        for (document in task.result!!) {
+                            Log.i("remote", " ${document.id} -> ${document.data}")
+                            result.add(document.toObject(Game::class.java).toGameCard())
+                        }
+                        continuation.resume(Result.Success(result))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("get all live games fail"))
+                    }
+                }
+    }
+
     override suspend fun getAllGamesCard(teamId: String): Result<List<GameCard>> = suspendCoroutine {continuation ->
         val games = FirebaseFirestore.getInstance().collection(GAMES)
         games.whereEqualTo(RECORDED, UserManager.teamId)
@@ -443,20 +470,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
                     }
                 }
     }
-
-
-//    override suspend fun getTeam(teamId: String): MutableLiveData<Team> {
-//        val team = MutableLiveData<Team>()
-//        FirebaseFirestore.getInstance().collection(TEAMS)
-//            .document(teamId)
-//            .get()
-//            .addOnCompleteListener {task ->
-//                task.result?.let{
-//                    team.value = it.toObject(Team::class.java)
-//                }
-//            }
-//        return team
-//    }
 
 
     override suspend fun getTeam(teamId: String): Result<Team> = suspendCoroutine {continuation ->
@@ -674,6 +687,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
     }
 
     override suspend fun getLiveEvents(gameId: String): MutableLiveData<List<Event>> {
+        var isInit = true
         val liveEvent = MutableLiveData<List<Event>>()
         val eventList = mutableListOf<Event>()
 
@@ -682,10 +696,16 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .addSnapshotListener { documents, error ->
                     error?.let{
                         Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                        return@addSnapshotListener
+                    }
+                    for (dc in documents!!.documentChanges) {
+                        eventList.add(0, dc.document.toObject(Event::class.java))
                     }
 
-                    for (dc in documents!!.documentChanges) {
-                        eventList.add(dc.document.toObject(Event::class.java))
+                    if (isInit) {
+                        Log.i("gillian", "is init是true")
+                        eventList.sortByDescending { it.time }
+                        isInit = false
                     }
                     liveEvent.value = eventList
                 }

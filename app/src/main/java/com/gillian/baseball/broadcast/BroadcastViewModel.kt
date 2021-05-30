@@ -18,7 +18,7 @@ class BroadcastViewModel(private val repository: BaseballRepository) : ViewModel
 
     fun getLiveEvent() {
         viewModelScope.launch {
-            liveEvents = repository.getLiveEvents("TSKLYyeMQ2IstBcbj7ON")
+            liveEvents = repository.getLiveEvents("J6SPWwBKBZgjjsCGHUUa")
         }
 
     }

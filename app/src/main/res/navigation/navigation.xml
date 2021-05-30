@@ -35,7 +35,7 @@
     <action android:id="@+id/navigationToNewPlayer" app:destination="@id/newPlayerDialog" />
     <action android:id="@+id/navigationToNewGame" app:destination="@id/newGameFragment" />
     <action android:id="@+id/navigationToStatGame" app:destination="@id/statGameFragment" />
-    <action android:id="@+id/navigationToBroadcast" app:destination="@id/broadcastFragment" />
+    <action android:id="@+id/navigationToAllBroadcast" app:destination="@id/allBroadcastFragment" />
 
     <fragment
         android:id="@+id/orderFragment"
@@ -114,6 +114,18 @@
     <fragment
         android:id="@+id/broadcastFragment"
         android:name="com.gillian.baseball.broadcast.BroadcastFragment"
-        android:label="BroadcastFragment" />
+        android:label="BroadcastFragment" >
+        <argument
+            android:name="gameId"
+            app:argType="string" />
+    </fragment>
+    <fragment
+        android:id="@+id/allBroadcastFragment"
+        android:name="com.gillian.baseball.allbroadcast.AllBroadcastFragment"
+        android:label="AllBroadcastFragment" >
+        <action
+            android:id="@+id/action_all_to_oneLive"
+            app:destination="@id/broadcastFragment" />
+    </fragment>
 
 </navigation>

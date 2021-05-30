@@ -62,6 +62,13 @@
         <item name="android:textSize">16sp</item>
     </style>
 
+    <style name="GameTag">
+        <item name="android:paddingTop">@dimen/quarter_margin</item>
+        <item name="android:paddingBottom">@dimen/quarter_margin</item>
+        <item name="android:paddingStart">@dimen/half_margin</item>
+        <item name="android:paddingEnd">@dimen/half_margin</item>
+    </style>
+
     <style name="GameButton" parent="Widget.AppCompat.Button.Borderless">
         <item name="android:textSize">16sp</item>
         <item name="android:letterSpacing">0.15</item>

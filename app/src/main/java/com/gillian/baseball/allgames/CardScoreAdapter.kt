@@ -12,7 +12,7 @@ import com.gillian.baseball.databinding.ItemCardScoreBinding
 import com.gillian.baseball.databinding.ItemCardSmallBinding
 
 
-class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : ListAdapter<GameCard, RecyclerView.ViewHolder>(DiffCallback) {
+class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, val isBroadcast: Boolean = false) : ListAdapter<GameCard, RecyclerView.ViewHolder>(DiffCallback) {
 
     class OnClickListener(val clickListener: (gameCard: GameCard) -> Unit) {
         fun onClick(gameCard: GameCard) = clickListener(gameCard)
@@ -43,7 +43,6 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-
         return when (viewType) {
             TYPE_SCHEDULE -> ScheduleViewHolder(ItemCardScheduleBinding.inflate(LayoutInflater.from(parent.context), parent, false))
             TYPE_FULL -> ViewHolder(ItemCardScoreBinding.inflate(LayoutInflater.from(parent.context), parent, false))
@@ -62,12 +61,16 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
     }
 
     override fun getItemViewType(position: Int): Int {
-        return when (getItem(position).status) {
-            GameStatus.SCHEDULED.number -> TYPE_SCHEDULE
-            else -> when (position) {
-                0 -> TYPE_FULL
-                1 -> TYPE_SMALL
-                else -> TYPE_SMALL
+        if (isBroadcast) {
+            return (TYPE_SMALL)
+        } else {
+            return when (getItem(position).status) {
+                GameStatus.SCHEDULED.number -> TYPE_SCHEDULE
+                else -> when (position) {
+                    0 -> TYPE_FULL
+                    1 -> TYPE_SMALL
+                    else -> TYPE_SMALL
+                }
             }
         }
     }
@@ -82,8 +85,8 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener) : 
         }
 
         private const val TYPE_SCHEDULE = 0x00
-        private const val TYPE_FULL     = 0x01
-        private const val TYPE_SMALL    = 0x02
+        private const val TYPE_FULL = 0x01
+        private const val TYPE_SMALL = 0x02
     }
 }
 

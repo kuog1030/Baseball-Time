@@ -2,6 +2,7 @@ package com.gillian.baseball.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.gillian.baseball.allbroadcast.AllBroadcastViewModel
 import com.gillian.baseball.allgames.AllGamesViewModel
 import com.gillian.baseball.broadcast.BroadcastViewModel
 import com.gillian.baseball.data.source.BaseballRepository
@@ -39,6 +40,8 @@ class ViewModelFactory constructor(
                     LoginViewModel(repository)
                 isAssignableFrom(BroadcastViewModel::class.java) ->
                     BroadcastViewModel(repository)
+                isAssignableFrom(AllBroadcastViewModel::class.java) ->
+                    AllBroadcastViewModel(repository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

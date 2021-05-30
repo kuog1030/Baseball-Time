@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_stat -> {
-                    navController.navigate(NavigationDirections.navigationToBroadcast())
+                    navController.navigate(NavigationDirections.navigationToAllBroadcast())
                     true
                 }
                 else -> false

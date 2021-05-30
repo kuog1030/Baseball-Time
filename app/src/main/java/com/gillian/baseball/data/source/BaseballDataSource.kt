@@ -42,6 +42,8 @@ interface BaseballDataSource {
 
     suspend fun getAllGames(teamId: String) : Result<List<Game>>
 
+    suspend fun getAllLiveGamesCard() : Result<List<GameCard>>
+
     suspend fun getAllGamesCard(teamId: String) : Result<List<GameCard>>
 
     //suspend fun getTeam(teamId: String): MutableLiveData<Team>

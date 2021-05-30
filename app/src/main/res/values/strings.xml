@@ -68,6 +68,7 @@
     <string name="no_game_hint">還沒有球賽紀錄喔</string>
     <string name="score_win">累積勝場</string>
     <string name="score_rate">累積敗場</string>
+    <string name="game_playing">LIVE</string>
 
 
     <!--    schedule a new game-->

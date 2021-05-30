@@ -20,7 +20,7 @@
             android:id="@+id/text_card_score_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text='@{game.title + " - " + game.place}'
+            android:text='@{game.title + "  " + game.place}'
             android:textColor="?attr/colorPrimary"
             android:layout_marginTop="@dimen/margin"
             app:layout_constraintEnd_toEndOf="parent"
