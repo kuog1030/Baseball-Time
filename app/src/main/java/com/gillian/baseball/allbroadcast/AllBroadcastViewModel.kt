@@ -1,5 +1,6 @@
 package com.gillian.baseball.allbroadcast
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,7 +23,10 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
     val allLiveResult : LiveData<List<GameCard>>
         get() = _allLiveResult
 
-    lateinit var cacheAllGames : List<GameCard>
+    val searchTitle = MutableLiveData<String>()
+
+
+    var cacheAllGames : List<GameCard> = emptyList()
 
     private val _errorMessage = MutableLiveData<String>()
 
@@ -72,9 +76,18 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
 
     }
 
+    // 我需要設定unclickable欸
+    fun searchGame() {
+        Log.i("gillian", "searching ${searchTitle.value}")
 
-    fun searchGame(title: String) {
+        if (searchTitle.value == null) {
+            _allLiveResult.value = cacheAllGames
 
+        } else {
+            val resultList = cacheAllGames.filter { card -> (card.title).contains(searchTitle.value!!) }
+
+            _allLiveResult.value = resultList
+        }
     }
 
 }
