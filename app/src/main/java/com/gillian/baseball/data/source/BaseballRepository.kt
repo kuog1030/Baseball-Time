@@ -37,6 +37,8 @@ interface BaseballRepository {
 
     suspend fun getAllEvents(gameId: String): List<Event>
 
+    suspend fun getLiveEvents(gameId: String): MutableLiveData<List<Event>>
+
     suspend fun getAllGames(teamId: String) : Result<List<Game>>
 
     suspend fun getAllGamesCard(teamId: String) : Result<List<GameCard>>

@@ -35,6 +35,7 @@
     <action android:id="@+id/navigationToNewPlayer" app:destination="@id/newPlayerDialog" />
     <action android:id="@+id/navigationToNewGame" app:destination="@id/newGameFragment" />
     <action android:id="@+id/navigationToStatGame" app:destination="@id/statGameFragment" />
+    <action android:id="@+id/navigationToBroadcast" app:destination="@id/broadcastFragment" />
 
     <fragment
         android:id="@+id/orderFragment"
@@ -110,5 +111,9 @@
             android:id="@+id/action_loginFragment_to_firstLoginFragment"
             app:destination="@id/firstLoginFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/broadcastFragment"
+        android:name="com.gillian.baseball.broadcast.BroadcastFragment"
+        android:label="BroadcastFragment" />
 
 </navigation>

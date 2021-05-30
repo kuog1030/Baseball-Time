@@ -30,7 +30,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     val game: LiveData<Game>
         get() = _game
 
-    val isHome = argument.isHome ?: true
+    val isHome = argument.isHome
 
 
 
@@ -66,6 +66,10 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     var inningCount = 1
     var inningShow = MutableLiveData<String>("1")
+
+    //計算上一個投手的投球局數
+    var previousIp = 0
+    var pitcherCount = 1
 
     val liveBallCount = MutableLiveData<Int>(0)
 
@@ -113,7 +117,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun switch() {
 
         if (inningCount == totalInning) {
-            _navigateToFinal.value = MyGame(isHome = isHome, game = game.value!!, benchPlayer = myBench)
+            switchFinal()
         } else {
             // 比賽還沒結束
             if (atBatNumber == (lineUp.size - 1)) {
@@ -162,6 +166,22 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
 
+    fun switchFinal() {
+
+        val totalInningPitched = ((inningCount-1) * 3 + outCount.value!!) - previousIp
+
+        Log.i("game", "換投中 event送達~")
+        sendEvent(
+                Event(
+                        pitcher = if (isHome) guestPitcher else homePitcher,
+                        inning = inningCount,
+                        result = EventType.INNINGSPITCHED.number,
+                        out = totalInningPitched
+                )
+        )
+
+        _navigateToFinal.value = MyGame(isHome = isHome, game = game.value!!, benchPlayer = myBench)
+    }
 
 
     private val _navigateToEvent = MutableLiveData<EventInfo>()
@@ -236,7 +256,6 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             nextPlayer()
         }
     }
-
 
     fun addPitchCount() {
         liveBallCount.value = liveBallCount.value!!.plus(1)
@@ -466,18 +485,22 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     // pinchDialog -> 換投
     fun nextPitcher(next: EventPlayer, position: Int) {
-        val totalInningPitched = ((inningCount-1) * 3 + outCount.value!!)
+        val totalInningPitched = ((inningCount-1) * 3 + outCount.value!!) - previousIp
+        previousIp = totalInningPitched
 
         Log.i("game", "換投中 event送達~")
         sendEvent(
             Event(
                 pitcher = if (isTop) homePitcher else guestPitcher,
                 inning = inningCount,
-                result = EventType.PINCHPITCHER.number,
+                result = EventType.INNINGSPITCHED.number,
                 out = totalInningPitched
             )
         )
 
+        // 第幾任投手
+        pitcherCount += 1
+        next.order = pitcherCount
         if (isTop) {
             next.pinch = homePitcher
             homePitchCount = 0

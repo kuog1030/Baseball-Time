@@ -12,24 +12,20 @@ import com.gillian.baseball.util.Util
 import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 
-class FirstLoginViewModel(private val repository: BaseballRepository) : ViewModel () {
+class FirstLoginViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     val teamName = MutableLiveData<String>()
     val playerName = MutableLiveData<String>()
     val playerNumber = MutableLiveData<String>()
 
-    private val _navigateToTeam = MutableLiveData<Boolean>()
+    var goToTeam = false
 
-    val navigateToTeam : LiveData<Boolean>
-        get() = _navigateToTeam
+    private val _navigateToTeamOrOrder = MutableLiveData<Boolean>()
 
-    private val _navigateToOrder = MutableLiveData<Boolean>()
-
-    val navigateToOrder : LiveData<Boolean>
-        get() = _navigateToOrder
+    val navigateToTeamOrOrder: LiveData<Boolean>
+        get() = _navigateToTeamOrOrder
 
     var errorMessage = MutableLiveData<String>()
-
 
 
     fun navigateToTeam(toTeam: Boolean) {
@@ -38,7 +34,7 @@ class FirstLoginViewModel(private val repository: BaseballRepository) : ViewMode
         } else {
             errorMessage.value = null
 
-
+            goToTeam = toTeam
             val numberInt = playerNumber.value!!.toInt()
 
             val team = Team(name = teamName.value ?: "")
@@ -46,21 +42,18 @@ class FirstLoginViewModel(private val repository: BaseballRepository) : ViewMode
 
             viewModelScope.launch {
                 val result = repository.initTeamAndPlayer(team, player)
-                Log.i("gillian", "view model scope called")
-                if (toTeam) {
-                    _navigateToTeam.value = when (result) {
-                        is Result.Success -> {
-                            result.data
-                        }
-                        is Result.Fail -> {
-                            null
-                        }
-                        is Result.Error -> {
-                            null
-                        }
-                        else -> {
-                            null
-                        }
+                _navigateToTeamOrOrder.value = when (result) {
+                    is Result.Success -> {
+                        result.data
+                    }
+                    is Result.Fail -> {
+                        null
+                    }
+                    is Result.Error -> {
+                        null
+                    }
+                    else -> {
+                        null
                     }
                 }
             }
@@ -68,8 +61,7 @@ class FirstLoginViewModel(private val repository: BaseballRepository) : ViewMode
     }
 
     fun onNavigatedDone() {
-        //_navigateToOrder.value = null
-        _navigateToTeam.value = null
+        _navigateToTeamOrOrder.value = null
     }
 
 }

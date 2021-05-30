@@ -37,7 +37,7 @@ class HitterBoxAdapter : ListAdapter<HitterBox, HitterBoxAdapter.ViewHolder>(Dif
         }
 
         override fun areContentsTheSame(oldItem: HitterBox, newItem: HitterBox): Boolean {
-            return oldItem.playerId == newItem.playerId
+            return oldItem.order == newItem.order
         }
 
     }

@@ -40,6 +40,7 @@ fun Int.toInningCount() : String {
     return ("${this/3}.${this%3}")
 }
 
+// TODO()目前只改to my game stat並且有修改過東西 之後要把to both game stat也更新
 fun List<Event>.toBothGameStat() : Statistic {
 
 
@@ -222,10 +223,9 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             }
         }
 
-        // TODO() 之後得分的result要改掉，目前傳上去是0
         if (type == 0) {
-            Log.i("gillian extension", "type = 0 and it shouldn't be print.")
             targetEventType = EventType.RUN
+            Log.i("gillian extension", "type = 0 and it shouldn't be print.")
         }
 
         if (targetEventType.isAtBat) box.atBat += 1
@@ -269,8 +269,11 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             }
         }
 
-        // TODO() 之後得分的result要改掉，目前傳上去是0
-        if (type == 0) targetEventType = EventType.SACRIFICEFLY
+
+        if (type == 0) {
+            targetEventType = EventType.SACRIFICEFLY
+            Log.i("gillian", "event result is 0. this is not suppose to be printed")
+        }
 
         box.run += event.run
 
@@ -282,12 +285,12 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
                 box.hit += 1
                 box.homerun += 1
             }
-            EventType.RUN -> box.run += 1
+            //EventType.RUN -> box.run += 1 上面加過了這邊應該不用加
             EventType.DROPPEDTHIRD -> box.strikeOut += 1
             EventType.STRIKEOUT -> box.strikeOut += 1
             EventType.WALK -> box.baseOnBalls += 1
             // inning pitched is put into out while recording event
-            EventType.PINCHPITCHER -> box.inningsPitched = event.out
+            EventType.INNINGSPITCHED -> box.inningsPitched = event.out
             else -> null // TODO() 可能要throw error
         }
     }

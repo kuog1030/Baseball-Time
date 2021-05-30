@@ -70,6 +70,10 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
         return remoteDataSource.getAllEvents(gameId)
     }
 
+    override suspend fun getLiveEvents(gameId: String): MutableLiveData<List<Event>> {
+        return remoteDataSource.getLiveEvents(gameId)
+    }
+
     override suspend fun getAllGames(teamId: String): Result<List<Game>> {
         return remoteDataSource.getAllGames(teamId)
     }

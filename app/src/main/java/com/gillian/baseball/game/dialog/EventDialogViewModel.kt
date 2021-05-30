@@ -164,6 +164,7 @@ class EventDialogViewModel(private val repository: BaseballRepository, private v
     fun run(atBase: AtBase) {
         atBase.base = -1
         eventList.add(Event(inning = hitterEvent.value!!.inning,
+                result = EventType.RUN.number,
                 run = 1,
                 player = atBase.player,
                 pitcher = hitterEvent.value?.pitcher!!,

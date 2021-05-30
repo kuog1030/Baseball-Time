@@ -34,7 +34,7 @@ data class GameCard(
         }
 
     private fun toDateString(dateLong: Long): String {
-        val dateFormat = SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.TAIWAN)
+        val dateFormat = SimpleDateFormat("yyyy-MM-dd EEE HH:mm", Locale.TAIWAN)
         return dateFormat.format(Date(dateLong))
     }
 }

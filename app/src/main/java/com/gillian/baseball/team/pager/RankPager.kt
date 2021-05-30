@@ -24,14 +24,9 @@ class RankPager : Fragment() {
 
         binding.viewModel = viewModel
 
-        val adapter = BroadcastAdapter()
-
-        binding.recylcerTest.adapter = adapter
-
         viewModel.testAllEvent.observe(viewLifecycleOwner, Observer {
             it?.let{
                 Log.i("rank pager", "get all event list success")
-                adapter.submitList(it)
             }
         })
 

@@ -35,7 +35,8 @@ class PitcherBoxAdapter : ListAdapter<PitcherBox, PitcherBoxAdapter.ViewHolder>(
         }
 
         override fun areContentsTheSame(oldItem: PitcherBox, newItem: PitcherBox): Boolean {
-            return oldItem.playerId == newItem.playerId
+            // TODO 原本是判斷oldItem.playerId 確實會不同但感覺很浪費時間判斷很多字串?
+            return oldItem.order == newItem.order
         }
 
     }

@@ -11,6 +11,7 @@ import com.google.common.io.Files.getFileExtension
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.auth.GoogleAuthProvider
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
@@ -670,6 +671,25 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         continuation.resume(emptyList())
                     }
                 }
+    }
+
+    override suspend fun getLiveEvents(gameId: String): MutableLiveData<List<Event>> {
+        val liveEvent = MutableLiveData<List<Event>>()
+        val eventList = mutableListOf<Event>()
+
+        FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
+                .collection(PLAYS)
+                .addSnapshotListener { documents, error ->
+                    error?.let{
+                        Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                    }
+
+                    for (dc in documents!!.documentChanges) {
+                        eventList.add(dc.document.toObject(Event::class.java))
+                    }
+                    liveEvent.value = eventList
+                }
+        return liveEvent
     }
 
     override suspend fun deletePlayer(playerId: String): Result<Boolean> = suspendCoroutine { continuation ->

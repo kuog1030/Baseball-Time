@@ -24,8 +24,8 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
     var startingPitcher : EventPlayer? = null
 
     var lineUp = mutableListOf<EventPlayer>()
-    lateinit var myBench : MutableList<EventPlayer>
     var pitcherList = mutableListOf<EventPlayer>()
+    lateinit var myBench : MutableList<EventPlayer>
 
     val awayLineUp = mutableListOf<EventPlayer>()
 
@@ -133,6 +133,10 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
             lineUp[index-1].order = index*100
         }
 
+        if (startingPitcher == null) {
+            pitcherList[0].order = 1
+        }
+
         val myTeam = GameTeam(
                 name = UserManager.teamName,
                 acronym = UserManager.teamAcronym,
@@ -214,6 +218,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
 
     fun selectPitcher(position: Int) {
         startingPitcher = pitcherList[position]
+        startingPitcher?.order = 1
     }
 
 

@@ -32,17 +32,13 @@ class FirstLoginFragment : Fragment() {
         binding.viewpagerFirstLoginArrow.setArrowIndicatorRes(R.drawable.ic_baseline_arrow_backward_24, R.drawable.ic_baseline_arrow_forward_24)
         binding.viewpagerFirstLoginArrow.bind(binding.viewpagerFirstLogin)
 
-        viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
+        viewModel.navigateToTeamOrOrder.observe(viewLifecycleOwner, Observer {
             it?.let {
-                findNavController().navigate(NavigationDirections.navigationToTeam())
-                viewModel.onNavigatedDone()
-            }
-        })
-
-        viewModel.navigateToOrder.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                // 先取得team id
-                findNavController().navigate(NavigationDirections.navigationToOrder(null))
+                if (viewModel.goToTeam) {
+                    findNavController().navigate(NavigationDirections.navigationToTeam())
+                } else {
+                    findNavController().navigate(NavigationDirections.navigationToOrder(null))
+                }
                 viewModel.onNavigatedDone()
             }
         })

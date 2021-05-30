@@ -35,7 +35,10 @@ interface BaseballDataSource {
 
     suspend fun updatePitchStat(playerId: String, pitcherBox: PitcherBox) : Result<Boolean>
 
+    // TODO() 這個不一定需要用到吧?
     suspend fun getAllEvents(gameId: String): List<Event>
+
+    suspend fun getLiveEvents(gameId: String): MutableLiveData<List<Event>>
 
     suspend fun getAllGames(teamId: String) : Result<List<Game>>
 
