@@ -20,6 +20,7 @@ data class Event(
 ) : Parcelable {
 
     // Event是不是需要壘上跑者的情況
+    // 跑者的event應該不需要
 
     fun toLiveString() : String {
         var liveString = "第${player.order/100}棒 ${player.name}在${strike}好${ball}壞之下，"
@@ -34,7 +35,9 @@ data class Event(
             liveString += "帶有${this.rbi}打點"
         }
 
-        liveString += "。目前${out+1}出局。"
+
+        // 如果是出局的事件才要out + 1
+        liveString += "。目前${out}出局。"
 
         return liveString
     }

@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballDataSource
 import com.gillian.baseball.ext.*
+import com.gillian.baseball.game.EventType
 import com.gillian.baseball.login.UserManager
 import com.google.common.io.Files.getFileExtension
 import com.google.firebase.auth.FirebaseUser
@@ -699,9 +700,12 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         return@addSnapshotListener
                     }
                     for (dc in documents!!.documentChanges) {
-                        eventList.add(0, dc.document.toObject(Event::class.java))
+                        // EventType.RUN == 11
+                        if (dc.document["result"].toString() != "11") {
+                            eventList.add(0, dc.document.toObject(Event::class.java))
+                        }
                     }
-
+                    Log.i("gillian", "---------------document change end---------------")
                     if (isInit) {
                         Log.i("gillian", "is init是true")
                         eventList.sortByDescending { it.time }

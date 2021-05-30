@@ -17,16 +17,15 @@ import kotlinx.coroutines.launch
 class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
-
     private val _allLiveResult = MutableLiveData<List<GameCard>>()
 
-    val allLiveResult : LiveData<List<GameCard>>
+    val allLiveResult: LiveData<List<GameCard>>
         get() = _allLiveResult
 
     val searchTitle = MutableLiveData<String>()
 
 
-    var cacheAllGames : List<GameCard> = emptyList()
+    var cacheAllGames: List<GameCard> = emptyList()
 
     private val _errorMessage = MutableLiveData<String>()
 
@@ -54,6 +53,7 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
                     _errorMessage.value = null
                     _status.value = LoadStatus.DONE
                     if (isInit) cacheAllGames = result.data
+                    if (result.data.isEmpty()) noLiveGame()
                     result.data
                 }
                 is Result.Fail -> {
@@ -86,8 +86,13 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
         } else {
             val resultList = cacheAllGames.filter { card -> (card.title).contains(searchTitle.value!!) }
 
+            _errorMessage.value = if (resultList.isEmpty()) Util.getString(R.string.error_search) else null
             _allLiveResult.value = resultList
         }
+    }
+
+    fun noLiveGame() {
+        _errorMessage.value = Util.getString(R.string.error_no_live_game)
     }
 
 }

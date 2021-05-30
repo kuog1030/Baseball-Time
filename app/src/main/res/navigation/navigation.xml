@@ -116,8 +116,8 @@
         android:name="com.gillian.baseball.broadcast.BroadcastFragment"
         android:label="BroadcastFragment" >
         <argument
-            android:name="gameId"
-            app:argType="string" />
+            android:name="game"
+            app:argType="com.gillian.baseball.data.GameCard"/>
     </fragment>
     <fragment
         android:id="@+id/allBroadcastFragment"

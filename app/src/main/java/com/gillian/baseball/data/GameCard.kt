@@ -9,7 +9,7 @@ import java.util.*
 data class GameCard(
         var id: String = "",
         val title: String = "",
-        val place: String = "",
+        var place: String = "",
         var date: Long = -1,
         var status: Int = 0,
         var isHome: Boolean = false,
@@ -20,10 +20,13 @@ data class GameCard(
         //val myScore: List<String> = listOf()
 ) : Parcelable {
     val dateString: String
-        get() = toDateString(date, false)
+        get() = toDateString(date, 0)
 
     val dateStringShort: String
-        get() = toDateString(date, true)
+        get() = toDateString(date, 1)
+
+    val dateStringTime: String
+        get() = toDateString(date, 2)
 
     val gameResult : GameResult
         get() {
@@ -36,13 +39,15 @@ data class GameCard(
             }
         }
 
-    private fun toDateString(dateLong: Long, toShort: Boolean): String {
-        if (toShort) {
-            val dateFormatShort = SimpleDateFormat("yyyy-MM-dd EEE", Locale.TAIWAN)
-            return dateFormatShort.format(Date(dateLong))
+    private fun toDateString(dateLong: Long, format: Int): String {
+        lateinit var dateFormat : SimpleDateFormat
+        if (format == 0) {
+            dateFormat = SimpleDateFormat("yyyy-MM-dd EEE HH:mm", Locale.TAIWAN)
+        } else if (format == 1) {
+            dateFormat = SimpleDateFormat("yyyy-MM-dd EEE", Locale.TAIWAN)
         } else {
-            val dateFormat = SimpleDateFormat("yyyy-MM-dd EEE HH:mm", Locale.TAIWAN)
-            return dateFormat.format(Date(dateLong))
+            dateFormat = SimpleDateFormat("MM-dd HH:mm", Locale.TAIWAN)
         }
+        return dateFormat.format(Date(dateLong))
     }
 }

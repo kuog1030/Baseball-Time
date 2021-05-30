@@ -2,6 +2,7 @@ package com.gillian.baseball.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.gillian.baseball.broadcast.BroadcastViewModel
 import com.gillian.baseball.data.GameCard
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.order.OrderViewModel
@@ -16,6 +17,8 @@ class GameCardViewModelFactory constructor(
                 when {
                     isAssignableFrom(OrderViewModel::class.java) ->
                         OrderViewModel(repository, gameCard)
+                    isAssignableFrom(BroadcastViewModel::class.java)->
+                        BroadcastViewModel(repository, gameCard!!)
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
                 }

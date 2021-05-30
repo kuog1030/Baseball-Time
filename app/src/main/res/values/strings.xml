@@ -8,6 +8,8 @@
     <string name="create_new_player_success">新增成功</string>
     <string name="error_schedule_game">除了備註欄都是必填喔</string>
     <string name="error_init_team_player">記得3個欄位都要填寫喔</string>
+    <string name="error_no_live_game">目前沒有正在比賽中的球賽唷</string>
+    <string name="error_search">沒有符合你的搜尋結果，\n麻煩你再檢查一次或聯絡比賽方</string>
     <string name="return_nothing">不好意思，神秘力量發生了</string>
 
     <!--    team related -->
@@ -69,6 +71,11 @@
     <string name="score_win">累積勝場</string>
     <string name="score_rate">累積敗場</string>
     <string name="game_playing">LIVE</string>
+    <string name="game_start_time">開賽時間</string>
+    <string name="recorded_team">記\n錄\n方</string>
+    <string name="no_game_place">（未紀錄）</string>
+    <string name="inning_top">%d局上</string>
+    <string name="inning_bottom">%d局下</string>
 
 
     <!--    schedule a new game-->

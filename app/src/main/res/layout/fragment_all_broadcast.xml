@@ -33,7 +33,6 @@
             android:id="@+id/imageButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/half_margin"
             android:backgroundTint="@color/transparent"
             android:onClick="@{()->viewModel.searchGame()}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_all_live_search"
@@ -68,13 +67,17 @@
 
         <TextView
             android:id="@+id/text_all_live_error"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginEnd="@dimen/double_margin"
             android:text="@{viewModel.errorMessage}"
+            android:gravity="center"
             app:layout_constraintBottom_toBottomOf="@+id/recycler_all_live"
             app:layout_constraintEnd_toEndOf="@+id/recycler_all_live"
             app:layout_constraintStart_toStartOf="@+id/recycler_all_live"
-            app:layout_constraintTop_toTopOf="@+id/recycler_all_live" />
+            app:layout_constraintTop_toTopOf="@+id/recycler_all_live"
+            tools:text="@string/error_search"/>
 
 
 

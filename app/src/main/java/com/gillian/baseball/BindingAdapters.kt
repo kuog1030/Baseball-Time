@@ -271,6 +271,16 @@ fun bindTextAndTeamStat(textView: TextView, number: Int?) {
     }
 }
 
+@BindingAdapter("inningCount")
+fun bindTextInning(textView: TextView, inning: Int) {
+    val inningNine = (inning + 1 ) / 2
+    if (inning % 2 == 1) {
+        textView.text = BaseballApplication.instance.getString(R.string.inning_top, inningNine)
+    } else {
+        textView.text = BaseballApplication.instance.getString(R.string.inning_bottom, inningNine)
+    }
+}
+
 @BindingAdapter("loadingStatus")
 fun bindLoadingStatus(view: ProgressBar, status: LoadStatus?) {
     view.visibility = when (status) {

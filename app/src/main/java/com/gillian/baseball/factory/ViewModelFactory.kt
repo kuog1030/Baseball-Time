@@ -38,8 +38,6 @@ class ViewModelFactory constructor(
                     EditPlayerViewModel(repository)
                 isAssignableFrom(LoginViewModel::class.java) ->
                     LoginViewModel(repository)
-                isAssignableFrom(BroadcastViewModel::class.java) ->
-                    BroadcastViewModel(repository)
                 isAssignableFrom(AllBroadcastViewModel::class.java) ->
                     AllBroadcastViewModel(repository)
                 else ->

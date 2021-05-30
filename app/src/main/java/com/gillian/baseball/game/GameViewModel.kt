@@ -128,6 +128,11 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
             clearCount(includeOut = true)
             inningCount += 1
+
+            sendEvent(Event(
+                result = EventType.INNINGCHANGE.number
+            ))
+
             if (isTop) {
                 // 目前上半局
                 homePitchCount = liveBallCount.value!!  // 紀錄這次投球數

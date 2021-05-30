@@ -11,8 +11,8 @@
 
         <ImageView
             android:id="@+id/base_first"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -20,19 +20,19 @@
 
         <ImageView
             android:id="@+id/base_second"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="22dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginStart="16dp"
             app:layout_constraintStart_toStartOf="@+id/base_first"
             app:layout_constraintTop_toTopOf="@+id/base_third"
             app:srcCompat="@drawable/diamond_field" />
 
         <ImageView
             android:id="@+id/base_third"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginEnd="22dp"
+            android:layout_width="25dp"
+            android:layout_height="25dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
             app:layout_constraintEnd_toEndOf="@+id/base_first"
             app:layout_constraintTop_toTopOf="@+id/base_first"
             app:srcCompat="@drawable/diamond_field" />
