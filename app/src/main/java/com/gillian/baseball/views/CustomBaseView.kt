@@ -68,26 +68,51 @@ class CustomBaseView(context: Context, attrs: AttributeSet) : ConstraintLayout(c
     private var first : ImageView
     private var second : ImageView
     private var third : ImageView
-    private var hitter : TextView
+
+    private var baseInt : Int
 
     private val attributes by lazy {
         context.obtainStyledAttributes(attrs, R.styleable.CustomBaseView)
     }
 
     init {
+
+        context.theme.obtainStyledAttributes(
+                attrs, R.styleable.CustomBaseView, 0, 0).apply {
+            try{
+                baseInt = getInteger(R.styleable.CustomBaseView_onBase, 0)
+            } finally {
+                recycle()
+            }
+        }
+
         val inflater = context.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
         val view = inflater.inflate(R.layout.view_base, this, true)
 
         first = view.findViewById(R.id.base_first)
         second = view.findViewById(R.id.base_second)
         third = view.findViewById(R.id.base_third)
-        hitter = view.findViewById(R.id.base_hitter)
 
-
+        setBaseList(baseInt)
     }
 
+    fun setBaseList(base: Int) {
+        if (base / 100 == 1) {
+            third.setColorFilter(BaseballApplication.instance.getColor(R.color.yellow_strike))
+        }
+
+        if ((base / 10 % 10) == 1) {
+            second.setColorFilter(BaseballApplication.instance.getColor(R.color.yellow_strike))
+        }
+
+        if (base % 10 == 1){
+            first.setColorFilter(BaseballApplication.instance.getColor(R.color.yellow_strike))
+        }
+    }
+
+
     fun setFirst() {
-        first.setImageDrawable(BaseballApplication.instance.getDrawable(R.drawable.diamond_field_occupied))
+        //first.setImageDrawable(BaseballApplication.instance.getDrawable(R.drawable.diamond_field_occupied))
     }
 }
 

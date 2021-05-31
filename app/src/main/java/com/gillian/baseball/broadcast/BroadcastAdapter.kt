@@ -15,7 +15,6 @@ class BroadcastAdapter : ListAdapter<Event, RecyclerView.ViewHolder>(DiffCallbac
     class ViewHolder(private var binding: ItemBroadcastBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: Event) {
             binding.event = event
-            binding.myCustomBase.setFirst()
             binding.executePendingBindings()
         }
     }
