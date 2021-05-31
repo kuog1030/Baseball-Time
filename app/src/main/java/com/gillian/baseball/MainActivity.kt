@@ -9,6 +9,7 @@ import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.gillian.baseball.databinding.ActivityMainBinding
 import com.gillian.baseball.ext.toInningCount
+import com.gillian.baseball.login.UserManager
 
 class MainActivity : AppCompatActivity() {
 
@@ -45,6 +46,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.loginCreateFragment -> setBottomNavigation(false)
                 R.id.loginSearchFragment -> setBottomNavigation(false)
                 R.id.loginGetFragment -> setBottomNavigation(false)
+                R.id.broadcastFragment -> if (UserManager.userId == "") {
+                    setBottomNavigation(false)
+                }
+                R.id.allBroadcastFragment -> if (UserManager.userId == "") {
+                    setBottomNavigation(false)
+                }
                 else -> setBottomNavigation(true)
             }
         }

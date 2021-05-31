@@ -61,13 +61,13 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
             R.id.radio_new_game_home -> {
                 homeImage.value = UserManager.teamImage
                 guestImage.value = ""
-                homeName.value = UserManager.teamName
+                homeName.value = UserManager.team?.name
                 guestName.value = awayName.value
             }
             else -> {
                 homeName.value = awayName.value
                 homeImage.value = ""
-                guestName.value = UserManager.teamName
+                guestName.value = UserManager.team?.name
                 guestImage.value = UserManager.teamImage
             }
 

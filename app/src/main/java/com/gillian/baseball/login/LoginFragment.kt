@@ -60,6 +60,10 @@ class LoginFragment : Fragment() {
             login()
         }
 
+        binding.buttonLoginBroadcast.setOnClickListener {
+            findNavController().navigate(NavigationDirections.navigationToAllBroadcast())
+        }
+
         viewModel.firebaseUser.observe(viewLifecycleOwner, Observer {
             it?.let{
                 Log.i("gillian", "url? ${it.photoUrl}")
