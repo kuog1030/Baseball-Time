@@ -13,7 +13,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.RecyclerView
-import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.data.EventPlayer
 import java.util.Collections.swap
 import com.gillian.baseball.databinding.FragmentOrderBinding

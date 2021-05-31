@@ -22,8 +22,6 @@ class ViewModelFactory constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
         with(modelClass) {
             when {
-                isAssignableFrom(LoginCreateViewModel::class.java) ->
-                    LoginCreateViewModel(repository)
                 isAssignableFrom(LoginSearchViewModel::class.java) ->
                     LoginSearchViewModel(repository)
                 isAssignableFrom(LoginGetViewModel::class.java) ->

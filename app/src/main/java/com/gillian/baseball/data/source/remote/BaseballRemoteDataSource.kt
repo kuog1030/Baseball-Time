@@ -102,6 +102,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .set(user).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         Log.i("gillianlog", "create user success")
+                        UserManager.userId = user.id
                         continuation.resume(Result.Success(user))
                     } else {
                         task.exception?.let {
@@ -124,9 +125,8 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
         team.id = document.id
         player.id = playerDocument.id
-        player.userId = UserManager.userId  // 這時候已經有user id了
-        //team.membersId.add(playerDocument.id)
-        //TODO() 這邊要賦值嗎
+        player.userId = UserManager.userId
+
         UserManager.teamId = document.id
         UserManager.playerId = playerDocument.id
 
@@ -145,10 +145,14 @@ object BaseballRemoteDataSource : BaseballDataSource {
                                     if (task.isSuccessful) {
                                         continuation.resume(Result.Success(true))
                                     } else {
-                                        continuation.resume(Result.Fail("initTeamAndPlayer_player fail"))
+                                        task.exception?.let {
+                                            Log.i("remote", "init update user fail ${it.message}")
+                                            continuation.resume(Result.Error(it))
+                                        }
+                                        Log.i("remote", "init update user fail")
+                                        continuation.resume(Result.Fail("initTeamAndPlayer_update_user fail"))
                                     }
                                 }
-
 
                     } else {
                         task.exception?.let {

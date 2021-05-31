@@ -74,7 +74,6 @@ class LoginFragment : Fragment() {
                     // navigate
                     findNavController().navigate(NavigationDirections.navigationToTeam())
                 } else {
-                    Log.i("gillian", "user to be created ${newUser}")
                     findNavController().navigate(LoginFragmentDirections.actionLoginToSearch(newUser))
                     // navigate
                 }

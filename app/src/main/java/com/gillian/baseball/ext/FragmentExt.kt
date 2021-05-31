@@ -35,3 +35,8 @@ fun Fragment.getVmFactory(eventInfo: EventInfo): EventViewModelFactory {
     val repository = (requireContext().applicationContext as BaseballApplication).repository
     return EventViewModelFactory(repository, eventInfo)
 }
+
+fun Fragment.getVmFactory(user: User): UserViewModelFactory {
+    val repository = (requireContext().applicationContext as BaseballApplication).repository
+    return UserViewModelFactory(repository, user)
+}

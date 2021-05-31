@@ -73,7 +73,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     init {
         // TODO() get team info
-        if (UserManager.team == null) {
+        if (UserManager.team == null || UserManager.teamId == "") {
             initMyUserData()
         } else {
             initTeamPage()
