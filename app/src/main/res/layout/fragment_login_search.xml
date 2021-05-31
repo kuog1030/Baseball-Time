@@ -22,6 +22,7 @@
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="搜尋球隊名稱"
+            android:text="@={viewModel.searchTeamName}"
             android:inputType="textPersonName"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.515"

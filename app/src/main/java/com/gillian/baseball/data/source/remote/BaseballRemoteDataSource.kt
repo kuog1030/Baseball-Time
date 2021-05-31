@@ -164,8 +164,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
         val players = FirebaseFirestore.getInstance().collection(PLAYERS)
         val playerDocument = players.document()
 
-        // TODO() Add player id to user id!
-
         team.id = document.id
         player.id = playerDocument.id
         player.userId = UserManager.userId  // 這時候已經有user id了
@@ -180,8 +178,20 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 playerDocument.set(player).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         UserManager.team = team
-                        continuation.resume(Result.Success(true))
-                        Log.i("remote", "init create team $team and player $player success")
+
+                        // update user team id and player id
+                        FirebaseFirestore.getInstance().collection(USERS)
+                                .document(UserManager.userId)
+                                .update("teamId", team.id, "playerId", player.id)
+                                .addOnCompleteListener {updateTask ->
+                                    if (task.isSuccessful) {
+                                        continuation.resume(Result.Success(true))
+                                    } else {
+                                        continuation.resume(Result.Fail("initTeamAndPlayer_player fail"))
+                                    }
+                                }
+
+
                     } else {
                         task.exception?.let {
                             Log.i("remote", "init create a player fail ${it.message}")

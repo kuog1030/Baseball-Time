@@ -16,10 +16,10 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     val firebaseUser = MutableLiveData<FirebaseUser>()
 
-    private val _userExist = MutableLiveData<String>()
+    private val _playerExist = MutableLiveData<String>()
 
-    val userExist : LiveData<String>
-        get() = _userExist
+    val playerExist : LiveData<String>
+        get() = _playerExist
 
     private val _signUpResult = MutableLiveData<User>()
 
@@ -63,7 +63,7 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
         firebaseUser.value?.let{
             viewModelScope.launch {
                 val result = repository.findUser(it.uid)
-                _userExist.value = when (result) {
+                _playerExist.value = when (result) {
                     is Result.Success -> {
                         result.data
                     }
@@ -83,11 +83,9 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
                 val result = repository.signUpUser(user)
                 _signUpResult.value = when (result) {
                     is Result.Success -> {
-                        Log.i("gillianlog", "in viewmodel success")
                         result.data
                     }
                     else -> {
-                        Log.i("gillianlog", "in viewmodel fail")
                         null
                     }
                 }
@@ -118,7 +116,7 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
     // 如果已經授權過 拿到的firebase user會是一樣的
 
 
-    fun onFirstLoginNavigated() {
+    fun onSearchNavigated() {
         _signUpResult.value = null
     }
 

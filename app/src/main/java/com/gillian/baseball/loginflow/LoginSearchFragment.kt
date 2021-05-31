@@ -28,6 +28,7 @@ class LoginSearchFragment : Fragment() {
         viewModel.navigateToCreate.observe(viewLifecycleOwner, Observer {
             it?.let{
                 findNavController().navigate(LoginSearchFragmentDirections.actionSearchToCreate())
+                viewModel.onCreateNavigated()
             }
         })
 

@@ -64,11 +64,11 @@ class LoginFragment : Fragment() {
             }
         })
 
-        viewModel.userExist.observe(viewLifecycleOwner, Observer {
+        viewModel.playerExist.observe(viewLifecycleOwner, Observer {
             it?.let{ playerId->
                 if (playerId.isEmpty()) {
-                    Log.i("gillian","player id is empty")
-                    //viewModel.newUserSignUp()
+                    viewModel.newUserSignUp()
+
                 } else {
                     UserManager.playerId = playerId
                     Log.i("gillian", "player id is not empty and usermanger player id is set")
@@ -82,9 +82,10 @@ class LoginFragment : Fragment() {
         viewModel.signUpResult.observe(viewLifecycleOwner, Observer {
             it?.let{
                 Log.i("gillian", "user sign up success in firebase and $it")
-                //UserManager.userId = it.id
-                //Log.i("gillianlog", "usermanager id set ${UserManager.userId}")
-                //viewModel.onFirstLoginNavigated()
+
+                UserManager.userId = it.id
+                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLoginSearchFragment())
+                viewModel.onSearchNavigated()
             }
         })
 
@@ -94,6 +95,7 @@ class LoginFragment : Fragment() {
                 UserManager.teamId = it.id
                 UserManager.team = it
                 Log.i("gillian", "get team by player id success $it")
+                findNavController().navigate(NavigationDirections.navigationToTeam())
             }
         })
 
