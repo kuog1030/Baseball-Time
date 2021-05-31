@@ -132,15 +132,19 @@
         android:name="com.gillian.baseball.loginflow.LoginSearchFragment"
         android:label="LoginSearchFragment" >
         <action
-            android:id="@+id/action_loginSearchFragment_to_loginCreateFragment"
+            android:id="@+id/action_search_to_create"
             app:destination="@id/loginCreateFragment" />
         <action
-            android:id="@+id/action_loginSearchFragment_to_loginGetFragment"
+            android:id="@+id/action_search_to_get"
             app:destination="@id/loginGetFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginGetFragment"
         android:name="com.gillian.baseball.loginflow.LoginGetFragment"
-        android:label="LoginGetFragment" />
+        android:label="LoginGetFragment" >
+        <argument
+            android:name="myTeam"
+            app:argType="com.gillian.baseball.data.Team" />
+    </fragment>
 
 </navigation>

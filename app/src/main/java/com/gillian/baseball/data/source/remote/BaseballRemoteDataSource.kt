@@ -38,6 +38,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
     // field name
     private const val USERID = "userId"
     private const val TEAMID = "teamId"
+    private const val PLAYERID = "playerId"
     private const val NOTE = "note"
     private const val NAME = "name"
     private const val NICKNAME = "nickname"
@@ -68,6 +69,75 @@ object BaseballRemoteDataSource : BaseballDataSource {
             }
     }
 
+    override suspend fun findUser(userId: String): Result<String> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(USERS)
+                .document(userId)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        if (task.result!!.exists()) {
+                            val getPlayerId = task.result!![PLAYERID].toString()
+                            UserManager.userId = userId
+                            continuation.resume(Result.Success(getPlayerId))
+                        } else {
+                            continuation.resume(Result.Success(""))
+                        }
+
+                    } else {
+                        task.exception?.let {
+                            Log.w("gillianlog", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("sign in fail"))
+                    }
+                }
+    }
+
+    override suspend fun getTeamByPlayer(playerId: String): Result<Team> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(PLAYERS)
+                .document(playerId)
+                .get()
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+
+                        val teamId = task.result!![TEAMID].toString()
+
+                        FirebaseFirestore.getInstance().collection(TEAMS)
+                                .document(teamId)
+                                .get()
+                                .addOnCompleteListener { taskTeam ->
+                                    if (taskTeam.isSuccessful) {
+                                        Log.i("gillian", "get team success")
+
+                                        val teamResult = taskTeam.result!!.toObject(Team::class.java)
+                                        continuation.resume(Result.Success(teamResult!!))
+
+                                    } else {
+                                        taskTeam.exception?.let {
+
+                                            Log.w("gillian", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                                            continuation.resume(Result.Error(it))
+                                            return@addOnCompleteListener
+                                        }
+                                        Log.i("gillianlog", "get team fail")
+                                        continuation.resume(Result.Fail("get team fail"))
+                                    }
+                                }
+
+
+                    } else {
+                        task.exception?.let {
+                            Log.w("gillian", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        Log.i("gillian", "search player fail")
+                        continuation.resume(Result.Fail("search player fail"))
+                    }
+                }
+    }
+
     override suspend fun signUpUser(user: User): Result<User> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(USERS)
                 .document(user.id)
@@ -94,6 +164,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
         val players = FirebaseFirestore.getInstance().collection(PLAYERS)
         val playerDocument = players.document()
 
+        // TODO() Add player id to user id!
 
         team.id = document.id
         player.id = playerDocument.id
@@ -396,6 +467,33 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
+    override suspend fun searchTeam(teamName: String): Result<List<Team>> = suspendCoroutine{ continuation ->
+        FirebaseFirestore.getInstance()
+                .collection(TEAMS)
+                .get()
+                .addOnCompleteListener{ task ->
+                    if (task.isSuccessful) {
+                        val teamList = mutableListOf<Team>()
+                        for (document in task.result!!) {
+                            Log.i("gillian", "the name is ${document["name"]}")
+                            if( document["name"].toString().contains(teamName) ) {
+                                teamList.add(document.toObject(Team::class.java))
+                            }
+                        }
+                        continuation.resume(Result.Success(teamList))
+
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("search team name fail"))
+                    }
+                }
+    }
+
     override suspend fun getAllGames(teamId: String): Result<List<Game>>  = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
                 .collection(GAMES)
@@ -478,7 +576,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
             .get()
             .addOnCompleteListener{ task ->
                 if (task.isSuccessful) {
-                    var result = task.result!!.toObject(Team::class.java)
+                    val result = task.result!!.toObject(Team::class.java)
                     continuation.resume(Result.Success(result!!))
 
                 } else {

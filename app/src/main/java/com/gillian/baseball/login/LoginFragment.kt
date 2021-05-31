@@ -32,16 +32,14 @@ class LoginFragment : Fragment() {
 
         if (hasUser()) {
             Log.i("gillianlog", "has user")
-            findNavController().navigate(NavigationDirections.navigationToTeam())
+            //findNavController().navigate(NavigationDirections.navigationToTeam())
         }
 
         auth = Firebase.auth
         val currentUser = auth.currentUser
         Log.i("gillianlog", "auth $auth currentUser $currentUser")
-        // if google account is already in firebase authentication
-        currentUser?.let {
-            viewModel.getUser()
-        }
+
+
     }
 
 
@@ -62,15 +60,40 @@ class LoginFragment : Fragment() {
         viewModel.firebaseUser.observe(viewLifecycleOwner, Observer {
             it?.let{
                 Log.i("gillian", "url? ${it.photoUrl}")
-                viewModel.createUserInFirebase()
+                viewModel.searchIfUserExist()
+            }
+        })
+
+        viewModel.userExist.observe(viewLifecycleOwner, Observer {
+            it?.let{ playerId->
+                if (playerId.isEmpty()) {
+                    Log.i("gillian","player id is empty")
+                    //viewModel.newUserSignUp()
+                } else {
+                    UserManager.playerId = playerId
+                    Log.i("gillian", "player id is not empty and usermanger player id is set")
+                    viewModel.getTeamAndPlayer(playerId)
+                    // use UserManager.playerId to search for team info then navigate to team
+
+                }
             }
         })
 
         viewModel.signUpResult.observe(viewLifecycleOwner, Observer {
             it?.let{
-                UserManager.userId = it.id
-                Log.i("gillianlog", "usermanager id set ${UserManager.userId}")
-                viewModel.onFirstLoginNavigated()
+                Log.i("gillian", "user sign up success in firebase and $it")
+                //UserManager.userId = it.id
+                //Log.i("gillianlog", "usermanager id set ${UserManager.userId}")
+                //viewModel.onFirstLoginNavigated()
+            }
+        })
+
+
+        viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                UserManager.teamId = it.id
+                UserManager.team = it
+                Log.i("gillian", "get team by player id success $it")
             }
         })
 
@@ -109,7 +132,6 @@ class LoginFragment : Fragment() {
         Log.i("gillianlog", "login function called gso $gso")
 
     }
-
 
 
     private fun hasUser() : Boolean{

@@ -3,6 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.loginflow.LoginSearchViewModel" />
+    </data>
+
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
@@ -13,7 +19,6 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/double_margin"
-            android:layout_marginTop="50dp"
             android:background="@drawable/bg_edit_text"
             android:ems="10"
             android:hint="搜尋球隊名稱"
@@ -28,6 +33,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:backgroundTint="@color/transparent"
+            android:onClick="@{()->viewModel.searchTeam()}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_search_team_title"
             app:layout_constraintEnd_toEndOf="@+id/edit_search_team_title"
             app:layout_constraintTop_toTopOf="@+id/edit_search_team_title"
@@ -35,30 +41,25 @@
 
         <Button
             android:id="@+id/button2"
-            android:layout_width="130dp"
-            android:layout_height="150dp"
-            android:layout_marginTop="150dp"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="130dp"
+            android:layout_marginEnd="24dp"
             android:background="@drawable/bg_edit_text"
+            android:onClick="@{()->viewModel.navigateToCreate()}"
             android:text="建立新的球隊"
-            app:layout_constraintStart_toStartOf="@+id/edit_search_team_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
-            android:id="@+id/button4"
-            android:layout_width="130dp"
-            android:layout_height="150dp"
-            android:text="搜尋現有球隊"
-            app:layout_constraintTop_toTopOf="@+id/button2"
-            tools:layout_editor_absoluteX="244dp" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_search_teams"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:orientation="vertical"
-            android:paddingStart="@dimen/margin"
-            android:paddingEnd="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
+            app:searchTeam="@{viewModel.teamsList}"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2"
             app:layout_constraintBottom_toBottomOf="parent"

@@ -9,6 +9,10 @@ interface BaseballRepository {
 
     suspend fun signInWithGoogle(idToken: String) : Result<FirebaseUser>
 
+    suspend fun findUser(userId: String) : Result<String>
+
+    suspend fun getTeamByPlayer(playerId: String): Result<Team>
+
     suspend fun signUpUser(user: User): Result<User>
 
     suspend fun initTeamAndPlayer(team: Team, player: Player) : Result<Boolean>
@@ -34,6 +38,8 @@ interface BaseballRepository {
     suspend fun updateHitStat(playerId: String, hitterBox: HitterBox) : Result<Boolean>
 
     suspend fun updatePitchStat(playerId: String, pitcherBox: PitcherBox) : Result<Boolean>
+
+    suspend fun searchTeam(teamName: String) : Result<List<Team>>
 
     suspend fun getAllEvents(gameId: String): List<Event>
 
