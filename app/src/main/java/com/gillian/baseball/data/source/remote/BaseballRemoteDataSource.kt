@@ -175,6 +175,25 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
     }
 
+    override suspend fun registerPlayer(playerId: String): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(PLAYERS)
+                .document(playerId)
+                .update(USERID, UserManager.userId)
+                .addOnCompleteListener{task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error register player. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("register player fail"))
+                    }
+                }
+    }
+
     override suspend fun scheduleGame(game: Game) : Result<Boolean> = suspendCoroutine { continuation ->
 
         val games = FirebaseFirestore.getInstance().collection(GAMES)
@@ -589,7 +608,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
     override suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>> = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
                 .collection(PLAYERS)
-                .whereEqualTo(TEAMID, UserManager.teamId)
+                .whereEqualTo(TEAMID, teamId)
                 .get()
                 .addOnCompleteListener{ task ->
                     if (task.isSuccessful) {

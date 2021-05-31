@@ -301,7 +301,7 @@ fun bindTextTeamCode(textView: TextView, teamId: String?) {
 }
 
 @BindingAdapter("loadingStatus")
-fun bindLoadingStatus(view: ProgressBar, status: LoadStatus?) {
+fun bindLoadingStatus(view: View, status: LoadStatus?) {
     view.visibility = when (status) {
         LoadStatus.LOADING -> View.VISIBLE
         else -> View.GONE

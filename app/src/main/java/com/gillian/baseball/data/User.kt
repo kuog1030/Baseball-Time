@@ -8,6 +8,6 @@ data class User (
     var id: String = "",
     val email: String,
     val image: String = "",
-    val playerId: String = "",
-    val teamId: String = ""
+    var playerId: String = "",
+    var teamId: String = ""
 ) : Parcelable

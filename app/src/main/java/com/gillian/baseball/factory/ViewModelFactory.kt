@@ -24,8 +24,6 @@ class ViewModelFactory constructor(
             when {
                 isAssignableFrom(LoginSearchViewModel::class.java) ->
                     LoginSearchViewModel(repository)
-                isAssignableFrom(LoginGetViewModel::class.java) ->
-                    LoginGetViewModel(repository)
                 isAssignableFrom(TeamViewModel::class.java) ->
                     TeamViewModel(repository)
                 isAssignableFrom(NewPlayerViewModel::class.java) ->
