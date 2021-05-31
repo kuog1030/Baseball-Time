@@ -12,6 +12,9 @@
     <string name="error_search">沒有符合你的搜尋結果，\n麻煩你再檢查一次或聯絡比賽方</string>
     <string name="return_nothing">不好意思，神秘力量發生了</string>
 
+    <!--    first login-->
+    <string name="team_code">代號</string>
+
     <!--    team related -->
     <string name="create_a_team">新增一支你的球隊吧</string>
     <string name="team_name">球隊名稱</string>
@@ -31,10 +34,13 @@
     <string name="number">背號</string>
     <string name="name_must">姓名（必填）</string>
     <string name="name_hint">潘威倫</string>
+    <string name="name_hint2">陳金鋒</string>
     <string name="number_must">背號（必填）</string>
     <string name="number_hint">18</string>
+    <string name="number_hint2">52</string>
     <string name="nickname">綽號</string>
     <string name="nickname_hint">嘟嘟</string>
+    <string name="nickname_hint2">鋒哥</string>
     <string name="image">圖片</string>
 
     <!--   box related -->

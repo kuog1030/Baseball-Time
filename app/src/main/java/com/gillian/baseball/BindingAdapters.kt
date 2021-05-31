@@ -281,6 +281,13 @@ fun bindTextInning(textView: TextView, inning: Int) {
     }
 }
 
+@BindingAdapter("teamCode")
+fun bindTextTeamCode(textView: TextView, teamId: String?) {
+    teamId?.let{
+        textView.text = it.substring(0, 5)
+    }
+}
+
 @BindingAdapter("loadingStatus")
 fun bindLoadingStatus(view: ProgressBar, status: LoadStatus?) {
     view.visibility = when (status) {

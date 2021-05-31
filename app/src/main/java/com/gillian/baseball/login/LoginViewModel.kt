@@ -46,7 +46,7 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     fun createUserInFirebase() {
         firebaseUser.value?.let{
-            val user = User(email = it.email!!)
+            val user = User(email = it.email!!, id = it.uid, image = it.photoUrl.toString())
             viewModelScope.launch {
                 val result = repository.signUpUser(user)
                 _signUpResult.value = when (result) {

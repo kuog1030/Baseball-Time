@@ -55,12 +55,13 @@ class LoginFragment : Fragment() {
 
         // login -> intent -> viewModel.signInWithGoogle -> get firebase user
         // -> create user in firebase database
-        binding.buttonGoolgeLogin.setOnClickListener {
+        binding.buttonLoginGoogle.setOnClickListener {
             login()
         }
 
         viewModel.firebaseUser.observe(viewLifecycleOwner, Observer {
             it?.let{
+                Log.i("gillian", "url? ${it.photoUrl}")
                 viewModel.createUserInFirebase()
             }
         })
@@ -69,7 +70,6 @@ class LoginFragment : Fragment() {
             it?.let{
                 UserManager.userId = it.id
                 Log.i("gillianlog", "usermanager id set ${UserManager.userId}")
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToFirstLoginFragment())
                 viewModel.onFirstLoginNavigated()
             }
         })

@@ -22,7 +22,7 @@
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="16dp"
             android:text="@{event.toLiveString()}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/my_custom_base"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="第4棒 Czerny在1好0壞之下擊出一壘安打2出局" />

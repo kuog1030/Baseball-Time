@@ -27,10 +27,10 @@ class FirstLoginFragment : Fragment() {
         //val viewModel = ViewModelProvider(this).get(FirstLoginViewModel::class.java)
         Log.i("gillian", "in fragment $viewModel")
 
-        binding.viewpagerFirstLogin.adapter = FirstLoginAdapter(childFragmentManager)
-        binding.tabsFirstLogin.setupWithViewPager(binding.viewpagerFirstLogin)
-        binding.viewpagerFirstLoginArrow.setArrowIndicatorRes(R.drawable.ic_baseline_arrow_backward_24, R.drawable.ic_baseline_arrow_forward_24)
-        binding.viewpagerFirstLoginArrow.bind(binding.viewpagerFirstLogin)
+        //binding.viewpagerFirstLogin.adapter = FirstLoginAdapter(childFragmentManager)
+//        binding.tabsFirstLogin.setupWithViewPager(binding.viewpagerFirstLogin)
+//        binding.viewpagerFirstLoginArrow.setArrowIndicatorRes(R.drawable.ic_baseline_arrow_backward_24, R.drawable.ic_baseline_arrow_forward_24)
+//        binding.viewpagerFirstLoginArrow.bind(binding.viewpagerFirstLogin)
 
         viewModel.navigateToTeamOrOrder.observe(viewLifecycleOwner, Observer {
             it?.let {

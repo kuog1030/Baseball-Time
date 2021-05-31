@@ -69,24 +69,22 @@ object BaseballRemoteDataSource : BaseballDataSource {
     }
 
     override suspend fun signUpUser(user: User): Result<User> = suspendCoroutine { continuation ->
-        val users = FirebaseFirestore.getInstance().collection(USERS)
-        val document = users.document()
-
-        user.id = document.id
-        document.set(user).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.i("gillianlog", "create user success")
-                continuation.resume(Result.Success(user))
-            } else {
-                task.exception?.let{
-                    Log.w("gillianlog", "[${this::class.simpleName}] Error getting documents. ${it.message}")
-                    continuation.resume(Result.Error(it))
-                    return@addOnCompleteListener
+        FirebaseFirestore.getInstance().collection(USERS)
+                .document(user.id)
+                .set(user).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        Log.i("gillianlog", "create user success")
+                        continuation.resume(Result.Success(user))
+                    } else {
+                        task.exception?.let {
+                            Log.w("gillianlog", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        Log.i("gillianlog", "create user")
+                        continuation.resume(Result.Fail("sign in fail"))
+                    }
                 }
-                Log.i("gillianlog", "create user")
-                continuation.resume(Result.Fail("sign in fail"))
-            }
-        }
     }
 
     override suspend fun initTeamAndPlayer(team: Team, player: Player) : Result<Boolean> = suspendCoroutine { continuation ->

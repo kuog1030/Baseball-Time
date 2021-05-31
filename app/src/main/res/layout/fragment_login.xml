@@ -8,8 +8,18 @@
         android:layout_height="match_parent"
         android:background="@color/black_login">
 
+        <Button
+            android:id="@+id/button_login_broadcast"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="收看直播"
+            app:layout_constraintEnd_toEndOf="@+id/button_login_google"
+            app:layout_constraintStart_toStartOf="@+id/button_login_google"
+            app:layout_constraintTop_toBottomOf="@+id/button_login_google" />
+
         <com.google.android.gms.common.SignInButton
-            android:id="@+id/button_goolge_login"
+            android:id="@+id/button_login_google"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
             app:buttonSize="wide"
@@ -26,7 +36,7 @@
             android:text="Baseball Time!"
             android:textColor="@color/white"
             android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/button_goolge_login"
+            app:layout_constraintBottom_toTopOf="@+id/button_login_google"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>

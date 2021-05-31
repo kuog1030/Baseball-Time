@@ -42,7 +42,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.gameFragment -> setBottomNavigation(false)
                 R.id.finalFragment -> setBottomNavigation(false)
                 R.id.loginFragment -> setBottomNavigation(false)
-                R.id.firstLoginFragment -> setBottomNavigation(false)
+                R.id.loginCreateFragment -> setBottomNavigation(false)
+                R.id.loginSearchFragment -> setBottomNavigation(false)
+                R.id.loginGetFragment -> setBottomNavigation(false)
                 else -> setBottomNavigation(true)
             }
         }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <EditText
+            android:id="@+id/edit_search_team_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/double_margin"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="搜尋球隊名稱"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.515"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/button2" />
+
+        <ImageButton
+            android:id="@+id/button_search_search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/transparent"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_search_team_title"
+            app:layout_constraintEnd_toEndOf="@+id/edit_search_team_title"
+            app:layout_constraintTop_toTopOf="@+id/edit_search_team_title"
+            app:srcCompat="@drawable/ic_search_24" />
+
+        <Button
+            android:id="@+id/button2"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="150dp"
+            android:background="@drawable/bg_edit_text"
+            android:text="建立新的球隊"
+            app:layout_constraintStart_toStartOf="@+id/edit_search_team_title"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button4"
+            android:layout_width="130dp"
+            android:layout_height="150dp"
+            android:text="搜尋現有球隊"
+            app:layout_constraintTop_toTopOf="@+id/button2"
+            tools:layout_editor_absoluteX="244dp" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_search_teams"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:orientation="vertical"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_search_team_title"
+            tools:listitem="@layout/item_search_team"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

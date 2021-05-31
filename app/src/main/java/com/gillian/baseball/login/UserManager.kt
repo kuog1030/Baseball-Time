@@ -13,7 +13,8 @@ object UserManager {
     val prefs = BaseballApplication.instance.getSharedPreferences("Baseball", Context.MODE_PRIVATE)
     var userId: String
         get() {
-            return ( prefs.getString("user", "a5n9NOoKGAsLbEb0oyH8")!! )
+            return ( prefs.getString("user", "")!! )
+            //a5n9NOoKGAsLbEb0oyH8
         }
         set(id) {
             prefs.edit().putString("user", id).apply()

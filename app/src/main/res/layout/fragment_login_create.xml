@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.loginflow.LoginCreateViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_create_team_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="150dp"
+            android:text="@string/create_a_team"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+            android:id="@+id/edit_create_team_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.teamName}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_create_team_title" />
+
+        <TextView
+            android:id="@+id/text_create_player_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:text="@string/create_a_player"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_create_team_name" />
+
+        <EditText
+            android:id="@+id/edit_create_player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="@string/name_hint2"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.playerName}"
+            app:layout_constraintEnd_toEndOf="@+id/text_create_player_title"
+            app:layout_constraintStart_toStartOf="@+id/text_create_player_title"
+            app:layout_constraintTop_toBottomOf="@+id/text_create_player_title" />
+
+        <EditText
+            android:id="@+id/edit_create_player_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="@string/number_hint2"
+            android:inputType="number"
+            android:text="@={viewModel.playerNumber}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_create_player_name"
+            app:layout_constraintStart_toStartOf="@+id/edit_create_player_name"
+            app:layout_constraintTop_toBottomOf="@+id/edit_create_player_name" />
+
+        <Button
+            android:id="@+id/button_create_team"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="40dp"
+            android:onClick="@{()->viewModel.navigateToTeam(true)}"
+            android:text="到Team"
+            app:layout_constraintEnd_toStartOf="@+id/button_create_play"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_create_player_number" />
+
+        <Button
+            android:id="@+id/button_create_play"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{()->viewModel.navigateToTeam(false)}"
+            android:text="開打!"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_create_team"
+            app:layout_constraintTop_toTopOf="@+id/button_create_team" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
