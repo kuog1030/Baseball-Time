@@ -69,20 +69,22 @@ object BaseballRemoteDataSource : BaseballDataSource {
             }
     }
 
-    override suspend fun findUser(userId: String): Result<String> = suspendCoroutine { continuation ->
+    override suspend fun findUser(userId: String): Result<Boolean> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(USERS)
                 .document(userId)
                 .get()
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        if (task.result!!.exists()) {
-                            val getPlayerId = task.result!![PLAYERID].toString()
-                            UserManager.userId = userId
-                            continuation.resume(Result.Success(getPlayerId))
-                        } else {
-                            continuation.resume(Result.Success(""))
+                        // has user
+                        val user = task.result!!
+                        val userExist = task.result!!.exists()
+                        if (userExist) {
+                            UserManager.userId = user.get("id").toString()
+                            UserManager.playerId = user.get(PLAYERID).toString()
+                            UserManager.teamId = user.get(TEAMID).toString()
+                            Log.i("gillian", "user exist ${user.get("id")} , ${user.get(PLAYERID)}, ${user.get(TEAMID)}")
                         }
-
+                        continuation.resume(Result.Success(userExist))
                     } else {
                         task.exception?.let {
                             Log.w("gillianlog", "[${this::class.simpleName}] Error getting documents. ${it.message}")
@@ -90,50 +92,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
                             return@addOnCompleteListener
                         }
                         continuation.resume(Result.Fail("sign in fail"))
-                    }
-                }
-    }
-
-    override suspend fun getTeamByPlayer(playerId: String): Result<Team> = suspendCoroutine { continuation ->
-        FirebaseFirestore.getInstance().collection(PLAYERS)
-                .document(playerId)
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-
-                        val teamId = task.result!![TEAMID].toString()
-
-                        FirebaseFirestore.getInstance().collection(TEAMS)
-                                .document(teamId)
-                                .get()
-                                .addOnCompleteListener { taskTeam ->
-                                    if (taskTeam.isSuccessful) {
-                                        Log.i("gillian", "get team success")
-
-                                        val teamResult = taskTeam.result!!.toObject(Team::class.java)
-                                        continuation.resume(Result.Success(teamResult!!))
-
-                                    } else {
-                                        taskTeam.exception?.let {
-
-                                            Log.w("gillian", "[${this::class.simpleName}] Error getting documents. ${it.message}")
-                                            continuation.resume(Result.Error(it))
-                                            return@addOnCompleteListener
-                                        }
-                                        Log.i("gillianlog", "get team fail")
-                                        continuation.resume(Result.Fail("get team fail"))
-                                    }
-                                }
-
-
-                    } else {
-                        task.exception?.let {
-                            Log.w("gillian", "[${this::class.simpleName}] Error getting documents. ${it.message}")
-                            continuation.resume(Result.Error(it))
-                            return@addOnCompleteListener
-                        }
-                        Log.i("gillian", "search player fail")
-                        continuation.resume(Result.Fail("search player fail"))
                     }
                 }
     }

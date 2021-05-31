@@ -38,13 +38,16 @@ class TeamFragment : Fragment() {
             }
         })
 
-        //TODO()有沒有更好的寫法
-        viewModel.team.observe(viewLifecycleOwner, Observer {
-            it?.let {
+        viewModel.initUser.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                UserManager.team = it
                 UserManager.teamName = it.name
-                viewModel.teamName.value = it.name
+                UserManager.teamAcronym = it.acronym
+                UserManager.teamImage = it.image
+                viewModel.initTeamPage()
             }
         })
+
 
         viewModel.myself.observe(viewLifecycleOwner, Observer {
             it?.let{

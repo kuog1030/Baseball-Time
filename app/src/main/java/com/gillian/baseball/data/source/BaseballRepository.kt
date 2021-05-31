@@ -9,9 +9,7 @@ interface BaseballRepository {
 
     suspend fun signInWithGoogle(idToken: String) : Result<FirebaseUser>
 
-    suspend fun findUser(userId: String) : Result<String>
-
-    suspend fun getTeamByPlayer(playerId: String): Result<Team>
+    suspend fun findUser(userId: String) : Result<Boolean>
 
     suspend fun signUpUser(user: User): Result<User>
 

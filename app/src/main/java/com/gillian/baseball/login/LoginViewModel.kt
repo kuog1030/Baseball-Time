@@ -16,10 +16,10 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     val firebaseUser = MutableLiveData<FirebaseUser>()
 
-    private val _playerExist = MutableLiveData<String>()
+    private val _userExist = MutableLiveData<Boolean>()
 
-    val playerExist : LiveData<String>
-        get() = _playerExist
+    val userExist : LiveData<Boolean>
+        get() = _userExist
 
     private val _signUpResult = MutableLiveData<User>()
 
@@ -63,7 +63,7 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
         firebaseUser.value?.let{
             viewModelScope.launch {
                 val result = repository.findUser(it.uid)
-                _playerExist.value = when (result) {
+                _userExist.value = when (result) {
                     is Result.Success -> {
                         result.data
                     }
@@ -75,43 +75,6 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
             }
         }
     }
-
-    fun newUserSignUp() {
-        firebaseUser.value?.let {
-            val user = User(email = it.email!!, id = it.uid, image = it.photoUrl.toString())
-            viewModelScope.launch {
-                val result = repository.signUpUser(user)
-                _signUpResult.value = when (result) {
-                    is Result.Success -> {
-                        result.data
-                    }
-                    else -> {
-                        null
-                    }
-                }
-            }
-        }
-    }
-
-    // use UserManager.playerId to search for
-    fun getTeamAndPlayer(playerId: String) {
-        viewModelScope.launch {
-            val getResult = repository.getTeamByPlayer(playerId)
-
-            _navigateToTeam.value = when (getResult) {
-                is Result.Success -> {
-                    Log.i("gillian", "get team by player success")
-                    getResult.data
-                }
-                else -> {
-                    Log.i("gillianlog", "get team by player fail")
-                    null
-                }
-            }
-
-        }
-    }
-
 
     // 如果已經授權過 拿到的firebase user會是一樣的
 

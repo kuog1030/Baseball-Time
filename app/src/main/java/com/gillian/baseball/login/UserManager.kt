@@ -36,10 +36,30 @@ object UserManager {
             prefs.edit().putString("team", id).apply()
         }
 
-    //var teamId: String = "qyjO8rziwuMz7O0oUfIo"
-    var teamImage: String = "https://api.appworks-school.tw/assets/201807242234/0.jpg"
-    var teamName : String = "Android"
-    var teamAcronym : String = "AD"
+    // TODO()這應該要刪掉
+    var teamName: String
+        get() {
+            return ( prefs.getString("teamName", "")!! )
+        }
+        set(name) {
+            prefs.edit().putString("teamName", name).apply()
+        }
 
-    var team : Team? = Team(id = teamId, image = teamImage, name = teamName, acronym = teamAcronym)
+    var teamImage: String
+        get() {
+            return ( prefs.getString("teamImage", "")!! )
+        }
+        set(url) {
+            prefs.edit().putString("teamImage", url).apply()
+        }
+
+    var teamAcronym: String
+        get() {
+            return ( prefs.getString("teamAcro", "")!! )
+        }
+        set(id) {
+            prefs.edit().putString("teamAcro", id).apply()
+        }
+
+    var team : Team? = null
 }

@@ -13,12 +13,8 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
         return remoteDataSource.signInWithGoogle(idToken)
     }
 
-    override suspend fun findUser(userId: String): Result<String> {
+    override suspend fun findUser(userId: String): Result<Boolean> {
         return remoteDataSource.findUser(userId)
-    }
-
-    override suspend fun getTeamByPlayer(playerId: String): Result<Team> {
-        return remoteDataSource.getTeamByPlayer(playerId)
     }
 
     override suspend fun signUpUser(user: User): Result<User> {

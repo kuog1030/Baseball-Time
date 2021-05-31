@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
-    app:startDestination="@id/loginSearchFragment">
+    app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/gameFragment"
@@ -104,7 +104,7 @@
         android:name="com.gillian.baseball.login.LoginFragment"
         android:label="LoginFragment" >
         <action
-            android:id="@+id/action_loginFragment_to_loginSearchFragment"
+            android:id="@+id/action_login_to_search"
             app:destination="@id/loginSearchFragment" />
     </fragment>
     <fragment
@@ -126,7 +126,11 @@
     <fragment
         android:id="@+id/loginCreateFragment"
         android:name="com.gillian.baseball.loginflow.LoginCreateFragment"
-        android:label="LoginCreateFragment" />
+        android:label="LoginCreateFragment" >
+        <argument
+            android:name="newUser"
+            app:argType="com.gillian.baseball.data.User" />
+    </fragment>
     <fragment
         android:id="@+id/loginSearchFragment"
         android:name="com.gillian.baseball.loginflow.LoginSearchFragment"
@@ -137,6 +141,9 @@
         <action
             android:id="@+id/action_search_to_get"
             app:destination="@id/loginGetFragment" />
+        <argument
+            android:name="newUser"
+            app:argType="com.gillian.baseball.data.User" />
     </fragment>
     <fragment
         android:id="@+id/loginGetFragment"
@@ -145,6 +152,9 @@
         <argument
             android:name="myTeam"
             app:argType="com.gillian.baseball.data.Team" />
+        <argument
+            android:name="newUser"
+            app:argType="com.gillian.baseball.data.User" />
     </fragment>
 
 </navigation>

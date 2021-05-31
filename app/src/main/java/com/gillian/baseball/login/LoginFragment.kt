@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.NavigationDirections
+import com.gillian.baseball.data.User
 import com.gillian.baseball.databinding.FragmentLoginBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.team.TeamViewModel
@@ -26,6 +27,7 @@ class LoginFragment : Fragment() {
 
     private val viewModel by viewModels<LoginViewModel> { getVmFactory() }
     private lateinit var auth: FirebaseAuth
+    private lateinit var newUser : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -52,7 +54,8 @@ class LoginFragment : Fragment() {
 
 
         // login -> intent -> viewModel.signInWithGoogle -> get firebase user
-        // -> create user in firebase database
+        // -> check if user exists (yes) -> navigate to team
+        //                         (no)  -> porceed login flow
         binding.buttonLoginGoogle.setOnClickListener {
             login()
         }
@@ -60,45 +63,23 @@ class LoginFragment : Fragment() {
         viewModel.firebaseUser.observe(viewLifecycleOwner, Observer {
             it?.let{
                 Log.i("gillian", "url? ${it.photoUrl}")
+                newUser = User(email = it.email!!, id = it.uid, image = it.photoUrl.toString())
                 viewModel.searchIfUserExist()
             }
         })
 
-        viewModel.playerExist.observe(viewLifecycleOwner, Observer {
-            it?.let{ playerId->
-                if (playerId.isEmpty()) {
-                    viewModel.newUserSignUp()
-
+        viewModel.userExist.observe(viewLifecycleOwner, Observer {
+            it?.let{exist ->
+                if (exist) {
+                    // navigate
+                    findNavController().navigate(NavigationDirections.navigationToTeam())
                 } else {
-                    UserManager.playerId = playerId
-                    Log.i("gillian", "player id is not empty and usermanger player id is set")
-                    viewModel.getTeamAndPlayer(playerId)
-                    // use UserManager.playerId to search for team info then navigate to team
-
+                    Log.i("gillian", "user to be created ${newUser}")
+                    findNavController().navigate(LoginFragmentDirections.actionLoginToSearch(newUser))
+                    // navigate
                 }
             }
         })
-
-        viewModel.signUpResult.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                Log.i("gillian", "user sign up success in firebase and $it")
-
-                UserManager.userId = it.id
-                findNavController().navigate(LoginFragmentDirections.actionLoginFragmentToLoginSearchFragment())
-                viewModel.onSearchNavigated()
-            }
-        })
-
-
-        viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                UserManager.teamId = it.id
-                UserManager.team = it
-                Log.i("gillian", "get team by player id success $it")
-                findNavController().navigate(NavigationDirections.navigationToTeam())
-            }
-        })
-
 
         return binding.root
     }
