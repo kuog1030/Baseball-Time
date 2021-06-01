@@ -394,6 +394,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val player = task.result!!.toObject(Player::class.java)
+                        Log.i("gillian", "player is who? $player")
                         val oldBox = player!!.pitchStat
                         oldBox.addNewBox(pitcherBox)
                         FirebaseFirestore.getInstance().collection(PLAYERS)

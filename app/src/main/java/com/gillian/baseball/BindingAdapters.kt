@@ -242,6 +242,19 @@ fun bindProfileImage(imageView: ImageView, url: String?) {
             .into(imageView)
 }
 
+@BindingAdapter("photoUrl")
+fun bindProfilePhoto(imageView: ImageView, url: String?) {
+    Glide.with(imageView.context)
+            .load(url)
+            .circleCrop()
+            .into(imageView)
+}
+
+@BindingAdapter("defaultPhoto")
+fun bindDefaultPhoto(textView: TextView, name: String) {
+    textView.text = name.substring(0, 1)
+}
+
 @BindingAdapter("teamImageUrl")
 fun bindTeamImage(imageView: ImageView, url: String?) {
     Glide.with(imageView.context)

@@ -173,14 +173,14 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     fun switchFinal() {
 
-        val totalInningPitched = ((inningCount-1) * 3 + outCount.value!!) - previousIp
+        val totalInningPitched = (((inningCount+1) / 2 - 1) * 3 + outCount.value!!) - previousIp
+        Log.i("game", "換投中 event送達~, out count ${outCount.value}")
 
-        Log.i("game", "換投中 event送達~")
         sendEvent(
                 Event(
-                        pitcher = if (isHome) guestPitcher else homePitcher,
-                        inning = inningCount,
-                        result = EventType.INNINGSPITCHED.number,
+                        pitcher = if (isHome) homePitcher else guestPitcher,
+                        inning = if (isHome) (inningCount-1) else inningCount,
+                        result = EventType.INNINGSPITCHED.number, //50
                         out = totalInningPitched
                 )
         )
@@ -490,7 +490,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     // pinchDialog -> 換投
     fun nextPitcher(next: EventPlayer, position: Int) {
-        val totalInningPitched = ((inningCount-1) * 3 + outCount.value!!) - previousIp
+        val totalInningPitched = (((inningCount+1) / 2 - 1) * 3 + outCount.value!!) - previousIp
         previousIp = totalInningPitched
 
         Log.i("game", "換投中 event送達~")

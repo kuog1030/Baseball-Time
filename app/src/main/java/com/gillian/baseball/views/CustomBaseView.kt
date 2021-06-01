@@ -49,7 +49,7 @@ class CustomBaseView(context: Context, attrs: AttributeSet) : ConstraintLayout(c
             second.setColorFilter(BaseballApplication.instance.getColor(R.color.yellow_strike))
         }
 
-        if (base % 10 == 1){
+        if (base % 10 == 1) {
             first.setColorFilter(BaseballApplication.instance.getColor(R.color.yellow_strike))
         }
     }

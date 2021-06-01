@@ -262,6 +262,8 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
         val type = event.result
         lateinit var targetEventType: EventType
 
+        Log.i("gillian", "update pitcher box event = $event")
+
         for (eventType in EventType.values()) {
             if (type == eventType.number) {
                 targetEventType = eventType
