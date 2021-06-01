@@ -65,7 +65,11 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_card_schedule_title"
             tools:layout_editor_absoluteY="26dp"
-            tools:text="福和橋 | 2021-05-15 09:00"/>
+            tools:text="福和橋 | 2021-05-15 09:00"
+            android:gravity="bottom"
+            android:drawablePadding="@dimen/quarter_margin"
+            app:drawableStartCompat="@drawable/ic_location_on_24"
+            app:drawableTint="@color/color_primary" />
 
         <TextView
             android:id="@+id/text_card_schedule_score"

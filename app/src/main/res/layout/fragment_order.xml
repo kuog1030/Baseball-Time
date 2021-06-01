@@ -63,9 +63,9 @@
                     android:id="@+id/radio_order_home"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_weight="1"
                     android:paddingStart="@dimen/radio_button_padding"
                     android:paddingEnd="@dimen/radio_button_padding"
-                    android:layout_weight="1"
                     android:text="@string/home" />
             </RadioGroup>
 
@@ -140,8 +140,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/double_margin"
-                android:text="@string/order_hitter"
                 android:gravity="center"
+                android:text="@string/order_hitter"
                 app:layout_constraintEnd_toEndOf="@+id/spinner_order_pitcher"
                 app:layout_constraintStart_toStartOf="@+id/text_order_pitcher"
                 app:layout_constraintTop_toBottomOf="@+id/text_order_pitcher" />
@@ -150,13 +150,13 @@
                 android:id="@+id/recycler_order_players"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintEnd_toEndOf="@+id/spinner_order_pitcher"
                 app:layout_constraintStart_toStartOf="@+id/text_order"
                 app:layout_constraintTop_toBottomOf="@+id/text_order"
-                android:overScrollMode="never"
-                tools:listitem="@layout/item_order_player"
-                tools:itemCount="5">
+                tools:itemCount="5"
+                tools:listitem="@layout/item_order_player">
 
             </androidx.recyclerview.widget.RecyclerView>
 
@@ -164,19 +164,21 @@
                 android:id="@+id/button_order_new_player"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:background="@color/transparent"
                 android:layout_marginTop="@dimen/quarter_margin"
-                android:paddingTop="5dp"
+                android:background="@color/transparent"
                 android:drawableTop="@drawable/ic_baseline_person_add_alt_24"
                 android:onClick="@{()->viewModel.showNewPlayerDialog()}"
+                android:paddingTop="7dp"
+                android:textSize="14sp"
                 android:text="@string/add_new_player"
-                app:layout_constraintEnd_toEndOf="@+id/text_order"
-                app:layout_constraintStart_toStartOf="@+id/text_order"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_order_players"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/toggleButton"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_order_players" />
 
             <Button
-                style="@style/GameButton"
                 android:id="@+id/button_order_next"
+                style="@style/GameButton"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
@@ -184,9 +186,9 @@
                 android:onClick="@{()->viewModel.checkIfAllFilled()}"
                 android:text="@string/game_start"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="@id/text_order_game_title"
                 app:layout_constraintEnd_toEndOf="@id/edit_order_game_title"
-                app:layout_constraintTop_toBottomOf="@id/button_order_new_player"/>
+                app:layout_constraintStart_toStartOf="@id/text_order_game_title"
+                app:layout_constraintTop_toBottomOf="@id/button_order_new_player" />
 
             <ImageView
                 android:id="@+id/image_order_spinner"
@@ -197,6 +199,23 @@
                 app:layout_constraintEnd_toEndOf="@+id/spinner_order_pitcher"
                 app:layout_constraintTop_toTopOf="@+id/spinner_order_pitcher"
                 app:srcCompat="@drawable/ic_triangle_spinner" />
+
+            <ToggleButton
+                android:id="@+id/toggleButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="@color/transparent"
+                android:drawableTop="@drawable/toggle_broadcast"
+                android:textOff="@string/broadcast_off"
+                android:textOn="@string/broadcast_on"
+                android:checked="@={viewModel.toggleBroadcast}"
+                android:paddingTop="7dp"
+                android:textSize="14sp"
+                app:layout_constraintBottom_toBottomOf="@+id/button_order_new_player"
+                app:layout_constraintEnd_toStartOf="@+id/button_order_new_player"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="@+id/recycler_order_players"
+                app:layout_constraintTop_toTopOf="@+id/button_order_new_player" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

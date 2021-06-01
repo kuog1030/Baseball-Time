@@ -94,6 +94,8 @@
     <string name="home_or_guest">你是主客隊？</string>
     <string name="versus">VS</string>
     <string name="add_game_note">備註</string>
+    <string name="broadcast_on">文字轉播已開啟</string>
+    <string name="broadcast_off">文字轉播已關閉</string>
 
     <!--    game final -->
     <string name="game_final">比賽結束</string>

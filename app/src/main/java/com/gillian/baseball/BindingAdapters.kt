@@ -259,16 +259,16 @@ fun bindDefaultPhoto(textView: TextView, name: String?) {
     }
 }
 
-@BindingAdapter("teamImageUrl")
-fun bindTeamImage(imageView: ImageView, url: String?) {
-    Glide.with(imageView.context)
-            .load(url)
-            .circleCrop()
-            .apply(RequestOptions()
-                    .placeholder(R.drawable.baseball_glove)
-                    .error(R.drawable.baseball_glove))
-            .into(imageView)
-}
+//@BindingAdapter("teamImageUrl")
+//fun bindTeamImage(imageView: ImageView, url: String?) {
+//    Glide.with(imageView.context)
+//            .load(url)
+//            .circleCrop()
+//            .apply(RequestOptions()
+//                    .placeholder(R.drawable.baseball_glove)
+//                    .error(R.drawable.baseball_glove))
+//            .into(imageView)
+//}
 
 @BindingAdapter("boxStyle")
 fun bindStyleForBox(textView: TextView, isTitle: Boolean) {

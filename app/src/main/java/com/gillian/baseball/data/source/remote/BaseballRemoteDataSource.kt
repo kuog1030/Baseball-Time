@@ -442,7 +442,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
         FirebaseFirestore.getInstance().collection(GAMES)
                 .document(gameId)
                 .update("box", box,
-                        "status", 2)
+                        "status", GameStatus.FINAL.number)
                 .addOnCompleteListener{task ->
                     if (task.isSuccessful) {
                         continuation.resume(Result.Success(true))
@@ -515,7 +515,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
     override suspend fun getAllLiveGamesCard(): Result<List<GameCard>> = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
                 .collection(GAMES)
-                .whereEqualTo(STATUS, 1) // GameStatus.PLAYING.number = 1
+                .whereEqualTo(STATUS, GameStatus.PLAYING.number) // GameStatus.PLAYING.number = 1
                 .get()
                 .addOnCompleteListener{ task ->
                     if (task.isSuccessful) {

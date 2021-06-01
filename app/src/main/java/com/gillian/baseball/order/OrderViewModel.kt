@@ -18,6 +18,9 @@ import java.util.*
 class OrderViewModel(private val repository: BaseballRepository, private val gameCard: GameCard?) : ViewModel() {
 
     val selectedSideRadio = MutableLiveData<Int>()
+
+    val toggleBroadcast = MutableLiveData<Boolean>(true)
+
     val gameTitle = MutableLiveData<String>()
     val awayTeamName = MutableLiveData<String>()
     val pitcher = MutableLiveData<String>()
@@ -125,7 +128,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
                 date = Calendar.getInstance().timeInMillis,
                 place = gameCard?.place ?: "",
                 recordedTeamId = UserManager.teamId,
-                status = GameStatus.PLAYING.number)
+                status = if (toggleBroadcast.value == true) GameStatus.PLAYING.number else GameStatus.PLAYINGPRIVATE.number)
 
         // TODO() 這樣對手的playerid都會一樣有點危險
         for (index in 1..minOf(9, lineUp.size)) {
