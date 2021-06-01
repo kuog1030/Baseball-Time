@@ -11,8 +11,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.R
+import com.gillian.baseball.allgames.AllGamesViewModel
 import com.gillian.baseball.data.Team
 import com.gillian.baseball.databinding.FragmentNewGameBinding
 import com.gillian.baseball.ext.getVmFactory
@@ -48,7 +50,7 @@ class NewGameFragment : Fragment() {
 
         viewModel.scheduleSuccess.observe(viewLifecycleOwner, Observer {
             it?.let{
-                if (it) findNavController().popBackStack()
+                if (it) findNavController().navigate(NewGameFragmentDirections.actionNewGameToAllGames(true))
                 viewModel.onGameUploadedAndNavigated()
             }
         })

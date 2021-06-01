@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.navigation_all_games -> {
-                    navController.navigate(NavigationDirections.navigationToAllGames())
+                    navController.navigate(NavigationDirections.navigationToAllGames(false))
                     true
                 }
                 R.id.navigation_stat -> {

@@ -155,6 +155,11 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
     }
 
 
+    override fun onCleared() {
+        super.onCleared()
+        Log.i("gillian", "all games view model on clear")
+    }
+
 }
 
 /*

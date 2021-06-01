@@ -55,10 +55,15 @@ class SchedulePager : Fragment() {
                         binding.fabAdd.startAnimation(rotateClose)
                         binding.fabFastScheduleGame.startAnimation(toBottom)
                         binding.fabFastStart.startAnimation(toBottom)
+                        binding.fabFastScheduleGame.clearAnimation()
+                        binding.fabFastStart.clearAnimation()
                     }
                 }
             }
         })
+
+        //TODO()
+        //view.clearAnimation() have some issuses but amination.setFillAfter(false);and mview.setClickable(false); WORKS perfect .
 
         viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
             it?.let{
