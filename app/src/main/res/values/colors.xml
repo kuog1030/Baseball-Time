@@ -49,6 +49,8 @@
     <color name="nav_icon">@color/grey_888</color>
     <color name="nav_icon_selected">@color/denim_blue</color>
 
+    <color name="default_photo">@color/color_primary_light</color>
+    <color name="default_2photo">#9FBECA</color>
 
 
 <!--    second -->

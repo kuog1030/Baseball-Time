@@ -24,6 +24,7 @@
             android:layout_height="@dimen/game_card_team_image"
             app:defaultName="@{game.guestName}"
             android:textSize="24sp"
+            android:backgroundTint="@color/default_2photo"
             app:layout_constraintBottom_toBottomOf="@+id/image_card_schedule_guest"
             app:layout_constraintEnd_toEndOf="@+id/image_card_schedule_guest"
             app:layout_constraintStart_toStartOf="@+id/image_card_schedule_guest"
