@@ -7,9 +7,6 @@ import com.gillian.baseball.allgames.AllGamesViewModel
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.editplayer.EditPlayerViewModel
 import com.gillian.baseball.login.LoginViewModel
-import com.gillian.baseball.loginflow.LoginCreateViewModel
-import com.gillian.baseball.loginflow.LoginGetViewModel
-import com.gillian.baseball.loginflow.LoginSearchViewModel
 import com.gillian.baseball.team.TeamViewModel
 import com.gillian.baseball.newplayer.NewPlayerViewModel
 import com.gillian.baseball.statistics.statgame.StatGameViewModel
@@ -22,8 +19,6 @@ class ViewModelFactory constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
         with(modelClass) {
             when {
-                isAssignableFrom(LoginSearchViewModel::class.java) ->
-                    LoginSearchViewModel(repository)
                 isAssignableFrom(TeamViewModel::class.java) ->
                     TeamViewModel(repository)
                 isAssignableFrom(NewPlayerViewModel::class.java) ->

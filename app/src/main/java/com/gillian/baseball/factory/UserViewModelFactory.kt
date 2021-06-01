@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.User
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.loginflow.LoginCreateViewModel
-import com.gillian.baseball.loginflow.LoginGetViewModel
+import com.gillian.baseball.loginflow.LoginSearchViewModel
 
 class UserViewModelFactory constructor(
         private val repository: BaseballRepository,
@@ -17,8 +17,8 @@ class UserViewModelFactory constructor(
                 when {
                     isAssignableFrom(LoginCreateViewModel::class.java) ->
                         LoginCreateViewModel(repository, user)
-                    isAssignableFrom(LoginGetViewModel::class.java) ->
-                        LoginGetViewModel(repository, user)
+                    isAssignableFrom(LoginSearchViewModel::class.java) ->
+                        LoginSearchViewModel(repository, user)
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
                 }

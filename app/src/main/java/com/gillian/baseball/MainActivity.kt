@@ -45,7 +45,6 @@ class MainActivity : AppCompatActivity() {
                 R.id.loginFragment -> setBottomNavigation(false)
                 R.id.loginCreateFragment -> setBottomNavigation(false)
                 R.id.loginSearchFragment -> setBottomNavigation(false)
-                R.id.loginGetFragment -> setBottomNavigation(false)
                 R.id.broadcastFragment -> if (UserManager.userId == "") {
                     setBottomNavigation(false)
                 }

@@ -101,17 +101,17 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .document(user.id)
                 .set(user).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        Log.i("gillianlog", "create user success")
                         UserManager.userId = user.id
+                        Log.i("gillian", "------- User Manager user id is set as ${user.id} ------------")
                         continuation.resume(Result.Success(user))
                     } else {
                         task.exception?.let {
-                            Log.w("gillianlog", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            Log.w("gillian", "[${this::class.simpleName}] Error getting documents. ${it.message}")
                             continuation.resume(Result.Error(it))
                             return@addOnCompleteListener
                         }
-                        Log.i("gillianlog", "create user")
-                        continuation.resume(Result.Fail("sign in fail"))
+                        Log.i("gillian", "create user")
+                        continuation.resume(Result.Fail("sign up fail"))
                     }
                 }
     }
@@ -175,12 +175,42 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
     }
 
+
+    override suspend fun searchPlayer(playerId: String): Result<List<Player>> = suspendCoroutine{ continuation ->
+        FirebaseFirestore.getInstance()
+                .collection(PLAYERS)
+                .get()
+                .addOnCompleteListener{ task ->
+                    if (task.isSuccessful) {
+                        val playerList = mutableListOf<Player>()
+
+                        for (document in task.result!!) {
+                            if( document["id"].toString().contains(playerId) ) {
+                                playerList.add(document.toObject(Player::class.java))
+                            }
+                        }
+                        continuation.resume(Result.Success(playerList))
+
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("search player id fail"))
+                    }
+                }
+    }
+
+
     override suspend fun registerPlayer(playerId: String): Result<Boolean> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(PLAYERS)
                 .document(playerId)
                 .update(USERID, UserManager.userId)
                 .addOnCompleteListener{task ->
                     if (task.isSuccessful) {
+                        Log.i("gillian", "register player success. player id update")
                         continuation.resume(Result.Success(true))
                     } else {
                         task.exception?.let {
@@ -456,33 +486,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         continuation.resume(Result.Fail("update game box fail"))
                     }
 
-                }
-    }
-
-    override suspend fun searchTeam(teamName: String): Result<List<Team>> = suspendCoroutine{ continuation ->
-        FirebaseFirestore.getInstance()
-                .collection(TEAMS)
-                .get()
-                .addOnCompleteListener{ task ->
-                    if (task.isSuccessful) {
-                        val teamList = mutableListOf<Team>()
-                        for (document in task.result!!) {
-                            Log.i("gillian", "the name is ${document["name"]}")
-                            if( document["name"].toString().contains(teamName) ) {
-                                teamList.add(document.toObject(Team::class.java))
-                            }
-                        }
-                        continuation.resume(Result.Success(teamList))
-
-                    } else {
-                        task.exception?.let {
-
-                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
-                            continuation.resume( Result.Error(it) )
-                            return@addOnCompleteListener
-                        }
-                        continuation.resume(Result.Fail("search team name fail"))
-                    }
                 }
     }
 

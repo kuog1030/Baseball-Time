@@ -15,6 +15,8 @@ interface BaseballRepository {
 
     suspend fun initTeamAndPlayer(team: Team, player: Player) : Result<Boolean>
 
+    suspend fun searchPlayer(playerId: String) : Result<List<Player>>
+
     suspend fun registerPlayer(playerId: String) : Result<Boolean>
 
     suspend fun createTeam(team: Team)
@@ -39,7 +41,7 @@ interface BaseballRepository {
 
     suspend fun updatePitchStat(playerId: String, pitcherBox: PitcherBox) : Result<Boolean>
 
-    suspend fun searchTeam(teamName: String) : Result<List<Team>>
+    //suspend fun searchTeam(teamName: String) : Result<List<Team>>
 
     suspend fun getAllEvents(gameId: String): List<Event>
 

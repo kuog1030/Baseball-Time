@@ -6,21 +6,25 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.R
-import com.gillian.baseball.data.LoadStatus
-import com.gillian.baseball.data.Result
-import com.gillian.baseball.data.Team
+import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.login.UserManager
 import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 
 
-class LoginSearchViewModel(private val repository: BaseballRepository) : ViewModel() {
+class LoginSearchViewModel(private val repository: BaseballRepository, private val user: User) : ViewModel() {
 
+    val searchPlayerId = MutableLiveData<String>()
 
-    val searchTeamName = MutableLiveData<String>()
+    val playerList = MutableLiveData<List<Player>>()
 
-    val teamsList = MutableLiveData<List<Team>>()
+    var player: Player? = null
 
+    private val _signUpUser = MutableLiveData<User>()
+
+    val signUpUser: LiveData<User>
+        get() = _signUpUser
 
     private val _status = MutableLiveData<LoadStatus>()
 
@@ -37,15 +41,20 @@ class LoginSearchViewModel(private val repository: BaseballRepository) : ViewMod
     val navigateToCreate: LiveData<Boolean>
         get() = _navigateToCreate
 
+    private val _navigateToTeam = MutableLiveData<Boolean>()
 
-    fun searchTeam() {
-        if (searchTeamName.value.isNullOrEmpty()) {
-            teamsList.value = emptyList()
+    val navigateToTeam: LiveData<Boolean>
+        get() = _navigateToTeam
+
+
+    fun searchPlayer() {
+        if (searchPlayerId.value.isNullOrEmpty()) {
+            playerList.value = emptyList()
 
         } else {
             viewModelScope.launch {
-                val result = repository.searchTeam(searchTeamName.value!!)
-                teamsList.value = when(result) {
+                val result = repository.searchPlayer(searchPlayerId.value!!)
+                playerList.value = when(result) {
                     is Result.Success -> {
                         _errorMessage.value = null
                         _status.value = LoadStatus.DONE
@@ -71,12 +80,84 @@ class LoginSearchViewModel(private val repository: BaseballRepository) : ViewMod
         }
     }
 
+    fun signUpUser() {
+        player?.let{
+            user.playerId = it.id
+            user.teamId = it.teamId!!  // 他不會是錯的，因為錯的話隊友那邊根本看球員頁看不到這個人
+            UserManager.playerId = it.id
+            UserManager.teamId = it.teamId ?: ""
+            // 唯一沒拿到的就是完整的team資訊
+
+            viewModelScope.launch {
+                _status.value = LoadStatus.LOADING
+                val result = repository.signUpUser(user)
+                _signUpUser.value = when (result) {
+                    is Result.Success -> {
+                        _errorMessage.value = null
+                        result.data
+                    }
+                    is Result.Fail -> {
+                        _errorMessage.value = result.error
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                    is Result.Error -> {
+                        _errorMessage.value = result.exception.toString()
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                    else -> {
+                        _errorMessage.value = Util.getString(R.string.return_nothing)
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                }
+            }
+            // view model scope end
+        }
+    }
+
+    fun registerPlayer() {
+        player?.let {
+            viewModelScope.launch {
+                val result = repository.registerPlayer(it.id)
+
+                _navigateToTeam.value = when (result) {
+                    is Result.Success -> {
+                        _status.value = LoadStatus.DONE
+                        result.data
+                    }
+                    is Result.Fail -> {
+                        _errorMessage.value = result.error
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                    is Result.Error -> {
+                        _errorMessage.value = result.exception.toString()
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                    else -> {
+                        _errorMessage.value = Util.getString(R.string.return_nothing)
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                }
+            }
+        }
+    }
+
+
     fun navigateToCreate() {
         _navigateToCreate.value = true
     }
 
     fun onCreateNavigated() {
         _navigateToCreate.value = null
+    }
+
+    fun onTeamNavigated() {
+        _navigateToTeam.value = null
     }
 
 }
