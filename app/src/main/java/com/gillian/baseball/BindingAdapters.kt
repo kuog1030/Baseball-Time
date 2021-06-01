@@ -250,9 +250,13 @@ fun bindProfilePhoto(imageView: ImageView, url: String?) {
             .into(imageView)
 }
 
-@BindingAdapter("defaultPhoto")
-fun bindDefaultPhoto(textView: TextView, name: String) {
-    textView.text = name.substring(0, 1)
+@BindingAdapter("defaultName")
+fun bindDefaultPhoto(textView: TextView, name: String?) {
+    if (name == null) {
+        textView.text = ""
+    } else {
+        textView.text = name.substring(0, 1)
+    }
 }
 
 @BindingAdapter("teamImageUrl")

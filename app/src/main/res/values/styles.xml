@@ -171,6 +171,12 @@
         <item name="layout_constraintVertical_bias">0.7</item>
     </style>
 
+    <style name="DefaultPhoto">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:background">@drawable/bg_default_photo</item>
+    </style>
+
 <!--    testing custom view-->
     <declare-styleable name="CustomBaseView">
         <attr name="onBase" format="integer" />

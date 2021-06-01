@@ -9,6 +9,7 @@ data class GameTeam (
         var name: String = "",
         val acronym : String = name,
         val teamId: String = "",
+        val image: String = "",
         var pitcher: EventPlayer = EventPlayer(),
         val lineUp: MutableList<EventPlayer> = mutableListOf()
 ) : Parcelable

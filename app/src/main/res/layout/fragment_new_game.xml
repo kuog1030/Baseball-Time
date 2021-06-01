@@ -67,6 +67,32 @@
                     app:layout_constraintTop_toBottomOf="@+id/imageView6"
                     tools:text="主隊" />
 
+
+                <TextView
+                    style="@style/DefaultPhoto"
+                    android:id="@+id/text_new_game_guest_d"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:defaultName="@{viewModel.guestName}"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                    app:layout_constraintStart_toStartOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+                <TextView
+                    style="@style/DefaultPhoto"
+                    android:id="@+id/text_new_game_home_d"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:defaultName="@{viewModel.homeName}"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                    app:layout_constraintStart_toStartOf="@+id/imageView6"
+                    app:layout_constraintTop_toTopOf="@+id/imageView6"
+                    tools:text="A"/>
+
                 <ImageView
                     android:id="@+id/imageView6"
                     android:layout_width="65dp"
@@ -74,7 +100,7 @@
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/text_new_game_versus"
                     app:layout_constraintTop_toTopOf="@+id/imageView5"
-                    app:teamImageUrl="@{viewModel.homeImage}"/>
+                    app:photoUrl="@{viewModel.homeImage}"/>
 
                 <ImageView
                     android:id="@+id/imageView5"
@@ -85,7 +111,8 @@
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintVertical_bias="0.4"
-                    app:teamImageUrl="@{viewModel.guestImage}"/>
+                    app:photoUrl="@{viewModel.guestImage}"/>
+
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 

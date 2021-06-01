@@ -17,6 +17,30 @@
         android:layout_marginBottom="@dimen/margin">
 
         <TextView
+            style="@style/DefaultPhoto"
+            android:id="@+id/text_card_score_guest_d"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            app:defaultName="@{game.guestName}"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_card_score_guest"
+            app:layout_constraintEnd_toEndOf="@+id/image_card_score_guest"
+            app:layout_constraintStart_toStartOf="@+id/image_card_score_guest"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_guest" />
+
+        <TextView
+            style="@style/DefaultPhoto"
+            android:id="@+id/text_card_score_home_d"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            app:defaultName="@{game.homeName}"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_card_score_home"
+            app:layout_constraintEnd_toEndOf="@+id/image_card_score_home"
+            app:layout_constraintStart_toStartOf="@+id/image_card_score_home"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_home" />
+
+        <TextView
             android:id="@+id/text_card_score_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -63,7 +87,7 @@
             app:layout_constraintEnd_toStartOf="@+id/text_card_score_score"
             app:layout_constraintHorizontal_bias="0.522"
             app:layout_constraintStart_toStartOf="parent"
-            app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
+            app:photoUrl="@{game.guestImage}"/>
 
         <TextView
             android:id="@+id/text_card_score_guest"
@@ -82,7 +106,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_card_score_score"
             app:layout_constraintTop_toTopOf="@+id/image_card_score_guest"
-            app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
+            app:photoUrl="@{game.homeImage}"/>
 
         <TextView
             android:id="@+id/text_card_score_home"

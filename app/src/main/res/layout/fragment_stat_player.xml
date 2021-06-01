@@ -20,13 +20,27 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/text_stat_player_default"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:background="@drawable/bg_default_photo"
+            android:gravity="center"
+            android:textColor="@color/white"
+            android:textSize="30sp"
+            app:defaultName="@{viewModel.player.name}"
+            app:layout_constraintBottom_toBottomOf="@+id/image_stat_player"
+            app:layout_constraintEnd_toEndOf="@+id/image_stat_player"
+            app:layout_constraintTop_toTopOf="@+id/image_stat_player"
+            tools:text="陳" />
+
         <ImageView
             android:id="@+id/image_stat_player"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="@dimen/double_margin"
             android:layout_marginTop="@dimen/double_margin"
-            app:imageUrl="@{viewModel.player.image}"
+            app:photoUrl="@{viewModel.player.image}"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/ic_baseline_sports_baseball_24" />
