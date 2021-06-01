@@ -111,22 +111,25 @@
     </style>
 
     <style name="PlayerNameTable">
-        <item name="android:layout_width">@dimen/player_name_box_width</item>
+        <item name="android:layout_weight">1.3</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:padding">4dp</item>
         <item name="android:gravity">center</item>
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">15sp</item>
     </style>
 
     <style name="PlayerTable">
-        <item name="android:layout_width">@dimen/player_box_width</item>
-        <item name="android:textSize">15sp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textSize">14sp</item>
         <item name="android:gravity">center</item>
     </style>
 
     <style name="PlayerTableLarge">
-        <item name="android:layout_width">38dp</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:textSize">15sp</item>
         <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
     <style name="PlayerTableLargeTitle" parent="PlayerTableLarge">

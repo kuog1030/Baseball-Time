@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
 
         if (hasUser()) {
             Log.i("gillianlog", "has user")
-            //findNavController().navigate(NavigationDirections.navigationToTeam())
+            findNavController().navigate(NavigationDirections.navigationToTeam())
         }
 
         auth = Firebase.auth
@@ -55,7 +55,7 @@ class LoginFragment : Fragment() {
 
         // login -> intent -> viewModel.signInWithGoogle -> get firebase user
         // -> check if user exists (yes) -> navigate to team
-        //                         (no)  -> porceed login flow
+        //                         (no)  -> proceed login flow
         binding.buttonLoginGoogle.setOnClickListener {
             login()
         }

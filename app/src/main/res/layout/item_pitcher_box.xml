@@ -14,14 +14,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TableLayout
             android:id="@+id/table_player_box"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp">
 
@@ -34,8 +34,8 @@
                 <TextView
                     android:id="@+id/row_player_box_name"
                     style="@style/PlayerNameTable"
+                    android:layout_weight="2"
                     boxStyle="@{isTitle}"
-                    android:layout_width="@dimen/box_name_width"
                     android:layout_height="wrap_content"
                     android:text="@{pitcher.name}"
                     tools:text="潘威倫"/>

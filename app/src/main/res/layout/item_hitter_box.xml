@@ -17,14 +17,14 @@
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
         <TableLayout
             android:id="@+id/table_player_box"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="1dp">
 
@@ -36,9 +36,8 @@
 
                 <TextView
                     android:id="@+id/row_player_box_order"
-                    style="@style/PlayerNameTable"
-                    android:layout_width="25dp"
                     android:gravity="end"
+                    android:layout_weight=".3"
                     android:layout_height="wrap_content"
                     android:textColor="@color/grey_888"
                     app:orderText="@{hitter.order}"

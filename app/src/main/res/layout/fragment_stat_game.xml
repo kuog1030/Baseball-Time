@@ -85,7 +85,7 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_game_stat_hitter"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginTop="@dimen/margin"
@@ -103,17 +103,18 @@
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_game_stat_pitcher"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:layout_marginBottom="@dimen/margin"
+                android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintTop_toBottomOf="@+id/text_game_stat_pitch"
                 app:pitcherBox="@{viewModel.myStat.myPitcher}"
                 tools:itemCount="2"
-                android:overScrollMode="never"
                 tools:listitem="@layout/item_hitter_box">
 
             </androidx.recyclerview.widget.RecyclerView>

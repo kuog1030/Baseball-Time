@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="box"
             type="com.gillian.baseball.data.BoxView" />
-<!--        <variable-->
-<!--            name="boxList"-->
-<!--            type="java.util.List&lt;String>" />-->
+        <!--        <variable-->
+        <!--            name="boxList"-->
+        <!--            type="java.util.List&lt;String>" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
