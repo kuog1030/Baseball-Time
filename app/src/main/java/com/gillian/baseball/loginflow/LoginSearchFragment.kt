@@ -27,7 +27,7 @@ class LoginSearchFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.recyclerSearchTeams.adapter = TeammateAdapter(TeammateAdapter.OnClickListener{ player ->
+        binding.recyclerSearchPlayer.adapter = TeammateAdapter(TeammateAdapter.OnClickListener{ player ->
             Log.i("gillian", "player clicked is $player")
             viewModel.player = player
         })

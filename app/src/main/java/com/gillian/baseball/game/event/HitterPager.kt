@@ -1,4 +1,4 @@
-package com.gillian.baseball.game.dialog
+package com.gillian.baseball.game.event
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -16,7 +16,7 @@ class HitterPager(val page : String, val atBase: AtBase) : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val binding = PagerHitterBinding.inflate(inflater, container, false)
-        val viewModel = ViewModelProvider(requireParentFragment()).get(EventDialogViewModel::class.java)
+        val viewModel = ViewModelProvider(requireParentFragment()).get(EventViewModel::class.java)
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         binding.page = page

@@ -7,7 +7,7 @@
 
         <variable
             name="viewModel"
-            type="com.gillian.baseball.game.dialog.EventDialogViewModel" />
+            type="com.gillian.baseball.game.event.EventViewModel" />
 
         <variable
             name="page"

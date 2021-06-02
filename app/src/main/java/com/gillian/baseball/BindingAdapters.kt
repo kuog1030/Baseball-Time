@@ -1,10 +1,7 @@
 package com.gillian.baseball
 
-import android.graphics.Color
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
-import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import androidx.recyclerview.widget.RecyclerView
@@ -13,7 +10,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.broadcast.BroadcastAdapter
 import com.gillian.baseball.data.*
-import com.gillian.baseball.loginflow.SearchTeamAdapter
 import com.gillian.baseball.team.pager.TeammateAdapter
 import com.gillian.baseball.views.BoxAdapter
 import com.gillian.baseball.views.HitterBoxAdapter
@@ -49,17 +45,6 @@ fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: MutableList<Player>?
         recyclerView.adapter?.apply {
             when (this) {
                 is TeammateAdapter -> submitList(it)
-            }
-        }
-    }
-}
-
-@BindingAdapter("searchTeam")
-fun bindSearchTeam(recyclerView: RecyclerView, teams: List<Team>?) {
-    teams?.let{
-        recyclerView.adapter?.apply {
-            when (this) {
-                is SearchTeamAdapter -> submitList(it)
             }
         }
     }

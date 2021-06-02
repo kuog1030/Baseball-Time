@@ -1,4 +1,4 @@
-package com.gillian.baseball.game.dialog
+package com.gillian.baseball.game.event
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager

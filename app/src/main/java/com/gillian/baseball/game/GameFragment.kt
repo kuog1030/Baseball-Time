@@ -8,10 +8,9 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
-import com.gillian.baseball.MainActivity
 import com.gillian.baseball.databinding.FragmentGameBinding
 import com.gillian.baseball.ext.getVmFactory
-import com.gillian.baseball.game.dialog.EventDialog
+import com.gillian.baseball.game.event.EventDialog
 import com.gillian.baseball.game.onbase.OnBaseDialog
 import com.gillian.baseball.game.pinch.PinchDialog
 

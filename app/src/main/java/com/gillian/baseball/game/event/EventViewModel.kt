@@ -1,6 +1,5 @@
-package com.gillian.baseball.game.dialog
+package com.gillian.baseball.game.event
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,7 +12,7 @@ import com.gillian.baseball.data.EventInfo
 import com.gillian.baseball.game.EventType
 import kotlinx.coroutines.launch
 
-class EventDialogViewModel(private val repository: BaseballRepository, private val eventInfo: EventInfo) : ViewModel() {
+class EventViewModel(private val repository: BaseballRepository, private val eventInfo: EventInfo) : ViewModel() {
 
     var atBaseList = eventInfo.atBaseList
     var hitterEvent = MutableLiveData<Event>(eventInfo.hitterPreEvent)

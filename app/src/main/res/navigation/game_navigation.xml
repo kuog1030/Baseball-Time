@@ -6,7 +6,7 @@
 
     <dialog
         android:id="@+id/eventDialog"
-        android:name="com.gillian.baseball.game.dialog.EventDialog"
+        android:name="com.gillian.baseball.game.event.EventDialog"
         android:label="EventDialog" >
         <argument
             android:name="preEvent"

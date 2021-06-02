@@ -1,7 +1,6 @@
-package com.gillian.baseball.game.dialog
+package com.gillian.baseball.game.event
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,7 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 //        dismiss()
 //    }
 
-    private val viewModel by viewModels<EventDialogViewModel> { getVmFactory(eventInfo) }
+    private val viewModel by viewModels<EventViewModel> { getVmFactory(eventInfo) }
     private val isSafe = eventInfo.isSafe
     private val atBaseList = eventInfo.atBaseList
 

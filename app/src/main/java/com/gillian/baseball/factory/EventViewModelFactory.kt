@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.data.EventInfo
-import com.gillian.baseball.game.dialog.EventDialogViewModel
+import com.gillian.baseball.game.event.EventViewModel
 
 class EventViewModelFactory constructor(
         private val repository: BaseballRepository,
@@ -14,8 +14,8 @@ class EventViewModelFactory constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
         with(modelClass) {
             when {
-                isAssignableFrom(EventDialogViewModel::class.java) ->
-                    EventDialogViewModel(repository, eventInfo)
+                isAssignableFrom(EventViewModel::class.java) ->
+                    EventViewModel(repository, eventInfo)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

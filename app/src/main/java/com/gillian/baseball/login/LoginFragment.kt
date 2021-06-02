@@ -34,7 +34,7 @@ class LoginFragment : Fragment() {
 
         if (hasUser()) {
             Log.i("gillianlog", "has user")
-            findNavController().navigate(NavigationDirections.navigationToTeam())
+            //findNavController().navigate(NavigationDirections.navigationToTeam())
         }
 
         auth = Firebase.auth
