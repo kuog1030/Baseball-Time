@@ -1,4 +1,4 @@
-package com.gillian.baseball.loginflow
+package com.gillian.baseball.loginfirst
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,16 +10,16 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.NavigationDirections
-import com.gillian.baseball.databinding.FragmentLoginSearchBinding
+import com.gillian.baseball.databinding.FragmentLoginFirstBinding
 import com.gillian.baseball.ext.getVmFactory
 
-class LoginSearchFragment : Fragment() {
+class LoginFirstFragment : Fragment() {
 
-    val args: LoginSearchFragmentArgs by navArgs()
+    val args: LoginFirstFragmentArgs by navArgs()
     private val viewModel by viewModels<LoginFirstViewModel> { getVmFactory(args.newUser) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = FragmentLoginSearchBinding.inflate(inflater, container, false)
+        val binding = FragmentLoginFirstBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -62,7 +62,7 @@ class LoginSearchFragment : Fragment() {
 
         viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
             it?.let{
-                findNavController().navigate(LoginSearchFragmentDirections.actionSearchToCreate(args.newUser))
+                findNavController().navigate(NavigationDirections.navigationToTeam())
                 viewModel.onTeamNavigated()
             }
         })

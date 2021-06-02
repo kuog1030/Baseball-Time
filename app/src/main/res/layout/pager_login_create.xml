@@ -6,7 +6,7 @@
     <data>
         <variable
             name="viewModel"
-            type="com.gillian.baseball.loginflow.LoginFirstViewModel" />
+            type="com.gillian.baseball.loginfirst.LoginFirstViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,45 +15,54 @@
 
         <EditText
             android:id="@+id/editTextTextPersonName4"
+            style="@style/LoginEdit"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginStart="40dp"
-            android:layout_marginTop="150dp"
             android:layout_marginEnd="40dp"
-            android:background="@drawable/bg_radius_border"
+            android:drawableStart="@drawable/ic_baseline_sports_baseball_24"
+            android:drawablePadding="@dimen/margin"
             android:ems="10"
             android:hint="球隊名稱"
             android:inputType="textPersonName"
             android:text="@={viewModel.newTeamName}"
+            app:layout_constraintBottom_toTopOf="@+id/editTextTextPersonName5"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_chainStyle="packed" />
 
         <EditText
             android:id="@+id/editTextTextPersonName5"
+            style="@style/LoginEdit"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_radius_border"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:drawableStart="@drawable/ic_person_24"
+            android:drawablePadding="@dimen/margin"
             android:ems="10"
             android:hint="球員名稱"
             android:inputType="textPersonName"
             android:text="@={viewModel.newPlayerName}"
-            android:layout_marginTop="@dimen/one_half_margin"
+            app:layout_constraintBottom_toTopOf="@+id/editTextNumber"
             app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName4"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName4"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName4" />
 
         <EditText
             android:id="@+id/editTextNumber"
+            style="@style/LoginEdit"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/one_half_margin"
-            android:background="@drawable/bg_radius_border"
+            android:drawableStart="@drawable/ic_looks_3_24"
+            android:drawablePadding="@dimen/margin"
             android:ems="10"
             android:hint="你的背號"
-            android:text="@={viewModel.newPlayerNumber}"
             android:inputType="number"
+            android:text="@={viewModel.newPlayerNumber}"
+            app:layout_constraintBottom_toTopOf="@+id/button4"
             app:layout_constraintEnd_toEndOf="@+id/editTextTextPersonName5"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName5"
             app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName5" />
 
@@ -61,12 +70,26 @@
             android:id="@+id/button4"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
             android:background="@drawable/button_radius_filled"
-            android:text="建立球隊和球員"
             android:onClick="@{()->viewModel.signUpUser()}"
+            android:text="建立球隊和球員"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/editTextNumber"
-            app:layout_constraintStart_toStartOf="@+id/editTextNumber"
-            app:layout_constraintTop_toBottomOf="@+id/editTextNumber" />
+            app:layout_constraintStart_toStartOf="@+id/editTextNumber" />
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/lottie_login_create"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            app:layout_constraintBottom_toTopOf="@+id/button4"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextNumber"
+            app:loadingStatus="@{viewModel.status}"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/login" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

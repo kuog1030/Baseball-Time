@@ -2,13 +2,11 @@ package com.gillian.baseball
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.databinding.DataBindingUtil
 import androidx.navigation.findNavController
 import com.gillian.baseball.databinding.ActivityMainBinding
-import com.gillian.baseball.ext.toInningCount
 import com.gillian.baseball.login.UserManager
 
 class MainActivity : AppCompatActivity() {
@@ -43,8 +41,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.gameFragment -> setBottomNavigation(false)
                 R.id.finalFragment -> setBottomNavigation(false)
                 R.id.loginFragment -> setBottomNavigation(false)
-                R.id.loginCreateFragment -> setBottomNavigation(false)
-                R.id.loginSearchFragment -> setBottomNavigation(false)
+                R.id.loginFirstFragment -> setBottomNavigation(false)
                 R.id.broadcastFragment -> if (UserManager.userId == "") {
                     setBottomNavigation(false)
                 }

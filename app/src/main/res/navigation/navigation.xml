@@ -115,8 +115,8 @@
         android:name="com.gillian.baseball.login.LoginFragment"
         android:label="LoginFragment" >
         <action
-            android:id="@+id/action_login_to_search"
-            app:destination="@id/loginSearchFragment" />
+            android:id="@+id/action_login_to_first"
+            app:destination="@id/loginFirstFragment" />
     </fragment>
     <fragment
         android:id="@+id/broadcastFragment"
@@ -135,20 +135,9 @@
             app:destination="@id/broadcastFragment" />
     </fragment>
     <fragment
-        android:id="@+id/loginCreateFragment"
-        android:name="com.gillian.baseball.loginflow.LoginCreateFragment"
-        android:label="LoginCreateFragment" >
-        <argument
-            android:name="newUser"
-            app:argType="com.gillian.baseball.data.User" />
-    </fragment>
-    <fragment
-        android:id="@+id/loginSearchFragment"
-        android:name="com.gillian.baseball.loginflow.LoginSearchFragment"
-        android:label="LoginSearchFragment" >
-        <action
-            android:id="@+id/action_search_to_create"
-            app:destination="@id/loginCreateFragment" />
+        android:id="@+id/loginFirstFragment"
+        android:name="com.gillian.baseball.loginfirst.LoginFirstFragment"
+        android:label="LoginFirstFragment">
         <argument
             android:name="newUser"
             app:argType="com.gillian.baseball.data.User" />

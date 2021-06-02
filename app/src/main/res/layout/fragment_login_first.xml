@@ -9,7 +9,7 @@
 
         <variable
             name="viewModel"
-            type="com.gillian.baseball.loginflow.LoginFirstViewModel" />
+            type="com.gillian.baseball.loginfirst.LoginFirstViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -38,10 +38,11 @@
             app:layout_constraintTop_toBottomOf="@+id/imageView13">
 
             <com.google.android.material.tabs.TabLayout
+                app:tabIndicatorColor="@color/blue_navy"
                 android:id="@+id/tabs_first_login"
                 android:layout_width="match_parent"
-                android:paddingStart="@dimen/margin"
-                android:paddingEnd="@dimen/margin"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
                 android:layout_height="45dp" />
 
         </androidx.viewpager.widget.ViewPager>

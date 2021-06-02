@@ -8,12 +8,14 @@
         android:layout_height="match_parent"
         android:background="@color/black_login">
 
+
         <Button
             android:id="@+id/button_login_broadcast"
             android:layout_width="0dp"
             android:layout_height="55dp"
             android:layout_marginTop="16dp"
             android:text="收看直播"
+            android:background="@drawable/button_radius_filled"
             android:backgroundTint="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/button_login_google"
             app:layout_constraintStart_toStartOf="@+id/button_login_google"

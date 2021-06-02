@@ -4,8 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.User
 import com.gillian.baseball.data.source.BaseballRepository
-import com.gillian.baseball.loginflow.LoginCreateViewModel
-import com.gillian.baseball.loginflow.LoginFirstViewModel
+import com.gillian.baseball.loginfirst.LoginFirstViewModel
 
 class UserViewModelFactory constructor(
         private val repository: BaseballRepository,
@@ -15,8 +14,6 @@ class UserViewModelFactory constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
             with(modelClass) {
                 when {
-                    isAssignableFrom(LoginCreateViewModel::class.java) ->
-                        LoginCreateViewModel(repository, user)
                     isAssignableFrom(LoginFirstViewModel::class.java) ->
                         LoginFirstViewModel(repository, user)
                     else ->

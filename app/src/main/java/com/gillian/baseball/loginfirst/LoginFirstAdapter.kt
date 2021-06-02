@@ -1,4 +1,4 @@
-package com.gillian.baseball.loginflow
+package com.gillian.baseball.loginfirst
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
