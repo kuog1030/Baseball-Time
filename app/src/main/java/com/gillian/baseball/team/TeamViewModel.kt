@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
+    val customBaseInt = MutableLiveData(101)
+
     val myself = MutableLiveData<Player>()
     val myAvg = MutableLiveData<String>()
     val myObp = MutableLiveData<String>()

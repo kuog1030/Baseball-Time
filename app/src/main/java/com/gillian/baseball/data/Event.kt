@@ -14,6 +14,7 @@ data class Event(
     var out: Int = 0,
     var rbi: Int = 0,
     var run: Int = 0,
+    var currentBase: Int = 0,
     val player: EventPlayer = EventPlayer(),
     val pitcher: EventPlayer = EventPlayer(),
     var time: Long = -1

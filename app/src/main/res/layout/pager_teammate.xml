@@ -22,7 +22,7 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:background="?attr/colorPrimary"
+                android:background="@drawable/bg_bottom_round"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.cardview.widget.CardView

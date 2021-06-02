@@ -237,6 +237,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                     pitcher = if (isTop) homePitcher else guestPitcher,
                     inning = inningCount,
                     result = EventType.STRIKEOUT.number,
+                    currentBase = getCustomBaseInt(baseList = baseList),
                     ball = ballCount.value ?: 0,
                     strike = totalStrike,
                     out = outCount.value ?: 0))
@@ -268,6 +269,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
 
     // 1. 單純點跑者的出局(on base dialog) 2. 打者出局後連帶跑者出局(event dialog)
+    // TODO()這個傳送壘上跑者狀態有點麻煩
     fun onBaseOut(outBaseList: List<Int>) {
         for (base in outBaseList) {
             sendEvent(Event(
@@ -341,6 +343,33 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         )
     }
 
+
+    //    fun baseListToCustom() {
+    //        var customInt = 0
+    //        for (atBase in atBaseList) {
+    //            Log.i("gillian", "at base is $atBase")
+    //            when (atBase.base) {
+    //                1 -> customInt += 1
+    //                2 -> customInt += 10
+    //                3 -> customInt += 100
+    //            }
+    //        }
+    //        customBaseInt.value = customInt
+    //    }
+    fun getCustomBaseInt(baseList: Array<EventPlayer?>) : Int{
+        var result = 0
+        for (i in 1..3) {
+            if (baseList[i] != null) {
+                when (i) {
+                    1 -> result += 1
+                    2 -> result += 10
+                    3 -> result += 100
+                }
+            }
+        }
+        return result
+    }
+
     fun onEventNavigated() {
         _navigateToEvent.value = null
     }
@@ -404,15 +433,20 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 strike = totalStrike,
                 out = outCount.value ?: 0)
         val hasRbi = advanceBase(0)
+        toBeSend.currentBase = getCustomBaseInt(baseList = baseList)
+        Log.i("gillian", "to be send ${toBeSend.currentBase}")
+
         if (hasRbi) {
             toBeSend.rbi = 1
         }
+
         sendEvent(toBeSend)
         clearCount(includeOut = false)
         nextPlayer()
     }
 
     fun sendEvent(event: Event) {
+        Log.i("gillian", "event current base ${event.currentBase}")
         viewModelScope.launch {
             repository.sendEvent(argument.game.id, event)
         }

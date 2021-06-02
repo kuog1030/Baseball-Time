@@ -1,5 +1,6 @@
 package com.gillian.baseball.game.event
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -35,7 +36,35 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     val dismiss: LiveData<Array<EventPlayer?>>
         get() = _dismiss
 
+
+
+    val customBaseInt = MutableLiveData<Int>(0)
+
+
+    init {
+        eventList.add(eventInfo.hitterPreEvent)
+        Log.i("gillian", "init event list $eventList")
+    }
+
+
+    fun baseListToCustom() {
+        var customInt = 0
+        for (atBase in atBaseList) {
+            Log.i("gillian", "at base is $atBase")
+            when (atBase.base) {
+                1 -> customInt += 1
+                2 -> customInt += 10
+                3 -> customInt += 100
+            }
+        }
+        customBaseInt.value = customInt
+    }
+
+
+
+
     fun changeToNextPage() {
+        baseListToCustom()
         _changeToNextPage.value = true
     }
 
@@ -61,6 +90,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         } else {
             readyToSend[0].strike += 1
         }
+        readyToSend[0].currentBase = customBaseInt.value ?: 0
         scoreToBeAdded = eventList[0].rbi
         viewModelScope.launch {
             for (singleEvent in readyToSend) {
@@ -89,10 +119,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     fun hit(baseCount: Int) {
-        hitterEvent.value?.let {
-            it.result = baseCount
-        }
-        eventList.add(hitterEvent.value!!)
+        eventList[0].result = baseCount
         // atBaseList[0] is hitter
         atBaseList[0].base = baseCount
 
@@ -100,24 +127,22 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     fun homerun() {
-        hitterEvent.value?.let {
+        eventList[0].let{
             it.result = EventType.HOMERUN.number
             it.run = 1
             it.rbi = 1
         }
-        eventList.add(hitterEvent.value!!)
         atBaseList[0].base = -1
         changeToNextPage()
     }
 
     fun hbp() {
-        hitterEvent.value?.let {
+        eventList[0].let{
             it.result = EventType.HITBYPITCH.number
             // 之後event統一會加strike，所以先扣掉XD
             it.strike -= 1
             it.ball += 1
         }
-        eventList.add(hitterEvent.value!!)
         atBaseList[0].base = 1
         changeToNextPage()
     }
@@ -127,24 +152,18 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     // 一安+失誤?????好可怕
     //TODO()
     fun error() {
-        hitterEvent.value?.let {
-            it.result = EventType.ERRORONBASE.number
-        }
+        eventList[0].result = EventType.ERRORONBASE.number
     }
 
     fun droppedThird() {
-        hitterEvent.value?.let {
-            it.result = EventType.DROPPEDTHIRD.number
-        }
+        // 我原本這裡竟然沒有add event
+        eventList[0].result = EventType.DROPPEDTHIRD.number
         atBaseList[0].base = 1
     }
 
     fun fielderChoice() {
         // default single
-        hitterEvent.value?.let {
-            it.result = EventType.FIELDERCHOICE.number
-        }
-        eventList.add(hitterEvent.value!!)
+        eventList[0].result = EventType.FIELDERCHOICE.number
         atBaseList[0].base = 1
         changeToNextPage()
     }
@@ -181,10 +200,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     fun groundOut() {
-        hitterEvent.value?.let {
-            it.result = EventType.GROUNDOUT.number
-        }
-        eventList.add(hitterEvent.value!!)
+        eventList[0].result = EventType.GROUNDOUT.number
         atBaseList[0].base = -1
         hasOut = true
         changeToNextPage()
@@ -192,11 +208,8 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
 
 
     fun airOut(hasRbi: Boolean) {
-        hitterEvent.value?.let {
-            it.result = if (hasRbi) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
-            //it.rbi = if (hasRbi) 1 else 0  跑者回壘得分的時候就會加進打者的event
-        }
-        eventList.add(hitterEvent.value!!)
+        eventList[0].result = if (hasRbi) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
+        //it.rbi = if (hasRbi) 1 else 0  跑者回壘得分的時候就會加進打者的event
         atBaseList[0].base = -1
         hasOut = true
         changeToNextPage()

@@ -55,10 +55,10 @@
         <!--        Testing custom view-->
         <com.gillian.baseball.views.CustomBaseView
             android:id="@+id/my_custom_base"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
             android:layout_marginEnd="4dp"
-            app:onBase="111"
+            app:onBase="@{event.currentBase}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

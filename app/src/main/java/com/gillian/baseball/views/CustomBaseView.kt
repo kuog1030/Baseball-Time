@@ -3,6 +3,7 @@ package com.gillian.baseball.views
 import android.content.Context
 import android.graphics.*
 import android.util.AttributeSet
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.widget.ImageView
@@ -11,19 +12,36 @@ import androidx.constraintlayout.widget.ConstraintLayout
 import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.R
 
-class CustomBaseView(context: Context, attrs: AttributeSet) : ConstraintLayout(context, attrs) {
+class CustomBaseView : ConstraintLayout {
 
-    private var first : ImageView
-    private var second : ImageView
-    private var third : ImageView
+    private lateinit var first: ImageView
+    private lateinit var second: ImageView
+    private lateinit var third: ImageView
 
-    private var baseInt : Int
 
-    init {
-        //context.obtainStyledAttributes(attrs, R.styleable.CustomBaseView)
+    //val layout: ConstraintLayout = LayoutInflater.from(context).inflate(R.layout.like_button, this, true) as ConstraintLayout
+
+    var onBase: Int = 0
+        set(value) {
+            field = value
+            Log.i("gillian", "on base is set again $value")
+            setBaseList(value)
+        }
+
+    private var baseInt: Int = 0
+
+    constructor(context: Context) : super(context) {
+        initView(context)
+    }
+
+    constructor(context: Context, attrs: AttributeSet?) : super(context, attrs) {
+        initView(context, attrs)
+    }
+
+    private fun initView(context: Context, attrs: AttributeSet? = null) {
         context.theme.obtainStyledAttributes(
                 attrs, R.styleable.CustomBaseView, 0, 0).apply {
-            try{
+            try {
                 baseInt = getInteger(R.styleable.CustomBaseView_onBase, 0)
             } finally {
                 recycle()
@@ -37,20 +55,31 @@ class CustomBaseView(context: Context, attrs: AttributeSet) : ConstraintLayout(c
         second = view.findViewById(R.id.base_second)
         third = view.findViewById(R.id.base_third)
 
-        setBaseList(baseInt)
+    }
+
+
+    init {
+        //context.obtainStyledAttributes(attrs, R.styleable.CustomBaseView)
+
     }
 
     fun setBaseList(base: Int = 0) {
-        if (base / 100 == 1) {
+        if (base / 100 != 0) {
             third.setColorFilter(BaseballApplication.instance.getColor(R.color.yellow_strike))
+        } else {
+            third.setColorFilter(BaseballApplication.instance.getColor(R.color.grey_ddd))
         }
 
-        if ((base / 10 % 10) == 1) {
+        if ((base / 10 % 10) != 0) {
             second.setColorFilter(BaseballApplication.instance.getColor(R.color.yellow_strike))
+        } else {
+            second.setColorFilter(BaseballApplication.instance.getColor(R.color.grey_ddd))
         }
 
-        if (base % 10 == 1) {
+        if (base % 10 != 0) {
             first.setColorFilter(BaseballApplication.instance.getColor(R.color.yellow_strike))
+        } else {
+            first.setColorFilter(BaseballApplication.instance.getColor(R.color.grey_ddd))
         }
     }
 

@@ -18,16 +18,15 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-            <ImageView
+            <com.gillian.baseball.views.CustomBaseView
                 android:id="@+id/image_event_end_field"
-                android:layout_width="@dimen/dialog_field_image"
-                android:layout_height="@dimen/dialog_field_image"
-                android:layout_marginTop="@dimen/double_margin"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/diamond_field" />
-
+                android:layout_marginTop="50dp"
+                app:onBase="@{viewModel.customBaseInt}" />
 
             <TextView
                 style="@style/EventDetailText"
