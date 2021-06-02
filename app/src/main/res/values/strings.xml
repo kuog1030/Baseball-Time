@@ -34,10 +34,10 @@
     <string name="number">背號</string>
     <string name="name_must">姓名（必填）</string>
     <string name="name_hint">潘威倫</string>
-    <string name="name_hint2">陳金鋒</string>
+    <string name="name_hint2">你的球員名，例：陳金鋒</string>
     <string name="number_must">背號（必填）</string>
     <string name="number_hint">18</string>
-    <string name="number_hint2">52</string>
+    <string name="number_hint2">你的背號，例：52</string>
     <string name="nickname">綽號</string>
     <string name="nickname_hint">嘟嘟</string>
     <string name="nickname_hint2">鋒哥</string>

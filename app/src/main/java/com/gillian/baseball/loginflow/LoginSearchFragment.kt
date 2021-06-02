@@ -27,15 +27,19 @@ class LoginSearchFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.recyclerSearchPlayer.adapter = TeammateAdapter(TeammateAdapter.OnClickListener{ player ->
-            Log.i("gillian", "player clicked is $player")
-            viewModel.player = player
-        })
 
         viewModel.signUpUser.observe(viewLifecycleOwner, Observer {
             it?.let {
                 // user manager team id, player id will be added first -> then user id (repository)
                 viewModel.registerPlayer()
+            }
+        })
+
+        viewModel.playerList.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                if (it.isNotEmpty()) {
+                    viewModel.player.value = it[0]
+                }
             }
         })
 

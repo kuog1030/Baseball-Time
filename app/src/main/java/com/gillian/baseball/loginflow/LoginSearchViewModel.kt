@@ -19,7 +19,7 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
 
     val playerList = MutableLiveData<List<Player>>()
 
-    var player: Player? = null
+    var player = MutableLiveData<Player>()
 
     private val _signUpUser = MutableLiveData<User>()
 
@@ -47,7 +47,25 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
         get() = _navigateToTeam
 
 
+    private val _teamCardExpand = MutableLiveData<Boolean>(false)
+
+    val teamCardExpand: LiveData<Boolean>
+        get() = _teamCardExpand
+
+    private val _playerCardExpand = MutableLiveData<Boolean>(false)
+
+    val playerCardExpand: LiveData<Boolean>
+        get() = _playerCardExpand
+
+
+    private val _expandNumber = MutableLiveData<Int>(2)
+
+    val expandNumber: LiveData<Int>
+        get() = _expandNumber
+
+
     fun searchPlayer() {
+        Log.i("gillian", "search player ${searchPlayerId.value}")
         if (searchPlayerId.value.isNullOrEmpty()) {
             playerList.value = emptyList()
 
@@ -81,7 +99,7 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
     }
 
     fun signUpUser() {
-        player?.let{
+        player.value?.let{
             user.playerId = it.id
             user.teamId = it.teamId!!  // 他不會是錯的，因為錯的話隊友那邊根本看球員頁看不到這個人
             UserManager.playerId = it.id
@@ -118,7 +136,7 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
     }
 
     fun registerPlayer() {
-        player?.let {
+        player.value?.let {
             viewModelScope.launch {
                 val result = repository.registerPlayer(it.id)
 
@@ -145,6 +163,10 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
                 }
             }
         }
+    }
+
+    fun setExpand(type: Int) {
+        _expandNumber.value = type
     }
 
 
