@@ -3,7 +3,7 @@
 <!--    <style name="Theme.Baseball" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">-->
     <style name="Theme.Baseball" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
-        <item name="colorPrimary">@color/slg</item>
+        <item name="colorPrimary">@color/color_primary</item>
         <item name="colorPrimaryVariant">@color/slg_dark</item>
         <item name="colorOnPrimary">@color/white</item>
         <!-- Secondary brand color. -->

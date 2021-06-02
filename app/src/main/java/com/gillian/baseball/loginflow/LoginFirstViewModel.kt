@@ -13,13 +13,29 @@ import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 
 
-class LoginSearchViewModel(private val repository: BaseballRepository, private val user: User) : ViewModel() {
+class LoginFirstViewModel(private val repository: BaseballRepository, private val user: User) : ViewModel() {
 
     val searchPlayerId = MutableLiveData<String>()
 
     val playerList = MutableLiveData<List<Player>>()
 
     var player = MutableLiveData<Player>()
+
+
+
+    val newTeamName = MutableLiveData<String>()
+
+    val newPlayerName = MutableLiveData<String>()
+
+    val newPlayerNumber = MutableLiveData<String>()
+
+
+
+
+    private val _signUpUserFromRegister = MutableLiveData<User>()
+
+    val signUpUserFromRegister: LiveData<User>
+        get() = _signUpUserFromRegister
 
     private val _signUpUser = MutableLiveData<User>()
 
@@ -36,32 +52,17 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
-    private val _navigateToCreate = MutableLiveData<Boolean>()
-
-    val navigateToCreate: LiveData<Boolean>
-        get() = _navigateToCreate
-
     private val _navigateToTeam = MutableLiveData<Boolean>()
 
     val navigateToTeam: LiveData<Boolean>
         get() = _navigateToTeam
 
+    private val _navigateFromRegister = MutableLiveData<Boolean>()
 
-    private val _teamCardExpand = MutableLiveData<Boolean>(false)
-
-    val teamCardExpand: LiveData<Boolean>
-        get() = _teamCardExpand
-
-    private val _playerCardExpand = MutableLiveData<Boolean>(false)
-
-    val playerCardExpand: LiveData<Boolean>
-        get() = _playerCardExpand
+    val navigateFromRegister: LiveData<Boolean>
+        get() = _navigateFromRegister
 
 
-    private val _expandNumber = MutableLiveData<Int>(2)
-
-    val expandNumber: LiveData<Int>
-        get() = _expandNumber
 
 
     fun searchPlayer() {
@@ -98,7 +99,7 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
         }
     }
 
-    fun signUpUser() {
+    fun signUpUserFromRegister() {
         player.value?.let{
             user.playerId = it.id
             user.teamId = it.teamId!!  // 他不會是錯的，因為錯的話隊友那邊根本看球員頁看不到這個人
@@ -109,7 +110,7 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
             viewModelScope.launch {
                 _status.value = LoadStatus.LOADING
                 val result = repository.signUpUser(user)
-                _signUpUser.value = when (result) {
+                _signUpUserFromRegister.value = when (result) {
                     is Result.Success -> {
                         _errorMessage.value = null
                         result.data
@@ -140,7 +141,7 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
             viewModelScope.launch {
                 val result = repository.registerPlayer(it.id)
 
-                _navigateToTeam.value = when (result) {
+                _navigateFromRegister.value = when (result) {
                     is Result.Success -> {
                         _status.value = LoadStatus.DONE
                         result.data
@@ -165,21 +166,79 @@ class LoginSearchViewModel(private val repository: BaseballRepository, private v
         }
     }
 
-    fun setExpand(type: Int) {
-        _expandNumber.value = type
+    fun signUpUser() {
+        if (newTeamName.value.isNullOrEmpty() || newPlayerNumber.value.isNullOrEmpty() || newPlayerName.value == null) {
+            _errorMessage.value = Util.getString(R.string.error_init_team_player)
+        } else {
+            _errorMessage.value = null
+
+            viewModelScope.launch {
+                _status.value = LoadStatus.LOADING
+                val result = repository.signUpUser(user)
+                _signUpUser.value = when (result) {
+                    is Result.Success -> {
+                        _errorMessage.value = null
+                        result.data
+                    }
+                    is Result.Fail -> {
+                        _errorMessage.value = result.error
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                    is Result.Error -> {
+                        _errorMessage.value = result.exception.toString()
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                    else -> {
+                        _errorMessage.value = Util.getString(R.string.return_nothing)
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                }
+            }
+        }
     }
 
+    fun initTeamAndPlayer() {
+        val numberInt = newPlayerNumber.value!!.toInt()
 
-    fun navigateToCreate() {
-        _navigateToCreate.value = true
-    }
+        val team = Team(name = newTeamName.value ?: "")
+        val player = Player(name = newPlayerName.value ?: "", number = numberInt, image = user.image)
 
-    fun onCreateNavigated() {
-        _navigateToCreate.value = null
+        viewModelScope.launch {
+            val result = repository.initTeamAndPlayer(team, player)
+            _navigateToTeam.value = when (result) {
+                is Result.Success -> {
+                    _status.value = LoadStatus.DONE
+                    result.data
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = result.error
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+                is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+                else -> {
+                    _errorMessage.value = Util.getString(R.string.return_nothing)
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+            }
+        }
+
     }
 
     fun onTeamNavigated() {
         _navigateToTeam.value = null
+    }
+
+    fun fromRegisterNavigated() {
+        _navigateFromRegister.value = null
     }
 
 }

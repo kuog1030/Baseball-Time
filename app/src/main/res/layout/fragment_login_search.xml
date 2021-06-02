@@ -9,230 +9,42 @@
 
         <variable
             name="viewModel"
-            type="com.gillian.baseball.loginflow.LoginSearchViewModel" />
+            type="com.gillian.baseball.loginflow.LoginFirstViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/blue_navy">
 
-        <Button
-            android:id="@+id/button_create_team_player"
-            style="@style/GameButton"
-            android:layout_width="0dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="@dimen/one_half_margin"
-            android:layout_marginTop="250dp"
-            android:backgroundTint="@color/grey_333"
-            android:text="建立新的球隊"
-            android:onClick="@{()->viewModel.setExpand(0)}"
-            android:textColor="@color/white"
-            app:layout_constraintEnd_toStartOf="@+id/button_search_player"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <Button
-            android:id="@+id/button_search_player"
-            style="@style/GameButton"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/one_half_margin"
-            android:layout_marginEnd="@dimen/one_half_margin"
-            android:backgroundTint="@color/grey_333"
-            android:text="Button"
-            android:onClick="@{()->viewModel.setExpand(1)}"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/button_create_team_player"
-            app:layout_constraintTop_toTopOf="@+id/button_create_team_player" />
 
         <ImageView
             android:id="@+id/imageView13"
             android:layout_width="75dp"
             android:layout_height="77dp"
-            android:layout_marginTop="100dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/baseball_380x380" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_login_register"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:background="@drawable/bg_card"
-            android:paddingStart="@dimen/double_margin"
-            android:paddingTop="@dimen/margin"
-            android:paddingEnd="@dimen/double_margin"
-            android:paddingBottom="@dimen/margin"
-            android:visibility="@{viewModel.expandNumber == 1 ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="@+id/button_search_player"
-            app:layout_constraintStart_toStartOf="@+id/button_create_team_player"
-            app:layout_constraintTop_toBottomOf="@id/button_create_team_player">
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/viewpager_first_login"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@drawable/bg_login_radius"
+            android:layout_marginTop="@dimen/double_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView13">
 
-            <EditText
-                android:id="@+id/edit_search_team_title"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="搜尋球員代號"
-                android:inputType="textPersonName"
-                android:text="@={viewModel.searchPlayerId}"
-                android:textSize="14sp"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
-
-            <ImageButton
-                android:id="@+id/button_search_search"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/transparent"
-                android:onClick="@{()->viewModel.searchPlayer()}"
-                app:layout_constraintBottom_toBottomOf="@+id/edit_search_team_title"
-                app:layout_constraintEnd_toEndOf="@+id/edit_search_team_title"
-                app:layout_constraintTop_toTopOf="@+id/edit_search_team_title"
-                app:srcCompat="@drawable/ic_search_24" />
-
-            <ImageView
-                android:id="@+id/imageView14"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="36dp"
-                android:layout_marginTop="28dp"
-                app:imageUrl="@{viewModel.player.image}"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_search_team_title"/>
-
-            <TextView
-                android:id="@+id/textView27"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:text="@{String.valueOf(viewModel.player.number)}"
-                android:textSize="18sp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView14"
-                app:layout_constraintStart_toEndOf="@+id/imageView14"
-                app:layout_constraintTop_toTopOf="@+id/imageView14"
-                tools:text="52"/>
-
-            <TextView
-                android:id="@+id/textView28"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:textSize="22sp"
-                android:text="@{viewModel.player.name}"
-                app:layout_constraintBottom_toBottomOf="@+id/textView27"
-                app:layout_constraintStart_toEndOf="@+id/textView27"
-                app:layout_constraintTop_toTopOf="@+id/textView27"
-                tools:text="陳金鋒"/>
-
-            <Button
-                android:id="@+id/button6"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:text="對這是我"
-                style="@style/GameButton"
-                android:visibility="@{viewModel.player == null ? View.VISIBLE: View.INVISIBLE}"
-                android:onClick="@{()->viewModel.signUpUser()}"
-                android:backgroundTint="@color/grey_333"
-                app:layout_constraintEnd_toEndOf="@+id/edit_search_team_title"
-                app:layout_constraintStart_toStartOf="@+id/edit_search_team_title"
-                app:layout_constraintTop_toBottomOf="@+id/imageView14" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/layout_login_create_team"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:background="@drawable/bg_card"
-            android:paddingStart="@dimen/double_margin"
-            android:paddingTop="@dimen/margin"
-            android:paddingEnd="@dimen/double_margin"
-            android:paddingBottom="@dimen/margin"
-            android:visibility="@{viewModel.expandNumber == 0 ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="@+id/button_search_player"
-            app:layout_constraintStart_toStartOf="@+id/button_create_team_player"
-            app:layout_constraintTop_toBottomOf="@id/button_create_team_player"
-            tools:visibility="gone">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_login_team"
+            <com.google.android.material.tabs.TabLayout
+                android:id="@+id/tabs_first_login"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="@dimen/margin"
-                app:layout_constraintTop_toTopOf="parent">
+                android:paddingStart="@dimen/margin"
+                android:paddingEnd="@dimen/margin"
+                android:layout_height="45dp" />
 
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="球隊名稱" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_login_name"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="@dimen/half_margin"
-                app:layout_constraintTop_toBottomOf="@+id/edit_login_team">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/name_hint2" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_login_number"
-                android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="@dimen/half_margin"
-                app:layout_constraintTop_toBottomOf="@+id/edit_login_name">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:ems="10"
-                    android:hint="@string/number_hint2"
-                    android:inputType="number" />
-
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/button4"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/one_half_margin"
-                android:layout_marginBottom="@dimen/half_margin"
-                android:text="Button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/button5"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edit_login_number" />
-
-            <Button
-                android:id="@+id/button5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/button4"
-                app:layout_constraintTop_toTopOf="@+id/button4" />
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.viewpager.widget.ViewPager>
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
