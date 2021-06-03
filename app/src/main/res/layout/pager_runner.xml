@@ -87,7 +87,7 @@
             style="@style/GameButton"
             android:layout_width="@dimen/hitter_button_width"
             android:layout_height="wrap_content"
-            android:onClick="@{()->viewModel.fielderChoiceOut(atBase)}"
+            android:onClick="@{()->viewModel.runnerOut(atBase)}"
             android:text="@string/out_field_choice"
             app:layout_constraintBottom_toTopOf="@+id/bar_hitter"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_run"

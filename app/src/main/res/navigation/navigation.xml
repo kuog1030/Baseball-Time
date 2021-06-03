@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/gameFragment">
 
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.gillian.baseball.game.GameFragment"
         android:label="GameFragment" >
-        <argument
-            android:name="preGame"
-            app:argType="com.gillian.baseball.data.MyGame" />
+<!--        <argument-->
+<!--            android:name="preGame"-->
+<!--            app:argType="com.gillian.baseball.data.MyGame" />-->
         <action
             android:id="@+id/action_gameFragment_to_finalFragment"
             app:destination="@id/finalFragment" />

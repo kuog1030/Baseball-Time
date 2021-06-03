@@ -11,7 +11,7 @@ import com.gillian.baseball.data.EventInfo
 import kotlinx.coroutines.launch
 
 // debug用
-val totalInning = 2
+val totalInning = 6
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
@@ -264,46 +264,83 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         }
     }
 
+    fun eventOut(totalOut: Int) {
+        outCount.value = outCount.value!!.plus(totalOut)
+        if (outCount.value!! >= 3) {
+            switch()
+        } else {
+            nextPlayer()
+        }
+    }
+
     fun addPitchCount() {
         liveBallCount.value = liveBallCount.value!!.plus(1)
     }
 
 
-    // 1. 單純點跑者的出局(on base dialog) 2. 打者出局後連帶跑者出局(event dialog)
-    // TODO()6/3這個傳送壘上跑者狀態有點麻煩
+    // 1. 牽制出局 2. 盜壘失敗
     fun onBaseOut(outBaseList: List<Int>, type: EventType) {
 
         Log.i("remote", "-------------- from on base out --------------")
-
-        var tempOut = outCount.value ?: 0
         for (base in outBaseList) {
-            tempOut += 1
+            outCount.value = outCount.value!!.plus(1)
+            val tempPlayer = baseList[base]!!
+            baseList[base] = null
+
             sendEvent(Event(
                     inning = inningCount,
-                    out = tempOut,
-                    player = baseList[base]!!,
+                    out = outCount.value!!,
+                    player = tempPlayer,
                     result = type.number,  // EventType.PICKOFF.number
                     currentBase = getCustomBaseInt(baseList = baseList),
                     pitcher = if (isTop) homePitcher else guestPitcher
             ))
 
-
-
-
-
-
+            if (outCount.value!! == 3) {
+                // three out! switch
+                switch()
+                break
+            }
         }
         Log.i("remote", "-------------- from on base end --------------")
-
-        outCount.value = outCount.value!!.plus(outBaseList.size)
-        if (outCount.value!! == 3) {
-            // three out! switch
-            switch()
-        } else {
-            baseList[outBaseList[0]] = null
-        }
         updateRunnerUI()
     }
+
+    //    // 1. 單純點跑者的出局(on base dialog) 2. 打者出局後連帶跑者出局(event dialog)
+    //    fun onBaseOut(outBaseList: List<Int>) {
+    //        for (base in outBaseList) {
+    //            sendEvent(Event(
+    //                    inning = inningCount,
+    //                    out = outCount.value ?: 0,
+    //                    player = baseList[base]!!,
+    //                    result = EventType.PICKOFF.number,
+    //                    pitcher = if (isTop) homePitcher else guestPitcher
+    //            ))
+    //        }
+    //
+    //        outCount.value = outCount.value!!.plus(outBaseList.size)
+    //        if (outCount.value!! == 3) {
+    //            // three out! switch
+    //            switch()
+    //        } else {
+    //            baseList[outBaseList[0]] = null
+    //        }
+    //        updateRunnerUI()
+    //    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     fun toEventDialog(isSafe: Boolean) {
         atBaseList.clear()

@@ -1,6 +1,7 @@
 package com.gillian.baseball.game.event
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -65,26 +66,30 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 
         viewModel.dismiss.observe(viewLifecycleOwner, Observer {
             it?.let {
+
+                Log.i("gillian", "current array ${it[0]}, ${it[1]}, ${it[2]}, ${it[3]}")
+
+
                 val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
                 gameViewModel.addPitchCount()
-                if (viewModel.hasOut != null) {
-                    // 如果有出局數的話 eg. 雖然上壘safe 但是選殺，有仍然有出局數
 
-                    // 如果有壘包上的出局數 // 要先處理不然baselist被清空了 例如雙殺打就不會記錄到
-                    if (!viewModel.hasBaseOut.isEmpty()) gameViewModel.onBaseOut(viewModel.hasBaseOut, EventType.ONBASEOUT)
-
-
-                    gameViewModel.setNewBaseList(it)
-                    // 犧牲打也要加上分數
-                    if (viewModel.scoreToBeAdded != 0) gameViewModel.scored(viewModel.scoreToBeAdded)
-
-                    gameViewModel.out()
-                } else {
-                    // 如果沒有出局數的話 is safe = true
-                    // 如果有得分，更新畫面得分數&更新box
+                if (viewModel.hasBaseOut.isEmpty()) {
+                    // 沒有壘上跑者出局
+                    // 高飛犧牲打
                     if (viewModel.scoreToBeAdded != 0) gameViewModel.scored(viewModel.scoreToBeAdded)
                     gameViewModel.setNewBaseList(it)
                     gameViewModel.nextPlayer()
+                    if (!isSafe) gameViewModel.eventOut(1)
+
+                } else {
+                    // 有壘上跑者出局
+                    gameViewModel.setNewBaseList(it)
+                    if (viewModel.scoreToBeAdded != 0) gameViewModel.scored(viewModel.scoreToBeAdded)
+                    if (isSafe) {
+                        gameViewModel.eventOut(1) // 選殺
+                    } else {
+                        gameViewModel.eventOut(viewModel.hasBaseOut.size +1) // 雙殺三殺
+                    }
                 }
 
                 // 更新安打的box

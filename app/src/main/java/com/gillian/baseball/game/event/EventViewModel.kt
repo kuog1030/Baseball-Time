@@ -18,7 +18,6 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     var atBaseList = eventInfo.atBaseList
     var hitterEvent = MutableLiveData<Event>(eventInfo.hitterPreEvent)
     var newBaseList = arrayOf<EventPlayer?>(null, null, null, null)
-    var hasOut: Boolean? = null
     var hasBaseOut = mutableListOf<Int>()
 
 
@@ -79,9 +78,9 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     fun onDialogDismiss() {
         _dismiss.value = null
         hasBaseOut.clear()
-        hasOut = null
     }
 
+    // rbi是由跑者回壘得分run()驅使的
     fun saveAndDismiss() {
         val readyToSend = eventList
         // 好壞球會在真正要送出前才記錄
@@ -90,8 +89,16 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         } else {
             readyToSend[0].strike += 1
         }
+
+        // 壘上跑者的出局數送出前加上去
+        if (hasBaseOut.isNotEmpty()) {
+            readyToSend[0].out += hasBaseOut.size
+        }
+
         readyToSend[0].currentBase = customBaseInt.value ?: 0
         scoreToBeAdded = eventList[0].rbi
+
+        Log.i("remote", "--------------from event viewmodel save and dismiss--------------")
         viewModelScope.launch {
             for (singleEvent in readyToSend) {
                 repository.sendEvent(eventInfo.gameId, singleEvent)
@@ -161,12 +168,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         atBaseList[0].base = 1
     }
 
-    fun fielderChoice() {
-        // default single
-        eventList[0].result = EventType.FIELDERCHOICE.number
-        atBaseList[0].base = 1
-        changeToNextPage()
-    }
+
 
     fun toBase(atBase: AtBase, base: Int) {
         atBase.base = base
@@ -193,25 +195,36 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         changeToNextPage()
     }
 
-    fun fielderChoiceOut(atBase: AtBase) {
+    // 打者按了野手選擇"上壘"
+    fun fielderChoice() {
+        // default single
+        eventList[0].result = EventType.FIELDERCHOICE.number
+        atBaseList[0].base = 1
+        changeToNextPage()
+    }
+
+
+    // 例如野手選擇的跑者出局
+    fun runnerOut(atBase: AtBase) {
         hasBaseOut.add(atBase.base)
         atBase.base = -1
         changeToNextPage()
     }
 
+    /* ------------- 以下是按了出局會有的三個選項 --------------- */
+
     fun groundOut() {
         eventList[0].result = EventType.GROUNDOUT.number
+        eventList[0].out += 1
         atBaseList[0].base = -1
-        hasOut = true
         changeToNextPage()
     }
 
-
+    // 高飛犧牲打是air out (true)
     fun airOut(hasRbi: Boolean) {
         eventList[0].result = if (hasRbi) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
-        //it.rbi = if (hasRbi) 1 else 0  跑者回壘得分的時候就會加進打者的event
+        eventList[0].out += 1
         atBaseList[0].base = -1
-        hasOut = true
         changeToNextPage()
     }
 

@@ -1,6 +1,7 @@
 package com.gillian.baseball.game
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.data.*
 import com.gillian.baseball.databinding.FragmentGameBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.game.event.EventDialog
@@ -16,7 +18,30 @@ import com.gillian.baseball.game.pinch.PinchDialog
 
 class GameFragment : Fragment() {
 
-   private val viewModel by viewModels<GameViewModel> {getVmFactory(GameFragmentArgs.fromBundle(requireArguments()).preGame) }
+
+    private val debugGame = MyGame(isHome = false, benchPlayer = mutableListOf(),
+            game = Game(id = "xDyxGmZgD7bnjT2F2Pgw", title = "第四周測試賽", date = 1622708617703,
+                    place = "測試橋",
+                    home = GameTeam(name = "中信兄弟", acronym = "兄弟", teamId = "", image = "",
+                            pitcher = EventPlayer(playerId = "C", order = -1, name = "黃恩賜", number = "45", pinch = null),
+                            lineUp = mutableListOf(EventPlayer(playerId = "A", order = 100, name = "第1棒", number = "", pinch = null),
+                                    EventPlayer(playerId = "B", order = 200, name = "第2棒", number = "", pinch = null))),
+
+                    guest = GameTeam(name = "Lion", acronym = "Lion", teamId = "LZKevMu4xqIkpmQc7JLM", image = "",
+                            pitcher = EventPlayer(playerId = "4RRBLoRvDtJFzI5OGkO7", order = 100, name = "Stephan", number = "22", pinch = null),
+                            lineUp = mutableListOf(EventPlayer(playerId = "4RRBLoRvDtJFzI5OGkO7", order = 100, name = "Stephan", number = "22", pinch = null),
+                                    EventPlayer(playerId = "FLtzHQkWKReNn7sCa0tF", order = 200, name = "Curry", number = "38", pinch = null),
+                                    EventPlayer( playerId = "C", order = 300, name = "王柏融", number = "9", pinch = null),
+                                    EventPlayer( playerId = "D", order = 400, name = "陳鏞基", number = "13", pinch = null),
+                                    EventPlayer( playerId = "E", order = 500, name = "張偉聖", number = "52", pinch = null))
+                    ),
+                    box = Box(score = mutableListOf(0), run = mutableListOf(0, 0), hit = mutableListOf(0, 0), error = mutableListOf(0, 0)),
+                    note = "", status = 1, recordedTeamId = "LZKevMu4xqIkpmQc7JLM"))
+
+
+
+    private val viewModel by viewModels<GameViewModel> {getVmFactory(debugGame) }
+   //private val viewModel by viewModels<GameViewModel> {getVmFactory(GameFragmentArgs.fromBundle(requireArguments()).preGame) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
