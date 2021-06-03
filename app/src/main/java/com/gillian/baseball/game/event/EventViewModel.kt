@@ -15,13 +15,13 @@ import kotlinx.coroutines.launch
 
 class EventViewModel(private val repository: BaseballRepository, private val eventInfo: EventInfo) : ViewModel() {
 
-    var atBaseList = eventInfo.atBaseList
+    val atBaseList = eventInfo.atBaseList
+
     var hitterEvent = MutableLiveData<Event>(eventInfo.hitterPreEvent)
     var newBaseList = arrayOf<EventPlayer?>(null, null, null, null)
     var hasBaseOut = mutableListOf<Int>()
 
 
-    var eventList = mutableListOf<Event>()
     var eventDetail = MutableLiveData<String>("")
 
     var scoreToBeAdded = 0
@@ -36,13 +36,11 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         get() = _dismiss
 
 
-
     val customBaseInt = MutableLiveData<Int>(0)
 
 
     init {
-        eventList.add(eventInfo.hitterPreEvent)
-        Log.i("gillian", "event view model : init event list $eventList")
+        atBaseList[0].event = eventInfo.hitterPreEvent
     }
 
 
@@ -62,36 +60,36 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
 
     // rbi是由跑者回壘得分run()驅使的
     fun saveAndDismiss() {
-        val readyToSend = eventList
+
         // 好壞球會在真正要送出前才記錄
-        if (eventList[0].result == EventType.HITBYPITCH.number) {
-            readyToSend[0].ball += 1
-        } else {
-            readyToSend[0].strike += 1
-        }
-
-        // 壘上跑者的出局數送出前加上去
-        if (hasBaseOut.isNotEmpty()) {
-            readyToSend[0].out += hasBaseOut.size
-        }
-
-        readyToSend[0].currentBase = customBaseInt.value ?: 0
-        scoreToBeAdded = eventList[0].rbi
-
-        Log.i("remote", "--------------from event viewmodel save and dismiss--------------")
-        viewModelScope.launch {
-            for (singleEvent in readyToSend) {
-                repository.sendEvent(eventInfo.gameId, singleEvent)
+        atBaseList[0].event?.let{
+            if (it.result == EventType.HITBYPITCH.number){
+                it.ball += 1
+            } else {
+                it.strike += 1
+            }
+            // 壘上跑者的出局數送出前加上去
+            if (hasBaseOut.isNotEmpty()) {
+                it.out += hasBaseOut.size
+            }
+            it.currentBase = customBaseInt.value ?: 0
+            scoreToBeAdded = it.rbi
+            hitToBeAdded = when (it.result) {
+                EventType.SINGLE.number -> 1
+                EventType.DOUBLE.number -> 1
+                EventType.TRIPLE.number -> 1
+                EventType.HOMERUN.number -> 1
+                else -> 0
             }
         }
 
-        // 安打數加上去box
-        hitToBeAdded = when (eventList[0].result) {
-            EventType.SINGLE.number -> 1
-            EventType.DOUBLE.number -> 1
-            EventType.TRIPLE.number -> 1
-            EventType.HOMERUN.number -> 1
-            else -> 0
+        Log.i("remote", "--------------from event viewmodel save and dismiss--------------")
+        viewModelScope.launch {
+            for (player in atBaseList) {
+                player.event?.let { eventToSend ->
+                    repository.sendEvent(eventInfo.gameId, eventToSend)
+                }
+            }
         }
 
         initNextEvent()
@@ -106,15 +104,21 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     fun hit(baseCount: Int) {
-        eventList[0].result = baseCount
-        // atBaseList[0] is hitter
+        atBaseList[0].eventType = when (baseCount) {
+            1 -> EventType.SINGLE
+            2 -> EventType.DOUBLE
+            else -> EventType.TRIPLE
+        }
+        atBaseList[0].event?.let{
+            it.result = baseCount
+        }
         atBaseList[0].base = baseCount
-
         changeToNextPage()
     }
 
     fun homerun() {
-        eventList[0].let{
+        atBaseList[0].eventType = EventType.HOMERUN
+        atBaseList[0].event?.let{
             it.result = EventType.HOMERUN.number
             it.run = 1
             it.rbi = 1
@@ -124,10 +128,10 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     fun hbp() {
-        eventList[0].let{
+        atBaseList[0].eventType = EventType.HITBYPITCH
+        atBaseList[0].event?.let{
             it.result = EventType.HITBYPITCH.number
-            // 之後event統一會加strike，所以先扣掉XD
-            it.strike -= 1
+            it.strike -= 1 // 之後event統一會加strike，所以先扣掉XD
             it.ball += 1
         }
         atBaseList[0].base = 1
@@ -139,24 +143,32 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     // 一安+失誤?????好可怕
     //TODO()
     fun error() {
-        eventList[0].result = EventType.ERRORONBASE.number
+        atBaseList[0].eventType = EventType.ERRORONBASE
+        atBaseList[0].event?.let{
+            it.result = EventType.ERRORONBASE.number
+        }
         atBaseList[0].base = 1
         changeToNextPage()
     }
 
     fun droppedThird() {
-        eventList[0].result = EventType.DROPPEDTHIRD.number
+        atBaseList[0].eventType = EventType.DROPPEDTHIRD
+        atBaseList[0].event?.let{
+            it.result = EventType.DROPPEDTHIRD.number
+        }
         atBaseList[0].base = 1
         changeToNextPage()
     }
 
 
     fun toBase(atBase: AtBase, base: Int) {
+        atBase.event = null
         atBase.base = base
         changeToNextPage()
     }
 
     fun thirdBase(atBase: AtBase) {
+        atBase.event = null
         atBase.base = 3
         changeToNextPage()
     }
@@ -164,22 +176,27 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     // 回壘得分
     fun run(atBase: AtBase) {
         atBase.base = -1
-        eventList.add(Event(inning = hitterEvent.value!!.inning,
-                result = EventType.RUN.number,
-                run = 1,
-                player = atBase.player,
-                pitcher = hitterEvent.value?.pitcher!!,
-                out = hitterEvent.value?.out ?: 0))
-        eventList[0].rbi += 1
+        atBase.eventType = EventType.RUN
+        atBase.event = Event(inning = hitterEvent.value!!.inning,
+            result = EventType.RUN.number,
+            run = 1,
+            player = atBase.player,
+            pitcher = hitterEvent.value?.pitcher!!,
+            out = hitterEvent.value?.out ?: 0)
 
-        eventDetail.value = eventDetail.value.plus("${atBase.player.number}號 ${atBase.player.name} 回壘得分 + 1\n")
+        atBaseList[0].event?.let{
+            it.rbi += 1
+        }
         changeToNextPage()
     }
 
     // 打者按了野手選擇"上壘"
     fun fielderChoice() {
         // default single
-        eventList[0].result = EventType.FIELDERCHOICE.number
+        atBaseList[0].eventType = EventType.FIELDERCHOICE
+        atBaseList[0].event?.let{
+            it.result = EventType.FIELDERCHOICE.number
+        }
         atBaseList[0].base = 1
         changeToNextPage()
     }
@@ -187,6 +204,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
 
     // 例如野手選擇的跑者出局
     fun runnerOut(atBase: AtBase) {
+        atBase.event = null
         hasBaseOut.add(atBase.base)
         atBase.base = -1
         changeToNextPage()
@@ -195,22 +213,27 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     /* ------------- 以下是按了出局會有的三個選項 --------------- */
 
     fun groundOut() {
-        eventList[0].result = EventType.GROUNDOUT.number
-        eventList[0].out += 1
+        atBaseList[0].eventType = EventType.GROUNDOUT
+        atBaseList[0].event?.let{
+            it.result = EventType.GROUNDOUT.number
+            it.out += 1
+        }
         atBaseList[0].base = -1
         changeToNextPage()
     }
 
     // 高飛犧牲打是air out (true)
     fun airOut(hasRbi: Boolean) {
-        eventList[0].result = if (hasRbi) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
-        eventList[0].out += 1
+        atBaseList[0].eventType = if (hasRbi) EventType.SACRIFICEFLY else EventType.AIROUT
+        atBaseList[0].event?.let{
+            it.result = if (hasRbi) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
+            it.out += 1
+        }
         atBaseList[0].base = -1
         changeToNextPage()
     }
 
     fun initNextEvent() {
-        eventList.clear()
         newBaseList = arrayOf(null, null, null, null)
     }
 

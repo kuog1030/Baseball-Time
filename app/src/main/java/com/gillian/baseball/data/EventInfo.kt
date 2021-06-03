@@ -5,7 +5,7 @@ import com.gillian.baseball.data.Event
 
 data class EventInfo (
     val gameId: String,
-    val atBaseList: List<AtBase>,
+    val atBaseList: MutableList<AtBase>,
     val isSafe: Boolean,
     val hitterPreEvent: Event
 )

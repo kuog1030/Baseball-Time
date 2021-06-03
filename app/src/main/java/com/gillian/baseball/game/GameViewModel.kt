@@ -331,7 +331,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             // 如果兩出局，只管打者
             if (outCount.value == 2) {
                 _navigateToOut.value = EventInfo(gameId = argument.game.id,
-                        atBaseList = listOf(AtBase(0, baseList[0]!!)),
+                        atBaseList = mutableListOf(AtBase(0, baseList[0]!!)),
                         isSafe = false,
                         hitterPreEvent = hitterEvent)
 
