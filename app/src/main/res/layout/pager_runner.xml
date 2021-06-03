@@ -22,52 +22,52 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/image_runner_field"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:layout_marginTop="40dp"
+        <com.gillian.baseball.views.CustomBaseView
+            android:id="@+id/base_event_runner"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="50dp"
             app:layout_constraintBottom_toTopOf="@+id/bar_hitter"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias="0.26"
-            app:srcCompat="@drawable/diamond_field" />
+            app:layout_constraintVertical_bias="0.15" />
 
         <Button
             android:id="@+id/button_runner_first"
             style="@style/GameButton"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:backgroundTint="@{atBase.base > 1 ? @color/grey_888 : @color/color_primary}"
             android:onClick="@{()->viewModel.toBase(atBase, 1)}"
             android:text="@string/first_base"
-            app:layout_constraintBottom_toBottomOf="@+id/image_runner_field"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_runner_field" />
+            app:layout_constraintBottom_toBottomOf="@+id/base_event_runner"
+            app:layout_constraintEnd_toEndOf="@+id/base_event_runner"
+            app:layout_constraintStart_toEndOf="@+id/base_event_runner"
+            app:layout_constraintTop_toTopOf="@+id/base_event_runner" />
 
         <Button
             android:id="@+id/button_runner_second"
             style="@style/GameButton"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@{atBase.base > 2 ? @color/grey_888 : @color/color_primary}"
             android:onClick="@{()->viewModel.toBase(atBase, 2)}"
             android:text="@string/second_base"
-            android:backgroundTint="@{atBase.base > 2 ? @color/grey_888 : @color/color_primary}"
-            app:layout_constraintBottom_toTopOf="@+id/image_runner_field"
+            app:layout_constraintBottom_toTopOf="@+id/base_event_runner"
             app:layout_constraintEnd_toEndOf="@+id/text_runner_second_player"
-            app:layout_constraintStart_toStartOf="@+id/text_runner_second_player" />
+            app:layout_constraintStart_toStartOf="@+id/text_runner_second_player"
+            app:layout_constraintTop_toTopOf="@+id/base_event_runner" />
 
         <Button
             android:id="@+id/button_runner_third"
             style="@style/GameButton"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
             android:onClick="@{()->viewModel.thirdBase(atBase)}"
             android:text="@string/third_base"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/base_event_runner"
+            app:layout_constraintStart_toStartOf="@+id/base_event_runner"
             app:layout_constraintTop_toTopOf="@+id/button_runner_first" />
 
         <Button
@@ -80,7 +80,7 @@
             app:layout_constraintBottom_toTopOf="@+id/button_runner_out"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/image_runner_field" />
+            app:layout_constraintTop_toBottomOf="@+id/base_event_runner" />
 
         <Button
             android:id="@+id/button_runner_out"
@@ -152,7 +152,7 @@
             app:layout_constraintBottom_toTopOf="@+id/button_runner_third"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_third"
             app:layout_constraintStart_toStartOf="@+id/button_runner_third"
-            app:layout_constraintTop_toTopOf="@+id/image_runner_field"
+            app:layout_constraintTop_toTopOf="@+id/base_event_runner"
             tools:text="3壘" />
 
         <TextView

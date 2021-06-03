@@ -279,66 +279,27 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
 
     // 1. 牽制出局 2. 盜壘失敗
-    fun onBaseOut(outBaseList: List<Int>, type: EventType) {
+    fun onBaseOut(base: Int, type: EventType) {
+        outCount.value = outCount.value!!.plus(1)
+        val tempPlayer = baseList[base]!!
+        baseList[base] = null
 
-        Log.i("remote", "-------------- from on base out --------------")
-        for (base in outBaseList) {
-            outCount.value = outCount.value!!.plus(1)
-            val tempPlayer = baseList[base]!!
-            baseList[base] = null
+        sendEvent(Event(
+            inning = inningCount,
+            out = outCount.value!!,
+            player = tempPlayer,
+            result = type.number,
+            currentBase = getCustomBaseInt(baseList = baseList),
+            pitcher = if (isTop) homePitcher else guestPitcher
+        ))
 
-            sendEvent(Event(
-                    inning = inningCount,
-                    out = outCount.value!!,
-                    player = tempPlayer,
-                    result = type.number,  // EventType.PICKOFF.number
-                    currentBase = getCustomBaseInt(baseList = baseList),
-                    pitcher = if (isTop) homePitcher else guestPitcher
-            ))
-
-            if (outCount.value!! == 3) {
-                // three out! switch
-                switch()
-                break
-            }
+        if (outCount.value!! == 3) {
+            // three out! switch
+            switch()
         }
-        Log.i("remote", "-------------- from on base end --------------")
+
         updateRunnerUI()
     }
-
-    //    // 1. 單純點跑者的出局(on base dialog) 2. 打者出局後連帶跑者出局(event dialog)
-    //    fun onBaseOut(outBaseList: List<Int>) {
-    //        for (base in outBaseList) {
-    //            sendEvent(Event(
-    //                    inning = inningCount,
-    //                    out = outCount.value ?: 0,
-    //                    player = baseList[base]!!,
-    //                    result = EventType.PICKOFF.number,
-    //                    pitcher = if (isTop) homePitcher else guestPitcher
-    //            ))
-    //        }
-    //
-    //        outCount.value = outCount.value!!.plus(outBaseList.size)
-    //        if (outCount.value!! == 3) {
-    //            // three out! switch
-    //            switch()
-    //        } else {
-    //            baseList[outBaseList[0]] = null
-    //        }
-    //        updateRunnerUI()
-    //    }
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 

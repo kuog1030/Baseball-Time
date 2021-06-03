@@ -46,7 +46,7 @@ class OnBaseDialog(val onBaseInfo: OnBaseInfo) : AppCompatDialogFragment() {
 
         viewModel.onBaseOut.observe(viewLifecycleOwner, Observer {
             it?.let{
-                gameViewModel.onBaseOut(listOf(onClickPlayer), it)
+                gameViewModel.onBaseOut(onClickPlayer, it)
                 viewModel.onOutDone()
                 dismiss()
             }
