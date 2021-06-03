@@ -25,6 +25,7 @@ class PinchDialog(private val isDefense: Boolean) : AppCompatDialogFragment() {
         val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
 
         binding.isDefense = isDefense
+        binding.gameTitle = gameViewModel.game.value?.title
 
         val benchAdapter = PinchAdapter(PinchAdapter.OnClickListener{ player, position ->
             if (isDefense) {
@@ -47,12 +48,12 @@ class PinchDialog(private val isDefense: Boolean) : AppCompatDialogFragment() {
         fieldAdapter.submitList(gameViewModel.lineUp)
 
         binding.buttonPinchHitter.setOnClickListener {
-            binding.recyclerPinchOnField.visibility = View.INVISIBLE
+            binding.recyclerPinchOnField.visibility = View.GONE
             binding.recyclerPinchBench.visibility = View.VISIBLE
         }
         binding.buttonPinchError.setOnClickListener {
             binding.recyclerPinchOnField.visibility = View.VISIBLE
-            binding.recyclerPinchBench.visibility = View.INVISIBLE
+            binding.recyclerPinchBench.visibility = View.GONE
         }
 
         return binding.root

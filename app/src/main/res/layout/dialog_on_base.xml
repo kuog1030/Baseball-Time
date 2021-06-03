@@ -32,12 +32,12 @@
             <com.gillian.baseball.views.CustomBaseView
                 android:id="@+id/base_on_base"
                 android:layout_width="200dp"
-                android:layout_height="180dp"
+                android:layout_height="wrap_content"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias=".18"
+                app:layout_constraintVertical_bias=".15"
                 app:onBase="0" />
 
             <Button
@@ -47,6 +47,7 @@
                 android:layout_height="wrap_content"
                 android:onClick="@{()->viewModel.advanceByError()}"
                 android:text="@string/error_advance"
+                android:layout_marginTop="@dimen/margin"
                 app:layout_constraintBottom_toTopOf="@+id/button_on_base_error"
                 app:layout_constraintEnd_toStartOf="@+id/button_on_base_steal_success"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -106,6 +107,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/base_on_base"
                 app:layout_constraintStart_toEndOf="@+id/base_on_base"
                 app:layout_constraintTop_toTopOf="@+id/text_on_base_third_player"
                 app:onBaseFirst="@{onBaseInfo}"
@@ -116,8 +118,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="18sp"
+                app:layout_constraintVertical_bias=".7"
                 app:layout_constraintBottom_toBottomOf="@+id/base_on_base"
                 app:layout_constraintEnd_toStartOf="@+id/base_on_base"
+                app:layout_constraintStart_toStartOf="@+id/base_on_base"
                 app:layout_constraintTop_toTopOf="@+id/base_on_base"
                 app:onBaseThird="@{onBaseInfo}"
                 tools:text="三壘在這" />

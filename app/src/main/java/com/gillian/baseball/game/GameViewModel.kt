@@ -505,7 +505,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun pinch(player: EventPlayer, position: Int) {
-        player.pinch = lineUp[atBatNumber]
+        player.order = lineUp[atBatNumber].order + 1
+
         if (isTop) {
             guestLineUp[atBatNumber] = player
             Log.i("gillian", "now guest line up $guestLineUp")

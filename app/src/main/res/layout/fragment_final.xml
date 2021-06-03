@@ -15,14 +15,13 @@
         android:layout_height="match_parent">
 
 
-
-
         <TextView
-            android:id="@+id/text_final_titla"
+            android:id="@+id/text_final_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/one_half_margin"
             android:text="@string/game_final"
+            android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -46,7 +45,7 @@
         </androidx.recyclerview.widget.RecyclerView>
 
         <TextView
-            android:id="@+id/textView9"
+            android:id="@+id/text_final_note"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/margin"
@@ -55,15 +54,15 @@
             android:paddingStart="@dimen/half_margin"
             android:textSize="18sp"
             app:drawableEndCompat="@drawable/ic_edit_24"
-            app:layout_constraintStart_toStartOf="@+id/editTextTextMultiLine"
+            app:layout_constraintStart_toStartOf="@+id/edit_final_note"
             app:layout_constraintTop_toBottomOf="@+id/recycler_final_box" />
 
         <EditText
-            android:id="@+id/editTextTextMultiLine"
+            android:id="@+id/edit_final_note"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
-            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginStart="@dimen/one_half_margin"
+            android:layout_marginEnd="@dimen/one_half_margin"
             android:background="@drawable/bg_edit_text"
             android:layout_marginTop="@dimen/margin"
             android:ems="10"
@@ -72,29 +71,33 @@
             android:inputType="textMultiLine"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView9" />
+            app:layout_constraintTop_toBottomOf="@+id/text_final_note" />
 
         <Button
-            android:id="@+id/button"
-            android:layout_width="wrap_content"
+            android:id="@+id/button_final_dinner"
+            style="@style/GameButton"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/margin"
+            android:layout_marginStart="@dimen/one_half_margin"
+            android:layout_marginEnd="@dimen/one_half_margin"
             android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}"
+            android:onClick="@{()->viewModel.updateNote()}"
             android:text="@string/game_end_dinner_time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/color_background"
-            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:visibility="gone">
+            app:layout_constraintTop_toTopOf="parent"
+            tools:visibility="invisible">
 
             <TextView
                 android:id="@+id/text_final_uploading"
@@ -111,8 +114,8 @@
                 android:id="@+id/animationView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
                 app:lottie_autoPlay="true"
                 app:lottie_loop="true"
                 app:lottie_rawRes="@raw/uploading" />

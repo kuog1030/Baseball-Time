@@ -64,6 +64,10 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
             }
         })
 
+        binding.buttonEventDismiss.setOnClickListener{
+            dismiss()
+        }
+
         viewModel.dismiss.observe(viewLifecycleOwner, Observer {
             it?.let {
 

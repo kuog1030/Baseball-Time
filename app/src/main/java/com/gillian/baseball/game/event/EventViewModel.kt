@@ -60,26 +60,6 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
 
-
-
-    fun changeToNextPage() {
-        baseListToCustom()
-        _changeToNextPage.value = true
-    }
-
-    fun onNextPageChanged() {
-        _changeToNextPage.value = null
-    }
-
-    fun dismissDialog() {
-        _dismiss.value = newBaseList
-    }
-
-    fun onDialogDismiss() {
-        _dismiss.value = null
-        hasBaseOut.clear()
-    }
-
     // rbi是由跑者回壘得分run()驅使的
     fun saveAndDismiss() {
         val readyToSend = eventList
@@ -160,14 +140,15 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     //TODO()
     fun error() {
         eventList[0].result = EventType.ERRORONBASE.number
+        atBaseList[0].base = 1
+        changeToNextPage()
     }
 
     fun droppedThird() {
-        // 我原本這裡竟然沒有add event
         eventList[0].result = EventType.DROPPEDTHIRD.number
         atBaseList[0].base = 1
+        changeToNextPage()
     }
-
 
 
     fun toBase(atBase: AtBase, base: Int) {
@@ -231,5 +212,23 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     fun initNextEvent() {
         eventList.clear()
         newBaseList = arrayOf(null, null, null, null)
+    }
+
+    fun changeToNextPage() {
+        baseListToCustom()
+        _changeToNextPage.value = true
+    }
+
+    fun onNextPageChanged() {
+        _changeToNextPage.value = null
+    }
+
+    fun dismissDialog() {
+        _dismiss.value = newBaseList
+    }
+
+    fun onDialogDismiss() {
+        _dismiss.value = null
+        hasBaseOut.clear()
     }
 }
