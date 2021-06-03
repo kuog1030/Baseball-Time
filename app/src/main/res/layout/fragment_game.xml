@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.GameViewModel" />
@@ -128,7 +130,7 @@
                 app:layout_constraintBottom_toTopOf="@+id/card_batting"
                 app:layout_constraintEnd_toEndOf="@+id/imageView8"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_bias="0.69"
+                app:layout_constraintVertical_bias="0.65"
                 app:srcCompat="@drawable/diamond_field" />
 
             <ImageView
@@ -292,6 +294,7 @@
                 android:id="@+id/text_batting_hitter"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/half_margin"
                 android:text="@{viewModel.atBatName}"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -301,11 +304,10 @@
 
             <Button
                 android:id="@+id/button_batting_first"
-                style="@style/Widget.AppCompat.Button.Borderless"
+                style="@style/RunnerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="16dp"
-                android:fontFamily="@font/noto_sans"
                 android:onClick="@{()->viewModel.toOnBaseDialog(1)}"
                 android:text="@{viewModel.firstBaseName}"
                 android:visibility="@{viewModel.firstBaseVisible? View.VISIBLE : View.GONE}"
@@ -316,7 +318,7 @@
 
             <Button
                 android:id="@+id/text_batting_third"
-                style="@style/Widget.AppCompat.Button.Borderless"
+                style="@style/RunnerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
@@ -330,7 +332,7 @@
 
             <Button
                 android:id="@+id/text_batting_second"
-                style="@style/Widget.AppCompat.Button.Borderless"
+                style="@style/RunnerButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="@{()->viewModel.toOnBaseDialog(2)}"
@@ -360,7 +362,7 @@
                 android:text="@{String.valueOf(viewModel.liveBallCount)}"
                 app:layout_constraintEnd_toEndOf="@+id/card_batting"
                 app:layout_constraintTop_toTopOf="@+id/textView2"
-                tools:text="22"/>
+                tools:text="22" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

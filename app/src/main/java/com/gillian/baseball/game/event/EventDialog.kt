@@ -13,6 +13,7 @@ import com.gillian.baseball.R
 import com.gillian.baseball.data.EventInfo
 import com.gillian.baseball.databinding.DialogEventBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.game.EventType
 import com.gillian.baseball.game.GameViewModel
 
 class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
@@ -70,7 +71,7 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
                     // 如果有出局數的話 eg. 雖然上壘safe 但是選殺，有仍然有出局數
 
                     // 如果有壘包上的出局數 // 要先處理不然baselist被清空了 例如雙殺打就不會記錄到
-                    if (!viewModel.hasBaseOut.isEmpty()) gameViewModel.onBaseOut(viewModel.hasBaseOut)
+                    if (!viewModel.hasBaseOut.isEmpty()) gameViewModel.onBaseOut(viewModel.hasBaseOut, EventType.ONBASEOUT)
 
 
                     gameViewModel.setNewBaseList(it)

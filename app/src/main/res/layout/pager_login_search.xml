@@ -16,6 +16,20 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/text_register_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/margin"
+            android:layout_marginTop="16dp"
+            android:visibility="@{viewModel.registerInfo? View.VISIBLE : View.INVISIBLE}"
+            android:background="@drawable/button_radius_filled_24"
+            android:text="@string/register_info"
+            android:textColor="?colorOnPrimary"
+            app:layout_constraintEnd_toEndOf="@+id/textView24"
+            app:layout_constraintStart_toStartOf="@+id/edit_search_team_title"
+            app:layout_constraintTop_toBottomOf="@+id/textView24" />
+
         <EditText
             android:id="@+id/edit_search_team_title"
             style="@style/LoginEdit"
@@ -51,9 +65,10 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
             android:layout_marginBottom="16dp"
-            android:background="@drawable/button_radius_filled"
+            android:background="@drawable/button_radius_filled_24"
             android:onClick="@{()->viewModel.signUpUserFromRegister()}"
             android:text="Button"
+            android:textColor="?attr/colorOnPrimary"
             android:visibility="@{viewModel.player == null? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -99,15 +114,17 @@
             app:layout_constraintTop_toBottomOf="@+id/textView13"
             tools:text="陳金鋒" />
 
-        <TextView
+        <Button
             android:id="@+id/textView24"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:drawablePadding="@dimen/margin"
+            android:layout_height="30dp"
+            android:drawablePadding="@dimen/half_margin"
             android:gravity="center"
-            android:text="這是什麼"
+            android:background="@color/transparent"
+            android:text="@string/what_is_this"
             android:layout_marginEnd="@dimen/half_margin"
             android:layout_marginTop="@dimen/half_margin"
+            android:onClick="@{()->viewModel.toggleRegisterInfo()}"
             app:layout_constraintEnd_toEndOf="@+id/edit_search_team_title"
             app:layout_constraintTop_toBottomOf="@+id/edit_search_team_title"
             app:drawableEndCompat="@drawable/ic_help_outline_24" />

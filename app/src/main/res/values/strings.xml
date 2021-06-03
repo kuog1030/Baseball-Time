@@ -11,9 +11,12 @@
     <string name="error_no_live_game">目前沒有正在比賽中的球賽唷</string>
     <string name="error_search">沒有符合你的搜尋結果，\n麻煩你再檢查一次或聯絡比賽方</string>
     <string name="return_nothing">不好意思，神秘力量發生了</string>
+    <string name="empty_player_list">目前還沒有隊友喔，右上角新增隊員</string>
 
     <!--    first login-->
     <string name="team_code">代號</string>
+    <string name="register_info">如果你的隊友已經使用過Baseball，並且幫你建立過球員資料，你可以從隊友那邊的畫面進到你的球員頁，替你查詢球員代號。輸入後即可繼承這個球員的資料。</string>
+    <string name="what_is_this">這是什麼</string>
 
     <!--    team related -->
     <string name="create_a_team">新增一支你的球隊吧</string>
@@ -80,7 +83,7 @@
     <string name="game_playing">LIVE</string>
     <string name="game_start_time">開賽時間</string>
     <string name="recorded_team">記\n錄\n方</string>
-    <string name="no_game_place">（未紀錄）</string>
+    <string name="no_game_place">（未記錄）</string>
     <string name="inning_top">%d局上</string>
     <string name="inning_bottom">%d局下</string>
 

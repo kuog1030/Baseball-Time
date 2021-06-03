@@ -20,9 +20,9 @@
 
         <ImageView
             android:id="@+id/imageView13"
-            android:layout_width="75dp"
-            android:layout_height="77dp"
-            android:layout_marginTop="50dp"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            app:layout_constraintBottom_toTopOf="@+id/viewpager_first_login"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -34,10 +34,13 @@
             android:layout_height="0dp"
             android:background="@drawable/bg_login_radius"
             android:layout_marginTop="@dimen/double_margin"
+            app:layout_constraintHeight_percent=".75"
+            app:layout_constraintVertical_bias="1"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView13">
+            app:layout_constraintTop_toTopOf="parent">
 
             <com.google.android.material.tabs.TabLayout
+                app:tabIndicator="@drawable/tab_indicator"
                 app:tabIndicatorColor="@color/blue_navy"
                 android:id="@+id/tabs_first_login"
                 android:layout_width="match_parent"

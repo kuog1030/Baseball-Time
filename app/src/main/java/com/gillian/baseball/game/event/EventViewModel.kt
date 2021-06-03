@@ -43,7 +43,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
 
     init {
         eventList.add(eventInfo.hitterPreEvent)
-        Log.i("gillian", "init event list $eventList")
+        Log.i("gillian", "event view model : init event list $eventList")
     }
 
 

@@ -12,7 +12,7 @@
         <Button
             android:id="@+id/button_login_broadcast"
             android:layout_width="0dp"
-            android:layout_height="55dp"
+            android:layout_height="50dp"
             android:layout_marginTop="16dp"
             android:text="收看直播"
             android:background="@drawable/button_radius_filled"
@@ -25,7 +25,7 @@
             android:id="@+id/button_login_google"
             android:layout_width="280dp"
             android:layout_height="wrap_content"
-            app:buttonSize="wide"
+            app:buttonSize="icon_only"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -42,5 +42,6 @@
             app:layout_constraintBottom_toTopOf="@+id/button_login_google"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

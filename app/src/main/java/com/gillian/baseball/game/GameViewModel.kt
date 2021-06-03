@@ -233,6 +233,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         totalStrike += 1
 
         if (strikeCount.value == 3) {
+            val tempOut = outCount.value ?: 0
             sendEvent(Event(player = lineUp[atBatNumber],
                     pitcher = if (isTop) homePitcher else guestPitcher,
                     inning = inningCount,
@@ -240,7 +241,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                     currentBase = getCustomBaseInt(baseList = baseList),
                     ball = ballCount.value ?: 0,
                     strike = totalStrike,
-                    out = outCount.value ?: 0))
+                    out = tempOut + 1))
             out()
         }
     }
@@ -269,17 +270,30 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
 
     // 1. 單純點跑者的出局(on base dialog) 2. 打者出局後連帶跑者出局(event dialog)
-    // TODO()這個傳送壘上跑者狀態有點麻煩
-    fun onBaseOut(outBaseList: List<Int>) {
+    // TODO()6/3這個傳送壘上跑者狀態有點麻煩
+    fun onBaseOut(outBaseList: List<Int>, type: EventType) {
+
+        Log.i("remote", "-------------- from on base out --------------")
+
+        var tempOut = outCount.value ?: 0
         for (base in outBaseList) {
+            tempOut += 1
             sendEvent(Event(
                     inning = inningCount,
-                    out = outCount.value ?: 0,
+                    out = tempOut,
                     player = baseList[base]!!,
-                    result = EventType.PICKOFF.number,
+                    result = type.number,  // EventType.PICKOFF.number
+                    currentBase = getCustomBaseInt(baseList = baseList),
                     pitcher = if (isTop) homePitcher else guestPitcher
             ))
+
+
+
+
+
+
         }
+        Log.i("remote", "-------------- from on base end --------------")
 
         outCount.value = outCount.value!!.plus(outBaseList.size)
         if (outCount.value!! == 3) {
@@ -344,19 +358,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
 
-    //    fun baseListToCustom() {
-    //        var customInt = 0
-    //        for (atBase in atBaseList) {
-    //            Log.i("gillian", "at base is $atBase")
-    //            when (atBase.base) {
-    //                1 -> customInt += 1
-    //                2 -> customInt += 10
-    //                3 -> customInt += 100
-    //            }
-    //        }
-    //        customBaseInt.value = customInt
-    //    }
-    fun getCustomBaseInt(baseList: Array<EventPlayer?>) : Int{
+    fun getCustomBaseInt(baseList: Array<EventPlayer?>) : Int {
         var result = 0
         for (i in 1..3) {
             if (baseList[i] != null) {

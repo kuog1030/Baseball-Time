@@ -29,7 +29,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
 
     val newPlayerNumber = MutableLiveData<String>()
 
-
+    val registerInfo = MutableLiveData<Boolean>(false)
 
 
     private val _signUpUserFromRegister = MutableLiveData<User>()
@@ -100,6 +100,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
     }
 
     fun signUpUserFromRegister() {
+        registerInfo.value = false
         player.value?.let{
             user.playerId = it.id
             user.teamId = it.teamId!!  // 他不會是錯的，因為錯的話隊友那邊根本看球員頁看不到這個人
@@ -239,6 +240,10 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
 
     fun fromRegisterNavigated() {
         _navigateFromRegister.value = null
+    }
+
+    fun toggleRegisterInfo() {
+        registerInfo.value = !(registerInfo.value!!)
     }
 
 }

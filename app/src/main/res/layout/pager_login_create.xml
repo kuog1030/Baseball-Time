@@ -71,7 +71,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginBottom="50dp"
-            android:background="@drawable/button_radius_filled"
+            android:background="@drawable/button_radius_filled_24"
             android:onClick="@{()->viewModel.signUpUser()}"
             android:text="建立球隊和球員"
             app:layout_constraintBottom_toBottomOf="parent"

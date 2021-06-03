@@ -86,6 +86,11 @@
         <item name="backgroundTint">@color/color_background</item>
     </style>
 
+    <style name="RunnerButton">
+        <item name="android:drawableTop">@drawable/ic_person_24</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
     <style name="GameButtonWhite" parent="GameButton">
         <item name="android:textColor">@color/black</item>
         <item name="backgroundTint">@color/white</item>

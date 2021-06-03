@@ -154,6 +154,7 @@
                 android:id="@+id/layout_team_team_card"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:minHeight="225dp"
                 android:layout_margin="@dimen/margin"
                 app:cardCornerRadius="@dimen/card_radius"
                 app:cardElevation="@dimen/card_elevation"
@@ -177,6 +178,19 @@
                         tools:listitem="@layout/item_teammate" />
 
             </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="@id/layout_team_team_card"
+                app:layout_constraintStart_toStartOf="@id/layout_team_team_card"
+                app:layout_constraintEnd_toEndOf="@id/layout_team_team_card"
+                app:layout_constraintBottom_toBottomOf="@id/layout_team_team_card"
+                app:emptyListHint="@{viewModel.teamPlayers}"
+                android:elevation="8dp"
+                android:gravity="center"
+                tools:text="@string/empty_player_list"/>
+
 
             <ImageButton
                 android:id="@+id/imageView2"

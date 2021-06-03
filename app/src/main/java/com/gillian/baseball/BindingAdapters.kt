@@ -50,6 +50,17 @@ fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: MutableList<Player>?
     }
 }
 
+@BindingAdapter("emptyListHint")
+fun bindEmptyHint(textView: TextView, players: List<Player>?) {
+    players?.let{
+        if (players.isEmpty()) {
+            textView.text = BaseballApplication.instance.getString(R.string.empty_player_list)
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+}
+
 @BindingAdapter("personalBox")
 fun bindPersonalBox(recyclerView: RecyclerView, myScore: List<PersonalScore>?) {
     myScore?.let{
@@ -196,7 +207,7 @@ fun bindOnBaseFirst(textView: TextView, onBaseInfo: OnBaseInfo?) {
 fun bindOnBaseSecond(textView: TextView, onBaseInfo: OnBaseInfo?) {
     onBaseInfo?.let {
         if (onBaseInfo.onClickPlayer == 2) {
-            textView.text = (onBaseInfo.baseList[1]?.name) ?: ""
+            textView.text = (onBaseInfo.baseList[2]?.name) ?: ""
             textView.visibility = View.VISIBLE
         } else {
             textView.visibility = View.GONE
@@ -208,7 +219,7 @@ fun bindOnBaseSecond(textView: TextView, onBaseInfo: OnBaseInfo?) {
 fun bindOnBaseThird(textView: TextView, onBaseInfo: OnBaseInfo?) {
     onBaseInfo?.let {
         if (onBaseInfo.onClickPlayer == 3) {
-            textView.text = (onBaseInfo.baseList[1]?.name) ?: ""
+            textView.text = (onBaseInfo.baseList[3]?.name) ?: ""
             textView.visibility = View.VISIBLE
         } else {
             textView.visibility = View.GONE

@@ -15,6 +15,11 @@ class BroadcastViewModel(private val repository: BaseballRepository, val game: G
 
     var liveEvents = MutableLiveData<List<Event>>()
 
+    val homeScore = MutableLiveData<Int>()
+
+    val guestScore = MutableLiveData<Int>()
+
+
     init {
         getLiveEvent()
         if (game.place.isEmpty()) {

@@ -19,6 +19,7 @@
             android:layout_height="@dimen/team_tab_height"
             android:text="@{viewModel.teamName}"
             android:gravity="center"
+            android:textColor="?attr/colorOnPrimary"
             android:background="?attr/colorPrimary"
             app:layout_constraintTop_toTopOf="parent"/>
 
@@ -32,7 +33,8 @@
             <com.google.android.material.tabs.TabLayout
                 android:id="@+id/tabs_teams"
                 app:tabBackground="?attr/colorPrimary"
-                app:tabIndicator="?attr/colorOnPrimary"
+                app:tabIndicatorColor="?attr/colorPrimary"
+                app:tabTextColor="?attr/colorOnPrimary"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/team_tab_height" />
 

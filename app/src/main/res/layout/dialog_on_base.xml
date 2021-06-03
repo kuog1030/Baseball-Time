@@ -29,16 +29,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/image_on_base_field"
-                android:layout_width="wrap_content"
-                android:layout_height="120dp"
-                android:layout_marginTop="40dp"
-                app:layout_constraintBottom_toTopOf="@+id/button_on_base_pick_off"
+            <com.gillian.baseball.views.CustomBaseView
+                android:id="@+id/base_on_base"
+                android:layout_width="200dp"
+                android:layout_height="180dp"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                app:srcCompat="@drawable/diamond_field" />
+                app:layout_constraintVertical_bias=".18"
+                app:onBase="0" />
 
             <Button
                 android:id="@+id/button_on_base_pick_off"
@@ -51,7 +51,7 @@
                 app:layout_constraintEnd_toStartOf="@+id/button_on_base_steal_success"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_on_base_field" />
+                app:layout_constraintTop_toBottomOf="@+id/base_on_base" />
 
             <Button
                 android:id="@+id/button_on_base_steal_success"
@@ -105,33 +105,29 @@
                 android:id="@+id/text_on_base_first_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:onBaseFirst="@{onBaseInfo}"
-                app:layout_constraintEnd_toEndOf="@id/image_on_base_field"
-                app:layout_constraintHorizontal_bias="0.9"
-                app:layout_constraintStart_toStartOf="@+id/image_on_base_field"
-                app:layout_constraintTop_toTopOf="@+id/text_on_base_third_player"
                 android:textSize="18sp"
-                tools:text="一壘在這"/>
+                app:layout_constraintStart_toEndOf="@+id/base_on_base"
+                app:layout_constraintTop_toTopOf="@+id/text_on_base_third_player"
+                app:onBaseFirst="@{onBaseInfo}"
+                tools:text="一壘在這" />
 
             <TextView
                 android:id="@+id/text_on_base_third_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:onBaseThird="@{onBaseInfo}"
-                app:layout_constraintBottom_toBottomOf="@+id/image_on_base_field"
-                app:layout_constraintEnd_toEndOf="@+id/image_on_base_field"
-                app:layout_constraintHorizontal_bias="0.1"
-                app:layout_constraintStart_toStartOf="@+id/image_on_base_field"
-                app:layout_constraintTop_toTopOf="@+id/image_on_base_field"
                 android:textSize="18sp"
-                tools:text="三壘在這"/>
+                app:layout_constraintBottom_toBottomOf="@+id/base_on_base"
+                app:layout_constraintEnd_toStartOf="@+id/base_on_base"
+                app:layout_constraintTop_toTopOf="@+id/base_on_base"
+                app:onBaseThird="@{onBaseInfo}"
+                tools:text="三壘在這" />
 
             <TextView
                 android:id="@+id/text_on_base_second_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:onBaseSecond="@{onBaseInfo}"
-                app:layout_constraintBottom_toTopOf="@id/image_on_base_field"
+                app:layout_constraintBottom_toTopOf="@id/base_on_base"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 android:textSize="18sp"
@@ -157,6 +153,17 @@
                 app:layout_constraintEnd_toEndOf="@id/bar_on_base"
                 app:layout_constraintStart_toStartOf="@id/bar_on_base"
                 app:layout_constraintTop_toBottomOf="@id/bar_on_base" />
+
+            <ImageButton
+                android:id="@+id/button_on_base_dismiss"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="@dimen/half_margin"
+                android:layout_marginEnd="@dimen/half_margin"
+                android:background="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_clear_36" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

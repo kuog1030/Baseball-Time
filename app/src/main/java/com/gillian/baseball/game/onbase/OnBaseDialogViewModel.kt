@@ -22,12 +22,13 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository, private 
     val proceed: LiveData<Boolean>
         get() = _proceed
 
-    private var _onBaseOut = MutableLiveData<Boolean>()
-    val onBaseOut: LiveData<Boolean>
+    private var _onBaseOut = MutableLiveData<EventType>()
+
+    val onBaseOut: LiveData<EventType>
         get() = _onBaseOut
 
     fun pickOff() {
-        _onBaseOut.value = true
+        _onBaseOut.value = EventType.PICKOFF
     }
 
     fun stealBaseSuccess() {
@@ -38,7 +39,7 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository, private 
     }
 
     fun stealBaseFail() {
-        _onBaseOut.value = true
+        _onBaseOut.value = EventType.STEALBASEFAIL
     }
 
     fun advanceByError() {
