@@ -57,6 +57,18 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         customBaseInt.value = customInt
     }
 
+    fun getDetailString() : String {
+        var result = ""
+        var count = 0
+        for (atBase in atBaseList) {
+            atBase.eventType?.let{
+                count += 1
+                result = result.plus("$count. ${atBase.player.name}${it.broadcast}\n")
+            }
+        }
+        return result
+    }
+
 
     // rbi是由跑者回壘得分run()驅使的
     fun saveAndDismiss() {
@@ -239,6 +251,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
 
     fun changeToNextPage() {
         baseListToCustom()
+        eventDetail.value = getDetailString()
         _changeToNextPage.value = true
     }
 
