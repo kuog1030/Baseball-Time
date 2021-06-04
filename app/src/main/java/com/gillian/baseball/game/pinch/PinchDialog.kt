@@ -46,11 +46,6 @@ class PinchDialog(private val isDefense: Boolean) : AppCompatDialogFragment() {
             dismiss()
         })
 
-        val fieldAdapter = PinchAdapter(PinchAdapter.OnClickListener{ player, position ->
-            gameViewModel.pinch(player, position)
-            dismiss()
-        })
-
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             it?.let{
                 dismiss()
@@ -60,9 +55,7 @@ class PinchDialog(private val isDefense: Boolean) : AppCompatDialogFragment() {
 
 
         binding.recyclerPinchPlayer.adapter = benchAdapter
-        binding.recyclerPinchError.adapter = fieldAdapter
         benchAdapter.submitList(gameViewModel.myBench)
-        fieldAdapter.submitList(gameViewModel.lineUp)
 
         return binding.root
     }

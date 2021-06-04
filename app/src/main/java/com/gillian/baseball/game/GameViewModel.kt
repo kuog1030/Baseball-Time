@@ -12,7 +12,7 @@ import com.gillian.baseball.ext.lineUpPlayer
 import kotlinx.coroutines.launch
 
 // debug用
-val totalInning = 6
+var totalInning = 2
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
@@ -130,7 +130,16 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun switch() {
 
         if (inningCount == totalInning) {
-            switchFinal()
+            game.value?.let{
+                if (it.box.run[0] == it.box.run[1] && totalInning <= 12) {
+                    // If Tie
+                    totalInning += 2
+                    switch()
+                } else {
+                    switchFinal()
+                }
+            }
+
         } else {
             // 比賽還沒結束
             if (atBatNumber == (lineUp.size - 1)) {
@@ -336,7 +345,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             _navigateToEvent.value = EventInfo(gameId = argument.game.id,
                     atBaseList = atBaseList,
                     isSafe = true,
-                    isBatting = (isTop xor isHome),
+                    isDefence = (isTop == isHome),
                     hitterPreEvent = hitterEvent,
                     onField = if(isHome) homeLineUp else guestLineUp)
         } else {
@@ -346,7 +355,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 _navigateToOut.value = EventInfo(gameId = argument.game.id,
                         atBaseList = mutableListOf(AtBase(0, baseList[0]!!)),
                         isSafe = false,
-                        isBatting = (isTop xor isHome),
+                        isDefence = (isTop == isHome),
                         hitterPreEvent = hitterEvent,
                         onField = if(isHome) homeLineUp else guestLineUp)
 
@@ -354,7 +363,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 _navigateToOut.value = EventInfo(gameId = argument.game.id,
                         atBaseList = atBaseList,
                         isSafe = false,
-                        isBatting = (isTop xor isHome),
+                        isDefence = (isTop == isHome),
                         hitterPreEvent = hitterEvent,
                         onField = if(isHome) homeLineUp else guestLineUp)
             }

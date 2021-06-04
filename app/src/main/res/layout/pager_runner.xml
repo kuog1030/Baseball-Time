@@ -149,6 +149,8 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             app:atBaseFirst="@{atBase}"
+            app:drawableTopCompat="@drawable/ic_person_24"
+            app:layout_constraintBottom_toBottomOf="@+id/text_runner_third_player"
             app:layout_constraintEnd_toEndOf="@+id/base_event_runner"
             app:layout_constraintStart_toEndOf="@+id/base_event_runner"
             app:layout_constraintTop_toTopOf="@+id/text_runner_third_player"
@@ -165,7 +167,8 @@
             app:layout_constraintEnd_toStartOf="@+id/base_event_runner"
             app:layout_constraintStart_toStartOf="@+id/base_event_runner"
             app:layout_constraintTop_toTopOf="@+id/base_event_runner"
-            tools:text="3壘" />
+            tools:text="3壘"
+            app:drawableTopCompat="@drawable/ic_person_24" />
 
         <TextView
             android:id="@+id/text_runner_second_player"
@@ -173,9 +176,11 @@
             android:layout_height="wrap_content"
             android:textSize="18sp"
             app:atBaseSecond="@{atBase}"
+            app:drawableTopCompat="@drawable/ic_person_24"
             app:layout_constraintBottom_toTopOf="@+id/base_event_runner"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/base_event_runner"
             tools:text="2壘" />
 
 

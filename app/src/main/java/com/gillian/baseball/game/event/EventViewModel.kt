@@ -177,10 +177,10 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         }
         atBaseList[0].base = 1
 
-        if (eventInfo.isBatting) {
-            changeToNextPage()
-        } else {
+        if (eventInfo.isDefence) {
             errorRecycler.value = true
+        } else {
+            changeToNextPage()
         }
     }
 
