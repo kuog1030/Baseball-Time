@@ -70,6 +70,7 @@
 
     <!--    Stat related-->
     <string name="my_performance">我的成績</string>
+    <string name="no_personal_record">（沒有出賽紀錄）</string>
     <string name="hitter_performance">打擊成績</string>
     <string name="pitcher_performance">投手成績</string>
     <string name="game_stat_title">成績看板</string>

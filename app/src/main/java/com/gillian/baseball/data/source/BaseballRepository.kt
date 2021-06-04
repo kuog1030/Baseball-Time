@@ -67,7 +67,7 @@ interface BaseballRepository {
 
     suspend fun getTeamEventPlayer(teamId: String): Result<MutableList<EventPlayer>>
 
-    suspend fun getGameBox(gameId: String) : Result<Box>
+    suspend fun getGame(gameId: String) : Result<Game>
 
     suspend fun getMyGameStat(gameId: String, isHome: Boolean) : Result<MyStatistic>
 

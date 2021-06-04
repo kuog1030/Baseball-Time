@@ -69,6 +69,17 @@ fun bindEmptyHint(textView: TextView, players: List<Player>?) {
     }
 }
 
+@BindingAdapter("noPersonalRecord")
+fun bindEmptyPersonal(textView: TextView, myScore: List<PersonalScore>?) {
+    myScore?.let{
+        if (it.isEmpty()) {
+            textView.text = BaseballApplication.instance.getString(R.string.no_personal_record)
+        } else {
+            textView.visibility = View.GONE
+        }
+    }
+}
+
 @BindingAdapter("personalBox")
 fun bindPersonalBox(recyclerView: RecyclerView, myScore: List<PersonalScore>?) {
     myScore?.let{
@@ -263,16 +274,6 @@ fun bindDefaultPhoto(textView: TextView, name: String?) {
     }
 }
 
-//@BindingAdapter("teamImageUrl")
-//fun bindTeamImage(imageView: ImageView, url: String?) {
-//    Glide.with(imageView.context)
-//            .load(url)
-//            .circleCrop()
-//            .apply(RequestOptions()
-//                    .placeholder(R.drawable.baseball_glove)
-//                    .error(R.drawable.baseball_glove))
-//            .into(imageView)
-//}
 
 @BindingAdapter("boxStyle")
 fun bindStyleForBox(textView: TextView, isTitle: Boolean) {

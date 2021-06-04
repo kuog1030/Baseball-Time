@@ -1,7 +1,6 @@
 package com.gillian.baseball.statistics.statgame
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -37,10 +36,16 @@ class StatGameFragment : Fragment() {
         binding.recyclerGameStatHitter.adapter = HitterBoxAdapter()
         binding.recyclerGameStatPitcher.adapter = PitcherBoxAdapter()
 
+        viewModel.game.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                viewModel.createBoxView()
+            }
+        })
+
 
         viewModel.gameId.observe(viewLifecycleOwner, Observer {
             viewModel.fetchMyTeamStat()
-            viewModel.fetchGameBox()
+            viewModel.fetchGame()
         })
 
 

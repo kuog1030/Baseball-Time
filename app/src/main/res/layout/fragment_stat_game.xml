@@ -14,37 +14,11 @@
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                app:loadingStatus="@{viewModel.status}"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent">
-
-                <com.airbnb.lottie.LottieAnimationView
-                    android:id="@+id/lottie_stat_game"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    app:layout_constraintVertical_bias=".8"
-                    app:layout_constraintWidth_percent=".15"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintBottom_toBottomOf="parent"
-                    app:lottie_autoPlay="true"
-                    app:lottie_loop="true"
-                    app:lottie_rawRes="@raw/login" />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
 
             <TextView
                 android:id="@+id/text_game_stat_title"
@@ -87,7 +61,7 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recycler_game_stat_my"
                 android:layout_width="wrap_content"
-                android:layout_height="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
                 android:orientation="horizontal"
                 app:personalBox="@{viewModel.myStat.myPersonalScore}"
@@ -97,6 +71,18 @@
                 app:layout_constraintTop_toBottomOf="@id/text_game_stat_my"
                 tools:itemCount="5"
                 tools:listitem="@layout/item_personal_score" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:noPersonalRecord="@{viewModel.myStat.myPersonalScore}"
+                android:background="@color/color_background"
+                android:padding="4dp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_game_stat_my"
+                app:layout_constraintBottom_toTopOf="@id/text_game_stat_bat"
+                tools:text="沒有出賽紀錄喔"/>
 
 
             <TextView
@@ -132,10 +118,8 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
                 android:overScrollMode="never"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
                 app:layout_constraintTop_toBottomOf="@+id/text_game_stat_pitch"
@@ -154,6 +138,59 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_hitter" />
+
+            <TextView
+                android:id="@+id/text_game_stat_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/one_half_margin"
+                android:text="@string/add_game_note"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_pitcher"
+                app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_pitcher"
+                app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_pitcher" />
+
+            <TextView
+                android:id="@+id/text_stat_note"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintHeight_min="50dp"
+                android:layout_marginTop="@dimen/margin"
+                android:layout_marginBottom="@dimen/margin"
+                android:text="@{viewModel.game.note}"
+                android:padding="@dimen/margin"
+                android:background="@drawable/bg_card"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/recycler_game_stat_pitcher"
+                app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_pitcher"
+                app:layout_constraintTop_toBottomOf="@+id/text_game_stat_note" />
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="0dp"
+                android:layout_height="800dp"
+                app:loadingStatus="@{viewModel.status}"
+                android:background="@color/color_primary"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:visibility="gone">
+
+                <com.airbnb.lottie.LottieAnimationView
+                    android:id="@+id/lottie_stat_game"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintVertical_bias=".5"
+                    app:layout_constraintWidth_percent=".15"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:lottie_autoPlay="true"
+                    app:lottie_loop="true"
+                    app:lottie_rawRes="@raw/login" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

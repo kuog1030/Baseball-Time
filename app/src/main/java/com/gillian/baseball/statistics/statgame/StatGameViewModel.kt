@@ -15,6 +15,7 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
     val myStat = MutableLiveData<MyStatistic>()
 
     val gameBox = MutableLiveData<List<BoxView>>()
+    val game = MutableLiveData<Game>()
 
     var gameId = MutableLiveData<String>()
     var isHome = MutableLiveData<Boolean>()
@@ -29,23 +30,33 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
     }
 
 
-    fun fetchGameBox() {
+    fun fetchGame() {
         viewModelScope.launch {
-            val boxResult = repository.getGameBox(gameId.value!!)
-            gameBox.value = when (boxResult) {
+            val gameResult = repository.getGame(gameId.value!!)
+            game.value = when (gameResult) {
                 is Result.Success -> {
-                    boxResult.data.toBoxViewList()
+                    gameResult.data
                 }
                 is Result.Fail -> {
+                    _status.value = LoadStatus.ERROR
                     null
                 }
                 is Result.Error -> {
+                    _status.value = LoadStatus.ERROR
                     null
                 }
                 else -> {
+                    _status.value = LoadStatus.ERROR
                     null
                 }
             }
+        }
+    }
+
+    fun createBoxView() {
+        game.value?.let{
+            gameBox.value = it.box.toBoxViewList()
+            if (myStat.value != null) _status.value = LoadStatus.DONE
         }
     }
 
@@ -55,7 +66,7 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
             val result = repository.getMyGameStat(gameId.value!!, isHome.value ?: false)
             myStat.value = when (result) {
                 is Result.Success -> {
-                    _status.value = LoadStatus.DONE
+                    if (gameBox.value != null) _status.value = LoadStatus.DONE
                     result.data
                 }
                 is Result.Fail -> {

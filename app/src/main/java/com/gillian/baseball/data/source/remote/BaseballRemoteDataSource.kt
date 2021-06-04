@@ -681,16 +681,17 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
-    override suspend fun getGameBox(gameId: String): Result<Box> = suspendCoroutine { continuation ->
+    override suspend fun getGame(gameId: String): Result<Game> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(GAMES)
                 .document(gameId)
                 .get()
                 .addOnSuccessListener { documents ->
                     if (documents != null) {
                         val gameResult = documents.toObject(Game::class.java)
-                        continuation.resume(Result.Success(gameResult!!.box))
+                        // TODO()這邊怎麼error handle?
+                        continuation.resume(Result.Success(gameResult!!))
                     } else {
-                        continuation.resume(Result.Fail("get game box fail"))
+                        continuation.resume(Result.Fail("get game fail"))
                     }
                 }
                 .addOnFailureListener{ exception ->
