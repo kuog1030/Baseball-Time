@@ -48,6 +48,8 @@ interface BaseballDataSource {
 
     suspend fun getLiveEvents(gameId: String): MutableLiveData<List<Event>>
 
+    suspend fun getLiveGame(gameId: String): MutableLiveData<Game>
+
     suspend fun getAllGames(teamId: String) : Result<List<Game>>
 
     suspend fun getAllLiveGamesCard() : Result<List<GameCard>>

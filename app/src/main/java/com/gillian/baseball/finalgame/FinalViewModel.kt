@@ -119,6 +119,14 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
     fun uploadBox () {
         Log.i("gillian", "box is $box")
         viewModelScope.launch {
+
+            // 我有修改過update Game Box 原本長這樣
+            //        FirebaseFirestore.getInstance().collection(GAMES)
+            //                .document(gameId)
+            //                .update("box", box,
+            //                        "status", GameStatus.FINAL.number)
+
+
             val result = repository.updateGameBox(myGame.game.id, box)
             when (result) {
                 is Result.Success -> {

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.R
 import com.gillian.baseball.data.Event
+import com.gillian.baseball.data.Game
 import com.gillian.baseball.data.GameCard
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.util.Util.getString
@@ -15,6 +16,8 @@ class BroadcastViewModel(private val repository: BaseballRepository, val game: G
 
     var liveEvents = MutableLiveData<List<Event>>()
 
+    var liveGame = MutableLiveData<Game>()
+
     val homeScore = MutableLiveData<Int>()
 
     val guestScore = MutableLiveData<Int>()
@@ -22,6 +25,7 @@ class BroadcastViewModel(private val repository: BaseballRepository, val game: G
 
     init {
         getLiveEvent()
+        getLiveGame()
         if (game.place.isEmpty()) {
             game.place = getString(R.string.no_game_place)
         }
@@ -30,6 +34,12 @@ class BroadcastViewModel(private val repository: BaseballRepository, val game: G
     fun getLiveEvent() {
         viewModelScope.launch {
             liveEvents = repository.getLiveEvents(game.id)
+        }
+    }
+
+    fun getLiveGame() {
+        viewModelScope.launch {
+            liveGame = repository.getLiveGame(game.id)
         }
     }
 

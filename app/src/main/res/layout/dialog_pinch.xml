@@ -80,7 +80,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/one_half_margin"
                     android:visibility="@{viewModel.expandBlock == 1? View.VISIBLE : View.GONE}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:visibility="gone">
 
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
@@ -117,7 +118,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/one_half_margin"
                     android:visibility="@{viewModel.expandBlock == 2? View.VISIBLE : View.GONE}"
-                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:visibility="gone">
 
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>

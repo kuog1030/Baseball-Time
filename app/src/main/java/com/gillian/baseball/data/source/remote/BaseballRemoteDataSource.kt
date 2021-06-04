@@ -471,8 +471,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
     override suspend fun updateGameBox(gameId: String, box: Box): Result<Boolean> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(GAMES)
                 .document(gameId)
-                .update("box", box,
-                        "status", GameStatus.FINAL.number)
+                .update("box", box)
                 .addOnCompleteListener{task ->
                     if (task.isSuccessful) {
                         continuation.resume(Result.Success(true))
@@ -805,6 +804,25 @@ object BaseballRemoteDataSource : BaseballDataSource {
                     liveEvent.value = eventList
                 }
         return liveEvent
+    }
+
+    override suspend fun getLiveGame(gameId: String): MutableLiveData<Game> {
+        val liveData = MutableLiveData<Game>()
+
+        FirebaseFirestore.getInstance().collection(GAMES)
+                .document(gameId)
+                .addSnapshotListener { snapshot, error ->
+                    error?.let{
+                        Log.w("remote", "[${this::class.simpleName}] Error getting game document. ${it.message}")
+                        return@addSnapshotListener
+                    }
+
+                    if (snapshot != null && snapshot.exists()) {
+                        liveData.value = snapshot.toObject(Game::class.java)
+                    }
+
+                }
+        return liveData
     }
 
     override suspend fun deletePlayer(playerId: String): Result<Boolean> = suspendCoroutine { continuation ->

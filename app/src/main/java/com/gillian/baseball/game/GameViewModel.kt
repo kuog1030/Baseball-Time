@@ -112,6 +112,16 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             it.box.score[inningCount - 1] += score
             it.box.run[(inningCount - 1) % 2] += score
         }
+
+        uploadGameBox()
+    }
+
+    fun uploadGameBox() {
+        viewModelScope.launch {
+            game.value?.let{
+                repository.updateGameBox(it.id, it.box)
+            }
+        }
     }
 
     fun switch() {
@@ -155,12 +165,9 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 inningShow.value = "${(inningCount / 2) + 1}"
             }
 
-
-            Log.i("at base", "box score ${game.value!!.box.score}")
-            Log.i("at base", "hit box ${game.value!!.box.hit}")
-            Log.i("at base", "run box ${game.value!!.box.run}")
-
+            uploadGameBox()
             game.value!!.box.score.add(0)
+
             isTop = !isTop
             liveIsTop.value = isTop
             baseList = arrayOf(lineUp[atBatNumber], null, null, null)

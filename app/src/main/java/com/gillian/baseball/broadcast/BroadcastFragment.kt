@@ -38,7 +38,11 @@ class BroadcastFragment : Fragment() {
         })
 
 
-
+//        viewModel.liveGame.observe(viewLifecycleOwner, Observer {
+//            it?.let{
+//                Log.i("gillian64", "live game change ${it.box}")
+//            }
+//        })
 
         return binding.root
     }

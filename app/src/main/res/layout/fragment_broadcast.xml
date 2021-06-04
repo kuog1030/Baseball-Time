@@ -156,12 +156,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
-            android:text='@{String.valueOf(viewModel.guestScore) + "-" + String.valueOf(viewModel.homeScore)}'
+            android:letterSpacing=".4"
+            android:text='@{String.valueOf(viewModel.liveGame.box.run[0]) + "-" + String.valueOf(viewModel.liveGame.box.run[1])}'
             android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView15"
-            tools:text="5 - 4" />
+            tools:text="5-4" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
