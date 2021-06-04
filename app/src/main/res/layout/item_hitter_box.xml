@@ -47,7 +47,6 @@
                     android:id="@+id/row_player_box_name"
                     style="@style/PlayerNameTable"
                     boxStyle="@{isTitle}"
-                    android:layout_width="@dimen/box_name_width"
                     android:layout_height="wrap_content"
                     android:text="@{hitter.name}"
                     tools:text="陳俊秀"/>
@@ -107,6 +106,14 @@
                     android:layout_height="wrap_content"
                     android:text='@{isTitle ? @string/box_sb : String.valueOf(hitter.stealBase) }'
                     tools:text="SB"/>
+
+                <TextView
+                    android:id="@+id/row_hitter_box_eight"
+                    style="@style/PlayerTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text='@{isTitle ? @string/box_e : String.valueOf(hitter.error) }'
+                    tools:text="E"/>
             </TableRow>
         </TableLayout>
 

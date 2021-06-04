@@ -33,23 +33,24 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
     // get my stat ( including my hitters and my pitchers ) -> for loop update players boxes
 
     val box = myGame.game.box
-    lateinit var gameResult : GameResult
+    lateinit var gameResult: GameResult
+
     //var boxViewList = mutableListOf<BoxView>()
     val myStat = MutableLiveData<MyStatistic>()
 
     private val _saveAndNavigate = MutableLiveData<Boolean>()
 
-    val saveAndNavigate : LiveData<Boolean>
+    val saveAndNavigate: LiveData<Boolean>
         get() = _saveAndNavigate
 
-    lateinit var hitterResult : Result<Boolean>
-    lateinit var pitcherResult : Result<Boolean>
+    lateinit var hitterResult: Result<Boolean>
+    lateinit var pitcherResult: Result<Boolean>
 
     val gameNote = MutableLiveData<String>(myGame.game.note)
 
 
     private val _gameBox = MutableLiveData<List<BoxView>>()
-    val gameBox : LiveData<List<BoxView>>
+    val gameBox: LiveData<List<BoxView>>
         get() = _gameBox
 
     val loading = MutableLiveData<Boolean>(true)
@@ -103,7 +104,7 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
     }
 
     fun updatePlayerStat() {
-        myStat.value?.let{
+        myStat.value?.let {
             viewModelScope.launch {
                 for (hitter in it.myHitter) {
                     if (hitter.playerId != "") {
@@ -134,9 +135,11 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
     }
 
     fun updateNote() {
-        gameNote.value?.let { note ->
+        if (gameNote.value == null) {
+            _saveAndNavigate.value = true
+        } else {
             viewModelScope.launch {
-                val noteResult = repository.updateGameNote(myGame.game.id, note)
+                val noteResult = repository.updateGameNote(myGame.game.id, gameNote.value!!)
                 _saveAndNavigate.value = when (noteResult) {
                     is Result.Success -> {
                         noteResult.data
@@ -158,6 +161,8 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
         }
     }
 
-
+    fun onTeamNavigated() {
+        _saveAndNavigate.value = null
+    }
 
 }

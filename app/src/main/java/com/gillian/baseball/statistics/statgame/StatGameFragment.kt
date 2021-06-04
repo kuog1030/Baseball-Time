@@ -41,7 +41,6 @@ class StatGameFragment : Fragment() {
         viewModel.gameId.observe(viewLifecycleOwner, Observer {
             viewModel.fetchMyTeamStat()
             viewModel.fetchGameBox()
-            Log.i("gillian", "game id change")
         })
 
 

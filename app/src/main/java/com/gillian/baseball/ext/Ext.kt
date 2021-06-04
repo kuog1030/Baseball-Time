@@ -217,6 +217,8 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
     val myHitter = mutableListOf(HitterBox())
     val myScore = mutableListOf<PersonalScore>()
 
+    val errorEvent = mutableListOf<Event>()
+
     fun updateHitterBox(event: Event, box: HitterBox) {
         val type = event.result
         lateinit var targetEventType: EventType
@@ -344,7 +346,12 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             }
 
         } else {
-            Log.i("gillian", "inning ${event.inning} and is Home 紀錄pitcher")
+            if (event.result == EventType.ERROR.number) {
+                errorEvent.add(event)
+                Log.i("gillian64", "有失誤要記錄了 ${event}")
+                continue
+            }
+
             var noPitcher = true
             for (onePitcherBox in myPitcher) {
                 if (onePitcherBox.playerId == event.pitcher.playerId) {
@@ -360,6 +367,14 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
                 myPitcher.add(newPitcherBox)
             }
 
+        }
+    }
+
+    for (event in errorEvent) {
+        for (oneHitterBox in myHitter) {
+            if (oneHitterBox.playerId == event.player.playerId) {
+                oneHitterBox.error += 1
+            }
         }
     }
 

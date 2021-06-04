@@ -19,7 +19,8 @@ data class HitterBox (
         var baseOnBalls : Int = 0,
         var strikeOut : Int = 0,
         var stealBase: Int = 0,
-        var sacrificeFly: Int = 0
+        var sacrificeFly: Int = 0,
+        var error: Int = 0
 ) : Parcelable {
 
     fun addNewBox(newBox: HitterBox) {
@@ -36,6 +37,7 @@ data class HitterBox (
             strikeOut += newBox.strikeOut
             stealBase += newBox.stealBase
             sacrificeFly += newBox.sacrificeFly
+            error += newBox.error
         }
     }
 

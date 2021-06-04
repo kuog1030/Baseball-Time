@@ -7,6 +7,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.databinding.FragmentFinalBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.finalgame.FinalFragmentArgs
@@ -30,6 +32,13 @@ class FinalFragment : Fragment() {
         viewModel.myStat.observe(viewLifecycleOwner, Observer {
             it?.let{
                 viewModel.updatePlayerStat()
+            }
+        })
+
+        viewModel.saveAndNavigate.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                findNavController().navigate(NavigationDirections.navigationToTeam())
+                viewModel.onTeamNavigated()
             }
         })
 

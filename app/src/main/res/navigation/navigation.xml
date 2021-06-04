@@ -1,15 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
-    app:startDestination="@id/gameFragment">
+    app:startDestination="@id/teamFragment">
 
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.gillian.baseball.game.GameFragment"
         android:label="GameFragment" >
-<!--        <argument-->
-<!--            android:name="preGame"-->
-<!--            app:argType="com.gillian.baseball.data.MyGame" />-->
+        <argument
+            android:name="preGame"
+            app:argType="com.gillian.baseball.data.MyGame" />
         <action
             android:id="@+id/action_gameFragment_to_finalFragment"
             app:destination="@id/finalFragment" />
@@ -29,7 +29,10 @@
     </fragment>
 
     <action android:id="@+id/navigationToStat" app:destination="@id/statFragment" />
-    <action android:id="@+id/navigationToTeam" app:destination="@id/teamFragment" />
+    <action
+        android:id="@+id/navigationToTeam"
+        app:destination="@id/teamFragment"
+        app:popUpTo="@id/navigation" />
     <action android:id="@+id/navigationToOrder" app:destination="@id/orderFragment" />
     <action android:id="@+id/navigationToAllGames" app:destination="@id/allGamesFragment" />
     <action android:id="@+id/navigationToNewPlayer" app:destination="@id/newPlayerDialog" />

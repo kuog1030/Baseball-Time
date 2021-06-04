@@ -1,6 +1,7 @@
 package com.gillian.baseball.statistics.statgame
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -18,12 +19,21 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
     var gameId = MutableLiveData<String>()
     var isHome = MutableLiveData<Boolean>()
 
+    private val _status = MutableLiveData<LoadStatus>()
+
+    val status: LiveData<LoadStatus>
+        get() = _status
+
+    init {
+        _status.value = LoadStatus.LOADING
+    }
+
+
     fun fetchGameBox() {
         viewModelScope.launch {
             val boxResult = repository.getGameBox(gameId.value!!)
             gameBox.value = when (boxResult) {
                 is Result.Success -> {
-                    Log.i("gillian", "game box")
                     boxResult.data.toBoxViewList()
                 }
                 is Result.Fail -> {
@@ -45,16 +55,19 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
             val result = repository.getMyGameStat(gameId.value!!, isHome.value ?: false)
             myStat.value = when (result) {
                 is Result.Success -> {
-                    Log.i("gillian", "all stat")
+                    _status.value = LoadStatus.DONE
                     result.data
                 }
                 is Result.Fail -> {
+                    _status.value = LoadStatus.ERROR
                     null
                 }
                 is Result.Error -> {
+                    _status.value = LoadStatus.ERROR
                     null
                 }
                 else -> {
+                    _status.value = LoadStatus.ERROR
                     null
                 }
             }

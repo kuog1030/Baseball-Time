@@ -93,7 +93,7 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 
                 // 更新安打的box
                 if (viewModel.hitToBeAdded != 0) gameViewModel.addHitToBox(viewModel.hitToBeAdded)
-                if (viewModel.errorEvent != null) gameViewModel.addErrorToBox(1)
+                if (viewModel.atBaseList[0].eventType == EventType.ERRORONBASE) gameViewModel.addErrorToBox(1)
                 dismiss()
                 viewModel.onDialogDismiss()
             }
