@@ -14,6 +14,7 @@ import com.gillian.baseball.data.OnBaseInfo
 import com.gillian.baseball.databinding.DialogOnBaseBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.game.GameViewModel
+import com.gillian.baseball.game.order.PinchAdapter
 
 
 class OnBaseDialog(val onBaseInfo: OnBaseInfo) : AppCompatDialogFragment() {
@@ -36,10 +37,22 @@ class OnBaseDialog(val onBaseInfo: OnBaseInfo) : AppCompatDialogFragment() {
 
         val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
 
-        viewModel.proceed.observe(viewLifecycleOwner, Observer {
-            it?.let{
+        val fieldAdapter = PinchAdapter(PinchAdapter.OnClickListener{ player, position ->
+            viewModel.recordError(player)
+        })
+
+        binding.recyclerOnBaseError.adapter = fieldAdapter
+        if (gameViewModel.isTop) {
+            fieldAdapter.submitList(gameViewModel.homeLineUp) // 上半場的話是主隊防守中
+        } else {
+            fieldAdapter.submitList(gameViewModel.guestLineUp)
+        }
+
+        viewModel.proceedWithError.observe(viewLifecycleOwner, Observer {
+            it?.let{ withError ->
                 gameViewModel.advanceBase(onClickPlayer)
                 viewModel.onProceedDone()
+                if (withError) { gameViewModel.addErrorToBox(1) }
                 dismiss()
             }
         })

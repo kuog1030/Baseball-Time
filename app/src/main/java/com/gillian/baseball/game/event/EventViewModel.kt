@@ -18,6 +18,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     val atBaseList = eventInfo.atBaseList
 
     var hitterEvent = MutableLiveData<Event>(eventInfo.hitterPreEvent)
+    var onFieldPlayer = eventInfo.onField
     var newBaseList = arrayOf<EventPlayer?>(null, null, null, null)
     var hasBaseOut = mutableListOf<Int>()
 
@@ -26,6 +27,10 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
 
     var scoreToBeAdded = 0
     var hitToBeAdded = 0
+    var errorEvent : Event? = null
+
+
+    val errorRecycler = MutableLiveData<Boolean>(false)
 
     private var _changeToNextPage = MutableLiveData<Boolean>()
     val changeToNextPage: LiveData<Boolean>
@@ -66,6 +71,10 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
                 result = result.plus("$count. ${atBase.player.name}${it.broadcast}\n")
             }
         }
+        errorEvent?.let{
+            result = result.plus("${it.player.name}發生失誤")
+        }
+
         return result
     }
 
@@ -102,6 +111,10 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
                     repository.sendEvent(eventInfo.gameId, eventToSend)
                 }
             }
+            errorEvent?.let{
+                Log.i("gillian64", "event VM send error event $it")
+                repository.sendEvent(eventInfo.gameId, it)
+            }
         }
 
         initNextEvent()
@@ -116,6 +129,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     fun hit(baseCount: Int) {
+        errorEvent = null
         atBaseList[0].eventType = when (baseCount) {
             1 -> EventType.SINGLE
             2 -> EventType.DOUBLE
@@ -129,6 +143,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     fun homerun() {
+        errorEvent = null
         atBaseList[0].eventType = EventType.HOMERUN
         atBaseList[0].event?.let{
             it.result = EventType.HOMERUN.number
@@ -140,6 +155,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     fun hbp() {
+        errorEvent = null
         atBaseList[0].eventType = EventType.HITBYPITCH
         atBaseList[0].event?.let{
             it.result = EventType.HITBYPITCH.number
@@ -160,10 +176,24 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
             it.result = EventType.ERRORONBASE.number
         }
         atBaseList[0].base = 1
+
+        if (eventInfo.isBatting) {
+            changeToNextPage()
+        } else {
+            errorRecycler.value = true
+        }
+    }
+
+    fun recordError(player: EventPlayer) {
+        // 記得在處理投手box的時候要加上去
+        errorEvent = Event(inning = hitterEvent.value!!.inning,
+        result = EventType.ERROR.number,
+        player = player)
         changeToNextPage()
     }
 
     fun droppedThird() {
+        errorEvent = null
         atBaseList[0].eventType = EventType.DROPPEDTHIRD
         atBaseList[0].event?.let{
             it.result = EventType.DROPPEDTHIRD.number
@@ -205,6 +235,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     // 打者按了野手選擇"上壘"
     fun fielderChoice() {
         // default single
+        errorEvent = null
         atBaseList[0].eventType = EventType.FIELDERCHOICE
         atBaseList[0].event?.let{
             it.result = EventType.FIELDERCHOICE.number
@@ -250,6 +281,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     fun changeToNextPage() {
+        errorRecycler.value = false
         baseListToCustom()
         eventDetail.value = getDetailString()
         _changeToNextPage.value = true

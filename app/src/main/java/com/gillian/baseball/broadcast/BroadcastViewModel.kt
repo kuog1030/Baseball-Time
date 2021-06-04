@@ -18,26 +18,22 @@ class BroadcastViewModel(private val repository: BaseballRepository, val game: G
 
     var liveGame = MutableLiveData<Game>()
 
-    val homeScore = MutableLiveData<Int>()
-
-    val guestScore = MutableLiveData<Int>()
-
 
     init {
-        getLiveEvent()
-        getLiveGame()
+        fetchLiveEvent()
+        fetchLiveGame()
         if (game.place.isEmpty()) {
             game.place = getString(R.string.no_game_place)
         }
     }
 
-    fun getLiveEvent() {
+    private fun fetchLiveEvent() {
         viewModelScope.launch {
             liveEvents = repository.getLiveEvents(game.id)
         }
     }
 
-    fun getLiveGame() {
+    private fun fetchLiveGame() {
         viewModelScope.launch {
             liveGame = repository.getLiveGame(game.id)
         }

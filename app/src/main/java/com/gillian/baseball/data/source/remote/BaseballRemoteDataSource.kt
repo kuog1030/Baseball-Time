@@ -448,6 +448,25 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
+    override suspend fun updateGameStatus(gameId: String, status: GameStatus): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(GAMES)
+                .document(gameId)
+                .update(STATUS, status.number)
+                .addOnCompleteListener{task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error updating game status. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("update game status fail"))
+                    }
+                }
+    }
+
     override suspend fun updateGameNote(gameId: String, note: String): Result<Boolean> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(GAMES)
                 .document(gameId)

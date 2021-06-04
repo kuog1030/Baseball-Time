@@ -18,7 +18,7 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
     var gameId = MutableLiveData<String>()
     var isHome = MutableLiveData<Boolean>()
 
-    fun getGameBox() {
+    fun fetchGameBox() {
         viewModelScope.launch {
             val boxResult = repository.getGameBox(gameId.value!!)
             gameBox.value = when (boxResult) {
@@ -40,7 +40,7 @@ class StatGameViewModel(private val repository: BaseballRepository) : ViewModel(
     }
 
 
-    fun getMyTeamStat() {
+    fun fetchMyTeamStat() {
         viewModelScope.launch {
             val result = repository.getMyGameStat(gameId.value!!, isHome.value ?: false)
             myStat.value = when (result) {

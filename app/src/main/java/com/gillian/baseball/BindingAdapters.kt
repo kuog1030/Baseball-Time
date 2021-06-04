@@ -39,6 +39,14 @@ fun bindStrikeCount(textView: TextView, count: Int?) {
     }
 }
 
+@BindingAdapter("nextBat")
+fun bindNextBat(textView: TextView, player: String?) {
+    player?.let{
+        textView.text = BaseballApplication.instance.getString(R.string.next_bat, player)
+    }
+}
+
+
 @BindingAdapter("teammates")
 fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: MutableList<Player>?) {
     teamPlayers?.let{

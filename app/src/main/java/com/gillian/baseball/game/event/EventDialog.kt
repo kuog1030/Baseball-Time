@@ -39,10 +39,7 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 //        }
 
         val binding = DialogEventBinding.inflate(inflater, container, false)
-//        val viewModel = ViewModelProvider(
-//                requireActivity(),
-//                ViewModelFactory((requireContext().applicationContext as BaseballApplication).repository)
-//        ).get(EventDialogViewModel::class.java)
+        val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
 
 
         fun changePage() {
@@ -73,8 +70,6 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 
                 Log.i("gillian", "current array ${it[0]}, ${it[1]}, ${it[2]}, ${it[3]}")
 
-
-                val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
                 gameViewModel.addPitchCount()
 
                 if (viewModel.hasBaseOut.isEmpty()) {
@@ -98,6 +93,7 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
 
                 // 更新安打的box
                 if (viewModel.hitToBeAdded != 0) gameViewModel.addHitToBox(viewModel.hitToBeAdded)
+                if (viewModel.errorEvent != null) gameViewModel.addErrorToBox(1)
                 dismiss()
                 viewModel.onDialogDismiss()
             }

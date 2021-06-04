@@ -6,6 +6,7 @@ import androidx.recyclerview.widget.DiffUtil
 import com.gillian.baseball.data.EventPlayer
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.gillian.baseball.databinding.ItemOrderPitcherBinding
 import com.gillian.baseball.databinding.ItemOrderPlayerBinding
 
 class PinchAdapter(val onClickListener: OnClickListener ) : ListAdapter<EventPlayer, PinchAdapter.ViewHolder>(DiffCallback) {
@@ -14,7 +15,7 @@ class PinchAdapter(val onClickListener: OnClickListener ) : ListAdapter<EventPla
         fun onClick(player: EventPlayer, position: Int) = clickListener(player, position)
     }
 
-    class ViewHolder(private var binding: ItemOrderPlayerBinding) : RecyclerView.ViewHolder(binding.root) {
+    class ViewHolder(private var binding: ItemOrderPitcherBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(player: EventPlayer) {
             binding.player = player
             binding.executePendingBindings()
@@ -23,7 +24,7 @@ class PinchAdapter(val onClickListener: OnClickListener ) : ListAdapter<EventPla
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
-        return ViewHolder(ItemOrderPlayerBinding.inflate(LayoutInflater.from(parent.context), parent, false))
+        return ViewHolder(ItemOrderPitcherBinding.inflate(LayoutInflater.from(parent.context), parent, false))
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

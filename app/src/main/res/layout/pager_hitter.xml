@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.event.EventViewModel" />
@@ -98,7 +98,7 @@
             android:layout_height="wrap_content"
             android:onClick="@{()->viewModel.error()}"
             android:text="@string/error"
-            app:layout_constraintBottom_toTopOf="@+id/bar_hitter"
+            app:layout_constraintBottom_toTopOf="@+id/layout_hitter_error"
             app:layout_constraintEnd_toEndOf="@+id/button_hitter_hbp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/button_hitter_hbp"
@@ -114,6 +114,32 @@
             app:layout_constraintEnd_toEndOf="@+id/button_hitter_fc"
             app:layout_constraintStart_toStartOf="@+id/button_hitter_fc"
             app:layout_constraintTop_toTopOf="@+id/button_hitter_error" />
+
+        <LinearLayout
+            android:id="@+id/layout_hitter_error"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintHeight_percent=".5"
+            app:layout_constraintVertical_bias="1"
+            app:layout_constraintTop_toBottomOf="@id/textView"
+            app:layout_constraintBottom_toTopOf="@+id/bar_hitter"
+            app:layout_constraintEnd_toEndOf="@+id/button_hitter_drop"
+            app:layout_constraintStart_toStartOf="@+id/button_hitter_error">
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_hitter_error"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingStart="@dimen/margin"
+                android:paddingBottom="@dimen/margin"
+                android:visibility="@{viewModel.errorRecycler? View.VISIBLE : View.GONE}"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_order_pitcher"
+                tools:itemCount="5"/>
+
+        </LinearLayout>
+
 
         <TextView
             android:id="@+id/textView"

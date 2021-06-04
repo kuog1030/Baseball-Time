@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.data.EventInfo
+import com.gillian.baseball.ext.lineUpPlayer
 import kotlinx.coroutines.launch
 
 // debug用
@@ -53,7 +54,6 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var homeABNumber = 0
     var guestABNumber = 0
 
-    // TODO()替補球員假資料
     var myBench = argument.benchPlayer
 
     /* ------------------------------------------------------------------------
@@ -82,9 +82,11 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var outCount = MutableLiveData<Int>(0)
     var totalStrike = 0
 
+    val nextAtBat = MutableLiveData<String>()
 
     init {
         lineUp = guestLineUp
+        nextAtBat.value = lineUp.lineUpPlayer(1).name
     }
     // 進到dialog的時候帶過去的用球數
     lateinit var hitterEvent: Event
@@ -96,6 +98,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var atBatName = MutableLiveData<String>().apply {
         value = "第1棒 ${baseList[0]?.name}"
     }
+
 
 
     /* ------------------------------------------------------------------------
@@ -246,7 +249,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                     pitcher = if (isTop) homePitcher else guestPitcher,
                     inning = inningCount,
                     result = EventType.STRIKEOUT.number,
-                    currentBase = getCustomBaseInt(baseList = baseList),
+                    currentBase = toCustomBaseInt(baseList = baseList),
                     ball = ballCount.value ?: 0,
                     strike = totalStrike,
                     out = tempOut + 1))
@@ -297,7 +300,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             out = outCount.value!!,
             player = tempPlayer,
             result = type.number,
-            currentBase = getCustomBaseInt(baseList = baseList),
+            currentBase = toCustomBaseInt(baseList = baseList),
             pitcher = if (isTop) homePitcher else guestPitcher
         ))
 
@@ -333,7 +336,9 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             _navigateToEvent.value = EventInfo(gameId = argument.game.id,
                     atBaseList = atBaseList,
                     isSafe = true,
-                    hitterPreEvent = hitterEvent)
+                    isBatting = (isTop xor isHome),
+                    hitterPreEvent = hitterEvent,
+                    onField = if(isHome) homeLineUp else guestLineUp)
         } else {
 
             // 如果兩出局，只管打者
@@ -341,13 +346,17 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 _navigateToOut.value = EventInfo(gameId = argument.game.id,
                         atBaseList = mutableListOf(AtBase(0, baseList[0]!!)),
                         isSafe = false,
-                        hitterPreEvent = hitterEvent)
+                        isBatting = (isTop xor isHome),
+                        hitterPreEvent = hitterEvent,
+                        onField = if(isHome) homeLineUp else guestLineUp)
 
             } else {
                 _navigateToOut.value = EventInfo(gameId = argument.game.id,
                         atBaseList = atBaseList,
                         isSafe = false,
-                        hitterPreEvent = hitterEvent)
+                        isBatting = (isTop xor isHome),
+                        hitterPreEvent = hitterEvent,
+                        onField = if(isHome) homeLineUp else guestLineUp)
             }
         }
     }
@@ -359,12 +368,13 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 out = outCount.value ?: 0,
                 onClickPlayer = base,
                 pitcher = if (isTop) homePitcher else guestPitcher,
-                baseList = baseList.toList()
+                baseList = baseList.toList(),
+                isDefence = (isTop == isHome)
         )
     }
 
 
-    fun getCustomBaseInt(baseList: Array<EventPlayer?>) : Int {
+    fun toCustomBaseInt(baseList: Array<EventPlayer?>) : Int {
         var result = 0
         for (i in 1..3) {
             if (baseList[i] != null) {
@@ -441,7 +451,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 strike = totalStrike,
                 out = outCount.value ?: 0)
         val hasRbi = advanceBase(0)
-        toBeSend.currentBase = getCustomBaseInt(baseList = baseList)
+        toBeSend.currentBase = toCustomBaseInt(baseList = baseList)
         Log.i("gillian", "to be send ${toBeSend.currentBase}")
 
         if (hasRbi) {
@@ -472,6 +482,9 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         // change the hitter to next person in line
         baseList[0] = lineUp[atBatNumber]
         atBatName.value = "第${atBatNumber + 1}棒 ${baseList[0]!!.name}"
+
+        nextAtBat.value = lineUp.lineUpPlayer(atBatNumber+1).name
+
         updateRunnerUI()
     }
 
@@ -505,6 +518,17 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 it.box.hit[1] += run
             }
         }
+    }
+
+    fun addErrorToBox(errorCount: Int) {
+        game.value?.let {
+            if (isTop) {
+                it.box.error[1] += errorCount
+            } else {
+                it.box.error[0] += errorCount
+            }
+        }
+        Log.i("gillian64", "current error box ${game.value!!.box}")
     }
 
     // 換代打

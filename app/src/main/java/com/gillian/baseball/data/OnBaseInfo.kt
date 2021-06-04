@@ -9,6 +9,7 @@ data class OnBaseInfo(
         val inning: Int,
         val out: Int,
         val onClickPlayer: Int,
+        val isDefence: Boolean,
         val pitcher: EventPlayer?,
         val baseList: List<EventPlayer?>
 ) : Parcelable

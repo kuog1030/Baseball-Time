@@ -18,6 +18,17 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
     // 如果我要讓使用者能確認資料，(調整打點資訊等) 可能就要按下按鈕才上船
     // 按下按鈕 -> 上傳 -> 上傳完才navigate
 
+    // 可能要改成
+    // 1. 更新球員成績 getMyStat() (抓到所有event -> toMyStat) -> observe -> upload hit and pitch
+    // 2. update status
+    // 3. 如果有note 才update
+
+    // 我有修改過update Game Box 原本長這樣
+    //        FirebaseFirestore.getInstance().collection(GAMES)
+    //                .document(gameId)
+    //                .update("box", box,
+    //                        "status", GameStatus.FINAL.number)
+
 
     // get my stat ( including my hitters and my pitchers ) -> for loop update players boxes
 
@@ -54,7 +65,7 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
         get() = _errorMessage
 
     init {
-        uploadBox()
+        // 需要先update status = final嗎
         createBoxViewList()
         getMyStat()
     }
@@ -105,43 +116,21 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
                         pitcherResult = repository.updatePitchStat(pitcher.playerId, pitcher)
                     }
                 }
-
+                updateGameStatus(GameStatus.FINALWITHSTAT)
                 _status.value = LoadStatus.DONE
                 loading.value = false
             }
         }
     }
 
-    fun createBoxViewList() {
-        _gameBox.value = box.toBoxViewList()
+    fun updateGameStatus(status: GameStatus) {
+        viewModelScope.launch {
+            repository.updateGameStatus(myGame.game.id, status)
+        }
     }
 
-    fun uploadBox () {
-        Log.i("gillian", "box is $box")
-        viewModelScope.launch {
-
-            // 我有修改過update Game Box 原本長這樣
-            //        FirebaseFirestore.getInstance().collection(GAMES)
-            //                .document(gameId)
-            //                .update("box", box,
-            //                        "status", GameStatus.FINAL.number)
-
-
-            val result = repository.updateGameBox(myGame.game.id, box)
-            when (result) {
-                is Result.Success -> {
-                }
-                is Result.Fail -> {
-                    _errorMessage.value = result.error
-                }
-                is Result.Error -> {
-                    _errorMessage.value = result.exception.toString()
-                }
-                else -> {
-                    _errorMessage.value = Util.getString(R.string.return_nothing)
-                }
-            }
-        }
+    fun createBoxViewList() {
+        _gameBox.value = box.toBoxViewList()
     }
 
     fun updateNote() {

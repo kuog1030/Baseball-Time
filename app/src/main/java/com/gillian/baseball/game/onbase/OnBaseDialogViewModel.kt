@@ -18,9 +18,11 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository, private 
     var pitcher = onBaseInfo.pitcher
     var atBase = AtBase(base = onBaseInfo.onClickPlayer, player = player!!)
 
-    private var _proceed = MutableLiveData<Boolean>()
-    val proceed: LiveData<Boolean>
-        get() = _proceed
+    val errorLayout = MutableLiveData<Boolean>(false)
+
+    private var _proceedWithError = MutableLiveData<Boolean>()
+    val proceedWithError: LiveData<Boolean>
+        get() = _proceedWithError
 
     private var _onBaseOut = MutableLiveData<EventType>()
 
@@ -32,9 +34,9 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository, private 
     }
 
     fun stealBaseSuccess() {
-        _proceed.value = true
+        _proceedWithError.value = false
         viewModelScope.launch {
-            repository.sendEvent(onBaseInfo.gameId, Event(player = player!!, pitcher = pitcher!!, result = EventType.STEALBASE.number))
+            repository.sendEvent(onBaseInfo.gameId, Event(player = player!!, pitcher = pitcher!!, result = EventType.STEALBASE.number, inning = onBaseInfo.inning))
         }
     }
 
@@ -42,16 +44,27 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository, private 
         _onBaseOut.value = EventType.STEALBASEFAIL
     }
 
-    fun advanceByError() {
-        _proceed.value = true
+    fun advanceByError(expand: Boolean) {
+        if (onBaseInfo.isDefence) {
+            errorLayout.value = expand
+        } else {
+            _proceedWithError.value = true
+        }
+    }
+
+    fun recordError(onClickPlayer: EventPlayer) {
+        viewModelScope.launch {
+            repository.sendEvent(onBaseInfo.gameId, Event(player = onClickPlayer, result = EventType.ERROR.number, inning = onBaseInfo.inning))
+        }
+        _proceedWithError.value = true
     }
 
     fun advance() {
-        _proceed.value = true
+        _proceedWithError.value = false
     }
 
     fun onProceedDone() {
-        _proceed.value = null
+        _proceedWithError.value = null
     }
 
     fun onOutDone() {

@@ -5,6 +5,11 @@ import com.gillian.baseball.data.*
 import com.gillian.baseball.game.EventType
 import com.gillian.baseball.login.UserManager
 
+fun MutableList<EventPlayer>.lineUpPlayer(number: Int) : EventPlayer {
+    return (this[(number % this.size)])
+}
+
+
 fun List<Event>.toPersonalScore() : List<String> {
 
     val result = mutableListOf<String>()
