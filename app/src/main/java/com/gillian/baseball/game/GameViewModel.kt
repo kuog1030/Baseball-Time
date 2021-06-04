@@ -130,6 +130,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             inningCount += 1
 
             sendEvent(Event(
+                inning = inningCount,
                 result = EventType.INNINGCHANGE.number
             ))
 
@@ -446,7 +447,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun sendEvent(event: Event) {
-        Log.i("gillian", "event current base ${event.currentBase}")
+        Log.i("gillian", "game VM send event base ${event.currentBase}")
         viewModelScope.launch {
             repository.sendEvent(argument.game.id, event)
         }
@@ -507,6 +508,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun pinch(player: EventPlayer, position: Int) {
         player.order = lineUp[atBatNumber].order + 1
 
+        Log.i("gillian", "替補${player} 代替 ${guestLineUp[atBatNumber]}上場")
         if (isTop) {
             guestLineUp[atBatNumber] = player
             Log.i("gillian", "now guest line up $guestLineUp")
@@ -533,7 +535,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             Event(
                 pitcher = if (isTop) homePitcher else guestPitcher,
                 inning = inningCount,
-                result = EventType.INNINGSPITCHED.number,
+                result = EventType.INNINGSPITCHED.number,  // 50
                 out = totalInningPitched
             )
         )
@@ -542,11 +544,9 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         pitcherCount += 1
         next.order = pitcherCount
         if (isTop) {
-            next.pinch = homePitcher
             homePitchCount = 0
             homePitcher = next
         } else {
-            next.pinch = guestPitcher
             guestPitchCount = 0
             guestPitcher = next
         }

@@ -6,6 +6,7 @@ import com.gillian.baseball.allbroadcast.AllBroadcastViewModel
 import com.gillian.baseball.allgames.AllGamesViewModel
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.editplayer.EditPlayerViewModel
+import com.gillian.baseball.game.pinch.PinchViewModel
 import com.gillian.baseball.login.LoginViewModel
 import com.gillian.baseball.team.TeamViewModel
 import com.gillian.baseball.newplayer.NewPlayerViewModel
@@ -35,6 +36,8 @@ class ViewModelFactory constructor(
                     LoginViewModel(repository)
                 isAssignableFrom(AllBroadcastViewModel::class.java) ->
                     AllBroadcastViewModel(repository)
+                isAssignableFrom(PinchViewModel::class.java)->
+                    PinchViewModel(repository)
                 else ->
                     throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
             }

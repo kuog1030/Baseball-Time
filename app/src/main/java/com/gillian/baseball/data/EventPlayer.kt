@@ -8,6 +8,5 @@ data class EventPlayer(
         var playerId: String = "",
         var order: Int = -1,
         val name: String = "",
-        val number: String = "",
-        var pinch: EventPlayer? = null
+        val number: String = ""
 ) : Parcelable
