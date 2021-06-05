@@ -39,6 +39,18 @@ fun bindStrikeCount(textView: TextView, count: Int?) {
     }
 }
 
+@BindingAdapter("fourCount")
+fun bindFourCount(textView: TextView, count: Int?) {
+    count?.let {
+        textView.text = when (count) {
+            0 -> BaseballApplication.instance.getString(R.string.three_zero)
+            1 -> BaseballApplication.instance.getString(R.string.three_one)
+            2 -> BaseballApplication.instance.getString(R.string.three_two)
+            else -> BaseballApplication.instance.getString(R.string.three_three)
+        }
+    }
+}
+
 @BindingAdapter("nextBat")
 fun bindNextBat(textView: TextView, player: String?) {
     player?.let{

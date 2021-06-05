@@ -44,42 +44,36 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin"
-            android:text="@string/game_place"
+            android:text="@string/recorded_team"
             app:layout_constraintEnd_toStartOf="@+id/textView19"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toEndOf="@+id/textView20"
             app:layout_constraintTop_toTopOf="@+id/textView18" />
 
-        <TextView
+        <ImageView
             android:id="@+id/textView17"
-            android:padding="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/denim_blue"
-            android:text="@string/recorded_team"
-            android:textColor="@color/white"
-            android:textSize="12sp"
+            android:padding="3dp"
             android:visibility="@{viewModel.game.isHome? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toTopOf="@+id/recycler_live"
+            app:layout_constraintBottom_toBottomOf="@+id/textView10"
+            app:layout_constraintEnd_toStartOf="@+id/textView10"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15"
-            tools:text="記"/>
+            app:srcCompat="@drawable/ic_edit_24"
+            app:tint="@color/color_primary" />
 
-        <TextView
+        <ImageView
             android:id="@+id/text_broadcast_recorded_home"
-            android:padding="3dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/denim_blue"
-            android:text="@string/recorded_team"
-            android:textColor="@color/white"
-            android:textSize="12sp"
+            android:padding="3dp"
             android:visibility="@{viewModel.game.isHome? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toTopOf="@+id/recycler_live"
+            app:layout_constraintBottom_toBottomOf="@+id/textView11"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15"
-            tools:text="記"/>
+            app:layout_constraintStart_toEndOf="@+id/textView11"
+            app:srcCompat="@drawable/ic_edit_24"
+            app:tint="@color/color_primary" />
 
         <TextView
             android:id="@+id/textView10"
@@ -99,6 +93,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.game.homeName}"
+            android:textSize="18sp"
             app:layout_constraintBottom_toBottomOf="@+id/textView21"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
@@ -135,12 +130,12 @@
             android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.game.place}"
+            android:text="@{viewModel.game.isHome? viewModel.game.homeName : viewModel.game.guestName}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView16"
             app:layout_constraintTop_toTopOf="@+id/textView16"
-            tools:text="福和橋"/>
+            tools:text="Android"/>
 
         <TextView
             android:id="@+id/textView20"

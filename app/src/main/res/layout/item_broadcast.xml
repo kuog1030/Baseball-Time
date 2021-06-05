@@ -31,25 +31,37 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/yellow_strike"
+            android:textColor="@color/green_ball"
             android:textSize="25sp"
+            app:ballCount="@{event.ball}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
             app:layout_constraintStart_toStartOf="@+id/textView5"
             app:layout_constraintTop_toBottomOf="@+id/textView5"
-            app:twoCount="@{event.strike}"
-            tools:text="@string/two_one" />
+            tools:text="@string/three_two" />
 
         <TextView
             android:id="@+id/textView12"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_margin"
-            android:textColor="@color/green_ball"
+            android:textColor="@color/yellow_strike"
             android:textSize="25sp"
-            app:ballCount="@{event.ball}"
             app:layout_constraintStart_toEndOf="@+id/textView6"
             app:layout_constraintTop_toTopOf="@+id/textView6"
+            app:twoCount="@{event.strike}"
+            tools:text="@string/two_one" />
+
+        <TextView
+            android:id="@+id/text_broadcast_out"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:textColor="@color/red_out"
+            android:textSize="25sp"
+            app:layout_constraintStart_toEndOf="@+id/textView12"
+            app:layout_constraintTop_toTopOf="@+id/textView12"
+            app:ballCount="@{event.out}"
             tools:text="@string/three_two" />
 
         <!--        Testing custom view-->
@@ -58,10 +70,10 @@
             android:layout_width="50dp"
             android:layout_height="50dp"
             android:layout_marginEnd="4dp"
-            app:onBase="@{event.currentBase}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            app:onBase="@{event.currentBase}" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

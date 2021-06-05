@@ -88,7 +88,7 @@
     <string name="score_rate">累積敗場</string>
     <string name="game_playing">LIVE</string>
     <string name="game_start_time">開賽時間</string>
-    <string name="recorded_team">記\n錄\n方</string>
+    <string name="recorded_team">球賽記錄方</string>
     <string name="no_game_place">（未記錄）</string>
     <string name="inning_top">%d局上</string>
     <string name="inning_bottom">%d局下</string>
@@ -179,6 +179,7 @@
     <string name="pinch_runner">代跑</string>
     <string name="record_error">記錄失誤</string>
 
+    <string name="event_end">打席結束後的壘上狀況</string>
     <string name="send_event">儲存變更</string>
 
 

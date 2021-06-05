@@ -40,9 +40,6 @@ class MainActivity : AppCompatActivity() {
             when (destination.id) {
                 R.id.teamFragment -> setBottomNavigation(true)
                 R.id.allGamesFragment -> setBottomNavigation(true)
-                R.id.broadcastFragment -> if (UserManager.userId == "") {
-                    setBottomNavigation(false)
-                }
                 R.id.allBroadcastFragment -> if (UserManager.userId == "") {
                     setBottomNavigation(false)
                 } else {
