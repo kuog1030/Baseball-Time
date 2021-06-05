@@ -18,7 +18,20 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@color/color_primary">
+
+        <TextView
+            android:id="@+id/ticket_test"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:text="TextView"
+            android:layout_margin="25dp"
+            android:background="@drawable/bg_card"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
             android:id="@+id/text_stat_player_default"
@@ -456,6 +469,38 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/imageView11"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="36dp"
+            app:layout_constraintBottom_toBottomOf="@+id/ticket_test"
+            app:layout_constraintEnd_toStartOf="@+id/ticket_test"
+            app:layout_constraintStart_toStartOf="@+id/ticket_test"
+            app:srcCompat="@drawable/bg_ticket" />
+
+        <ImageView
+            android:id="@+id/imageView12"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/ticket_test"
+            app:layout_constraintStart_toEndOf="@+id/ticket_test"
+            app:layout_constraintTop_toTopOf="@+id/imageView11"
+            app:srcCompat="@drawable/bg_ticket" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="1dp"
+            android:text=""
+            android:background="@color/color_primary"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            app:layout_constraintBottom_toBottomOf="@+id/imageView12"
+            app:layout_constraintEnd_toStartOf="@+id/imageView12"
+            app:layout_constraintStart_toEndOf="@+id/imageView11"
+            app:layout_constraintTop_toTopOf="@+id/imageView12" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
