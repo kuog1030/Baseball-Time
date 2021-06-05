@@ -12,6 +12,7 @@ data class GameCard(
         var place: String = "",
         var date: Long = -1,
         var status: Int = 0,
+        val note: String = "",
         var isHome: Boolean = false,
         var homeName: String = "",
         var guestName: String = "",

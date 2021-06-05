@@ -1,6 +1,8 @@
 package com.gillian.baseball.allgames
 
+import android.util.Log
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
@@ -29,7 +31,14 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, va
     class ScheduleViewHolder(private var binding: ItemCardScheduleBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(game: GameCard, onClickListener: OnClickListener) {
             binding.game = game
-            binding.root.setOnClickListener { onClickListener.onClick(game) }
+            binding.buttonCardScheduleStart.setOnClickListener { onClickListener.onClick(game) }
+            binding.buttonScheduleMore.setOnCheckedChangeListener { _, isChecked ->
+                if (isChecked) {
+                    binding.layoutCardDetail.visibility = View.VISIBLE
+                } else {
+                    binding.layoutCardDetail.visibility = View.GONE
+                }
+            }
             binding.executePendingBindings()
         }
     }

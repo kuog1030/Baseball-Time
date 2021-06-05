@@ -12,7 +12,7 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="220dp"
+        android:layout_height="wrap_content"
         android:background="@drawable/bg_card"
         android:layout_marginBottom="@dimen/margin">
 
@@ -81,7 +81,7 @@
             android:text="@string/versus"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_schedule_guest"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_card_schedule_guest"/>
 
@@ -89,23 +89,23 @@
             android:id="@+id/image_card_schedule_guest"
             android:layout_width="@dimen/game_card_team_image"
             android:layout_height="@dimen/game_card_team_image"
-            android:layout_marginBottom="@dimen/margin"
-            app:layout_constraintBottom_toTopOf="@+id/text_card_schedule_guest"
+            android:layout_marginTop="@dimen/margin"
             app:layout_constraintEnd_toStartOf="@+id/text_card_schedule_score"
-            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:photoUrl="@{game.guestImage}"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_card_schedule_date"
+            app:photoUrl="@{game.guestImage}" />
 
         <TextView
             android:id="@+id/text_card_schedule_guest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="@dimen/margin"
+            android:layout_marginTop="12dp"
             android:text="@{game.guestName}"
-            app:layout_constraintBottom_toTopOf="@id/bar_card_schedule"
             app:layout_constraintEnd_toStartOf="@+id/text_card_schedule_score"
             app:layout_constraintStart_toStartOf="parent"
-            tools:text="Android"/>
+            app:layout_constraintTop_toBottomOf="@+id/text_card_guest_d"
+            tools:text="Android" />
 
         <ImageView
             android:id="@+id/image_card_schedule_home"
@@ -131,33 +131,64 @@
             android:id="@+id/bar_card_schedule"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_marginBottom="@dimen/half_margin"
+            android:layout_marginTop="@dimen/margin"
             android:background="@color/grey_888"
-            app:layout_constraintBottom_toTopOf="@+id/text_card_schedule_detail"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_card_schedule_guest" />
 
-        <TextView
-            android:id="@+id/text_card_schedule_detail"
+        <Button
+            android:id="@+id/button_card_schedule_start"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
+            android:paddingBottom="@dimen/quarter_margin"
+            android:layout_marginTop="@dimen/half_margin"
             android:layout_marginEnd="@dimen/margin"
-            android:layout_marginBottom="@dimen/half_margin"
             android:gravity="center_vertical"
             android:text="@string/start_game"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/image_card_schedule_arrow" />
-
-        <ImageView
-            android:id="@+id/image_card_schedule_arrow"
-            android:layout_width="20dp"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/half_margin"
-            app:layout_constraintBottom_toBottomOf="@+id/text_card_schedule_detail"
+            android:background="@color/transparent"
+            android:textColor="#777777"
+            android:drawableEnd="@drawable/ic_arrow_forward_20"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_card_schedule_detail"
-            app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+            app:layout_constraintTop_toBottomOf="@+id/bar_card_schedule" />
 
+
+        <ToggleButton
+            android:id="@+id/button_schedule_more"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:paddingBottom="@dimen/quarter_margin"
+            android:layout_marginStart="@dimen/margin"
+            android:background="@color/transparent"
+            android:drawableStart="@drawable/toggle_arrow"
+            android:text="@string/add_game_note"
+            android:textOn="@string/add_game_note"
+            android:textOff="@string/add_game_note"
+            android:textColor="#777777"
+            android:textSize="15sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/button_card_schedule_start"/>
+
+
+        <LinearLayout
+            android:id="@+id/layout_card_detail"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/button_schedule_more"
+            android:background="@drawable/bg_card_bottom_part"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
+            android:paddingBottom="@dimen/margin"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/quarter_margin"
+                android:text="@{game.note}"
+                tools:text="大概就是這樣拉拉拉拉拉拉拉"/>
+        </LinearLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

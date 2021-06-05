@@ -24,6 +24,7 @@ data class Game (
                 id = id,
                 title = title,
                 place = place,
+                note = note,
                 date = date,
                 status = status,
                 isHome = (recordedTeamId == home.teamId),
