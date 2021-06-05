@@ -27,6 +27,7 @@ class AllGamesFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
 
 
+
         binding.viewpagerAllGames.adapter = AllGamesAdapter(childFragmentManager)
         binding.tabsAllGames.setupWithViewPager(binding.viewpagerAllGames)
 

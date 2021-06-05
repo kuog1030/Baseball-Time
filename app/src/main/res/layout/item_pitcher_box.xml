@@ -29,7 +29,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@{isTitle? @color/grey_888 : @color/white}">
+                android:background="@{isTitle? @color/color_primary : @color/white}">
 
                 <TextView
                     android:id="@+id/row_player_box_name"

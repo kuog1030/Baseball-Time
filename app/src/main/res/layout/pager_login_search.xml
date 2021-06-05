@@ -16,20 +16,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/text_register_info"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/margin"
-            android:layout_marginTop="16dp"
-            android:visibility="@{viewModel.registerInfo? View.VISIBLE : View.INVISIBLE}"
-            android:background="@drawable/button_radius_filled_24"
-            android:text="@string/register_info"
-            android:textColor="?colorOnPrimary"
-            app:layout_constraintEnd_toEndOf="@+id/textView24"
-            app:layout_constraintStart_toStartOf="@+id/edit_search_team_title"
-            app:layout_constraintTop_toBottomOf="@+id/textView24" />
-
         <EditText
             android:id="@+id/edit_search_team_title"
             style="@style/LoginEdit"
@@ -41,7 +27,7 @@
             android:hint="搜尋球員代號"
             android:inputType="textPersonName"
             android:text="@={viewModel.searchPlayerId}"
-            app:layout_constraintBottom_toTopOf="@+id/imageView11"
+            app:layout_constraintBottom_toTopOf="@+id/image_search_player"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -60,74 +46,96 @@
             app:srcCompat="@drawable/ic_search_24" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/button_search_register"
+            style="@style/ButtonFilled24"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:layout_marginBottom="16dp"
-            android:background="@drawable/button_radius_filled_24"
+            android:layout_marginBottom="50dp"
             android:onClick="@{()->viewModel.signUpUserFromRegister()}"
-            android:text="Button"
-            android:textColor="?attr/colorOnPrimary"
+            android:text="@string/register_this_player"
             android:visibility="@{viewModel.player == null? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView23" />
+            app:layout_constraintStart_toStartOf="parent" />
 
         <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="130dp"
-            android:layout_height="130dp"
+            android:id="@+id/image_search_player"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             android:layout_marginTop="32dp"
-            app:layout_constraintBottom_toTopOf="@+id/textView13"
+            app:layout_constraintBottom_toTopOf="@+id/text_search_number"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_search_team_title"
             app:photoUrl="@{viewModel.player.image}" />
 
         <TextView
-            android:id="@+id/textView13"
+            android:id="@+id/text_search_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
             android:text="@{String.valueOf(viewModel.player.number)}"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:visibility="@{viewModel.player == null? View.INVISIBLE : View.VISIBLE}"
-            app:layout_constraintBottom_toTopOf="@+id/textView23"
+            app:layout_constraintBottom_toTopOf="@+id/text_search_player"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageView11"
+            app:layout_constraintTop_toBottomOf="@+id/image_search_player"
             tools:text="52" />
 
         <TextView
-            android:id="@+id/textView23"
+            android:id="@+id/text_search_player"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/half_margin"
             android:text="@{viewModel.player.name}"
-            android:textSize="20sp"
-            app:layout_constraintBottom_toTopOf="@+id/button2"
+            android:textSize="18sp"
+            app:layout_constraintBottom_toTopOf="@+id/button_search_register"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13"
+            app:layout_constraintTop_toBottomOf="@+id/text_search_number"
             tools:text="陳金鋒" />
 
         <Button
-            android:id="@+id/textView24"
+            android:id="@+id/button_search_info"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
+            android:layout_marginTop="@dimen/half_margin"
+            android:layout_marginEnd="@dimen/half_margin"
+            android:background="@color/transparent"
             android:drawablePadding="@dimen/half_margin"
             android:gravity="center"
-            android:background="@color/transparent"
-            android:text="@string/what_is_this"
-            android:layout_marginEnd="@dimen/half_margin"
-            android:layout_marginTop="@dimen/half_margin"
             android:onClick="@{()->viewModel.toggleRegisterInfo()}"
+            android:text="@string/what_is_this"
+            app:drawableEndCompat="@drawable/ic_help_outline_24"
             app:layout_constraintEnd_toEndOf="@+id/edit_search_team_title"
-            app:layout_constraintTop_toBottomOf="@+id/edit_search_team_title"
-            app:drawableEndCompat="@drawable/ic_help_outline_24" />
+            app:layout_constraintTop_toBottomOf="@+id/edit_search_team_title" />
+
+        <TextView
+            android:id="@+id/text_search_error"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.errorMessage}"
+            android:visibility="@{viewModel.errorMessage == null? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintBottom_toTopOf="@+id/button_search_register"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_search_team_title" />
+
+        <TextView
+            android:id="@+id/text_search_info_block"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/button_radius_filled_24"
+            android:padding="@dimen/margin"
+            android:text="@string/register_info"
+            android:textColor="?colorOnPrimary"
+            android:visibility="@{viewModel.registerInfo? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="@+id/button_search_info"
+            app:layout_constraintStart_toStartOf="@+id/edit_search_team_title"
+            app:layout_constraintTop_toBottomOf="@+id/button_search_info"
+            tools:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

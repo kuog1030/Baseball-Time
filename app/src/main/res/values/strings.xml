@@ -3,6 +3,7 @@
 
 
     <!--    error hint for user-->
+    <string name="error_no_player_result">沒有搜尋結果，麻煩再確認一次球員代號</string>
     <string name="error_order">所有欄位都要填寫喔</string>
     <string name="create_new_player_error">姓名和背號都是必填的喔</string>
     <string name="create_new_player_success">新增成功</string>
@@ -17,6 +18,8 @@
     <string name="team_code">代號</string>
     <string name="register_info">如果你的隊友已經使用過Baseball，並且幫你建立過球員資料，你可以從隊友那邊的畫面進到你的球員頁，替你查詢球員代號。輸入後即可繼承這個球員的資料。</string>
     <string name="what_is_this">這是什麼</string>
+    <string name="register_this_player">使用這個球員登入</string>
+    <string name="create_team_and_player">建立球隊和球員</string>
 
     <!--    team related -->
     <string name="create_a_team">新增一支你的球隊吧</string>
@@ -25,6 +28,7 @@
     <string name="create_a_player_button">新增球員</string>
     <string name="edit_player_save">儲存球員資料</string>
     <string name="player_name">球員名稱</string>
+    <string name="your_number">你的背號</string>
     <string name="player_number">球員背號</string>
     <string name="you">你</string>
     <string name="your_teammate">你的隊友</string>

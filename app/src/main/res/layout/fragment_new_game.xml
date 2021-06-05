@@ -40,11 +40,11 @@
                     android:layout_height="wrap_content"
                     android:text="@string/versus"
                     android:textSize="45dp"
-                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintBottom_toBottomOf="@+id/team_new_game_home"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.68" />
+                    app:layout_constraintTop_toTopOf="@+id/text_new_game_home_d"
+                    app:layout_constraintVertical_bias="0.5" />
 
                 <TextView
                     android:id="@+id/text_new_game_guest"

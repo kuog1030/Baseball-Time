@@ -10,6 +10,7 @@ import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
 import com.gillian.baseball.util.Util
+import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 
 
@@ -66,16 +67,16 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
 
 
     fun searchPlayer() {
-        Log.i("gillian", "search player ${searchPlayerId.value}")
+        registerInfo.value = false
         if (searchPlayerId.value.isNullOrEmpty()) {
             playerList.value = emptyList()
-
+            player.value = null
         } else {
             viewModelScope.launch {
                 val result = repository.searchPlayer(searchPlayerId.value!!)
                 playerList.value = when(result) {
                     is Result.Success -> {
-                        _errorMessage.value = null
+                        _errorMessage.value = if (result.data.isEmpty()) (getString(R.string.error_no_player_result)) else null
                         _status.value = LoadStatus.DONE
                         result.data
                     }

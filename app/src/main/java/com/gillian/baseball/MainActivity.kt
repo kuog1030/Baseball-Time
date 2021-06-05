@@ -38,17 +38,17 @@ class MainActivity : AppCompatActivity() {
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
-                R.id.gameFragment -> setBottomNavigation(false)
-                R.id.finalFragment -> setBottomNavigation(false)
-                R.id.loginFragment -> setBottomNavigation(false)
-                R.id.loginFirstFragment -> setBottomNavigation(false)
+                R.id.teamFragment -> setBottomNavigation(true)
+                R.id.allGamesFragment -> setBottomNavigation(true)
                 R.id.broadcastFragment -> if (UserManager.userId == "") {
                     setBottomNavigation(false)
                 }
                 R.id.allBroadcastFragment -> if (UserManager.userId == "") {
                     setBottomNavigation(false)
+                } else {
+                    setBottomNavigation(true)
                 }
-                else -> setBottomNavigation(true)
+                else -> setBottomNavigation(false)
             }
         }
 

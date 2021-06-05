@@ -278,7 +278,7 @@ fun bindDefaultPhoto(textView: TextView, name: String?) {
 @BindingAdapter("boxStyle")
 fun bindStyleForBox(textView: TextView, isTitle: Boolean) {
     if (isTitle) {
-        textView.setTextColor(BaseballApplication.instance.getColor(R.color.white))
+        textView.setTextColor(BaseballApplication.instance.getColor(R.color.color_on_primary))
     } else {
         textView.setTextColor(BaseballApplication.instance.getColor(R.color.black))
     }
@@ -296,12 +296,10 @@ fun bindStyleForPersonalScore(textView: TextView, color: Int) {
 
 @BindingAdapter("overallTeamStat")
 fun bindTextAndTeamStat(textView: TextView, number: Int?) {
-    number?.let{
-        if (number == 0) {
-            textView.text = "-"
-        } else {
-            textView.text = number.toString()
-        }
+    if (number == null){
+        textView.text = "-"
+    } else {
+        textView.text = number.toString()
     }
 }
 

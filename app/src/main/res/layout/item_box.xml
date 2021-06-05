@@ -21,15 +21,14 @@
             android:id="@+id/table_item_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/grey_888">
+                android:layout_height="wrap_content"
+                android:background="@color/color_primary">
 
                 <TextView
                     android:id="@+id/row_box_type"
@@ -42,7 +41,7 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/text_box_guest"
@@ -56,7 +55,7 @@
 
             <TableRow
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="wrap_content">
 
                 <TextView
                     android:id="@+id/text_box_home"

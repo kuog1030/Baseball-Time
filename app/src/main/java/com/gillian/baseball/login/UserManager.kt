@@ -22,7 +22,7 @@ object UserManager {
 
     var playerId: String
         get() {
-            return ( prefs.getString("player", "kWOBrCuTTB7e4ncz6xb4")!! )
+            return ( prefs.getString("player", "")!! )
         }
         set(id) {
             prefs.edit().putString("player", id).apply()
@@ -30,7 +30,7 @@ object UserManager {
 
     var teamId: String
         get() {
-            return ( prefs.getString("team", "pmZ3TH0DWvlaXJ3qtAIy")!! )
+            return ( prefs.getString("team", "")!! )
         }
         set(id) {
             prefs.edit().putString("team", id).apply()

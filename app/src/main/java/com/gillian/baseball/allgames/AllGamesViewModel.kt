@@ -62,6 +62,7 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
 
     val totalWins = MutableLiveData<Int>(0)
     val totalLose = MutableLiveData<Int>(0)
+    val teamName = UserManager.team?.name
 
 
 
