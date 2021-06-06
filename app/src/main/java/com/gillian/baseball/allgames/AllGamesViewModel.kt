@@ -62,8 +62,7 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
 
     val totalWins = MutableLiveData<Int>(0)
     val totalLose = MutableLiveData<Int>(0)
-    val teamName = UserManager.team?.name
-
+    val teamName = MutableLiveData<String>(UserManager.team?.name)
 
 
 
@@ -114,11 +113,16 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
         val yetGames = mutableListOf<GameCard>()
         for (game in _allGameCards.value!!) {
             if (game.status >= GameStatus.FINAL.number) {
-                // including final and final with stat
                 endGames.add(game)
-            } else {
+            } else if (game.status == GameStatus.SCHEDULED.number) {
                 yetGames.add(game)
             }
+//            if (game.status >= GameStatus.FINAL.number) {
+//                // including final and final with stat
+//                endGames.add(game)
+//            } else {
+//                yetGames.add(game)
+//            }
         }
         endGames.sortByDescending { it.date }
         yetGames.sortBy { it.date }

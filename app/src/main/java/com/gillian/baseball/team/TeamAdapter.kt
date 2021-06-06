@@ -10,7 +10,7 @@ import com.gillian.baseball.team.pager.TeammatePager
 
 class TeamAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val titleList = listOf("所有隊員", "排行榜")
+    private val titleList = listOf("所有隊員", "球隊頁")
 
     override fun getItem(position: Int): Fragment {
 

@@ -51,10 +51,10 @@
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginStart="@dimen/double_margin"
-            android:layout_marginTop="@dimen/double_margin"
-            app:photoUrl="@{viewModel.player.image}"
+            android:layout_marginTop="60dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="@+id/ticket_test"
+            app:photoUrl="@{viewModel.player.image}" />
 
         <TextView
             android:id="@+id/text_stat_player_name"
@@ -456,7 +456,7 @@
             android:src="@drawable/ic_edit_24"
             android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_stat_player" />
+            app:layout_constraintTop_toTopOf="@+id/imageButton2" />
 
         <TextView
             android:id="@+id/textView22"
@@ -467,7 +467,8 @@
             app:layout_constraintBottom_toBottomOf="@+id/ticket_test"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13" />
+            app:layout_constraintTop_toBottomOf="@+id/textView13"
+            tools:text="0kaCKMTWNn7DB0g6YkBr"/>
 
         <ImageView
             android:id="@+id/imageView11"
@@ -499,6 +500,15 @@
             app:layout_constraintEnd_toStartOf="@+id/imageView12"
             app:layout_constraintStart_toEndOf="@+id/imageView11"
             app:layout_constraintTop_toTopOf="@+id/imageView12" />
+
+        <ImageButton
+            android:id="@+id/imageButton2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@color/transparent"
+            app:srcCompat="@drawable/ic_baseline_arrow_backward_24"
+            tools:layout_editor_absoluteX="32dp"
+            tools:layout_editor_absoluteY="36dp" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

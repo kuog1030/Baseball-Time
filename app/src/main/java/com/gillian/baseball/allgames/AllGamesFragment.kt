@@ -25,6 +25,7 @@ class AllGamesFragment : Fragment() {
         val binding = FragmentAllGamesBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
 
 

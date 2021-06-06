@@ -48,6 +48,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     var teamName = MutableLiveData<String>()
+    val teamImage = MutableLiveData<String>()
 
 
     fun getTeamPlayer() {
@@ -100,6 +101,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         getMyPlayerInfo()
         getTeamPlayer()
         teamName.value = UserManager.teamName
+        teamImage.value = UserManager.teamImage
     }
 
 
