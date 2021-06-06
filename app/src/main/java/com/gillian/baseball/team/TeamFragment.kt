@@ -55,6 +55,12 @@ class TeamFragment : Fragment() {
             }
         })
 
+        viewModel.teamPlayers.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                viewModel.createHitRank(it)
+            }
+        })
+
         return binding.root
     }
 }

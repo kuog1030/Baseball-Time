@@ -5,11 +5,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gillian.baseball.R
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
-import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 
 class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
@@ -49,6 +47,20 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     var teamName = MutableLiveData<String>()
     val teamImage = MutableLiveData<String>()
+
+
+    val editable = MutableLiveData<Boolean>(false)
+    val hitRank = MutableLiveData<List<Player>>()
+    val homerunRank = MutableLiveData<List<Player>>()
+
+    fun startEdit() {
+        editable.value = !(editable.value!!)
+    }
+
+    fun createHitRank(playerList: List<Player>) {
+        hitRank.value = playerList.sortedByDescending { it.hitStat.hit }
+        homerunRank.value = playerList.sortedByDescending { it.hitStat.homerun }
+    }
 
 
     fun getTeamPlayer() {
@@ -98,14 +110,14 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     }
 
     fun initTeamPage() {
-        getMyPlayerInfo()
+        fetchMyPlayerInfo()
         getTeamPlayer()
         teamName.value = UserManager.teamName
         teamImage.value = UserManager.teamImage
     }
 
 
-    fun getMyPlayerInfo() {
+    fun fetchMyPlayerInfo() {
         viewModelScope.launch {
             _statusMe.value = LoadStatus.LOADING
             val myResult = repository.getOnePlayer(UserManager.playerId)

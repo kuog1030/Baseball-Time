@@ -9,6 +9,14 @@ fun MutableList<EventPlayer>.lineUpPlayer(number: Int) : EventPlayer {
     return (this[(number % this.size)])
 }
 
+//fun List<Player>.toRankList(type: Int) : Rank {
+//
+//    val rankType = when (type) {
+//        0 ->
+//    }
+//
+//}
+
 
 fun List<Event>.toPersonalScore() : List<String> {
 
