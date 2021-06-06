@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.databinding.FragmentStatGameBinding
 import com.gillian.baseball.ext.getVmFactory
@@ -35,6 +36,10 @@ class StatGameFragment : Fragment() {
         binding.recyclerGameStatMy.adapter = PersonalScoreAdapter()
         binding.recyclerGameStatHitter.adapter = HitterBoxAdapter()
         binding.recyclerGameStatPitcher.adapter = PitcherBoxAdapter()
+
+        binding.buttonGameStatLeave.setOnClickListener{
+            findNavController().popBackStack()
+        }
 
         viewModel.game.observe(viewLifecycleOwner, Observer {
             it?.let{

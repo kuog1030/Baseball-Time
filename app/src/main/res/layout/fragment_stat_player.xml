@@ -21,21 +21,37 @@
         android:layout_height="match_parent"
         android:background="@color/color_primary">
 
-        <TextView
-            android:id="@+id/ticket_test"
+        <View
+            android:id="@+id/ticket_top"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_margin="16dp"
-            android:background="@drawable/bg_card"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            app:layout_constraintHeight_percent=".85"
+            android:background="@drawable/bg_card2"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <View
+            android:id="@+id/ticket_bottom"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:background="@drawable/bg_card2"
+            android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toBottomOf="@id/ticket_top"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
+
         <TextView
             android:id="@+id/text_stat_player_default"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:background="@drawable/bg_default_photo"
             android:gravity="center"
             android:textColor="@color/white"
@@ -48,21 +64,21 @@
 
         <ImageView
             android:id="@+id/image_stat_player"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
             android:layout_marginStart="@dimen/double_margin"
             android:layout_marginTop="60dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/ticket_test"
+            app:layout_constraintStart_toStartOf="@+id/ticket_top"
+            app:layout_constraintTop_toTopOf="@+id/ticket_top"
             app:photoUrl="@{viewModel.player.image}" />
 
         <TextView
             android:id="@+id/text_stat_player_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
+            android:layout_marginStart="@dimen/double_margin"
             android:text="@{viewModel.player.name}"
-            android:textSize="20sp"
+            android:textSize="22sp"
             app:layout_constraintBottom_toTopOf="@+id/text_stat_player_number"
             app:layout_constraintStart_toEndOf="@+id/image_stat_player"
             app:layout_constraintTop_toTopOf="@+id/image_stat_player"
@@ -96,8 +112,8 @@
             android:layout_marginTop="@dimen/double_margin"
             android:layout_marginEnd="@dimen/margin"
             android:text="@string/hitter_performance"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/ticket_top"
+            app:layout_constraintStart_toStartOf="@+id/ticket_top"
             app:layout_constraintTop_toBottomOf="@+id/image_stat_player" />
 
 
@@ -105,11 +121,12 @@
             android:id="@+id/table_stat_player_hit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
-            android:layout_marginTop="@dimen/one_half_margin"
-            app:layout_constraintEnd_toEndOf="@id/text_stat_player_hit"
-            app:layout_constraintStart_toStartOf="@id/text_stat_player_hit"
-            app:layout_constraintTop_toBottomOf="@+id/text_stat_slg_number">
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginStart="@dimen/half_margin"
+            android:layout_marginEnd="@dimen/half_margin"
+            app:layout_constraintEnd_toEndOf="@id/ticket_top"
+            app:layout_constraintStart_toStartOf="@id/ticket_top"
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_slg">
 
 
             <TableRow
@@ -257,10 +274,11 @@
             android:id="@+id/table_stat_player_pitch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp"
             android:layout_marginTop="@dimen/margin"
-            app:layout_constraintEnd_toEndOf="@id/text_stat_player_pitch"
-            app:layout_constraintStart_toStartOf="@id/text_stat_player_pitch"
+            android:layout_marginStart="@dimen/half_margin"
+            android:layout_marginEnd="@dimen/half_margin"
+            app:layout_constraintEnd_toEndOf="@id/ticket_top"
+            app:layout_constraintStart_toStartOf="@id/ticket_top"
             app:layout_constraintTop_toBottomOf="@id/text_stat_player_pitch">
 
 
@@ -388,12 +406,12 @@
             android:id="@+id/text_stat_player_avg"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="8dp"
             android:text="@string/box_avg"
             app:layout_constraintEnd_toStartOf="@+id/text_stat_player_obp"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_hit" />
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_avg_number" />
 
         <TextView
             android:id="@+id/text_stat_player_obp"
@@ -421,41 +439,48 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
             android:text="@{viewModel.myAvg}"
+            android:textSize="24sp"
+            android:textColor="@color/color_primary"
             app:layout_constraintEnd_toEndOf="@+id/text_stat_player_avg"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_avg"
-            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_avg"
-            tools:text="0.373" />
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_player_hit"
+            tools:text=".373" />
 
         <TextView
             android:id="@+id/text_stat_obp_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.myObp}"
+            android:textSize="24sp"
+            android:textColor="@color/color_primary"
             app:layout_constraintEnd_toEndOf="@+id/text_stat_player_obp"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_obp"
             app:layout_constraintTop_toTopOf="@+id/text_stat_avg_number"
-            tools:text="0.582" />
+            tools:text=".582" />
 
         <TextView
             android:id="@+id/text_stat_slg_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.mySlg}"
+            android:textSize="24sp"
+            android:textColor="@color/color_primary"
             app:layout_constraintEnd_toEndOf="@+id/text_stat_player_slg"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_slg"
             app:layout_constraintTop_toTopOf="@+id/text_stat_obp_number"
-            tools:text="0.999" />
+            tools:text=".999" />
 
         <ImageButton
             android:id="@+id/button_stat_player_edit"
             android:layout_width="35dp"
             android:layout_height="35dp"
-            android:layout_marginEnd="@dimen/one_half_margin"
+            android:layout_marginEnd="@dimen/margin"
             android:background="@color/transparent"
             android:onClick="@{()->viewModel.navigateToEdit()}"
             android:src="@drawable/ic_edit_24"
             android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintBottom_toBottomOf="@+id/imageButton2"
+            app:layout_constraintEnd_toEndOf="@+id/ticket_top"
             app:layout_constraintTop_toTopOf="@+id/imageButton2" />
 
         <TextView
@@ -463,52 +488,38 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.player.id}"
+            android:textStyle="bold"
             android:textIsSelectable="true"
-            app:layout_constraintBottom_toBottomOf="@+id/ticket_test"
+            android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@id/ticket_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13"
             tools:text="0kaCKMTWNn7DB0g6YkBr"/>
-
-        <ImageView
-            android:id="@+id/imageView11"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="36dp"
-            app:layout_constraintBottom_toBottomOf="@+id/ticket_test"
-            app:layout_constraintEnd_toStartOf="@+id/ticket_test"
-            app:layout_constraintStart_toStartOf="@+id/ticket_test"
-            app:srcCompat="@drawable/bg_ticket" />
-
-        <ImageView
-            android:id="@+id/imageView12"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/ticket_test"
-            app:layout_constraintStart_toEndOf="@+id/ticket_test"
-            app:layout_constraintTop_toTopOf="@+id/imageView11"
-            app:srcCompat="@drawable/bg_ticket" />
 
         <View
             android:id="@+id/textView13"
             android:layout_width="0dp"
             android:layout_height="10dp"
             android:background="@drawable/bg_dotted_line"
-            android:layout_marginStart="@dimen/half_margin"
-            android:layout_marginEnd="@dimen/half_margin"
-            app:layout_constraintBottom_toBottomOf="@+id/imageView12"
-            app:layout_constraintEnd_toStartOf="@+id/imageView12"
-            app:layout_constraintStart_toEndOf="@+id/imageView11"
-            app:layout_constraintTop_toTopOf="@+id/imageView12" />
+            android:layout_marginStart="@dimen/one_half_margin"
+            android:layout_marginEnd="@dimen/one_half_margin"
+            android:layerType="software"
+            app:layout_constraintTop_toBottomOf="@id/ticket_top"
+            app:layout_constraintBottom_toBottomOf="@id/ticket_top"
+            app:layout_constraintStart_toStartOf="@id/ticket_top"
+            app:layout_constraintEnd_toEndOf="@id/ticket_top"/>
 
         <ImageButton
             android:id="@+id/imageButton2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="@dimen/margin"
             android:background="@color/transparent"
-            app:srcCompat="@drawable/ic_baseline_arrow_backward_24"
-            tools:layout_editor_absoluteX="32dp"
-            tools:layout_editor_absoluteY="36dp" />
+            app:layout_constraintStart_toStartOf="@+id/ticket_top"
+            app:layout_constraintTop_toTopOf="@+id/ticket_top"
+            app:srcCompat="@drawable/ic_baseline_arrow_backward_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

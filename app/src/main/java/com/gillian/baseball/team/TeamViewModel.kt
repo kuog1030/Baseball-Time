@@ -46,6 +46,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     var teamName = MutableLiveData<String>()
+    val teamAcronym = MutableLiveData<String>()
     val teamImage = MutableLiveData<String>()
 
 
@@ -114,6 +115,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         getTeamPlayer()
         teamName.value = UserManager.teamName
         teamImage.value = UserManager.teamImage
+        teamAcronym.value = UserManager.teamAcronym
     }
 
 
