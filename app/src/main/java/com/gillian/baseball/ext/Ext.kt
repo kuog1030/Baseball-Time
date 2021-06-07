@@ -20,6 +20,11 @@ fun List<Player>.toRankList() : List<Rank> {
         val result = Rank()
 
         if (this.size <= 3) {
+            result.type = when (type) {
+                1 -> getString(R.string.hit_rank)
+                2 -> getString(R.string.homerun_rank)
+                else -> getString(R.string.sb_rank)
+            }
             resultList.add(result)
         } else {
             if (type == 1) {
@@ -374,9 +379,13 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
         // home team offense (hitting) during bottom inning (for example 3 bottom),
         // which total inning is even ( 3 bottom = 6 )
         // home hitting -> false xor true -> true
+        if (event.result == EventType.INNINGCHANGE.number) {
+            continue
+        }
+
         if ((event.inning % 2 == 1) xor (isHome)) {
 
-            Log.i("gillian", "inning ${event.inning} and is Home 紀錄hitter")
+            Log.i("gillian67", "hitter ${event.player.name}")
             var noHitter = true
 
             for (oneHitterBox in myHitter) {
@@ -434,5 +443,6 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
     myHitter.sortBy {it.order}
     myScore.sortBy {it.time}
 
+    Log.i("gillian67", "hitter size? ${myHitter.size}")
     return MyStatistic(myPitcher = myPitcher, myHitter = myHitter, myPersonalScore = myScore)
 }

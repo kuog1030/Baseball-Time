@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-
+        <import type="android.view.View" />
         <variable
             name="viewModel"
             type="com.gillian.baseball.team.TeamViewModel" />
@@ -17,29 +17,42 @@
 
         <View
             android:id="@+id/view"
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            android:background="@color/color_primary"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:background="@drawable/ic_wave"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_percent="2" />
+
+        <ImageView
+            android:id="@+id/image_rank_team_edit"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="20dp"
+            android:visibility="@{viewModel.editable ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/bg_ticket" />
 
         <ImageView
             android:id="@+id/image_rank_team"
             imageUrl="@{viewModel.teamImage}"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            app:layout_constraintBottom_toBottomOf="@+id/view"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_rank_team_edit"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view"
+            app:layout_constraintTop_toTopOf="@+id/image_rank_team_edit"
             tools:src="@drawable/ic_baseline_sports_baseball_24" />
 
         <TextView
             android:id="@+id/text_rank_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
-            android:text="球隊名稱"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="24dp"
+            android:text="球隊名稱"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_rank_team" />
 
@@ -93,13 +106,15 @@
             android:id="@+id/button_rank_edit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@color/transparent"
             android:layout_marginEnd="@dimen/double_margin"
+            android:background="@color/transparent"
+            app:layout_constraintVertical_bias=".7"
             android:onClick="@{()->viewModel.startEdit()}"
             app:layout_constraintBottom_toBottomOf="@+id/image_rank_team"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/view"
-            app:srcCompat="@drawable/ic_edit_24" />
+            app:layout_constraintTop_toTopOf="@+id/image_rank_team"
+            android:src="@{viewModel.editable ? @drawable/ic_baseline_clear_24 : @drawable/ic_edit_24}"
+            tools:src="@drawable/ic_edit_24"/>
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -127,6 +142,19 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.core.widget.NestedScrollView>
+
+        <ImageButton
+            android:id="@+id/button_edit_save"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/one_half_margin"
+            android:background="@color/transparent"
+            android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
+            android:onClick="@{()->viewModel.updateTeamInfo()}"
+            app:layout_constraintBottom_toBottomOf="@+id/button_rank_edit"
+            app:layout_constraintEnd_toStartOf="@+id/button_rank_edit"
+            app:layout_constraintTop_toTopOf="@+id/button_rank_edit"
+            app:srcCompat="@drawable/ic_check_24" />
 
         <!--        <com.airbnb.lottie.LottieAnimationView-->
         <!--            android:id="@+id/animationViewTest"-->

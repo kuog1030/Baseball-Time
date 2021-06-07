@@ -9,7 +9,7 @@ data class Player(
         var userId : String? = null,
         var teamId : String = "",
         var name : String = "",
-        var nickname : String? = null,
+        var nickname : String = name,
         var number : Int = -1,
         var image: String? = null,
         var hitStat: HitterBox = HitterBox(),

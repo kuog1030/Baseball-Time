@@ -42,6 +42,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
     private const val NOTE = "note"
     private const val NAME = "name"
     private const val NICKNAME = "nickname"
+    private const val ACRONYM = "acronym"
     private const val NUMBER = "number"
     private const val IMAGE = "image"
     private const val HITSTAT = "hitStat"
@@ -386,6 +387,29 @@ object BaseballRemoteDataSource : BaseballDataSource {
             }
     }
 
+    override suspend fun updateTeamInfo(team: Team): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(TEAMS)
+                .document(team.id)
+                .update(
+                        NAME, team.name,
+                        ACRONYM, team.acronym,
+                        IMAGE, team.image
+                )
+                .addOnCompleteListener {task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+                            Log.w("remote", "[${this::class.simpleName}] Error updating team info. ${it.message}")
+                            continuation.resume( Result.Error(it) )
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("update team info fail"))
+                    }
+                }
+    }
+
+
     override suspend fun updateHitStat(playerId: String, hitterBox: HitterBox) : Result<Boolean> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(PLAYERS)
                 .document(playerId)
@@ -636,9 +660,10 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         val result = mutableListOf<Player>()
                         for (document in task.result!!) {
                             Log.i("remote", " ${document.id} -> ${document.data}")
-                            if (document.data["userId"] != UserManager.userId) {
-                                result.add(document.toObject(Player::class.java))
-                            }
+//                            if (document.data["userId"] != UserManager.userId) {
+//                                result.add(document.toObject(Player::class.java))
+//                            }
+                            result.add(document.toObject(Player::class.java))
                         }
                         result.sortBy { it.number }
                         continuation.resume(Result.Success(result))

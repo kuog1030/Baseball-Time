@@ -77,8 +77,12 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
                     // 高飛犧牲打
                     if (viewModel.scoreToBeAdded != 0) gameViewModel.scored(viewModel.scoreToBeAdded)
                     gameViewModel.setNewBaseList(it)
-                    gameViewModel.nextPlayer()
-                    if (!isSafe) gameViewModel.eventOut(1)
+                    Log.i("gillian67", "這邊")
+                    if (!isSafe) {
+                        gameViewModel.eventOut(1)
+                    } else {
+                        gameViewModel.nextPlayer()
+                    }
 
                 } else {
                     // 有壘上跑者出局

@@ -51,7 +51,7 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
                 teamId = UserManager.teamId,
                 name = name.value!!,
                 number = numberInt,
-                nickname = nickname.value ?: name.value,
+                nickname = nickname.value ?: name.value!!,
                 image = photoUrl.value
         )
 

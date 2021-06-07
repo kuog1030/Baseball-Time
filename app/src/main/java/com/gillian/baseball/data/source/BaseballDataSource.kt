@@ -39,6 +39,8 @@ interface BaseballDataSource {
 
     suspend fun updatePlayerInfo(player: Player) : Result<Boolean>
 
+    suspend fun updateTeamInfo(team: Team) : Result<Boolean>
+
     suspend fun updateHitStat(playerId: String, hitterBox: HitterBox) : Result<Boolean>
 
     suspend fun updatePitchStat(playerId: String, pitcherBox: PitcherBox) : Result<Boolean>

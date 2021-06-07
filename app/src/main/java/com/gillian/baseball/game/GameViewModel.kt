@@ -12,7 +12,7 @@ import com.gillian.baseball.ext.lineUpPlayer
 import kotlinx.coroutines.launch
 
 // debug用
-var totalInning = 2
+var totalInning = 6
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
@@ -483,12 +483,15 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun nextPlayer() {
         clearCount(includeOut = false)
         // if current at bat is the last player of line up
+        Log.i("gillian67", "current ${atBatNumber} and next ${atBatNumber}")
+
         if (atBatNumber == (lineUp.size - 1)) {
             atBatNumber = 0
         } else {
             atBatNumber += 1
         }
 
+        Log.i("gillian67", "current ${atBatNumber} and next ${atBatNumber}")
         // change the hitter to next person in line
         baseList[0] = lineUp[atBatNumber]
         atBatName.value = "第${atBatNumber + 1}棒 ${baseList[0]!!.name}"

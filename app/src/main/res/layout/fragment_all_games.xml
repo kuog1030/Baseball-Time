@@ -26,6 +26,7 @@
             android:text="@{viewModel.teamName}"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:textColor="@color/color_primary"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Android"/>

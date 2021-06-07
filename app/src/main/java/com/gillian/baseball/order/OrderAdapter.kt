@@ -25,7 +25,7 @@ class OrderAdapter : ListAdapter<EventPlayer, OrderAdapter.ViewHolder>(DiffCallb
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val player = getItem(position)
-        holder.bind(player, (position < 9)) //TODO() changed to 9
+        holder.bind(player, (position < 9))
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<EventPlayer>() {

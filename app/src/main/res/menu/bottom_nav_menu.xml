@@ -8,12 +8,12 @@
 
     <item
         android:id="@+id/navigation_all_games"
-        android:icon="@drawable/ic_baseline_date_range_24"
+        android:icon="@drawable/ic_baseline_sports_baseball_24"
         android:title=""/>
 
     <item
         android:id="@+id/navigation_stat"
-        android:icon="@drawable/ic_baseline_toc_24"
+        android:icon="@drawable/ic_videocam_24"
         android:title=""/>
 
 </menu>

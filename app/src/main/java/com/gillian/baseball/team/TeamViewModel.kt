@@ -1,5 +1,6 @@
 package com.gillian.baseball.team
 
+import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -47,6 +48,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     val editable = MutableLiveData<Boolean>(false)
+    val readyToSentPhoto = MutableLiveData<Uri>()
     val rankList = MutableLiveData<List<Rank>>()
 
     fun startEdit() {
@@ -149,6 +151,16 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
             myObp.value = statFormat.format(it.hitStat.myObp() ?: 0F)
             mySlg.value = statFormat.format(it.hitStat.mySlg() ?: 0F)
         }
+    }
+
+    fun updateTeamInfo() {
+        // 6/8 TODO
+//        if (teamAcronym.value != "" && teamName.value != "") {
+//
+//            if (readyToSentPhoto.value != null) {
+//
+//            }
+//        }
     }
 
 

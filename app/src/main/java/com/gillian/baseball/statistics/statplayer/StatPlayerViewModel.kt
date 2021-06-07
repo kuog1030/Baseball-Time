@@ -79,7 +79,7 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
         player.value?.let{
 
             editable.value = (it.userId.isNullOrEmpty() || it.userId == UserManager.userId)  // 如果這個球員沒人認領 user id is null才可以修改
-
+            Log.i("gillian67", "${it.userId} and ${UserManager.userId}")
             myAvg.value = statFormat.format(it.hitStat.myAverage() ?: 0F)
             myObp.value = statFormat.format(it.hitStat.myObp() ?: 0F)
             mySlg.value = statFormat.format(it.hitStat.mySlg() ?: 0F)

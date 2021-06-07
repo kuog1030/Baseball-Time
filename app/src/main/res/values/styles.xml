@@ -85,7 +85,7 @@
     </style>
 
     <style name="GameButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:textSize">16sp</item>
+        <item name="android:textSize">15sp</item>
         <item name="android:letterSpacing">0.15</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
         <item name="android:background">@drawable/button_radius_filled</item>
@@ -156,7 +156,7 @@
     </style>
 
     <style name="PlayerTableLargeTitle" parent="PlayerTableLarge">
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/color_primary</item>
     </style>
 
     <style name="CreateTeamTitle">

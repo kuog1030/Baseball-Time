@@ -18,7 +18,7 @@
     <string name="sign_in_with_google">Sign In With Google</string>
     <string name="team_code">代號</string>
     <string name="straight_to_broadcast">收看文字轉播</string>
-    <string name="register_info">如果你的隊友已經使用過Baseball，並且幫你建立過球員資料，你可以從隊友那邊的畫面進到你的球員頁，替你查詢球員代號。輸入後即可繼承這個球員的資料。</string>
+    <string name="register_info">如果你的隊友已經使用過Baseball Time，並且幫你建立過球員資料，你可以從隊友那邊的畫面進到你的球員頁，替你查詢球員代號。輸入後即可繼承這個球員的資料。</string>
     <string name="what_is_this">這是什麼</string>
     <string name="register_this_player">使用這個球員登入</string>
     <string name="create_team_and_player">建立球隊和球員</string>
@@ -35,6 +35,8 @@
     <string name="create_a_player">新增你自己吧</string>
     <string name="create_a_player_button">新增球員</string>
     <string name="edit_player_save">儲存球員資料</string>
+    <string name="remove_from_team">從球隊移除</string>
+    <string name="remove_confirm">確定移除嗎？</string>
     <string name="player_name">球員名稱</string>
     <string name="your_number">你的背號</string>
     <string name="player_number">球員背號</string>

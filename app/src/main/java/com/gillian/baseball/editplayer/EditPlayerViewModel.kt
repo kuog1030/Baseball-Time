@@ -32,6 +32,8 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     val errorMessage = MutableLiveData<Int>()
 
+    val confirmDelete = MutableLiveData<Boolean>(false)
+
     private val _status = MutableLiveData<LoadStatus>()
 
     val status: LiveData<LoadStatus>
@@ -106,7 +108,7 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
             id = oldPlayer.id,
             name = name.value!!,
             number = numberInt,
-            nickname = nickname.value,
+            nickname = nickname.value ?: name.value!!,
             image = photoUrl.value
         )
 
@@ -137,13 +139,17 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    fun deletePlayer() {
+    fun confirmDelete() {
         viewModelScope.launch {
             _navigateToTeam.value = when (repository.deletePlayer(oldPlayer.id)) {
                 is Result.Success -> true
                 else -> null
             }
         }
+    }
+
+    fun deletePlayer() {
+        confirmDelete.value = true
     }
 
     fun onTeamNavigated() {

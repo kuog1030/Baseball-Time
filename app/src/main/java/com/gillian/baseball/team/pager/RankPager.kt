@@ -1,5 +1,7 @@
 package com.gillian.baseball.team.pager
 
+import android.app.Activity
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -11,18 +13,30 @@ import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.broadcast.BroadcastAdapter
 import com.gillian.baseball.data.HitterBox
 import com.gillian.baseball.databinding.PagerRankBinding
+import com.gillian.baseball.editplayer.REQUEST_IMAGE_OPEN
 import com.gillian.baseball.team.TeamViewModel
 import com.gillian.baseball.views.HitterBoxAdapter
 
 class RankPager : Fragment() {
+
+    lateinit var binding : PagerRankBinding
+    lateinit var viewModel : TeamViewModel
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val binding = PagerRankBinding.inflate(inflater, container, false)
+        binding = PagerRankBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val viewModel = ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java)
+        viewModel = ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java)
 
         binding.viewModel = viewModel
+
+        binding.imageRankTeam.setOnClickListener {
+            if (viewModel.editable.value == true) {
+                pickImageFromGallery()
+            }
+        }
+
 
         val adapter = RankAdapter()
         binding.recyclerRank.adapter = adapter
@@ -30,4 +44,22 @@ class RankPager : Fragment() {
 
         return binding.root
     }
+
+
+    private fun pickImageFromGallery() {
+        val intent = Intent(Intent.ACTION_PICK).apply{
+            type = "image/*"
+        }
+        startActivityForResult(intent, REQUEST_IMAGE_OPEN)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+
+        if (requestCode == REQUEST_IMAGE_OPEN && resultCode == Activity.RESULT_OK && data != null) {
+            binding.imageRankTeam.setImageURI(data.data)
+            viewModel.readyToSentPhoto.value = data.data
+        }
+    }
+
 }

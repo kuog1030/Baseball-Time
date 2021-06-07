@@ -14,6 +14,7 @@ import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 import java.util.*
 
+private val totalOrder = 9
 
 class OrderViewModel(private val repository: BaseballRepository, private val gameCard: GameCard?) : ViewModel() {
 
@@ -131,7 +132,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
                 status = if (toggleBroadcast.value == true) GameStatus.PLAYING.number else GameStatus.PLAYINGPRIVATE.number)
 
         // TODO() 這樣對手的playerid都會一樣有點危險
-        for (index in 1..minOf(9, lineUp.size)) {
+        for (index in 1..minOf(totalOrder, lineUp.size)) {
             awayLineUp.add(EventPlayer(playerId = "$index", name = "第${index}棒", order = (index*100)))
             lineUp[index-1].order = index*100
         }
@@ -146,11 +147,11 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
                 image = UserManager.team?.image?:"",
                 teamId = UserManager.teamId,
                 pitcher = startingPitcher ?: pitcherList[0],
-                lineUp = lineUp.subList(0, minOf(9, lineUp.size))
+                lineUp = lineUp.subList(0, minOf(totalOrder, lineUp.size))
         )
 
         // 先發九人以外的那些
-        myBench = lineUp.subList(minOf(9, lineUp.size), lineUp.size)
+        myBench = lineUp.subList(minOf(totalOrder, lineUp.size), lineUp.size)
 
         val awayTeam = GameTeam(
                 name = awayTeamName.value!!,
