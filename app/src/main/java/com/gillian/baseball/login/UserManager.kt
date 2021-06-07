@@ -36,30 +36,5 @@ object UserManager {
             prefs.edit().putString("team", id).apply()
         }
 
-    // TODO()這應該要刪掉
-    var teamName: String
-        get() {
-            return ( prefs.getString("teamName", "")!! )
-        }
-        set(name) {
-            prefs.edit().putString("teamName", name).apply()
-        }
-
-    var teamImage: String
-        get() {
-            return ( prefs.getString("teamImage", "")!! )
-        }
-        set(url) {
-            prefs.edit().putString("teamImage", url).apply()
-        }
-
-    var teamAcronym: String
-        get() {
-            return ( prefs.getString("teamAcro", "")!! )
-        }
-        set(id) {
-            prefs.edit().putString("teamAcro", id).apply()
-        }
-
     var team : Team? = null
 }

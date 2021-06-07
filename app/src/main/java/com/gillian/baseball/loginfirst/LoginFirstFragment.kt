@@ -1,6 +1,7 @@
 package com.gillian.baseball.loginfirst
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,6 +13,7 @@ import androidx.navigation.fragment.navArgs
 import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.databinding.FragmentLoginFirstBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.login.UserManager
 
 class LoginFirstFragment : Fragment() {
 
@@ -31,7 +33,7 @@ class LoginFirstFragment : Fragment() {
         // 1. new create
         // sign up user -> init team and player
         // repository.signUpUser -> repository.initTeamAndPlayer
-        //   ( user id )                  ( team, player id )
+        //   ( user id )                  ( team, team id, player id )
 
         // 2. register existed player
         // sign up user from register -> registerPlayer() -> navigate from register
@@ -48,6 +50,7 @@ class LoginFirstFragment : Fragment() {
             }
         })
 
+        // register player -> fetch Team -> navigate
         viewModel.signUpUserFromRegister.observe(viewLifecycleOwner, Observer {
             it?.let {
                 // user manager team id, player id will be added first -> then user id (repository)
@@ -55,8 +58,16 @@ class LoginFirstFragment : Fragment() {
             }
         })
 
+        viewModel.proceedFetchTeam.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                viewModel.fetchTeam()
+            }
+        })
+
         viewModel.navigateFromRegister.observe(viewLifecycleOwner, Observer {
             it?.let{
+                UserManager.team = it
+                Log.i("gillian67", "fetch team success ${UserManager.team}")
                 findNavController().navigate(NavigationDirections.navigationToTeam())
                 viewModel.fromRegisterNavigated()
             }

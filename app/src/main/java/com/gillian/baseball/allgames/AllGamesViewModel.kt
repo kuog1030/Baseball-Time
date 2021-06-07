@@ -81,7 +81,7 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
 
             _status.value = LoadStatus.LOADING
 
-            val result = repository.getAllGamesCard("")
+            val result = repository.getAllGamesCard(UserManager.teamId)
 
             _allGameCards.value = when (result) {
                 is Result.Success -> {

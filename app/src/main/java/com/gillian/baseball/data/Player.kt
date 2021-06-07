@@ -7,7 +7,7 @@ import kotlinx.android.parcel.Parcelize
 data class Player(
         var id : String = "",
         var userId : String? = null,
-        var teamId : String? = null,
+        var teamId : String = "",
         var name : String = "",
         var nickname : String? = null,
         var number : Int = -1,

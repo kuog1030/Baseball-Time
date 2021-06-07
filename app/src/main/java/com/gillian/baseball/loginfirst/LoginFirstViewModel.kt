@@ -53,14 +53,19 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
+    private val _proceedFetchTeam = MutableLiveData<Boolean>()
+
+    val proceedFetchTeam: LiveData<Boolean>
+        get() = _proceedFetchTeam
+
     private val _navigateToTeam = MutableLiveData<Boolean>()
 
     val navigateToTeam: LiveData<Boolean>
         get() = _navigateToTeam
 
-    private val _navigateFromRegister = MutableLiveData<Boolean>()
+    private val _navigateFromRegister = MutableLiveData<Team>()
 
-    val navigateFromRegister: LiveData<Boolean>
+    val navigateFromRegister: LiveData<Team>
         get() = _navigateFromRegister
 
 
@@ -143,7 +148,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
             viewModelScope.launch {
                 val result = repository.registerPlayer(it.id)
 
-                _navigateFromRegister.value = when (result) {
+                _proceedFetchTeam.value = when (result) {
                     is Result.Success -> {
                         _status.value = LoadStatus.DONE
                         result.data
@@ -161,6 +166,22 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
                     else -> {
                         _errorMessage.value = Util.getString(R.string.return_nothing)
                         _status.value = LoadStatus.ERROR
+                        null
+                    }
+                }
+            }
+        }
+    }
+
+    fun fetchTeam() {
+        viewModelScope.launch {
+            player.value?.let{
+                val result = repository.getTeam(it.teamId)
+                _navigateFromRegister.value = when (result) {
+                    is Result.Success -> {
+                        result.data
+                    }
+                    else -> {
                         null
                     }
                 }

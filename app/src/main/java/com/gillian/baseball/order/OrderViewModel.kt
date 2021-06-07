@@ -141,10 +141,10 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
         }
 
         val myTeam = GameTeam(
-                name = UserManager.teamName,
-                acronym = UserManager.teamAcronym,
-                teamId = UserManager.teamId,
+                name = UserManager.team?.name ?: "",
+                acronym = UserManager.team?.acronym ?: "",
                 image = UserManager.team?.image?:"",
+                teamId = UserManager.teamId,
                 pitcher = startingPitcher ?: pitcherList[0],
                 lineUp = lineUp.subList(0, minOf(9, lineUp.size))
         )

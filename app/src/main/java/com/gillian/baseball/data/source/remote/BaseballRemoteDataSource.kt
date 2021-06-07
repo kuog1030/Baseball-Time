@@ -560,7 +560,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
     override suspend fun getAllGamesCard(teamId: String): Result<List<GameCard>> = suspendCoroutine {continuation ->
         val games = FirebaseFirestore.getInstance().collection(GAMES)
-        games.whereEqualTo(RECORDED, UserManager.teamId)
+        games.whereEqualTo(RECORDED, teamId)
                 .get()
                 .addOnCompleteListener{ task ->
                     if (task.isSuccessful) {
@@ -591,7 +591,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 if (task.isSuccessful) {
                     val result = task.result!!.toObject(Team::class.java)
                     continuation.resume(Result.Success(result!!))
-
                 } else {
                     task.exception?.let {
 

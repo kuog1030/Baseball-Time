@@ -119,7 +119,8 @@
         android:label="LoginFragment" >
         <action
             android:id="@+id/action_login_to_first"
-            app:destination="@id/loginFirstFragment" />
+            app:destination="@id/loginFirstFragment"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/broadcastFragment"

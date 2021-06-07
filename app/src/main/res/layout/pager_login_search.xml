@@ -25,13 +25,13 @@
             android:ems="10"
             android:hint="搜尋球員代號"
             android:inputType="textPersonName"
+            app:layout_constraintVertical_bias=".1"
             android:text="@={viewModel.searchPlayerId}"
-            app:layout_constraintBottom_toTopOf="@+id/image_search_player"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.39"
-            app:layout_constraintVertical_chainStyle="packed" />
+            app:layout_constraintVertical_chainStyle="spread" />
 
         <ImageButton
             android:id="@+id/button_search_search"
@@ -62,22 +62,25 @@
             android:id="@+id/image_search_player"
             android:layout_width="80dp"
             android:layout_height="80dp"
-            android:layout_marginTop="32dp"
             app:layout_constraintBottom_toTopOf="@+id/text_search_number"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_search_team_title"
+            app:layout_constraintVertical_chainStyle="packed"
             app:photoUrl="@{viewModel.player.image}" />
 
         <TextView
             android:id="@+id/text_search_number"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_margin"
             android:text="@{String.valueOf(viewModel.player.number)}"
             android:textSize="18sp"
             android:visibility="@{viewModel.player == null? View.INVISIBLE : View.VISIBLE}"
             app:layout_constraintBottom_toTopOf="@+id/text_search_player"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_search_player"
             tools:text="52" />
@@ -91,6 +94,7 @@
             android:textSize="18sp"
             app:layout_constraintBottom_toTopOf="@+id/button_search_register"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_search_number"
             tools:text="陳金鋒" />
@@ -134,7 +138,7 @@
             app:layout_constraintEnd_toEndOf="@+id/button_search_info"
             app:layout_constraintStart_toStartOf="@+id/edit_search_team_title"
             app:layout_constraintTop_toBottomOf="@+id/button_search_info"
-            tools:visibility="gone"/>
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

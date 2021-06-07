@@ -11,8 +11,6 @@ import com.gillian.baseball.data.LoadStatus
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.source.BaseballRepository
-import com.gillian.baseball.login.UserManager
-import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 
 

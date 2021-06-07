@@ -13,8 +13,6 @@ import kotlinx.coroutines.launch
 class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
-    val customBaseInt = MutableLiveData(101)
-
     val myself = MutableLiveData<Player>()
     val myAvg = MutableLiveData<String>()
     val myObp = MutableLiveData<String>()
@@ -43,7 +41,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     val statusTeam: LiveData<LoadStatus>
         get() = _statusTeam
-
 
     var teamName = MutableLiveData<String>()
     val teamAcronym = MutableLiveData<String>()
@@ -88,8 +85,8 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     }
 
     init {
-        // TODO() get team info
-        if (UserManager.team == null || UserManager.teamId == "") {
+        if (UserManager.team == null) {
+            Log.i("gillian67", "team null?")
             initMyUserData()
         } else {
             initTeamPage()
@@ -113,9 +110,9 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     fun initTeamPage() {
         fetchMyPlayerInfo()
         getTeamPlayer()
-        teamName.value = UserManager.teamName
-        teamImage.value = UserManager.teamImage
-        teamAcronym.value = UserManager.teamAcronym
+        teamName.value = UserManager.team?.name
+        teamImage.value = UserManager.team?.image
+        teamAcronym.value = UserManager.team?.acronym
     }
 
 
@@ -157,11 +154,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-
-
-    fun navigate() {
-        Log.i("gillian", " onclick yes!")
-    }
 
     fun onNewPlayerDialogShowed() {
         _showNewPlayerDialog.value = null

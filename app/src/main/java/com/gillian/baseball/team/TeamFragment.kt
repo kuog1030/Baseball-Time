@@ -41,9 +41,6 @@ class TeamFragment : Fragment() {
         viewModel.initUser.observe(viewLifecycleOwner, Observer {
             it?.let{
                 UserManager.team = it
-                UserManager.teamName = it.name
-                UserManager.teamAcronym = it.acronym
-                UserManager.teamImage = it.image
                 viewModel.initTeamPage()
             }
         })

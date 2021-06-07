@@ -64,14 +64,13 @@ class LoginFragment : Fragment() {
             it?.let {
                 UserManager.team = it
                 Log.i("gillian67", "fetch team success ${UserManager.team}")
-                //findNavController().navigate(NavigationDirections.navigationToTeam())
+                findNavController().navigate(NavigationDirections.navigationToTeam())
             }
         })
 
 
         viewModel.firebaseUser.observe(viewLifecycleOwner, Observer {
             it?.let{
-                Log.i("gillian", "url? ${it.photoUrl}")
                 newUser = User(email = it.email!!, id = it.uid, image = it.photoUrl.toString())
                 viewModel.searchIfUserExist()
             }

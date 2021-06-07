@@ -59,7 +59,7 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
     fun updateCard() {
         when (selectedSideRadio.value) {
             R.id.radio_new_game_home -> {
-                homeImage.value = UserManager.teamImage
+                homeImage.value = UserManager.team?.image
                 guestImage.value = ""
                 homeName.value = UserManager.team?.name
                 guestName.value = awayName.value
@@ -68,7 +68,7 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
                 homeName.value = awayName.value
                 homeImage.value = ""
                 guestName.value = UserManager.team?.name
-                guestImage.value = UserManager.teamImage
+                guestImage.value = UserManager.team?.image
             }
 
         }
