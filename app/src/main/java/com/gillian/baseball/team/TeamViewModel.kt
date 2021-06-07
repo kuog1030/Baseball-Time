@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.ext.toRankList
 import com.gillian.baseball.login.UserManager
 import kotlinx.coroutines.launch
 
@@ -19,8 +20,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val mySlg = MutableLiveData<String>()
 
     val initUser = MutableLiveData<Team>()
-
-    val testAllEvent = MutableLiveData<List<Event>>()
 
     private val _teamPlayers = MutableLiveData<MutableList<Player>>()
 
@@ -48,16 +47,14 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     val editable = MutableLiveData<Boolean>(false)
-    val hitRank = MutableLiveData<List<Player>>()
-    val homerunRank = MutableLiveData<List<Player>>()
+    val rankList = MutableLiveData<List<Rank>>()
 
     fun startEdit() {
         editable.value = !(editable.value!!)
     }
 
-    fun createHitRank(playerList: List<Player>) {
-        hitRank.value = playerList.sortedByDescending { it.hitStat.hit }
-        homerunRank.value = playerList.sortedByDescending { it.hitStat.homerun }
+    fun createRankList(playerList: List<Player>) {
+        rankList.value = playerList.toRankList()
     }
 
 

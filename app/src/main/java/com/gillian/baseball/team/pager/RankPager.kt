@@ -24,12 +24,8 @@ class RankPager : Fragment() {
 
         binding.viewModel = viewModel
 
-        viewModel.testAllEvent.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                Log.i("rank pager", "get all event list success")
-            }
-        })
-
+        val adapter = RankAdapter()
+        binding.recyclerRank.adapter = adapter
 
 
         return binding.root

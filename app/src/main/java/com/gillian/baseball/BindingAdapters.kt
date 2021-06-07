@@ -10,6 +10,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.broadcast.BroadcastAdapter
 import com.gillian.baseball.data.*
+import com.gillian.baseball.team.pager.RankAdapter
 import com.gillian.baseball.team.pager.TeammateAdapter
 import com.gillian.baseball.views.BoxAdapter
 import com.gillian.baseball.views.HitterBoxAdapter
@@ -65,6 +66,17 @@ fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: MutableList<Player>?
         recyclerView.adapter?.apply {
             when (this) {
                 is TeammateAdapter -> submitList(it)
+            }
+        }
+    }
+}
+
+@BindingAdapter("rankList")
+fun bindRankList(recyclerView: RecyclerView, rank: List<Rank>?) {
+    rank?.let{
+        recyclerView.adapter?.apply {
+            when (this) {
+                is RankAdapter -> submitList(it)
             }
         }
     }

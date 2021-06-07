@@ -11,49 +11,54 @@ fun MutableList<EventPlayer>.lineUpPlayer(number: Int) : EventPlayer {
     return (this[(number % this.size)])
 }
 
-fun List<Player>.toRank(type: Int) : Rank {
+fun List<Player>.toRankList() : List<Rank> {
 
     lateinit var sortList : List<Player>
-    val result = Rank()
+    val resultList = mutableListOf<Rank>()
 
-    if (this.size <= 3) {
-        return result
-    } else {
-        if (type == 1) {
-            sortList = this.sortedByDescending { it.hitStat.hit }
-            result.type = getString(R.string.hit_rank)
-            result.let {
-                it.topImage = sortList[0].image ?: ""
-                it.topScore = sortList[0].hitStat.hit.toString()
-                it.secondScore = sortList[1].hitStat.hit.toString()
-                it.thirdScore = sortList[2].hitStat.hit.toString()
-            }
-        } else if (type == 2) {
-            sortList = this.sortedByDescending { it.hitStat.homerun }
-            result.type = getString(R.string.homerun_rank)
-            result.let {
-                it.topImage = sortList[0].image ?: ""
-                it.topScore = sortList[0].hitStat.homerun.toString()
-                it.secondScore = sortList[1].hitStat.homerun.toString()
-                it.thirdScore = sortList[2].hitStat.homerun.toString()
-            }
+    for (type in 1..3) {
+        val result = Rank()
 
+        if (this.size <= 3) {
+            resultList.add(result)
         } else {
-            sortList = this.sortedByDescending { it.hitStat.stealBase }
-            result.type = getString(R.string.sb_rank)
-            result.let {
-                it.topImage = sortList[0].image ?: ""
-                it.topScore = sortList[0].hitStat.stealBase.toString()
-                it.secondScore = sortList[1].hitStat.stealBase.toString()
-                it.thirdScore = sortList[2].hitStat.stealBase.toString()
-            }
-        }
-        result.topName = sortList[0].name
-        result.secondName = sortList[1].name
-        result.thirdName = sortList[2].name
+            if (type == 1) {
+                sortList = this.sortedByDescending { it.hitStat.hit }
+                result.type = getString(R.string.hit_rank)
+                result.let {
+                    it.topImage = sortList[0].image ?: ""
+                    it.topScore = sortList[0].hitStat.hit.toString()
+                    it.secondScore = sortList[1].hitStat.hit.toString()
+                    it.thirdScore = sortList[2].hitStat.hit.toString()
+                }
+            } else if (type == 2) {
+                sortList = this.sortedByDescending { it.hitStat.homerun }
+                result.type = getString(R.string.homerun_rank)
+                result.let {
+                    it.topImage = sortList[0].image ?: ""
+                    it.topScore = sortList[0].hitStat.homerun.toString()
+                    it.secondScore = sortList[1].hitStat.homerun.toString()
+                    it.thirdScore = sortList[2].hitStat.homerun.toString()
+                }
 
-        return result
+            } else {
+                sortList = this.sortedByDescending { it.hitStat.stealBase }
+                result.type = getString(R.string.sb_rank)
+                result.let {
+                    it.topImage = sortList[0].image ?: ""
+                    it.topScore = sortList[0].hitStat.stealBase.toString()
+                    it.secondScore = sortList[1].hitStat.stealBase.toString()
+                    it.thirdScore = sortList[2].hitStat.stealBase.toString()
+                }
+            }
+            result.topName = sortList[0].name
+            result.secondName = sortList[1].name
+            result.thirdName = sortList[2].name
+
+            resultList.add(result)
+        }
     }
+    return resultList
 }
 
 
