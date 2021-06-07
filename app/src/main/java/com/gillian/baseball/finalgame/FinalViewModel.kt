@@ -1,6 +1,5 @@
 package com.gillian.baseball.finalgame
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,7 +10,7 @@ import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 
-class FinalViewModel(private val repository: BaseballRepository, private val myGame: MyGame) : ViewModel() {
+class FinalViewModel(private val repository: BaseballRepository, val myGame: MyGame) : ViewModel() {
 
     // 1. 更新box               uploadBox()
     // 2. 更新球員成績          getMyStat() -> observe -> upload hit and pitch
@@ -68,11 +67,11 @@ class FinalViewModel(private val repository: BaseballRepository, private val myG
     init {
         // 需要先update status = final嗎
         createBoxViewList()
-        getMyStat()
+        fetchMyStat()
     }
 
 
-    fun getMyStat() {
+    fun fetchMyStat() {
         viewModelScope.launch {
 
             _status.value = LoadStatus.LOADING

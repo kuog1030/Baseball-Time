@@ -12,7 +12,7 @@ import com.gillian.baseball.ext.lineUpPlayer
 import kotlinx.coroutines.launch
 
 // debug用
-var totalInning = 6
+var totalInning = 2
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
@@ -205,6 +205,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 )
         )
 
+        uploadGameBox()
         _navigateToFinal.value = MyGame(isHome = isHome, game = game.value!!, benchPlayer = myBench)
     }
 

@@ -20,9 +20,9 @@
             android:id="@+id/text_game_stat_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/half_margin"
+            android:layout_marginTop="12dp"
             android:text="@string/game_stat_title"
-            android:textSize="24sp"
+            android:textSize="22sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -33,16 +33,16 @@
             android:layout_height="18dp"
             android:layout_marginStart="@dimen/margin"
             android:background="@color/transparent"
-            app:layout_constraintBottom_toTopOf="@+id/nestedScrollView2"
+            app:layout_constraintBottom_toBottomOf="@+id/text_game_stat_title"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_game_stat_title"
             app:srcCompat="@drawable/ic_baseline_arrow_backward_24" />
 
         <androidx.core.widget.NestedScrollView
             android:id="@+id/nestedScrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/half_margin"
+            android:layout_marginTop="12dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_game_stat_title">
 
@@ -188,7 +188,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/one_half_margin"
-                    android:text="BATTERS 打擊成績"
+                    android:text="@string/batters_perfomance"
                     android:textColor="@color/color_primary"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -234,7 +234,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/one_half_margin"
-                    android:text="PITCHERS 投手成績"
+                    android:text="@string/pitchers_perfomance"
                     android:textColor="@color/color_primary"
                     android:textSize="18sp"
                     android:textStyle="bold"
@@ -286,7 +286,7 @@
                             style="@style/FinalTableTitle"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Team" />
+                            android:text="@string/team" />
 
                     </TableRow>
 

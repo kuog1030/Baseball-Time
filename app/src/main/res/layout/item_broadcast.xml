@@ -12,7 +12,9 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingStart="@dimen/margin"
+        android:paddingEnd="@dimen/margin">
 
         <TextView
             android:id="@+id/textView5"
@@ -25,7 +27,7 @@
             app:layout_constraintEnd_toStartOf="@id/my_custom_base"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="第4棒 Czerny在1好0壞之下擊出一壘安打2出局" />
+            tools:text="第4棒 Czerny擊出一壘安打2出局" />
 
         <TextView
             android:id="@+id/textView6"

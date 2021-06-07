@@ -26,6 +26,54 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
+        <TableLayout
+            android:id="@+id/table_final_box"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            app:layout_constraintEnd_toStartOf="@id/recycler_final_box"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/recycler_final_box">
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_primary">
+
+                <TextView
+                    style="@style/FinalTableTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/team" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/FinalTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.myGame.game.guest.name}"
+                    tools:text="日本武士" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    style="@style/FinalTable"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.myGame.game.home.name}"
+                    tools:text="中華隊" />
+            </TableRow>
+        </TableLayout>
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_final_box"
             android:layout_width="wrap_content"
@@ -37,10 +85,10 @@
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.3"
-            tools:listitem="@layout/item_box">
+            tools:listitem="@layout/item_box"
+            tools:itemCount="4">
 
         </androidx.recyclerview.widget.RecyclerView>
 

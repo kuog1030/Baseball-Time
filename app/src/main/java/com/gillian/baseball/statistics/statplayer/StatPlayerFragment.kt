@@ -38,6 +38,10 @@ class StatPlayerFragment : Fragment() {
 
         viewModel.getPlayerStat(args.playerId)
 
+        binding.buttonStatPlayerLeave.setOnClickListener {
+            findNavController().popBackStack()
+        }
+
         viewModel.player.observe(viewLifecycleOwner, Observer {
             it?.let {
                 if (viewModel.isInit) {

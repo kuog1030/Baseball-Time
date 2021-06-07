@@ -75,9 +75,13 @@
     <!--    Stat related-->
     <string name="my_performance">我的成績</string>
     <string name="no_personal_record">（沒有出賽紀錄）</string>
-    <string name="hitter_performance">打擊成績</string>
-    <string name="pitcher_performance">投手成績</string>
+    <string name="batters_perfomance">BATTERS 打擊成績</string>
+    <string name="pitchers_perfomance">PITCHERS 投手成績</string>
+    <string name="my_batting">打擊成績</string>
+    <string name="my_pitching">投手成績</string>
     <string name="game_stat_title">成績看板</string>
+    <string name="team">Team</string>
+
 
     <!--   all games related -->
     <string name="more_detail">詳細數據</string>
