@@ -209,7 +209,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         val player = Player(name = newPlayerName.value ?: "", number = numberInt, image = user.image)
 
         viewModelScope.launch {
-            val result = repository.initTeamAndPlayer(team, player)
+            val result = repository.initTeamAndPlayer(team, player)  // UserManager.playerId & teamId will be set
             _navigateToTeam.value = when (result) {
                 is Result.Success -> {
                     _status.value = LoadStatus.DONE

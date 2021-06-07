@@ -33,14 +33,9 @@ class LoginFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         if (hasUser()) {
-            Log.i("gillianlog", "has user")
-            findNavController().navigate(NavigationDirections.navigationToTeam())
+            Log.i("gillian6", "has user")
+            viewModel.fetchTeam()
         }
-
-        auth = Firebase.auth
-        val currentUser = auth.currentUser
-        Log.i("gillianlog", "auth $auth currentUser $currentUser")
-
 
     }
 
@@ -50,7 +45,7 @@ class LoginFragment : Fragment() {
         val binding = FragmentLoginBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        viewModel
+        binding.viewModel = viewModel
 
 
         // login -> intent -> viewModel.signInWithGoogle -> get firebase user
@@ -63,6 +58,16 @@ class LoginFragment : Fragment() {
         binding.buttonLoginBroadcast.setOnClickListener {
             findNavController().navigate(NavigationDirections.navigationToAllBroadcast())
         }
+
+
+        viewModel.initTeam.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                UserManager.team = it
+                Log.i("gillian67", "fetch team success ${UserManager.team}")
+                //findNavController().navigate(NavigationDirections.navigationToTeam())
+            }
+        })
+
 
         viewModel.firebaseUser.observe(viewLifecycleOwner, Observer {
             it?.let{
@@ -120,8 +125,9 @@ class LoginFragment : Fragment() {
     }
 
 
-    private fun hasUser() : Boolean{
-        return (UserManager.userId != "")
+    private fun hasUser() : Boolean {
+        Log.i("gillian67", "user id ${UserManager.userId}, team id ${UserManager.teamId}")
+        return (UserManager.userId != "" && UserManager.teamId != "")
     }
 
 

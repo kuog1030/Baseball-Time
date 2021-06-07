@@ -31,6 +31,29 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
     val navigateToTeam : LiveData<Team>
         get() = _navigateToTeam
 
+    val showLoginPage = MutableLiveData<Boolean>(true)
+
+    private val _initTeam = MutableLiveData<Team>()
+
+    val initTeam : LiveData<Team>
+        get() = _initTeam
+
+
+    fun fetchTeam() {
+        showLoginPage.value = false
+        viewModelScope.launch {
+            val result = repository.getTeam(UserManager.teamId)
+            _initTeam.value = when (result) {
+                is Result.Success -> {
+                    result.data
+                }
+                else -> {
+                    null
+                }
+            }
+        }
+    }
+
 
     fun signInWithGoogle(token: String?) {
         Log.i("gillianlog", "sign in ing!")

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
 
         <variable
             name="viewModel"
@@ -56,6 +57,16 @@
             app:layout_constraintTop_toBottomOf="@id/tabs_all_games">
 
         </androidx.viewpager.widget.ViewPager>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toBottomOf="@id/text_all_game_team"
+            android:background="@color/grey_transparent"
+            android:visibility="@{viewModel.clicked ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

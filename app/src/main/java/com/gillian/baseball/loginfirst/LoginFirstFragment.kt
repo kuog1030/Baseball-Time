@@ -27,6 +27,17 @@ class LoginFirstFragment : Fragment() {
         binding.viewpagerFirstLogin.adapter = LoginFirstAdapter(childFragmentManager)
         binding.tabsFirstLogin.setupWithViewPager(binding.viewpagerFirstLogin)
 
+        // two way to sign up
+        // 1. new create
+        // sign up user -> init team and player
+        // repository.signUpUser -> repository.initTeamAndPlayer
+        //   ( user id )                  ( team, player id )
+
+        // 2. register existed player
+        // sign up user from register -> registerPlayer() -> navigate from register
+        //               repository.signUpUser -> repository.registerPlayer
+        // (team, player id)    ( user id )
+
 
         // From pager search and register
         viewModel.playerList.observe(viewLifecycleOwner, Observer {
