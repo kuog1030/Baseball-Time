@@ -277,6 +277,17 @@ fun bindProfilePhoto(imageView: ImageView, url: String?) {
             .into(imageView)
 }
 
+@BindingAdapter("imageSquareUrl")
+fun bindProfileImageSquare(imageView: ImageView, url: String?) {
+    Glide.with(imageView.context)
+            .load(url)
+            .centerCrop()
+            .apply(RequestOptions()
+                    .placeholder(R.drawable.ic_baseline_sports_baseball_24)
+                    .error(R.drawable.ic_baseline_sports_baseball_24))
+            .into(imageView)
+}
+
 @BindingAdapter("defaultName")
 fun bindDefaultPhoto(textView: TextView, name: String?) {
     if (name == null) {

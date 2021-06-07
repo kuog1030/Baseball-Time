@@ -23,6 +23,12 @@
     <string name="register_this_player">使用這個球員登入</string>
     <string name="create_team_and_player">建立球隊和球員</string>
 
+    <!--    rank related-->
+    <string name="homerun_rank">全壘打王</string>
+    <string name="hit_rank">安打王</string>
+    <string name="avg_rank">打擊王</string>
+    <string name="sb_rank">盜壘王</string>
+
     <!--    team related -->
     <string name="create_a_team">新增一支你的球隊吧</string>
     <string name="team_name">球隊名稱</string>

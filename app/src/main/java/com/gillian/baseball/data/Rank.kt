@@ -1,12 +1,12 @@
 package com.gillian.baseball.data
 
 data class Rank(
-        val type: String,
-        val topName: String,
-        val topImage: String,
-        val topScore: String,
-        val secondName: String,
-        val secondScore: String,
-        val thirdName: String,
-        val thirdScore: String
+        var type: String = "",
+        var topImage: String = "",
+        var topName: String = "",
+        var topScore: String = "",
+        var secondName: String = "",
+        var secondScore: String = "",
+        var thirdName: String = "",
+        var thirdScore: String = ""
 )

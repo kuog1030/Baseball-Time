@@ -1,21 +1,60 @@
 package com.gillian.baseball.ext
 
 import android.util.Log
+import com.gillian.baseball.R
 import com.gillian.baseball.data.*
 import com.gillian.baseball.game.EventType
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.util.Util.getString
 
 fun MutableList<EventPlayer>.lineUpPlayer(number: Int) : EventPlayer {
     return (this[(number % this.size)])
 }
 
-//fun List<Player>.toRankList(type: Int) : Rank {
-//
-//    val rankType = when (type) {
-//        0 ->
-//    }
-//
-//}
+fun List<Player>.toRank(type: Int) : Rank {
+
+    lateinit var sortList : List<Player>
+    val result = Rank()
+
+    if (this.size <= 3) {
+        return result
+    } else {
+        if (type == 1) {
+            sortList = this.sortedByDescending { it.hitStat.hit }
+            result.type = getString(R.string.hit_rank)
+            result.let {
+                it.topImage = sortList[0].image ?: ""
+                it.topScore = sortList[0].hitStat.hit.toString()
+                it.secondScore = sortList[1].hitStat.hit.toString()
+                it.thirdScore = sortList[2].hitStat.hit.toString()
+            }
+        } else if (type == 2) {
+            sortList = this.sortedByDescending { it.hitStat.homerun }
+            result.type = getString(R.string.homerun_rank)
+            result.let {
+                it.topImage = sortList[0].image ?: ""
+                it.topScore = sortList[0].hitStat.homerun.toString()
+                it.secondScore = sortList[1].hitStat.homerun.toString()
+                it.thirdScore = sortList[2].hitStat.homerun.toString()
+            }
+
+        } else {
+            sortList = this.sortedByDescending { it.hitStat.stealBase }
+            result.type = getString(R.string.sb_rank)
+            result.let {
+                it.topImage = sortList[0].image ?: ""
+                it.topScore = sortList[0].hitStat.stealBase.toString()
+                it.secondScore = sortList[1].hitStat.stealBase.toString()
+                it.thirdScore = sortList[2].hitStat.stealBase.toString()
+            }
+        }
+        result.topName = sortList[0].name
+        result.secondName = sortList[1].name
+        result.thirdName = sortList[2].name
+
+        return result
+    }
+}
 
 
 fun List<Event>.toPersonalScore() : List<String> {
