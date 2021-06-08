@@ -2,17 +2,17 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/navigation_team"
+        android:id="@+id/teamFragment"
         android:icon="@drawable/ic_baseline_people_24"
         android:title=""/>
 
     <item
-        android:id="@+id/navigation_all_games"
+        android:id="@+id/allGamesFragment"
         android:icon="@drawable/ic_baseline_sports_baseball_24"
         android:title=""/>
 
     <item
-        android:id="@+id/navigation_stat"
+        android:id="@+id/allBroadcastFragment"
         android:icon="@drawable/ic_videocam_24"
         android:title=""/>
 

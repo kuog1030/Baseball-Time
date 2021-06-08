@@ -25,6 +25,7 @@
 
     <!--   box related -->
     <dimen name="box_name_width">90dp</dimen>
+    <dimen name="box_height">32dp</dimen>
 
 
     <dimen name="bar_height">1dp</dimen>

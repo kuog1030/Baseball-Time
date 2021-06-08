@@ -41,6 +41,12 @@ class RankPager : Fragment() {
         val adapter = RankAdapter()
         binding.recyclerRank.adapter = adapter
 
+        viewModel.newTeamImage.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                viewModel.updateTeamInfo(it)
+            }
+        })
+
 
         return binding.root
     }

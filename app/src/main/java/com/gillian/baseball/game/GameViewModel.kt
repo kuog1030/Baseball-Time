@@ -12,7 +12,7 @@ import com.gillian.baseball.ext.lineUpPlayer
 import kotlinx.coroutines.launch
 
 // debug用
-var totalInning = 6
+var totalInning = 2
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
@@ -129,6 +129,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
     fun switch() {
 
+        Log.i("gillian68", "$inningCount and $totalInning")
+        Log.i("gillian68", "${game.value!!.box.run[0]} and ${game.value!!.box.run[1]}")
         if (inningCount == totalInning) {
             game.value?.let{
                 if (it.box.run[0] == it.box.run[1] && totalInning <= 12) {

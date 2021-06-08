@@ -38,7 +38,8 @@ class FinalFragment : Fragment() {
 
         viewModel.saveAndNavigate.observe(viewLifecycleOwner, Observer {
             it?.let{
-                (activity as MainActivity).navigateToTeamByBottomNav()
+                //(activity as MainActivity).navigateToTeamByBottomNav()
+                findNavController().navigate(NavigationDirections.navigationToTeam())
                 viewModel.onTeamNavigated()
             }
         })

@@ -287,7 +287,6 @@
                             android:id="@+id/row_box_type"
                             style="@style/FinalTableTitle"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="@string/team" />
 
                     </TableRow>
@@ -299,8 +298,8 @@
                         <TextView
                             android:id="@+id/text_box_guest"
                             style="@style/FinalTable"
+                            android:textSize="14sp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="@{viewModel.game.guest.name}"
                             tools:text="日本武士" />
 
@@ -313,8 +312,8 @@
                         <TextView
                             android:id="@+id/text_box_home"
                             style="@style/FinalTable"
+                            android:textSize="14sp"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
                             android:text="@{viewModel.game.home.name}"
                             tools:text="中華隊" />
                     </TableRow>

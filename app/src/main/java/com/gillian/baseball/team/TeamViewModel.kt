@@ -37,10 +37,16 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val statusMe: LiveData<LoadStatus>
         get() = _statusMe
 
-    private val _statusTeam = MutableLiveData<LoadStatus>()
+    private val _statusEdit = MutableLiveData<LoadStatus>()
 
-    val statusTeam: LiveData<LoadStatus>
-        get() = _statusTeam
+    val statusEdit: LiveData<LoadStatus>
+        get() = _statusEdit
+
+    private val _newTeamImage = MutableLiveData<String>()
+
+    val newTeamImage : LiveData<String>
+        get() = _newTeamImage
+
 
     var teamName = MutableLiveData<String>()
     val teamAcronym = MutableLiveData<String>()
@@ -52,6 +58,10 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val rankList = MutableLiveData<List<Rank>>()
 
     fun startEdit() {
+        if (editable.value == true) {
+            teamName.value = UserManager.team?.name
+            teamAcronym.value = UserManager.team?.acronym
+        }
         editable.value = !(editable.value!!)
     }
 
@@ -153,14 +163,69 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    fun updateTeamInfo() {
+
+    fun checkIfInfoFilled() {
+        if (teamAcronym.value != "" && teamName.value != "") {
+            _statusEdit.value = LoadStatus.LOADING
+            if (readyToSentPhoto.value != null) {
+                Log.i("gillian68", "1")
+                uploadPhoto(readyToSentPhoto.value!!)
+            } else {
+                Log.i("gillian68", "2")
+                _newTeamImage.value = teamImage.value
+            }
+        }
+    }
+
+    fun uploadPhoto(uri: Uri) {
+        viewModelScope.launch {
+            val result = repository.uploadImage(uri)
+            Log.i("gillian68", "3")
+            _newTeamImage.value = when (result) {
+                is Result.Success -> {
+                    Log.i("gillian68", "4")
+                    result.data
+                }
+                else -> {
+                    _statusEdit.value = LoadStatus.ERROR
+                    null
+                }
+            }
+        }
+    }
+
+
+
+    fun updateTeamInfo(imageUrl: String) {
+        Log.i("gillian68", "5")
         // 6/8 TODO
-//        if (teamAcronym.value != "" && teamName.value != "") {
-//
-//            if (readyToSentPhoto.value != null) {
-//
-//            }
-//        }
+        val newTeam = Team(name = teamName.value ?: "", acronym = teamAcronym.value ?: "", image = imageUrl, id = UserManager.teamId)
+        viewModelScope.launch {
+
+            Log.i("gillian68", "6 ${newTeam}")
+
+            val result = repository.updateTeamInfo(newTeam)
+            when (result) {
+                is Result.Success -> {
+                    readyToSentPhoto.value = null
+                    teamImage.value = imageUrl
+                    _statusEdit.value = LoadStatus.DONE
+                    startEdit()
+                    updateUserManager(newTeam)
+                }
+                else -> {
+                    _statusEdit.value = LoadStatus.ERROR
+                    startEdit()
+                }
+            }
+
+        }
+
+    }
+
+    fun updateUserManager(newTeam: Team) {
+        UserManager.team = newTeam
+        Log.i("gillian68", "8 ${UserManager.team}")
     }
 
 

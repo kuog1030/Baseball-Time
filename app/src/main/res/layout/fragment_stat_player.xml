@@ -523,7 +523,6 @@
             android:layout_marginStart="16dp"
             android:layout_marginTop="@dimen/margin"
             android:background="@color/transparent"
-            android:visibility="invisible"
             app:layout_constraintStart_toStartOf="@+id/ticket_top"
             app:layout_constraintTop_toTopOf="@+id/ticket_top"
             app:srcCompat="@drawable/ic_baseline_arrow_backward_24" />

@@ -43,7 +43,6 @@
                 <TextView
                     style="@style/FinalTableTitle"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
                     android:text="@string/team" />
 
             </TableRow>
@@ -55,7 +54,7 @@
                 <TextView
                     style="@style/FinalTable"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
                     android:text="@{viewModel.myGame.game.guest.name}"
                     tools:text="日本武士" />
 
@@ -68,7 +67,7 @@
                 <TextView
                     style="@style/FinalTable"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:textSize="14sp"
                     android:text="@{viewModel.myGame.game.home.name}"
                     tools:text="中華隊" />
             </TableRow>
@@ -78,17 +77,15 @@
             android:id="@+id/recycler_final_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/double_margin"
             android:layout_marginEnd="@dimen/margin"
             android:orientation="horizontal"
             app:gameBox="@{viewModel.gameBox}"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.3"
-            tools:listitem="@layout/item_box"
-            tools:itemCount="4">
+            app:layout_constraintTop_toBottomOf="@+id/text_final_title"
+            tools:itemCount="4"
+            tools:listitem="@layout/item_box">
 
         </androidx.recyclerview.widget.RecyclerView>
 
@@ -97,13 +94,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:drawablePadding="@dimen/margin"
-            android:layout_marginTop="@dimen/margin"
-            android:text="@string/add_game_note"
             android:paddingStart="@dimen/half_margin"
+            android:text="@string/add_game_note"
             android:textSize="18sp"
             app:drawableEndCompat="@drawable/ic_edit_24"
+            app:layout_constraintBottom_toTopOf="@+id/button_final_dinner"
             app:layout_constraintStart_toStartOf="@+id/edit_final_note"
-            app:layout_constraintTop_toBottomOf="@+id/recycler_final_box" />
+            app:layout_constraintTop_toTopOf="parent" />
 
         <EditText
             android:id="@+id/edit_final_note"
@@ -144,8 +141,10 @@
             android:visibility="@{viewModel.loading ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0"
             tools:visibility="invisible">
 
             <TextView

@@ -50,7 +50,7 @@ class NewGameFragment : Fragment() {
 
         viewModel.scheduleSuccess.observe(viewLifecycleOwner, Observer {
             it?.let{
-                if (it) findNavController().navigate(NewGameFragmentDirections.actionNewGameToAllGames(true))
+                if (it) findNavController().navigate(NewGameFragmentDirections.actionNewGameToAllGames())
                 viewModel.onGameUploadedAndNavigated()
             }
         })

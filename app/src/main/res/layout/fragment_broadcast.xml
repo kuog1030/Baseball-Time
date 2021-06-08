@@ -129,7 +129,7 @@
             android:id="@+id/textView19"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{viewModel.game.isHome? viewModel.game.homeName : viewModel.game.guestName}"
+            app:recordedTeam="@{viewModel.liveGame}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/textView16"

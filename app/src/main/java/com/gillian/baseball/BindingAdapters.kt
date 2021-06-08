@@ -348,6 +348,17 @@ fun bindTextInning(textView: TextView, inning: Int) {
     }
 }
 
+@BindingAdapter("recordedTeam")
+fun bindRecordedTeamName(textView: TextView, game: Game?) {
+    game?.let{
+        if (game.recordedTeamId == game.home.teamId) {
+            textView.text = game.home.name
+        } else {
+            textView.text = game.guest.name
+        }
+    }
+}
+
 @BindingAdapter("teamCode")
 fun bindTextTeamCode(textView: TextView, teamId: String?) {
     teamId?.let{
