@@ -61,7 +61,7 @@ fun bindNextBat(textView: TextView, player: String?) {
 
 
 @BindingAdapter("teammates")
-fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: MutableList<Player>?) {
+fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: List<Player>?) {
     teamPlayers?.let{
         recyclerView.adapter?.apply {
             when (this) {

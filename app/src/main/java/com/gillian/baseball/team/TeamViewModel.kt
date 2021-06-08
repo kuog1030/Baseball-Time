@@ -27,6 +27,11 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val teamPlayers: LiveData<MutableList<Player>>
         get() = _teamPlayers
 
+    private val _teamPlayersWithMe = MutableLiveData<List<Player>>()
+
+    val teamPlayersWithMe: LiveData<List<Player>>
+        get() = _teamPlayersWithMe
+
     private val _showNewPlayerDialog = MutableLiveData<Boolean>()
 
     val showNewPlayerDialog: LiveData<Boolean>
@@ -78,6 +83,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
             _teamPlayers.value = when (result) {
                 is Result.Success -> {
+                    _teamPlayersWithMe.value = result.data.filter { it.userId != UserManager.userId }
                     result.data
                 }
                 is Result.Fail -> {
@@ -202,16 +208,14 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         val newTeam = Team(name = teamName.value ?: "", acronym = teamAcronym.value ?: "", image = imageUrl, id = UserManager.teamId)
         viewModelScope.launch {
 
-            Log.i("gillian68", "6 ${newTeam}")
-
             val result = repository.updateTeamInfo(newTeam)
             when (result) {
                 is Result.Success -> {
+                    UserManager.team = newTeam
                     readyToSentPhoto.value = null
                     teamImage.value = imageUrl
                     _statusEdit.value = LoadStatus.DONE
                     startEdit()
-                    updateUserManager(newTeam)
                 }
                 else -> {
                     _statusEdit.value = LoadStatus.ERROR
@@ -220,12 +224,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
             }
 
         }
-
-    }
-
-    fun updateUserManager(newTeam: Team) {
-        UserManager.team = newTeam
-        Log.i("gillian68", "8 ${UserManager.team}")
     }
 
 

@@ -53,10 +53,6 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun navigateToTeamByBottomNav() {
-        binding.bottomNavView.selectedItemId = R.id.teamFragment
-    }
-
     private fun setBottomNavigation(visible: Boolean) {
         if (visible) {
             binding.bottomNavView.visibility = VISIBLE

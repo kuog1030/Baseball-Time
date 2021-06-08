@@ -649,7 +649,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
     }
 
 
-    //TODO() 目前這個function沒有用到teamId欸
     override suspend fun getTeamPlayer(teamId: String): Result<MutableList<Player>> = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
                 .collection(PLAYERS)

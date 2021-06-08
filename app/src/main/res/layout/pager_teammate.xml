@@ -196,7 +196,7 @@
                     android:paddingEnd="@dimen/quarter_margin"
                     app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                     app:spanCount="3"
-                    app:teammates="@{viewModel.teamPlayers}"
+                    app:teammates="@{viewModel.teamPlayersWithMe}"
                     tools:listitem="@layout/item_teammate" />
 
             </androidx.cardview.widget.CardView>
@@ -206,7 +206,7 @@
                 android:layout_height="wrap_content"
                 android:elevation="8dp"
                 android:gravity="center"
-                app:emptyListHint="@{viewModel.teamPlayers}"
+                app:emptyListHint="@{viewModel.teamPlayersWithMe}"
                 app:layout_constraintBottom_toBottomOf="@id/layout_team_team_card"
                 app:layout_constraintEnd_toEndOf="@id/layout_team_team_card"
                 app:layout_constraintStart_toStartOf="@id/layout_team_team_card"

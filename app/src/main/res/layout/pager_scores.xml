@@ -104,7 +104,7 @@
                 android:text='@{viewModel.scheduleGames != null ? @string/no_game_hint : ""}'
                 android:visibility="@{viewModel.scoresGames.size == 0 ? View.VISIBLE : View.GONE}"
                 app:layout_constraintTop_toBottomOf="@id/text_scores_rate_title"
-                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginTop="200dp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"/>
 
