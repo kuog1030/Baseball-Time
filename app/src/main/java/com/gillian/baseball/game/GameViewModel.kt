@@ -478,9 +478,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 strike = totalStrike,
                 out = outCount.value ?: 0)
         val hasRbi = advanceBase(0)
-        Log.i("gillian69", "number ${toBeSend} line up ${lineUp} strike ${totalStrike} out ${outCount.value}")
         toBeSend.currentBase = toCustomBaseInt(baseList = baseList)
-        Log.i("gillian69", "to be send ${toBeSend.currentBase}")
 
         if (hasRbi) {
             toBeSend.rbi = 1
@@ -501,15 +499,12 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun nextPlayer() {
         clearCount(includeOut = false)
         // if current at bat is the last player of line up
-        Log.i("gillian67", "current ${atBatNumber} and next ${atBatNumber}")
-
         if (atBatNumber == (lineUp.size - 1)) {
             atBatNumber = 0
         } else {
             atBatNumber += 1
         }
 
-        Log.i("gillian67", "current ${atBatNumber} and next ${atBatNumber}")
         // change the hitter to next person in line
         baseList[0] = lineUp[atBatNumber]
         atBatName.value = "第${atBatNumber + 1}棒 ${baseList[0]!!.name}"
@@ -582,8 +577,10 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         }
         //lineUp[atBatNumber] = player
         atBatName.value = player.name
+        baseList[0] = lineUp[atBatNumber]
 
         myBench.removeAt(position)
+        Log.i("gillian", "line up 現在${lineUp}")
         Log.i("gillian", "移除掉替補球員，應該要剩下 $myBench")
     }
 
