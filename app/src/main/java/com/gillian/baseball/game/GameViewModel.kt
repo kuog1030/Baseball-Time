@@ -7,12 +7,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
-import com.gillian.baseball.data.EventInfo
 import com.gillian.baseball.ext.lineUpPlayer
 import kotlinx.coroutines.launch
+import java.util.concurrent.CopyOnWriteArrayList
 
 // debug用
-var totalInning = 2
+var totalInning = 18
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
@@ -54,7 +54,10 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     var homeABNumber = 0
     var guestABNumber = 0
 
-    var myBench = argument.benchPlayer
+    var myBench = CopyOnWriteArrayList<EventPlayer>().apply {
+        this.addAll(argument.benchPlayer)
+    }
+
 
     /* ------------------------------------------------------------------------
                     兩隊共同使用的東西，會被更新
@@ -169,7 +172,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 pitcher.value = guestPitcher.name
                 inningShow.value = "${(inningCount / 2)}"
             } else {
-                guestPitchCount += liveBallCount.value!!
+                guestPitchCount = liveBallCount.value!!
                 liveBallCount.value = homePitchCount
 
                 homeABNumber = atBatNumber
@@ -178,6 +181,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 pitcher.value = homePitcher.name
                 inningShow.value = "${(inningCount / 2) + 1}"
             }
+
+            nextAtBat.value = lineUp.lineUpPlayer(atBatNumber+1).name
 
             uploadGameBox()
             game.value!!.box.score.add(0)
@@ -246,6 +251,15 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         ballCount.value = ballCount.value!!.plus(1)
         if (ballCount.value == 4) {
             // single
+
+            Log.i("gillian69", "number ${atBatNumber} line up ${lineUp[0]}")
+            Log.i("gillian", "${guestLineUp} and ${myBench}")
+            Log.i("gillian69", "$inningCount ${totalStrike} ${outCount.value}")
+
+
+
+
+
             ballFour()
         }
     }
@@ -455,6 +469,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun ballFour() {
+        Log.i("gillian69", "number ${atBatNumber} line up ${lineUp}")
         val toBeSend = Event(player = lineUp[atBatNumber],
                 pitcher = if (isTop) homePitcher else guestPitcher,
                 inning = inningCount,
@@ -463,8 +478,9 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 strike = totalStrike,
                 out = outCount.value ?: 0)
         val hasRbi = advanceBase(0)
+        Log.i("gillian69", "number ${toBeSend} line up ${lineUp} strike ${totalStrike} out ${outCount.value}")
         toBeSend.currentBase = toCustomBaseInt(baseList = baseList)
-        Log.i("gillian", "to be send ${toBeSend.currentBase}")
+        Log.i("gillian69", "to be send ${toBeSend.currentBase}")
 
         if (hasRbi) {
             toBeSend.rbi = 1
@@ -555,18 +571,19 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         player.order = lineUp[atBatNumber].order + 1
 
         Log.i("gillian", "替補${player} 代替 ${guestLineUp[atBatNumber]}上場")
+
         if (isTop) {
-            guestLineUp[atBatNumber] = player
+            //guestLineUp[atBatNumber] = player
+            guestLineUp.set(atBatNumber, player)
             Log.i("gillian", "now guest line up $guestLineUp")
         } else {
             homeLineUp[atBatNumber] = player
             Log.i("gillian", "now home line up $homeLineUp")
         }
-        lineUp[atBatNumber] = player
+        //lineUp[atBatNumber] = player
         atBatName.value = player.name
 
         myBench.removeAt(position)
-
         Log.i("gillian", "移除掉替補球員，應該要剩下 $myBench")
     }
 

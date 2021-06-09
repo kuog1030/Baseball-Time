@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Baseball</string>
+    <string name="app_name">Baseball Time</string>
 
 
     <!--    error hint for user-->
@@ -91,6 +91,7 @@
     <string name="my_pitching">投手成績</string>
     <string name="game_stat_title">成績看板</string>
     <string name="team">Team</string>
+    <string name="player_id_info">這個球員還沒有使用者認領，歡迎邀請這位球員也加入Baseball Time並使用這段球員代號來加入球隊、延續累積成績。</string>
 
 
     <!--   all games related -->

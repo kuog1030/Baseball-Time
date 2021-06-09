@@ -409,6 +409,18 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
+    /*
+    FirebaseFirestore.getInstance().collection(PLAYERS)
+            .document()
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                }
+
+            }
+     */
+
 
     override suspend fun updateHitStat(playerId: String, hitterBox: HitterBox) : Result<Boolean> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(PLAYERS)

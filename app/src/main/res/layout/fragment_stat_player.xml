@@ -1,16 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="hitStat"
             type="com.gillian.baseball.data.HitterBox" />
+
         <variable
             name="pitchStat"
             type="com.gillian.baseball.data.PitcherBox" />
+
         <variable
             name="viewModel"
             type="com.gillian.baseball.statistics.statplayer.StatPlayerViewModel" />
@@ -25,12 +29,12 @@
             android:id="@+id/ticket_top"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            app:layout_constraintHeight_percent=".85"
             android:background="@drawable/bg_card2"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_percent=".85"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -43,10 +47,10 @@
             android:layout_marginBottom="@dimen/margin"
             android:background="@drawable/bg_card2"
             android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
-            app:layout_constraintTop_toBottomOf="@id/ticket_top"
             app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"/>
+            app:layout_constraintTop_toBottomOf="@id/ticket_top" />
 
         <TextView
             android:id="@+id/text_stat_player_default"
@@ -66,8 +70,8 @@
             android:id="@+id/image_stat_player"
             android:layout_width="70dp"
             android:layout_height="70dp"
-            android:layout_marginTop="50dp"
             android:layout_marginStart="@dimen/half_margin"
+            android:layout_marginTop="50dp"
             app:layout_constraintStart_toEndOf="@+id/button_stat_player_leave"
             app:layout_constraintTop_toTopOf="@+id/ticket_top"
             app:photoUrl="@{viewModel.player.image}" />
@@ -110,9 +114,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
             android:background="#597599"
-            android:textColor="@color/color_on_primary"
-            android:text="@string/my_batting"
             android:paddingStart="@dimen/margin"
+            android:text="@string/my_batting"
+            android:textColor="@color/color_on_primary"
             app:layout_constraintEnd_toEndOf="@+id/table_stat_player_hit"
             app:layout_constraintStart_toStartOf="@+id/table_stat_player_hit"
             app:layout_constraintTop_toBottomOf="@+id/image_stat_player" />
@@ -122,8 +126,8 @@
             android:id="@+id/table_stat_player_hit"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
             android:layout_marginStart="@dimen/half_margin"
+            android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/half_margin"
             app:layout_constraintEnd_toEndOf="@id/ticket_top"
             app:layout_constraintStart_toStartOf="@id/ticket_top"
@@ -265,10 +269,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/double_margin"
-            android:text="@string/my_pitching"
             android:background="#597599"
-            android:textColor="@color/color_on_primary"
             android:paddingStart="@dimen/margin"
+            android:text="@string/my_pitching"
+            android:textColor="@color/color_on_primary"
             app:layout_constraintEnd_toEndOf="@+id/text_stat_player_hit"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_hit"
             app:layout_constraintTop_toBottomOf="@+id/table_stat_player_hit" />
@@ -278,8 +282,8 @@
             android:id="@+id/table_stat_player_pitch"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
             android:layout_marginStart="@dimen/half_margin"
+            android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/half_margin"
             app:layout_constraintEnd_toEndOf="@id/ticket_top"
             app:layout_constraintStart_toStartOf="@id/ticket_top"
@@ -442,9 +446,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
             android:text="@{viewModel.myAvg}"
+            android:textColor="@color/color_primary"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="@color/color_primary"
             app:layout_constraintEnd_toEndOf="@+id/text_stat_player_avg"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_avg"
             app:layout_constraintTop_toBottomOf="@+id/text_stat_player_hit"
@@ -455,9 +459,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.myObp}"
+            android:textColor="@color/color_primary"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="@color/color_primary"
             app:layout_constraintEnd_toEndOf="@+id/text_stat_player_obp"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_obp"
             app:layout_constraintTop_toTopOf="@+id/text_stat_avg_number"
@@ -468,9 +472,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.mySlg}"
+            android:textColor="@color/color_primary"
             android:textSize="21sp"
             android:textStyle="bold"
-            android:textColor="@color/color_primary"
             app:layout_constraintEnd_toEndOf="@+id/text_stat_player_slg"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_slg"
             app:layout_constraintTop_toTopOf="@+id/text_stat_obp_number"
@@ -494,27 +498,59 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.player.id}"
-            android:textStyle="bold"
             android:textIsSelectable="true"
+            android:textStyle="bold"
             android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@id/ticket_bottom"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/textView13"
-            tools:text="0kaCKMTWNn7DB0g6YkBr"/>
+            tools:text="0kaCKMTWNn7DB0g6YkBr" />
+
+        <ImageButton
+            android:id="@+id/button_stat_player_info"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginStart="@dimen/margin"
+            android:background="@color/transparent"
+            android:drawablePadding="@dimen/half_margin"
+            android:gravity="center"
+            android:src="@drawable/ic_help_outline_24"
+            android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
+            android:onClick="@{()->viewModel.showInfo()}"
+            app:layout_constraintBottom_toBottomOf="@+id/textView22"
+            app:layout_constraintStart_toEndOf="@id/textView22"
+            app:layout_constraintTop_toTopOf="@id/textView22" />
+
+        <TextView
+            android:id="@+id/text_stat_player_info"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/button_radius_filled_24"
+            android:padding="@dimen/margin"
+            android:text="@string/player_id_info"
+            android:textColor="?colorOnPrimary"
+            app:layout_constraintWidth_percent=".8"
+            android:visibility="@{viewModel.infoVisibility? View.VISIBLE : View.INVISIBLE}"
+            android:layout_marginBottom="@dimen/quarter_margin"
+            app:layout_constraintEnd_toEndOf="@id/ticket_bottom"
+            app:layout_constraintBottom_toTopOf="@id/ticket_bottom"
+            app:layout_constraintStart_toStartOf="@+id/ticket_bottom"
+            tools:visibility="visible" />
+
 
         <View
             android:id="@+id/textView13"
             android:layout_width="0dp"
             android:layout_height="10dp"
-            android:background="@drawable/bg_dotted_line"
             android:layout_marginStart="@dimen/one_half_margin"
             android:layout_marginEnd="@dimen/one_half_margin"
+            android:background="@drawable/bg_dotted_line"
             android:layerType="software"
-            app:layout_constraintTop_toBottomOf="@id/ticket_top"
             app:layout_constraintBottom_toBottomOf="@id/ticket_top"
+            app:layout_constraintEnd_toEndOf="@id/ticket_top"
             app:layout_constraintStart_toStartOf="@id/ticket_top"
-            app:layout_constraintEnd_toEndOf="@id/ticket_top"/>
+            app:layout_constraintTop_toBottomOf="@id/ticket_top" />
 
         <ImageButton
             android:id="@+id/button_stat_player_leave"

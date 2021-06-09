@@ -22,6 +22,14 @@
           }
         },
         {
+          "client_id": "534551205378-dvqq0q0jrr0capvulvs2riupe9defnh3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gillian.baseball",
+            "certificate_hash": "6660da781461a5ed3cbdfa8adb403f9d2b580781"
+          }
+        },
+        {
           "client_id": "534551205378-86bj9g48tc1mi74a8gnep6muval9hrdm.apps.googleusercontent.com",
           "client_type": 3
         }
