@@ -1,15 +1,11 @@
 package com.gillian.baseball.statistics.statplayer
 
-import android.net.Uri
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.R
-import com.gillian.baseball.data.HitterBox
-import com.gillian.baseball.data.LoadStatus
-import com.gillian.baseball.data.PitcherBox
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.source.BaseballRepository
@@ -50,7 +46,7 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
 
 
 
-    fun getPlayerStat(playerId: String) {
+    fun fetchPlayerStat(playerId: String) {
         Log.i("gillian", "get player stat!!")
         viewModelScope.launch {
             val result = repository.getOnePlayer(playerId)
@@ -96,8 +92,13 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
         _navigateToEdit.value = null
     }
 
-    fun showInfo() {
-        infoVisibility.value = true
+    fun showInfo(show: Boolean = true) {
+        if (show) {
+            infoVisibility.value = !(infoVisibility.value!!)
+        } else {
+            infoVisibility.value = false
+        }
+
     }
 
     fun navigateToTeam() {
@@ -111,7 +112,7 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
     fun refresh() {
         player.value?.let {
             isInit = false
-            getPlayerStat(it.id)
+            fetchPlayerStat(it.id)
         }
     }
 

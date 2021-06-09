@@ -1,9 +1,6 @@
 package com.gillian.baseball.statistics.statplayer
 
-import android.app.Activity
-import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -12,14 +9,9 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.databinding.FragmentStatPlayerBinding
 import com.gillian.baseball.editplayer.EditPlayerDialog
 import com.gillian.baseball.ext.getVmFactory
-import com.gillian.baseball.newplayer.NewPlayerDialog
-import com.gillian.baseball.newplayer.REQUEST_IMAGE_OPEN
-import com.gillian.baseball.views.HitterBoxAdapter
-import com.gillian.baseball.views.PitcherBoxAdapter
 
 const val REQUEST_IMAGE_OPEN = 1
 
@@ -33,10 +25,10 @@ class StatPlayerFragment : Fragment() {
 
         binding = FragmentStatPlayerBinding.inflate(inflater, container, false)
 
-        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
 
-        viewModel.getPlayerStat(args.playerId)
+        viewModel.fetchPlayerStat(args.playerId)
 
         binding.buttonStatPlayerLeave.setOnClickListener {
             findNavController().popBackStack()
