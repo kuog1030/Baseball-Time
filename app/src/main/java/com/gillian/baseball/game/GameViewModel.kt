@@ -580,7 +580,6 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         baseList[0] = lineUp[atBatNumber]
 
         myBench.removeAt(position)
-        Log.i("gillian", "line up 現在${lineUp}")
         Log.i("gillian", "移除掉替補球員，應該要剩下 $myBench")
     }
 
