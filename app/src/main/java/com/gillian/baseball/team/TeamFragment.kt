@@ -45,13 +45,6 @@ class TeamFragment : Fragment() {
             }
         })
 
-
-        viewModel.myself.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                viewModel.updateMyStatUi()
-            }
-        })
-
         viewModel.teamPlayers.observe(viewLifecycleOwner, Observer {
             it?.let{
                 viewModel.createRankList(it)

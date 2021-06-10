@@ -16,28 +16,31 @@ fun List<Player>.toRankList() : List<Rank> {
     lateinit var sortList : List<Player>
     val resultList = mutableListOf<Rank>()
 
-    for (type in 1..3) {
+    for (type in 1..4) {
         val result = Rank()
 
         if (this.size <= 3) {
             result.type = when (type) {
                 1 -> getString(R.string.hit_rank)
                 2 -> getString(R.string.homerun_rank)
+                3 -> getString(R.string.avg_rank)
                 else -> getString(R.string.sb_rank)
             }
             resultList.add(result)
         } else {
             if (type == 1) {
-                sortList = this.sortedByDescending { it.hitStat.hit }
-                result.type = getString(R.string.hit_rank)
+                sortList = this.sortedWith (compareBy({ -it.hitStat.avg }, {it.hitStat.atBat}))
+                result.type = getString(R.string.avg_rank)
                 result.let {
+                    val statFormat = "%.3f"
                     it.topImage = sortList[0].image ?: ""
-                    it.topScore = sortList[0].hitStat.hit.toString()
-                    it.secondScore = sortList[1].hitStat.hit.toString()
-                    it.thirdScore = sortList[2].hitStat.hit.toString()
+                    it.topScore = statFormat.format(sortList[0].hitStat.avg)
+                    it.secondScore = statFormat.format(sortList[1].hitStat.avg)
+                    it.thirdScore = statFormat.format(sortList[2].hitStat.avg)
                 }
+
             } else if (type == 2) {
-                sortList = this.sortedByDescending { it.hitStat.homerun }
+                sortList = this.sortedWith (compareBy({ -it.hitStat.homerun }, {it.hitStat.atBat}))
                 result.type = getString(R.string.homerun_rank)
                 result.let {
                     it.topImage = sortList[0].image ?: ""
@@ -46,8 +49,18 @@ fun List<Player>.toRankList() : List<Rank> {
                     it.thirdScore = sortList[2].hitStat.homerun.toString()
                 }
 
+            } else if (type == 3) {
+                sortList = this.sortedWith (compareBy({ -it.hitStat.hit }, {it.hitStat.atBat}))
+                result.type = getString(R.string.hit_rank)
+                result.let {
+                    it.topImage = sortList[0].image ?: ""
+                    it.topScore = sortList[0].hitStat.hit.toString()
+                    it.secondScore = sortList[1].hitStat.hit.toString()
+                    it.thirdScore = sortList[2].hitStat.hit.toString()
+                }
+
             } else {
-                sortList = this.sortedByDescending { it.hitStat.stealBase }
+                sortList = this.sortedWith (compareBy({ -it.hitStat.stealBase }, {it.hitStat.atBat}))
                 result.type = getString(R.string.sb_rank)
                 result.let {
                     it.topImage = sortList[0].image ?: ""
@@ -289,6 +302,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
 
         if (type == 0) {
             targetEventType = EventType.RUN
+            //TODO()檢查這個~~
             Log.i("gillian extension", "type = 0 and it shouldn't be print.")
         }
 
@@ -313,6 +327,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
                 box.hit += 1
                 box.homerun += 1
             }
+            EventType.HITBYPITCH -> box.hitByPitch += 1
             EventType.SACRIFICEFLY -> box.sacrificeFly += 1
             EventType.DROPPEDTHIRD -> box.strikeOut += 1
             EventType.STRIKEOUT -> box.strikeOut += 1

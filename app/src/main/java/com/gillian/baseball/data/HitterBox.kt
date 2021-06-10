@@ -17,11 +17,21 @@ data class HitterBox (
         var homerun: Int = 0,
         var runsBattedIn : Int = 0,
         var baseOnBalls : Int = 0,
+        var hitByPitch : Int = 0,
         var strikeOut : Int = 0,
         var stealBase: Int = 0,
         var sacrificeFly: Int = 0,
         var error: Int = 0
 ) : Parcelable {
+
+    val avg : Float
+        get() = myAverage()
+
+    val obp : Float
+        get() = myObp()
+
+    val slg : Float
+        get() = mySlg()
 
     fun addNewBox(newBox: HitterBox) {
         this.apply {
@@ -42,36 +52,36 @@ data class HitterBox (
     }
 
     // 打擊率
-    fun myAverage() : Float? {
+    fun myAverage() : Float {
         if (atBat != 0) {
             return (hit / atBat.toFloat())
         } else {
-            return null
+            return 0F
         }
     }
 
     // 上壘率
-    fun myObp() : Float? {
+    fun myObp() : Float {
         if (atBat != 0) {
-            return ((hit+baseOnBalls) / (atBat + baseOnBalls + sacrificeFly).toFloat())
+            return ((hit + baseOnBalls + hitByPitch) / (atBat + baseOnBalls + hitByPitch + sacrificeFly).toFloat())
         } else {
-            return null
+            return 0F
         }
     }
 
     // Slugging Percentage
-    fun mySlg() : Float? {
+    fun mySlg() : Float {
         if (atBat != 0) {
             return ((single + (2*douBle) + (3*triple) + (4*homerun)) / atBat.toFloat())
         } else {
-            return null
+            return 0F
         }
     }
 
     // On-base Plus Slugging
     fun myOps() : Float? {
         if (atBat != 0) {
-            return (myObp()!! + mySlg()!!)
+            return (obp + slg)
         } else {
             return null
         }

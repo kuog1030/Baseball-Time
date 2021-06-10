@@ -338,6 +338,12 @@ fun bindTextAndTeamStat(textView: TextView, number: Int?) {
     }
 }
 
+@BindingAdapter("statPercentage")
+fun bindHitStatPercentage(textView: TextView, average: Float) {
+    val statFormat = "%.3f"
+    textView.text = statFormat.format(average)
+}
+
 @BindingAdapter("inningCount")
 fun bindTextInning(textView: TextView, inning: Int) {
     val inningNine = (inning + 1 ) / 2

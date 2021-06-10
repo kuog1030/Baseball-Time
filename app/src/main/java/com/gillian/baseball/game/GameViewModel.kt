@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
 
 // debug用
-var totalInning = 18
+var totalInning = 2
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 

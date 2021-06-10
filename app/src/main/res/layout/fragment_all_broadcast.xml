@@ -87,7 +87,14 @@
             app:layout_constraintTop_toTopOf="@+id/layout_broadcast_swipe"
             tools:text="@string/error_search"/>
 
-
+        <ProgressBar
+            android:layout_width="@dimen/double_margin"
+            android:layout_height="@dimen/double_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_all_live_search"
+            app:loadingStatus="@{viewModel.status}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -160,15 +160,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         _showNewPlayerDialog.value = true
     }
 
-    fun updateMyStatUi() {
-        val statFormat = "%.3f"
-        myself.value?.let {
-            myAvg.value = statFormat.format(it.hitStat.myAverage() ?: 0F)
-            myObp.value = statFormat.format(it.hitStat.myObp() ?: 0F)
-            mySlg.value = statFormat.format(it.hitStat.mySlg() ?: 0F)
-        }
-    }
-
 
     fun checkIfInfoFilled() {
         if (teamAcronym.value != "" && teamName.value != "") {

@@ -48,30 +48,30 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
 
     fun fetchAllLiveGame(isInit: Boolean = false) {
         viewModelScope.launch {
-            _status.value = LoadStatus.LOADING
+            if (isInit) _status.value = LoadStatus.LOADING
             val result = repository.getAllLiveGamesCard()
 
             _allLiveResult.value = when (result) {
                 is Result.Success -> {
                     _errorMessage.value = null
-                    _status.value = LoadStatus.DONE
-                    if (isInit) cacheAllGames = result.data
+                    if (isInit) _status.value = LoadStatus.DONE
+                    cacheAllGames = result.data
                     if (result.data.isEmpty()) noLiveGame()
                     result.data
                 }
                 is Result.Fail -> {
                     _errorMessage.value = result.error
-                    _status.value = LoadStatus.ERROR
+                    if (isInit) _status.value = LoadStatus.ERROR
                     null
                 }
                 is Result.Error -> {
                     _errorMessage.value = result.exception.toString()
-                    _status.value = LoadStatus.ERROR
+                    if (isInit) _status.value = LoadStatus.ERROR
                     null
                 }
                 else -> {
                     _errorMessage.value = Util.getString(R.string.return_nothing)
-                    _status.value = LoadStatus.ERROR
+                    if (isInit) _status.value = LoadStatus.ERROR
                     null
                 }
             }
@@ -101,7 +101,7 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
 
     fun refresh() {
         if (_status.value != LoadStatus.LOADING) {
-            fetchAllLiveGame(true)
+            fetchAllLiveGame(false)
         }
     }
 
