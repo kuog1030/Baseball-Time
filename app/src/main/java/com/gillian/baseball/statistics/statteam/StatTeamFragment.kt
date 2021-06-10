@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.databinding.FragmentStatTeamBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.team.TeamViewModel
@@ -28,6 +29,10 @@ class StatTeamFragment : Fragment() {
                 viewModel.createStatTable(it)
             }
         })
+
+        binding.buttonTeamStatLeave.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         binding.recyclerTeamStatHitter.adapter = HitterBoxAdapter()
         binding.recyclerTeamStatPitcher.adapter = PitcherBoxAdapter()

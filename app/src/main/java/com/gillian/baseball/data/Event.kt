@@ -44,4 +44,29 @@ data class Event(
         return liveString
     }
 
+    fun toOnBaseString() : String {
+        var liveString = ""
+
+        if (this.result == EventType.INNINGSPITCHED.number) {
+            if (inning % 2 == 1) {
+                liveString += "主隊換投。投手${pitcher.name}在投了${this.out}局後下場。"
+            } else {
+                liveString += "客隊換投。投手${pitcher.name}在投了${this.out}局後下場。"
+            }
+        } else {
+            liveString += "壘上跑者${player.name}"
+            for (type in EventType.values()) {
+                if (this.result == type.number) {
+                    liveString += type.broadcast
+                }
+            }
+            if (this.out == 3) {
+                liveString += "三人出局，換邊。"
+            } else {
+                liveString += "目前${this.out}出局。 "
+            }
+        }
+
+        return liveString
+    }
 }

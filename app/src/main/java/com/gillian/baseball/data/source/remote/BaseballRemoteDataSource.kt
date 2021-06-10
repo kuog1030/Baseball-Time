@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -578,8 +579,10 @@ object BaseballRemoteDataSource : BaseballDataSource {
                     if (task.isSuccessful) {
                         val result = mutableListOf<GameCard>()
                         for (document in task.result!!) {
-                            Log.i("remote", " ${document.id} -> ${document.data}")
-                            result.add(document.toObject(Game::class.java).toGameCard())
+                            val game = document.toObject(Game::class.java).toGameCard()
+                            if (game.date >= (Calendar.getInstance().timeInMillis - TimeUnit.DAYS.toMillis(3))) {
+                                result.add(game)
+                            }
                         }
                         continuation.resume(Result.Success(result))
                     } else {

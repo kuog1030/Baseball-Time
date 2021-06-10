@@ -21,7 +21,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/half_margin"
             android:layout_marginEnd="16dp"
             android:text="@{event.toLiveString()}"
             app:layout_constraintEnd_toStartOf="@id/my_custom_base"
@@ -59,11 +59,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginBottom="@dimen/half_margin"
             android:textColor="@color/red_out"
             android:textSize="25sp"
+            app:ballCount="@{event.out}"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toEndOf="@+id/textView12"
             app:layout_constraintTop_toTopOf="@+id/textView12"
-            app:ballCount="@{event.out}"
             tools:text="@string/three_two" />
 
         <!--        Testing custom view-->
