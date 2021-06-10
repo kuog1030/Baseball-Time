@@ -248,6 +248,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     // 例如野手選擇的跑者出局
     fun runnerOut(atBase: AtBase) {
         atBase.event = null
+        atBase.eventType = EventType.ONBASEOUT
         hasBaseOut.add(atBase.base)
         atBase.base = -1
         changeToNextPage()

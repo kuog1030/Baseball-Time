@@ -305,7 +305,11 @@ fun bindDefaultPhoto(textView: TextView, name: String?) {
     if (name == null) {
         textView.text = ""
     } else {
-        textView.text = name.substring(0, 1)
+        if (name.length < 1) {
+            textView.text = ""
+        } else {
+            textView.text = name.substring(0, 1)
+        }
     }
 }
 

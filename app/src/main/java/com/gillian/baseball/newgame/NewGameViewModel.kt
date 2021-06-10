@@ -91,10 +91,10 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
 
             if (isHome) {
                 game.home = myGameTeam
-                game.guest.name = awayName.value!!
+                game.guest.name = awayName.value?: ""
             } else {
                 game.guest = myGameTeam
-                game.home.name = awayName.value!!
+                game.home.name = awayName.value?: ""
             }
 
             uploadNewGame(game)
