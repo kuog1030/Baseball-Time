@@ -35,6 +35,7 @@ data class HitterBox (
 
     fun addNewBox(newBox: HitterBox) {
         this.apply {
+            name = newBox.name
             atBat += newBox.atBat
             single += newBox.single
             douBle += newBox.douBle

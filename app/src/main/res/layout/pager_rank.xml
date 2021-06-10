@@ -127,12 +127,27 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent">
 
+                <Button
+                    android:id="@+id/button_to_team_stat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/one_half_margin"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    android:layout_marginEnd="@dimen/margin"
+                    android:textColor="@color/grey_888"
+                    android:drawablePadding="@dimen/margin"
+                    android:drawableEnd="@drawable/ic_arrow_forward_20"
+                    android:background="@color/transparent"
+                    android:onClick="@{()->viewModel.navigateToTeamStat()}"
+                    android:text="查看所有球員數據"/>
+
+
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_rank"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:overScrollMode="never"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/button_to_team_stat"
                     android:paddingStart="@dimen/quarter_margin"
                     android:paddingEnd="@dimen/quarter_margin"
                     app:rankList="@{viewModel.rankList}"

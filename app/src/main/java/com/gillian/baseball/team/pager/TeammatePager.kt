@@ -8,19 +8,24 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.databinding.PagerTeammateBinding
+import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.login.UserManager
 import com.gillian.baseball.team.TeamFragmentDirections
 import com.gillian.baseball.team.TeamViewModel
 
 class TeammatePager : Fragment() {
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val binding = PagerTeammateBinding.inflate(inflater, container, false)
 
 
-        val viewModel = ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java)
+        val viewModel = ViewModelProvider(requireActivity(), this.getVmFactory()).get(TeamViewModel::class.java)
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 

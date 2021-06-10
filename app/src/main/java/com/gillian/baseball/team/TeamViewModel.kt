@@ -16,10 +16,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     val myself = MutableLiveData<Player>()
-    val myAvg = MutableLiveData<String>()
-    val myObp = MutableLiveData<String>()
-    val mySlg = MutableLiveData<String>()
-
     val initUser = MutableLiveData<Team>()
 
     private val _teamPlayers = MutableLiveData<MutableList<Player>>()
@@ -37,6 +33,11 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val showNewPlayerDialog: LiveData<Boolean>
         get() = _showNewPlayerDialog
 
+    private val _navigateToTeamStat = MutableLiveData<Boolean>()
+
+    val navigateToTeamStat: LiveData<Boolean>
+        get() = _navigateToTeamStat
+
     private val _statusMe = MutableLiveData<LoadStatus>()
 
     val statusMe: LiveData<LoadStatus>
@@ -51,6 +52,17 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     val newTeamImage : LiveData<String>
         get() = _newTeamImage
+
+    // For Team Stat
+    private val _hitterStat = MutableLiveData<List<HitterBox>>()
+
+    val hitterStat: LiveData<List<HitterBox>>
+        get() = _hitterStat
+
+    private val _pitcherStat = MutableLiveData<List<PitcherBox>>()
+
+    val pitcherStat: LiveData<List<PitcherBox>>
+        get() = _pitcherStat
 
 
     var teamName = MutableLiveData<String>()
@@ -75,7 +87,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     }
 
 
-    fun getTeamPlayer() {
+    fun fetchTeamPlayer() {
 
         viewModelScope.launch {
 
@@ -124,7 +136,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     fun initTeamPage() {
         fetchMyPlayerInfo()
-        getTeamPlayer()
+        fetchTeamPlayer()
         teamName.value = UserManager.team?.name
         teamImage.value = UserManager.team?.image
         teamAcronym.value = UserManager.team?.acronym
@@ -165,10 +177,8 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         if (teamAcronym.value != "" && teamName.value != "") {
             _statusEdit.value = LoadStatus.LOADING
             if (readyToSentPhoto.value != null) {
-                Log.i("gillian68", "1")
                 uploadPhoto(readyToSentPhoto.value!!)
             } else {
-                Log.i("gillian68", "2")
                 _newTeamImage.value = teamImage.value
             }
         }
@@ -177,10 +187,8 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     fun uploadPhoto(uri: Uri) {
         viewModelScope.launch {
             val result = repository.uploadImage(uri)
-            Log.i("gillian68", "3")
             _newTeamImage.value = when (result) {
                 is Result.Success -> {
-                    Log.i("gillian68", "4")
                     result.data
                 }
                 else -> {
@@ -194,7 +202,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     fun updateTeamInfo(imageUrl: String) {
-        Log.i("gillian68", "5")
         // 6/8 TODO
         val newTeam = Team(name = teamName.value ?: "", acronym = teamAcronym.value ?: "", image = imageUrl, id = UserManager.teamId)
         viewModelScope.launch {
@@ -217,13 +224,41 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
+    // For Tea, Stat
+    fun createStatTable(playerList: List<Player>){
+        val hitResult = mutableListOf(HitterBox())
+        val pitchResult = mutableListOf(PitcherBox())
+
+        for (player in playerList) {
+            hitResult.add(player.hitStat)
+            if (player.pitchStat.inningsPitched != 0) {
+                pitchResult.add(player.pitchStat)
+            }
+        }
+
+        _hitterStat.value = hitResult
+        _pitcherStat.value = pitchResult
+    }
+
+
+    fun navigateToTeamStat() {
+        teamPlayers.value?.let{
+            createStatTable(it)
+            _navigateToTeamStat.value = true
+        }
+    }
+
+    fun onTeamStatNavigated() {
+        _navigateToTeamStat.value = null
+    }
+
 
     fun onNewPlayerDialogShowed() {
         _showNewPlayerDialog.value = null
     }
 
     fun refresh() {
-        getTeamPlayer()
+        fetchTeamPlayer()
     }
 
 

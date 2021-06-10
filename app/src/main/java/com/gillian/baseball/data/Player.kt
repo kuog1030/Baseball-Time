@@ -12,6 +12,6 @@ data class Player(
         var nickname : String = name,
         var number : Int = -1,
         var image: String? = null,
-        var hitStat: HitterBox = HitterBox(),
-        var pitchStat: PitcherBox = PitcherBox()
+        var hitStat: HitterBox = HitterBox(name = name, playerId = id),
+        var pitchStat: PitcherBox = PitcherBox(name = name, playerId = id)
 ) : Parcelable
