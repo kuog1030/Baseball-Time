@@ -30,7 +30,7 @@ class SchedulePager : Fragment() {
 
         binding.recyclerSchedule.adapter = CardScoreAdapter(CardScoreAdapter.OnClickListener{ it ->
             findNavController().navigate(NavigationDirections.navigationToOrder(it))
-        })
+        }, false, viewModel)
 
         binding.layoutScheduleSwipe.setOnRefreshListener {
             viewModel.refresh()

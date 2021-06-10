@@ -15,7 +15,8 @@ data class Team (
         return GameTeam(
                 name = name,
                 acronym = acronym,
-                teamId = id
+                teamId = id,
+                image = image
         )
     }
 }

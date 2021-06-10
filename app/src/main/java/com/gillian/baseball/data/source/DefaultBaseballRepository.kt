@@ -148,4 +148,8 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
     override suspend fun deletePlayer(playerId: String): Result<Boolean> {
         return remoteDataSource.deletePlayer(playerId)
     }
+
+    override suspend fun deleteGame(gameId: String): Result<Boolean> {
+        return remoteDataSource.deleteGame(gameId)
+    }
 }

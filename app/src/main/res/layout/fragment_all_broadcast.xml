@@ -56,7 +56,7 @@
             android:id="@+id/layout_broadcast_swipe"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/half_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -66,6 +66,7 @@
                 android:id="@+id/recycler_all_live"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:paddingTop="@dimen/half_margin"
                 android:orientation="vertical"
                 app:scoresGames="@{viewModel.allLiveResult}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

@@ -14,7 +14,8 @@ import com.gillian.baseball.databinding.ItemCardScoreBinding
 import com.gillian.baseball.databinding.ItemCardSmallBinding
 
 
-class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, val isBroadcast: Boolean = false) : ListAdapter<GameCard, RecyclerView.ViewHolder>(DiffCallback) {
+class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, val isBroadcast: Boolean = false, val viewModel: AllGamesViewModel? = null)
+    : ListAdapter<GameCard, RecyclerView.ViewHolder>(DiffCallback) {
 
     class OnClickListener(val clickListener: (gameCard: GameCard) -> Unit) {
         fun onClick(gameCard: GameCard) = clickListener(gameCard)
@@ -29,7 +30,7 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, va
     }
 
     class ScheduleViewHolder(private var binding: ItemCardScheduleBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(game: GameCard, onClickListener: OnClickListener) {
+        fun bind(game: GameCard, onClickListener: OnClickListener, viewModel: AllGamesViewModel?) {
             binding.game = game
             binding.buttonCardScheduleStart.setOnClickListener { onClickListener.onClick(game) }
             binding.buttonScheduleMore.setOnCheckedChangeListener { _, isChecked ->
@@ -40,6 +41,13 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, va
                 }
             }
             binding.executePendingBindings()
+
+            if (viewModel != null) {
+                binding.buttonScheduleDelete.setOnClickListener {
+                    binding.progressScheduleDelete.visibility = View.VISIBLE
+                    viewModel.deleteGame(game.id)
+                }
+            }
         }
     }
 
@@ -65,7 +73,7 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, va
         when (holder) {
             is ViewHolder -> holder.bind(game, onClickListener)
             is SmallViewHolder -> holder.bind(game, onClickListener)
-            is ScheduleViewHolder -> holder.bind(game, onClickListener)
+            is ScheduleViewHolder -> holder.bind(game, onClickListener, viewModel)
         }
     }
 

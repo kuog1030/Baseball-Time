@@ -126,7 +126,6 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
         }
         endGames.sortByDescending { it.date }
         yetGames.sortBy { it.date }
-        //totalWins.value = endGames.filter {it.gameResult == GameResult.WIN}.size
         totalWins.value = endGames.count { it.gameResult == GameResult.WIN }
         totalLose.value = endGames.count {it.gameResult == GameResult.LOSE}
 
@@ -139,6 +138,13 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
     fun refresh() {
         if (_status.value != LoadStatus.LOADING) {
             getAllGamesCard()
+        }
+    }
+
+    fun deleteGame(gameId: String) {
+        viewModelScope.launch {
+            val result = repository.deleteGame(gameId)
+            refresh()
         }
     }
 

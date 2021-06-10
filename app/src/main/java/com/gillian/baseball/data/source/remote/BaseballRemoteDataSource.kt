@@ -900,4 +900,24 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
     }
 
+    override suspend fun deleteGame(gameId: String): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(GAMES)
+                .document(gameId)
+                .delete()
+                .addOnCompleteListener {task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error deleting schedule game. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("delete schedule game fail"))
+                    }
+                }
+
+    }
+
 }

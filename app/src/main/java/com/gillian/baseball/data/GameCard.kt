@@ -31,6 +31,9 @@ data class GameCard(
     val dateStringTime: String
         get() = toDateString(date, 2)
 
+    val dateStringDate: String
+        get() = toDateString(date, 3)
+
     val gameResult : GameResult
         get() {
             if (homeScore > guestScore) {
@@ -44,13 +47,13 @@ data class GameCard(
 
     private fun toDateString(dateLong: Long, format: Int): String {
         lateinit var dateFormat : SimpleDateFormat
-        if (format == 0) {
-            dateFormat = SimpleDateFormat("yyyy-MM-dd EEE HH:mm", Locale.TAIWAN)
-        } else if (format == 1) {
-            dateFormat = SimpleDateFormat("yyyy-MM-dd EEE", Locale.TAIWAN)
-        } else {
-            dateFormat = SimpleDateFormat("MM-dd HH:mm", Locale.TAIWAN)
+        dateFormat = when (format) {
+            0 -> SimpleDateFormat("yyyy-MM-dd EEE HH:mm", Locale.TAIWAN)
+            1 -> SimpleDateFormat("yyyy-MM-dd EEE", Locale.TAIWAN)
+            2 -> SimpleDateFormat("MM-dd HH:mm", Locale.TAIWAN)
+            else -> SimpleDateFormat("MM/dd", Locale.TAIWAN)
         }
+
         return dateFormat.format(Date(dateLong))
     }
 }
