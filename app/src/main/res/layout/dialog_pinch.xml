@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="gameTitle"
+            type="String" />
+
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.game.pinch.PinchViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:onClick="@{()->viewModel.dismiss()}">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="80dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="80dp"
+            android:background="@drawable/bg_dialog"
+            android:paddingBottom="@dimen/one_half_margin"
+            android:onClick="@{()->viewModel.nothing()}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TextView
+                android:id="@+id/text_pinch_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/one_half_margin"
+                android:text="@{gameTitle}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <LinearLayout
+                android:id="@+id/layout_pinch_player"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/one_half_margin"
+                android:layout_marginTop="@dimen/one_half_margin"
+                android:layout_marginEnd="@dimen/one_half_margin"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@id/text_pinch_title">
+
+                <ToggleButton
+                    android:id="@+id/toggle_pinch_player"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/button_radius_filled"
+                    android:checked="@{viewModel.expandBlock == 1}"
+                    android:drawableEnd="@drawable/toggle_arrow"
+                    android:drawableTint="@color/color_on_primary"
+                    android:onClick="@{()->viewModel.expandPlayer()}"
+                    android:paddingStart="@dimen/margin"
+                    android:paddingEnd="@dimen/margin"
+                    android:textColor="@color/color_on_primary"
+                    android:text="@{viewModel.playerToggleText}"
+                    android:textOn="@{viewModel.playerToggleText}"
+                    android:textOff="@{viewModel.playerToggleText}"
+                    android:textSize="17sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_pinch_player"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/one_half_margin"
+                    android:visibility="@{viewModel.expandBlock == 1? View.VISIBLE : View.GONE}"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:visibility="gone">
+
+                </androidx.recyclerview.widget.RecyclerView>
+            </LinearLayout>
+
+<!--            <Button-->
+<!--                style="@style/ButtonRadiusFilled"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:textSize="17sp"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/layout_pinch_player"-->
+<!--                app:layout_constraintStart_toStartOf="@id/layout_pinch_player"-->
+<!--                app:layout_constraintEnd_toEndOf="@id/layout_pinch_player"-->
+<!--                android:layout_marginTop="@dimen/one_half_margin"-->
+<!--                android:text="比賽中止"/>-->
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,191 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="newPhoto"
+            type="Boolean" />
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.editplayer.EditPlayerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_card">
+
+        <TextView
+            android:id="@+id/text_edit_player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/one_half_margin"
+            android:text="@string/name"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_edit_player_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_edit_player_name" />
+
+        <EditText
+            android:id="@+id/edit_edit_player_name"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/one_half_margin"
+            android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginEnd="@dimen/one_half_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/name_hint}"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.name}"
+            android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_edit_player_name"
+            app:layout_constraintTop_toBottomOf="@+id/image_edit_player_photo" />
+
+        <TextView
+            android:id="@+id/text_edit_player_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_edit_player_number"
+            app:layout_constraintStart_toStartOf="@+id/text_edit_player_name"
+            app:layout_constraintTop_toTopOf="@+id/edit_edit_player_number" />
+
+        <EditText
+            android:id="@+id/edit_edit_player_number"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/number_hint}"
+            android:inputType="number"
+            android:text="@={viewModel.number}"
+            android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_edit_player_name"
+            app:layout_constraintStart_toStartOf="@+id/edit_edit_player_name"
+            app:layout_constraintTop_toBottomOf="@+id/edit_edit_player_name" />
+
+        <TextView
+            android:id="@+id/text_edit_player_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nickname"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_edit_player_nickname"
+            app:layout_constraintStart_toStartOf="@+id/text_edit_player_number"
+            app:layout_constraintTop_toTopOf="@+id/edit_edit_player_nickname" />
+
+        <EditText
+            android:id="@+id/edit_edit_player_nickname"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="@string/nickname_hint"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.nickname}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_edit_player_number"
+            app:layout_constraintStart_toStartOf="@+id/edit_edit_player_number"
+            app:layout_constraintTop_toBottomOf="@+id/edit_edit_player_number" />
+
+        <ImageButton
+            android:id="@+id/imageView3"
+            android:layout_width="@dimen/close_size"
+            android:layout_height="@dimen/close_size"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            android:background="@drawable/ic_baseline_clear_24"
+            android:onClick="@{()->viewModel.dismissAndDontSave()}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_edit_player_remove"
+            style="@style/GameButton"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:backgroundTint="@color/grey_888"
+            android:onClick="@{()->viewModel.deletePlayer()}"
+            android:paddingStart="@dimen/half_margin"
+            android:paddingEnd="@dimen/half_margin"
+            android:text="@string/remove_from_team"
+            app:layout_constraintEnd_toStartOf="@+id/button_edit_player_save"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/edit_edit_player_nickname" />
+
+        <Button
+            android:id="@+id/button_edit_player_confirm"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.confirmDelete? View.VISIBLE : View.GONE}"
+            android:onClick="@{()->viewModel.confirmDelete()}"
+            android:paddingStart="@dimen/half_margin"
+            android:paddingEnd="@dimen/half_margin"
+            android:text="@string/remove_confirm"
+            app:layout_constraintBottom_toBottomOf="@+id/button_edit_player_remove"
+            app:layout_constraintEnd_toEndOf="@+id/button_edit_player_remove"
+            app:layout_constraintStart_toStartOf="@+id/button_edit_player_remove"
+            app:layout_constraintTop_toTopOf="@+id/button_edit_player_remove" />
+
+        <Button
+            android:id="@+id/button_edit_player_save"
+            style="@style/GameButton"
+            android:layout_width="130dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/double_margin"
+            android:onClick="@{()->viewModel.checkIfInfoFilled()}"
+            android:paddingStart="@dimen/half_margin"
+            android:paddingEnd="@dimen/half_margin"
+            android:text="@string/edit_player_save"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/button_edit_player_remove"
+            app:layout_constraintTop_toTopOf="@+id/button_edit_player_remove" />
+
+
+        <ImageView
+            android:id="@+id/image_edit_player_photo"
+            imageUrl="@{viewModel.photoUrl}"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_marginTop="@dimen/double_margin"
+            android:visibility="@{newPhoto ? View.INVISIBLE : View.VISIBLE}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:loadingStatus="@{viewModel.status}" />
+
+        <ImageView
+            android:id="@+id/image_edit_player_new_photo"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{newPhoto ? View.VISIBLE : View.INVISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/image_edit_player_photo"
+            app:layout_constraintEnd_toEndOf="@+id/image_edit_player_photo"
+            app:layout_constraintStart_toStartOf="@+id/image_edit_player_photo"
+            app:layout_constraintTop_toTopOf="@+id/image_edit_player_photo" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

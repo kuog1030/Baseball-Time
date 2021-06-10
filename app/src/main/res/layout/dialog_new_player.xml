@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.newplayer.NewPlayerViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/bg_bottom_card">
+
+        <TextView
+            android:id="@+id/text_new_player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:text="@string/name_must"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_new_player_name"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/edit_new_player_name" />
+
+        <EditText
+            android:id="@+id/edit_new_player_name"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="58dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/name_hint}"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.name}"
+            android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_new_player_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_new_player_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/number_must"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_new_player_number"
+            app:layout_constraintStart_toStartOf="@+id/text_new_player_name"
+            app:layout_constraintTop_toTopOf="@+id/edit_new_player_number" />
+
+        <EditText
+            android:id="@+id/edit_new_player_number"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/number_hint}"
+            android:inputType="number"
+            android:text="@={viewModel.number}"
+            android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_player_name"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_player_name"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_player_name" />
+
+        <TextView
+            android:id="@+id/text_new_player_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nickname"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_new_player_nickname"
+            app:layout_constraintStart_toStartOf="@+id/text_new_player_number"
+            app:layout_constraintTop_toTopOf="@+id/edit_new_player_nickname" />
+
+        <EditText
+            android:id="@+id/edit_new_player_nickname"
+            style="@style/EditText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:hint="@string/nickname_hint"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.nickname}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_player_number"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_player_number"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_player_number" />
+
+        <TextView
+            android:id="@+id/text_new_player_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:text="@string/image"
+            app:layout_constraintStart_toStartOf="@+id/text_new_player_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_player_nickname" />
+
+        <ImageButton
+            android:id="@+id/imageView3"
+            android:layout_width="@dimen/close_size"
+            android:layout_height="@dimen/close_size"
+            android:layout_marginEnd="@dimen/margin"
+            android:background="@drawable/ic_baseline_clear_24"
+            android:onClick="@{()->viewModel.dismissDialog()}"
+            app:layout_constraintBottom_toTopOf="@+id/edit_new_player_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/button_new_player_save"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:onClick="@{()->viewModel.checkIfInfoFilled()}"
+            android:text="@string/create_a_player_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_player_nickname"
+            app:layout_constraintStart_toStartOf="@+id/text_new_player_image"
+            app:layout_constraintTop_toBottomOf="@+id/image_new_player_photo" />
+
+        <ImageView
+            android:id="@+id/image_new_player_photo"
+            android:layout_width="80dp"
+            android:layout_height="120dp"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_player_nickname"
+            app:layout_constraintStart_toStartOf="@+id/text_new_player_nickname"
+            app:layout_constraintTop_toBottomOf="@+id/text_new_player_image"
+            app:srcCompat="@drawable/button_drawble_game" />
+
+        <ProgressBar
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorPrimary"
+            android:indeterminateTint="@color/white"
+            android:padding="10dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            app:layout_constraintBottom_toBottomOf="@id/button_new_player_save"
+            app:layout_constraintEnd_toEndOf="@id/button_new_player_save"
+            app:layout_constraintStart_toStartOf="@id/button_new_player_save"
+            app:layout_constraintTop_toTopOf="@id/button_new_player_save"
+            app:loadingStatus="@{viewModel.status}" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

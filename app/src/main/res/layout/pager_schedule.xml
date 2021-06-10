@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.allgames.AllGamesViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+            android:id="@+id/layout_schedule_swipe"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_schedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:overScrollMode="never"
+                android:padding="@dimen/margin"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                app:layout_constraintTop_toTopOf="parent"
+                app:scoresGames="@{viewModel.scheduleGames}"
+                tools:itemCount="3"
+                tools:listitem="@layout/item_card_small">
+
+            </androidx.recyclerview.widget.RecyclerView>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+
+
+
+        <Button
+            android:id="@+id/fab_fast_start"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:background="@drawable/bg_card"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
+            android:clickable="true"
+            android:drawableEnd="@drawable/button_drawble_game"
+            android:drawablePadding="@dimen/margin"
+            android:drawableTint="?attr/colorPrimaryVariant"
+            android:onClick="@{()->viewModel.startANewGame()}"
+            android:text="@string/fast_start_games"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="16sp"
+            android:visibility="@{viewModel.clicked ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/fab_fast_schedule_game"
+            app:layout_constraintEnd_toEndOf="@id/fab_fast_schedule_game"
+            tools:visibility="visible" />
+
+        <Button
+            android:id="@+id/fab_fast_schedule_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:background="@drawable/bg_card"
+            android:paddingStart="@dimen/margin"
+            android:paddingEnd="@dimen/margin"
+            android:clickable="true"
+            android:drawableEnd="@drawable/button_drawble_calendar"
+            android:drawablePadding="@dimen/margin"
+            android:drawableTint="?attr/colorPrimaryVariant"
+            android:src="@android:drawable/ic_input_add"
+            android:text="@string/schedule_games"
+            android:onClick="@{()->viewModel.createNewGame()}"
+            android:textColor="?attr/colorPrimaryVariant"
+            android:textSize="16sp"
+            android:visibility="@{viewModel.clicked ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toTopOf="@id/fab_add"
+            app:layout_constraintEnd_toEndOf="@id/fab_add"
+            tools:visibility="visible" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/one_half_margin"
+            android:layout_marginBottom="@dimen/one_half_margin"
+            android:backgroundTint="?attr/colorPrimary"
+            android:clickable="true"
+            android:onClick="@{()->viewModel.expandAndClose()}"
+            android:src="@android:drawable/ic_input_add"
+            android:tint="@android:color/white"
+            app:borderWidth="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <TextView
+            android:id="@+id/text_schedule_no_game"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{viewModel.scheduleGames != null ? @string/no_schedule_hint : ""}'
+            android:visibility="@{viewModel.scheduleGames.size == 0 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+        <View
+            android:id="@+id/shadow_schedule"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:background="@color/grey_transparent"
+            android:onClick="@{()->viewModel.expandAndClose()}"
+            android:visibility="@{viewModel.clicked ? View.VISIBLE : View.GONE}"
+            tools:visibility="gone"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

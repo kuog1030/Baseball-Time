@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="game"
+            type="com.gillian.baseball.data.GameCard" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="220dp"
+        android:background="@drawable/bg_card"
+        android:layout_marginBottom="@dimen/margin">
+
+        <TextView
+            style="@style/DefaultPhoto"
+            android:id="@+id/text_card_score_guest_d"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            app:defaultName="@{game.guestName}"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_card_score_guest"
+            app:layout_constraintEnd_toEndOf="@+id/image_card_score_guest"
+            app:layout_constraintStart_toStartOf="@+id/image_card_score_guest"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_guest" />
+
+        <TextView
+            style="@style/DefaultPhoto"
+            android:id="@+id/text_card_score_home_d"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            app:defaultName="@{game.homeName}"
+            android:textSize="24sp"
+            app:layout_constraintBottom_toBottomOf="@+id/image_card_score_home"
+            app:layout_constraintEnd_toEndOf="@+id/image_card_score_home"
+            app:layout_constraintStart_toStartOf="@+id/image_card_score_home"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_home" />
+
+        <TextView
+            android:id="@+id/text_card_score_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text='@{game.title + "  " + game.place}'
+            android:textColor="?attr/colorPrimary"
+            android:layout_marginTop="@dimen/margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="全國棒球大專盃8強 - 福和橋" />
+
+        <TextView
+            android:id="@+id/text_card_score_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.15"
+            android:text="@{game.dateString}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_card_score_title"
+            tools:layout_editor_absoluteY="26dp"
+            tools:text="2021/05/15 09:00"/>
+
+        <TextView
+            android:id="@+id/text_card_score_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="45sp"
+            android:letterSpacing="0.4"
+            android:text='@{String.valueOf(game.guestScore) + "-" + String.valueOf(game.homeScore)}'
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_score_guest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_guest"
+            tools:text="3-2" />
+
+        <ImageView
+            android:id="@+id/image_card_score_guest"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            android:layout_marginBottom="@dimen/margin"
+            app:layout_constraintBottom_toTopOf="@+id/text_card_score_guest"
+            app:layout_constraintEnd_toStartOf="@+id/text_card_score_score"
+            app:layout_constraintHorizontal_bias="0.522"
+            app:layout_constraintStart_toStartOf="parent"
+            app:photoUrl="@{game.guestImage}"/>
+
+        <TextView
+            android:id="@+id/text_card_score_guest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/margin"
+            android:text="@{game.guestName}"
+            app:layout_constraintBottom_toTopOf="@+id/bar_card_score"
+            app:layout_constraintEnd_toStartOf="@+id/text_card_score_score"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <ImageView
+            android:id="@+id/image_card_score_home"
+            android:layout_width="@dimen/game_card_team_image"
+            android:layout_height="@dimen/game_card_team_image"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_card_score_score"
+            app:layout_constraintTop_toTopOf="@+id/image_card_score_guest"
+            app:photoUrl="@{game.homeImage}"/>
+
+        <TextView
+            android:id="@+id/text_card_score_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{game.homeName}"
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_score_guest"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_card_score_score"
+            app:layout_constraintTop_toTopOf="@+id/text_card_score_guest" />
+
+        <View
+            android:id="@+id/bar_card_score"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginBottom="@dimen/half_margin"
+            android:background="@color/grey_888"
+            app:layout_constraintBottom_toTopOf="@+id/text_card_score_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_card_score_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="@dimen/half_margin"
+            android:gravity="center_vertical"
+            android:text="@string/more_detail"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/image_card_score_arrow" />
+
+        <ImageView
+            android:id="@+id/image_card_score_arrow"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/half_margin"
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_score_detail"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_card_score_detail"
+            app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

@@ -4,12 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.view.View" />
+        <variable
+            name="onBaseInfo"
+            type="com.gillian.baseball.data.OnBaseInfo" />
         <variable
             name="viewModel"
-            type="com.gillian.baseball.game.dialog.OnBaseDialogViewModel" />
-        <variable
-            name="atBase"
-            type="com.gillian.baseball.data.AtBase" />
+            type="com.gillian.baseball.game.onbase.OnBaseDialogViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,44 +18,50 @@
         android:layout_height="match_parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="@dimen/dialog_width"
-            android:layout_height="@dimen/dialog_height"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="50dp"
+            android:layout_marginEnd="@dimen/margin"
+            android:layout_marginBottom="50dp"
+            android:background="@drawable/bg_dialog"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <ImageView
-                android:id="@+id/image_on_base_field"
-                android:layout_width="wrap_content"
-                android:layout_height="200dp"
-                android:layout_marginTop="40dp"
-                app:layout_constraintBottom_toTopOf="@+id/button_on_base_pick_off"
+            <com.gillian.baseball.views.CustomBaseView
+                android:id="@+id/base_on_base"
+                android:layout_width="200dp"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView"
-                app:srcCompat="@drawable/field" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias=".15"
+                app:onBase="0" />
 
             <Button
                 android:id="@+id/button_on_base_pick_off"
                 style="@style/GameButton"
                 android:layout_width="@dimen/hitter_button_width"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_margin"
-                android:text="@string/pick_off"
-                android:onClick="@{()->viewModel.pickOff()}"
+                android:onClick="@{()->viewModel.advanceByError(true)}"
+                android:text="@string/error_advance"
+                android:layout_marginTop="@dimen/margin"
+                app:layout_constraintBottom_toTopOf="@+id/button_on_base_error"
                 app:layout_constraintEnd_toStartOf="@+id/button_on_base_steal_success"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/image_on_base_field" />
+                app:layout_constraintTop_toBottomOf="@+id/base_on_base" />
 
             <Button
                 android:id="@+id/button_on_base_steal_success"
                 style="@style/GameButton"
                 android:layout_width="@dimen/hitter_button_width"
                 android:layout_height="wrap_content"
-                android:text="@string/steal_base_success"
                 android:onClick="@{()->viewModel.stealBaseSuccess()}"
+                android:text="@string/steal_base_success"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/button_on_base_pick_off"
@@ -62,24 +69,23 @@
 
             <Button
                 android:id="@+id/button_on_base_error"
-                style="@style/GameButton"
+                style="@style/GameButtonOut"
                 android:layout_width="@dimen/hitter_button_width"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="36dp"
-                android:text="@string/error_advance"
-                android:onClick="@{()->viewModel.advanceByError()}"
+                android:onClick="@{()->viewModel.pickOff()}"
+                android:text="@string/pick_off"
+                app:layout_constraintBottom_toTopOf="@+id/button_on_base_run"
                 app:layout_constraintEnd_toEndOf="@+id/button_on_base_pick_off"
-                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toStartOf="@+id/button_on_base_pick_off"
                 app:layout_constraintTop_toBottomOf="@+id/button_on_base_pick_off" />
 
             <Button
                 android:id="@+id/button_on_base_steal_fail"
-                style="@style/GameButton"
+                style="@style/GameButtonOut"
                 android:layout_width="@dimen/hitter_button_width"
                 android:layout_height="wrap_content"
-                android:text="@string/steal_base_fail"
                 android:onClick="@{()->viewModel.stealBaseFail()}"
+                android:text="@string/steal_base_fail"
                 app:layout_constraintEnd_toEndOf="@+id/button_on_base_steal_success"
                 app:layout_constraintStart_toStartOf="@+id/button_on_base_steal_success"
                 app:layout_constraintTop_toTopOf="@+id/button_on_base_error" />
@@ -89,79 +95,110 @@
                 style="@style/GameButton"
                 android:layout_width="@dimen/hitter_button_width"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_margin"
                 android:onClick="@{()->viewModel.advance()}"
                 android:text="@string/advance"
+                app:layout_constraintBottom_toTopOf="@+id/bar_on_base"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/button_on_base_steal_fail" />
-
-
-            <TextView
-                android:id="@+id/textView"
-                style="@style/EventPage"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@{atBase.runnerString}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:text="陳傑憲" />
+                app:layout_constraintTop_toBottomOf="@+id/button_on_base_error" />
 
             <TextView
                 android:id="@+id/text_on_base_first_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintEnd_toEndOf="@id/image_on_base_field"
-                app:layout_constraintHorizontal_bias="0.9"
-                app:layout_constraintStart_toStartOf="@+id/image_on_base_field"
-                app:layout_constraintTop_toTopOf="@+id/text_on_base_third_player" />
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="@+id/base_on_base"
+                app:layout_constraintStart_toEndOf="@+id/base_on_base"
+                app:layout_constraintTop_toTopOf="@+id/text_on_base_third_player"
+                app:onBaseFirst="@{onBaseInfo}"
+                tools:text="一壘在這" />
 
             <TextView
                 android:id="@+id/text_on_base_third_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintBottom_toBottomOf="@+id/image_on_base_field"
-                app:layout_constraintEnd_toEndOf="@+id/image_on_base_field"
-                app:layout_constraintHorizontal_bias="0.1"
-                app:layout_constraintStart_toStartOf="@+id/image_on_base_field"
-                app:layout_constraintTop_toTopOf="@+id/image_on_base_field" />
+                android:textSize="18sp"
+                app:layout_constraintVertical_bias=".7"
+                app:layout_constraintBottom_toBottomOf="@+id/base_on_base"
+                app:layout_constraintEnd_toStartOf="@+id/base_on_base"
+                app:layout_constraintStart_toStartOf="@+id/base_on_base"
+                app:layout_constraintTop_toTopOf="@+id/base_on_base"
+                app:onBaseThird="@{onBaseInfo}"
+                tools:text="三壘在這" />
 
             <TextView
                 android:id="@+id/text_on_base_second_player"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView"
-                app:layout_constraintBottom_toTopOf="@id/image_on_base_field"
+                app:onBaseSecond="@{onBaseInfo}"
+                app:layout_constraintBottom_toTopOf="@id/base_on_base"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:textSize="18sp"
+                tools:text="二壘在這"/>
 
             <View
                 android:id="@+id/bar_on_base"
                 android:layout_width="332dp"
                 android:layout_height="2dp"
-                android:layout_marginStart="@dimen/double_margin"
-                android:layout_marginEnd="@dimen/double_margin"
-                android:layout_marginBottom="60dp"
+                android:layout_marginBottom="@dimen/event_dialog_bar_margin"
                 android:background="@color/grey_888"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintEnd_toEndOf="@+id/button_on_base_steal_fail"
+                app:layout_constraintStart_toStartOf="@+id/button_on_base_error" />
 
             <TextView
                 android:id="@+id/text_on_base_page"
                 style="@style/EventPage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
                 android:text="@string/page_one"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="@id/bar_on_base"
                 app:layout_constraintStart_toStartOf="@id/bar_on_base"
                 app:layout_constraintTop_toBottomOf="@id/bar_on_base" />
+
+            <ImageButton
+                android:id="@+id/button_on_base_dismiss"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginTop="@dimen/half_margin"
+                android:layout_marginEnd="@dimen/half_margin"
+                android:background="@color/transparent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:srcCompat="@drawable/ic_clear_36" />
+
+            <LinearLayout
+                android:id="@+id/layout_on_base_error"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:orientation="horizontal"
+                android:background="@drawable/bg_card"
+                android:visibility="@{viewModel.errorLayout? View.VISIBLE : View.GONE}"
+                app:layout_constraintBottom_toBottomOf="@+id/button_on_base_run"
+                app:layout_constraintEnd_toEndOf="@+id/button_on_base_steal_fail"
+                app:layout_constraintStart_toStartOf="@+id/button_on_base_error"
+                app:layout_constraintTop_toTopOf="@+id/button_on_base_pick_off">
+
+                <ImageButton
+                    android:id="@+id/button_on_base_leave"
+                    android:layout_width="24dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/transparent"
+                    android:onClick="@{()->viewModel.advanceByError(false)}"
+                    app:srcCompat="@drawable/ic_baseline_arrow_backward_24" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recycler_on_base_error"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="@dimen/margin"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_order_pitcher"
+                    tools:itemCount="5"/>
+            </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

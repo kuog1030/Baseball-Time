@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View"/>
+        <variable
+            name="game"
+            type="com.gillian.baseball.data.GameCard" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="90dp"
+        android:background="@drawable/bg_card"
+        android:layout_marginBottom="@dimen/margin">
+
+        <TextView
+            android:id="@+id/text_card_small_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/half_margin"
+            android:text='@{game.title + "  " + game.place}'
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.012"
+            app:layout_constraintStart_toStartOf="@+id/bar_card_small"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="全國棒球大專盃8強 - 福和橋" />
+
+        <TextView
+            android:id="@+id/text_card_small_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin"
+            android:text="@{game.status == 1 ? game.dateStringTime : game.dateStringShort}"
+            app:layout_constraintEnd_toEndOf="@+id/bar_card_small"
+            app:layout_constraintTop_toTopOf="@+id/text_card_small_title"
+            tools:text="2021/05/15 週六" />
+
+        <View
+            android:id="@+id/bar_card_small"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/grey_888"
+            android:layout_marginTop="@dimen/quarter_margin"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_card_small_title" />
+
+        <TextView
+            android:id="@+id/text_card_small_score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:letterSpacing="0.4"
+            android:text='@{String.valueOf(game.guestScore) + "-" + String.valueOf(game.homeScore)}'
+            android:textSize="20sp"
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_small_guest"
+            app:layout_constraintEnd_toStartOf="@+id/image_card_small_arrow"
+            app:layout_constraintHorizontal_bias="0.4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_card_small_guest"
+            app:layout_constraintVertical_bias="0.5"
+            tools:text="3-2" />
+
+        <TextView
+            android:id="@+id/text_card_small_guest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:text="@{game.guestName}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/text_card_small_title"
+            app:layout_constraintTop_toBottomOf="@+id/bar_card_small"
+            app:layout_constraintVertical_bias="0.5"
+            tools:text="Android" />
+
+        <TextView
+            android:id="@+id/text_card_small_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/one_half_margin"
+            android:text="@{game.homeName}"
+            app:layout_constraintBottom_toBottomOf="@+id/text_card_small_score"
+            app:layout_constraintStart_toEndOf="@+id/text_card_small_score"
+            app:layout_constraintTop_toTopOf="@+id/text_card_small_score"
+            tools:text="東園國小" />
+
+
+        <ImageView
+            android:id="@+id/image_card_small_arrow"
+            android:layout_width="20dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/half_margin"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bar_card_small"
+            app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+
+        <TextView
+            android:id="@+id/text_card_small_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin"
+            android:textSize="18sp"
+            app:gameResult="@{game.gameResult}"
+            android:visibility="@{game.status == 1 ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/image_card_small_arrow"
+            app:layout_constraintEnd_toStartOf="@+id/image_card_small_arrow"
+            app:layout_constraintTop_toTopOf="@+id/image_card_small_arrow"
+            tools:text="L" />
+
+        <TextView
+            style="@style/GameTag"
+            android:id="@+id/text_card_small_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_playing"
+            android:layout_marginEnd="@dimen/quarter_margin"
+            android:background="@color/red_out"
+            android:textStyle="bold"
+            android:textColor="@color/white"
+            android:visibility="@{game.status == 1 ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/image_card_small_arrow"
+            app:layout_constraintEnd_toEndOf="@+id/image_card_small_arrow"
+            app:layout_constraintTop_toTopOf="@+id/image_card_small_arrow"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>

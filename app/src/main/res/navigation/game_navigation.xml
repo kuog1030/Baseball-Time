@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/game_navigation"
+    app:startDestination="@id/eventDialog">
+
+
+    <dialog
+        android:id="@+id/eventDialog"
+        android:name="com.gillian.baseball.game.event.EventDialog"
+        android:label="EventDialog" >
+        <argument
+            android:name="preEvent"
+            app:argType="com.gillian.baseball.data.Event" />
+    </dialog>
+
+    <action android:id="@+id/navigationToEventDialog" app:destination="@id/eventDialog" />
+
+</navigation>

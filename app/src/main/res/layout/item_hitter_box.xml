@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="isTitle"
+            type="Boolean" />
+        <variable
+            name="isEven"
+            type="Boolean" />
+        <variable
+            name="hitter"
+            type="com.gillian.baseball.data.HitterBox"/>
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:id="@+id/table_player_box"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="1dp">
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@{isTitle? @color/color_primary : isEven? @color/grey_ddd : @color/white}">
+
+                <TextView
+                    android:id="@+id/row_player_box_order"
+                    android:gravity="end"
+                    android:layout_weight=".5"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/grey_888"
+                    app:orderText="@{hitter.order}"
+                    tools:text="1"/>
+
+                <TextView
+                    android:id="@+id/row_player_box_name"
+                    style="@style/PlayerNameTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text="@{hitter.name}"
+                    tools:text="陳俊秀"/>
+
+                <TextView
+                    android:id="@+id/row_hitter_box_one"
+                    style="@style/PlayerTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text="@{isTitle ? @string/box_ab : String.valueOf(hitter.atBat)}"
+                    tools:text="AB"/>
+
+                <TextView
+                    android:id="@+id/row_hitter_box_two"
+                    style="@style/PlayerTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text="@{isTitle ? @string/box_r : String.valueOf(hitter.run)}"
+                    tools:text="R"/>
+
+                <TextView
+                    android:id="@+id/row_hitter_box_three"
+                    style="@style/PlayerTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text="@{isTitle ? @string/box_h : String.valueOf(hitter.hit)}"
+                    tools:text="H"/>
+
+                <TextView
+                    android:id="@+id/row_hitter_box_four"
+                    style="@style/PlayerTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text="@{isTitle ? @string/box_rbi : String.valueOf(hitter.runsBattedIn)}"
+                    tools:text="RBI"/>
+
+                <TextView
+                    android:id="@+id/row_hitter_box_five"
+                    style="@style/PlayerTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text="@{isTitle ? @string/box_bb : String.valueOf(hitter.baseOnBalls)}"
+                    tools:text="BB"/>
+
+                <TextView
+                    android:id="@+id/row_hitter_box_six"
+                    style="@style/PlayerTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text="@{isTitle ? @string/box_so : String.valueOf(hitter.strikeOut)}"
+                    tools:text="SO"/>
+
+                <TextView
+                    android:id="@+id/row_hitter_box_seven"
+                    style="@style/PlayerTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text='@{isTitle ? @string/box_sb : String.valueOf(hitter.stealBase) }'
+                    tools:text="SB"/>
+
+                <TextView
+                    android:id="@+id/row_hitter_box_eight"
+                    style="@style/PlayerTable"
+                    boxStyle="@{isTitle}"
+                    android:layout_height="wrap_content"
+                    android:text='@{isTitle ? @string/box_e : String.valueOf(hitter.error) }'
+                    tools:text="E"/>
+            </TableRow>
+        </TableLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

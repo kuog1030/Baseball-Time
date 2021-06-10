@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="box"
+            type="com.gillian.baseball.data.BoxView" />
+        <!--        <variable-->
+        <!--            name="boxList"-->
+        <!--            type="java.util.List&lt;String>" />-->
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableLayout
+            android:id="@+id/table_item_box"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_primary">
+
+                <TextView
+                    android:id="@+id/row_box_type"
+                    style="@style/FinalTableTitle"
+                    android:layout_width="wrap_content"
+                    android:text="@{box.type}" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_box_guest"
+                    style="@style/FinalTable"
+                    android:layout_width="wrap_content"
+                    android:text="@{box.guest}"
+                    tools:text="10" />
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/text_box_home"
+                    style="@style/FinalTable"
+                    android:layout_width="wrap_content"
+                    android:text="@{box.home}"
+                    tools:text="1" />
+
+            </TableRow>
+        </TableLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

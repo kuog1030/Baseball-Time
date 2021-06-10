@@ -1,5 +1,146 @@
 <resources>
-    <string name="app_name">Baseball</string>
+    <string name="app_name">Baseball Time</string>
+
+
+    <!--    error hint for user-->
+    <string name="error_no_player_result">沒有搜尋結果，麻煩再確認一次球員代號</string>
+    <string name="error_order">所有欄位都要填寫喔</string>
+    <string name="create_new_player_error">姓名和背號都是必填的喔</string>
+    <string name="create_new_player_success">新增成功</string>
+    <string name="error_schedule_game">除了備註欄都是必填喔</string>
+    <string name="error_init_team_player">記得3個欄位都要填寫喔</string>
+    <string name="error_no_live_game">目前沒有正在比賽中的球賽唷</string>
+    <string name="error_search">沒有符合你的搜尋結果，\n麻煩你再檢查一次或聯絡比賽方</string>
+    <string name="return_nothing">不好意思，神秘力量發生了</string>
+    <string name="empty_player_list">目前還沒有隊友喔，右上角新增隊員</string>
+
+    <!--    first login-->
+    <string name="sign_in_with_google">Sign In With Google</string>
+    <string name="team_code">代號</string>
+    <string name="straight_to_broadcast">收看文字轉播</string>
+    <string name="register_info">如果你的隊友已經使用過Baseball Time，並且幫你建立過球員資料，你可以從隊友那邊的畫面進到你的球員頁，替你查詢球員代號。輸入後即可繼承這個球員的資料。</string>
+    <string name="what_is_this">這是什麼</string>
+    <string name="register_this_player">使用這個球員登入</string>
+    <string name="create_team_and_player">建立球隊和球員</string>
+
+    <!--    rank related-->
+    <string name="homerun_rank">全壘打王</string>
+    <string name="hit_rank">安打王</string>
+    <string name="avg_rank">打擊王</string>
+    <string name="sb_rank">盜壘王</string>
+
+    <!--    team related -->
+    <string name="create_a_team">新增一支你的球隊吧</string>
+    <string name="team_name">球隊名稱</string>
+    <string name="create_a_player">新增你自己吧</string>
+    <string name="create_a_player_button">新增球員</string>
+    <string name="edit_player_save">儲存球員資料</string>
+    <string name="remove_from_team">從球隊移除</string>
+    <string name="remove_confirm">確定移除嗎？</string>
+    <string name="player_name">球員名稱</string>
+    <string name="your_number">你的背號</string>
+    <string name="player_number">球員背號</string>
+    <string name="you">你</string>
+    <string name="your_teammate">你的隊友</string>
+
+    <string name="all_player">所有隊員</string>
+    <string name="rank">排行榜</string>
+
+    <string name="please_enter">這是必填喔</string>
+    <string name="name">姓名</string>
+    <string name="number">背號</string>
+    <string name="name_must">姓名（必填）</string>
+    <string name="name_hint">潘威倫</string>
+    <string name="name_hint2">你的球員名，例：陳金鋒</string>
+    <string name="number_must">背號（必填）</string>
+    <string name="number_hint">18</string>
+    <string name="number_hint2">你的背號，例：52</string>
+    <string name="nickname">綽號</string>
+    <string name="nickname_hint">嘟嘟</string>
+    <string name="nickname_hint2">鋒哥</string>
+    <string name="team_hint">最強OB隊</string>
+    <string name="image">圖片</string>
+
+    <!--   box related -->
+    <string name="box_g">G</string>
+    <string name="box_ab">AB</string>
+    <string name="box_r">R</string>
+    <string name="box_h">H</string>
+    <string name="box_rbi">RBI</string>
+    <string name="box_bb">BB</string>
+    <string name="box_so">SO</string>
+    <string name="box_sb">SB</string>
+    <string name="box_e">E</string>
+    <string name="box_ip">IP</string>
+    <string name="box_er">ER</string>
+    <string name="box_hr">HR</string>
+    <string name="box_single">1B</string>
+    <string name="box_double">2B</string>
+    <string name="box_triple">3B</string>
+    <string name="box_sf">SF</string>
+    <string name="box_avg">AVG</string>
+    <string name="box_obp">OBP</string>
+    <string name="box_slg">SLG</string>
+
+    <!--    Stat related-->
+    <string name="my_performance">我的成績</string>
+    <string name="no_personal_record">（沒有出賽紀錄）</string>
+    <string name="batters_perfomance">BATTERS 打擊成績</string>
+    <string name="pitchers_perfomance">PITCHERS 投手成績</string>
+    <string name="my_batting">打擊成績</string>
+    <string name="my_pitching">投手成績</string>
+    <string name="game_stat_title">成績看板</string>
+    <string name="team">Team</string>
+    <string name="player_id_info">這個球員還沒有使用者認領，歡迎邀請這位球員也加入Baseball Time，使用這段球員代號來加入球隊、延續累積成績。</string>
+
+
+    <!--   all games related -->
+    <string name="fast_start_games">快速開始比賽</string>
+    <string name="schedule_games">安排一場比賽</string>
+    <string name="more_detail">詳細數據</string>
+    <string name="start_game">開始比賽</string>
+    <string name="no_schedule_hint">還沒有安排好的比賽喔</string>
+    <string name="no_game_hint">還沒有球賽紀錄喔</string>
+    <string name="score_win">累積勝場</string>
+    <string name="score_rate">累積敗場</string>
+    <string name="game_playing">LIVE</string>
+    <string name="game_start_time">開賽時間</string>
+    <string name="recorded_team">球賽記錄方</string>
+    <string name="no_game_place">（未記錄）</string>
+    <string name="inning_top">%d局上</string>
+    <string name="inning_bottom">%d局下</string>
+
+
+    <!--    schedule a new game-->
+    <string name="schedule_a_game">預訂一場球賽</string>
+    <string name="game_date">球賽日期</string>
+    <string name="game_place">球賽地點</string>
+    <string name="select_a_date">選個日期吧</string>
+    <string name="starting_pitcher">預計先發投手</string>
+    <string name="home_or_guest">你是主客隊？</string>
+    <string name="versus">VS</string>
+    <string name="add_game_note">備註</string>
+    <string name="broadcast_on">文字轉播已開啟</string>
+    <string name="broadcast_off">文字轉播已關閉</string>
+
+    <!--    game final -->
+    <string name="game_final">比賽結束</string>
+    <string name="data_uploading">資料上傳中 ^^ </string>
+    <string name="game_end_dinner_time">比完賽去吃飯</string>
+
+    <!--    game record related -->
+
+    <string name="ready_to_start">準備開始比賽</string>
+    <string name="you_are">你是</string>
+    <string name="home">主隊</string>
+    <string name="guest">客隊</string>
+    <string name="away_team_name">對手球隊名稱</string>
+    <string name="game_title">比賽名稱</string>
+    <string name="pitcher_name">我方先發投手</string>
+    <string name="order_hitter">先發打序 - 長按球員拖移更改打序</string>
+    <string name="order_hint">長按球員拖移更改打序</string>
+    <string name="add_new_player">新建立球員</string>
+    <string name="game_start">開始比賽</string>
 
 
     <string name="B">B</string>
@@ -49,9 +190,21 @@
     <string name="error_advance">失誤進壘</string>
     <string name="pinch">換人</string>
 
+    <string name="next_bat">下一棒 %s</string>
+    <string name="pinch_pitcher">換投</string>
+    <string name="pinch_hitter">代打</string>
+    <string name="pinch_runner">代跑</string>
+    <string name="record_error">記錄失誤</string>
+
+    <string name="event_end">打席結束後的壘上狀況</string>
     <string name="send_event">儲存變更</string>
 
+
     <string name="page_one">1/1</string>
+
+    <string name="H">H</string>
+    <string name="R">R</string>
+    <string name="E">E</string>
 
 
 </resources>

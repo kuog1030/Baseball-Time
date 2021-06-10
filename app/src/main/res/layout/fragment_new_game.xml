@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.newgame.NewGameViewModel" />
+    </data>
+    
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/card_new_game"
+            android:layout_width="match_parent"
+            android:layout_height="160dp"
+            android:layout_margin="@dimen/margin"
+            app:cardCornerRadius="@dimen/card_radius"
+            app:cardElevation="@dimen/card_elevation"
+            app:layout_constraintTop_toTopOf="parent">
+
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/text_new_game_versus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/versus"
+                    android:textSize="45dp"
+                    app:layout_constraintBottom_toBottomOf="@+id/team_new_game_home"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="@+id/text_new_game_home_d"
+                    app:layout_constraintVertical_bias="0.5" />
+
+                <TextView
+                    android:id="@+id/text_new_game_guest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@{viewModel.guestName}"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                    app:layout_constraintStart_toStartOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="@+id/team_new_game_home"
+                    tools:text="客隊" />
+
+                <TextView
+                    android:id="@+id/team_new_game_home"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:text="@{viewModel.homeName}"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                    app:layout_constraintStart_toStartOf="@+id/imageView6"
+                    app:layout_constraintTop_toBottomOf="@+id/imageView6"
+                    tools:text="主隊" />
+
+
+                <TextView
+                    style="@style/DefaultPhoto"
+                    android:id="@+id/text_new_game_guest_d"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:defaultName="@{viewModel.guestName}"
+                    android:textSize="28sp"
+                    android:backgroundTint="@color/default_2photo"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                    app:layout_constraintStart_toStartOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+
+                <TextView
+                    style="@style/DefaultPhoto"
+                    android:id="@+id/text_new_game_home_d"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    app:defaultName="@{viewModel.homeName}"
+                    android:textSize="28sp"
+                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
+                    app:layout_constraintEnd_toEndOf="@+id/imageView6"
+                    app:layout_constraintStart_toStartOf="@+id/imageView6"
+                    app:layout_constraintTop_toTopOf="@+id/imageView6"
+                    tools:text="A"/>
+
+                <ImageView
+                    android:id="@+id/imageView6"
+                    android:layout_width="65dp"
+                    android:layout_height="64dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toEndOf="@+id/text_new_game_versus"
+                    app:layout_constraintTop_toTopOf="@+id/imageView5"
+                    app:photoUrl="@{viewModel.homeImage}"/>
+
+                <ImageView
+                    android:id="@+id/imageView5"
+                    android:layout_width="65dp"
+                    android:layout_height="65dp"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/text_new_game_versus"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintVertical_bias="0.4"
+                    app:photoUrl="@{viewModel.guestImage}"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </androidx.cardview.widget.CardView>
+
+
+        <TextView
+            android:id="@+id/text_new_game_side"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:text="@string/home_or_guest"
+            app:layout_constraintBottom_toBottomOf="@id/radio_group_new_game"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@id/radio_group_new_game" />
+
+
+        <RadioGroup
+            android:id="@+id/radio_group_new_game"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:orientation="horizontal"
+            android:checkedButton="@={viewModel.selectedSideRadio}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_away"
+            app:layout_constraintStart_toEndOf="@id/text_new_game_side"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_away"
+            app:layout_constraintTop_toBottomOf="@id/card_new_game">
+
+            <RadioButton
+                android:id="@+id/radio_new_game_guest"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/radio_button_padding"
+                android:paddingEnd="@dimen/radio_button_padding"
+                android:layout_weight="1"
+                android:text="@string/guest" />
+
+            <RadioButton
+                android:id="@+id/radio_new_game_home"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:paddingStart="@dimen/radio_button_padding"
+                android:paddingEnd="@dimen/radio_button_padding"
+                android:layout_weight="1"
+                android:text="@string/home" />
+
+        </RadioGroup>
+
+
+        <TextView
+            android:id="@+id/text_new_game_away"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/away_team_name"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_new_game_away"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_title"
+            app:layout_constraintTop_toTopOf="@+id/edit_new_game_away" />
+
+        <EditText
+            android:id="@+id/edit_new_game_away"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:textSize="15sp"
+            android:inputType="textPersonName"
+            android:text="@={viewModel.awayName}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/text_new_game_away"
+            app:layout_constraintTop_toBottomOf="@+id/radio_group_new_game" />
+
+        <TextView
+            android:id="@+id/text_new_game_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_title"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_new_game_title"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_side"
+            app:layout_constraintTop_toTopOf="@+id/edit_new_game_title" />
+
+        <EditText
+            android:id="@+id/edit_new_game_title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:background="@drawable/bg_edit_text"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:textSize="15sp"
+            android:text="@={viewModel.gameTitle}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_away"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_away"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_away" />
+
+        <TextView
+            android:id="@+id/text_new_game_place"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_place"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintBottom_toBottomOf="@+id/edit_new_game_place"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_title"
+            app:layout_constraintTop_toTopOf="@+id/edit_new_game_place" />
+
+        <EditText
+            android:id="@+id/edit_new_game_place"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:inputType="textPersonName"
+            android:background="@drawable/bg_edit_text"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:text="@={viewModel.gamePlace}"
+            android:textSize="15sp"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_title"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_title"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_title" />
+
+        <TextView
+            android:id="@+id/text_new_game_date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/game_date"
+            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            app:layout_constraintBottom_toBottomOf="@+id/button_new_game_date"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_away"
+            app:layout_constraintTop_toTopOf="@+id/button_new_game_date" />
+
+        <Button
+            android:id="@+id/button_new_game_date"
+            style="?spinnerStyle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:paddingStart="15dp"
+            android:text="@{viewModel.gameDate}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_away"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_away"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_place" />
+
+        <Button
+            style="@style/GameButton"
+            android:id="@+id/button3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@string/schedule_a_game"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:onClick="@{()->viewModel.scheduleNewGame()}"
+            app:layout_constraintEnd_toEndOf="@id/edit_new_game_note"
+            app:layout_constraintStart_toStartOf="@id/text_new_game_note"
+            app:layout_constraintTop_toBottomOf="@+id/edit_new_game_note"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+
+        <TextView
+            android:id="@+id/text_new_game_note"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/add_game_note"
+            app:layout_constraintStart_toStartOf="@+id/text_new_game_date"
+            app:layout_constraintTop_toTopOf="@+id/edit_new_game_note" />
+
+        <EditText
+            android:id="@+id/edit_new_game_note"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/new_game_note_height"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            android:gravity="top"
+            android:background="@drawable/bg_edit_text"
+            android:layout_marginTop="@dimen/one_half_margin"
+            android:textSize="14sp"
+            android:text="@={viewModel.gameNote}"
+            app:layout_constraintEnd_toEndOf="@+id/edit_new_game_title"
+            app:layout_constraintStart_toStartOf="@+id/edit_new_game_title"
+            app:layout_constraintTop_toBottomOf="@+id/button_new_game_date"
+            tools:text="明天記得帶球棒"/>
+
+
+        <!--        <TextView-->
+<!--            android:id="@+id/text_new_game_starter"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/starting_pitcher"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/spinner_new_game_starter"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/text_new_game_date"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/spinner_new_game_starter" />-->
+
+<!--        <Spinner-->
+<!--            android:id="@+id/spinner_new_game_starter"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_marginTop="@dimen/double_margin"-->
+<!--            android:spinnerMode="dropdown"-->
+<!--            app:layout_constraintEnd_toEndOf="@+id/button_new_game_date"-->
+<!--            app:layout_constraintStart_toStartOf="@+id/button_new_game_date"-->
+<!--            app:layout_constraintTop_toBottomOf="@+id/button_new_game_date" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</layout>

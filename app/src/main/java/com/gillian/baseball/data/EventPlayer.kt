@@ -5,7 +5,8 @@ import kotlinx.android.parcel.Parcelize
 
 @Parcelize
 data class EventPlayer(
-    var userId: String = "",
-    val name: String = "",
-    val number: String = ""
+        var playerId: String = "",
+        var order: Int = -1,
+        val name: String = "",
+        val number: String = ""
 ) : Parcelable

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="player"
+            type="com.gillian.baseball.data.EventPlayer" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/half_margin"
+        android:paddingBottom="@dimen/half_margin">
+
+        <TextView
+            android:id="@+id/text_order_number"
+            style="@style/PlayerNumber"
+            android:layout_width="30dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/one_half_margin"
+            android:text="@{String.valueOf(player.number)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="24" />
+
+        <TextView
+            style="@style/PlayerName"
+            android:id="@+id/text_player_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:text="@{player.name}"
+            app:layout_constraintTop_toTopOf="@id/text_order_number"
+            app:layout_constraintBottom_toBottomOf="@id/text_order_number"
+            app:layout_constraintStart_toEndOf="@id/text_order_number"
+            tools:text="蘇智傑"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

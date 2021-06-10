@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.gillian.baseball.game.event.EventViewModel" />
+        <variable
+            name="page"
+            type="String" />
+
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/text_end_title"
+            style="@style/EventPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/event_end"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"/>
+
+        <com.gillian.baseball.views.CustomBaseView
+            android:id="@+id/image_event_end_field"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:layout_marginTop="30dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_end_title"
+            app:onBase="@{viewModel.customBaseInt}" />
+
+            <TextView
+                style="@style/EventDetailText"
+                android:id="@+id/text_event_end_detail"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/double_margin"
+                android:layout_marginTop="@dimen/double_margin"
+                android:layout_marginEnd="@dimen/double_margin"
+                android:text="@{viewModel.eventDetail}"
+                android:gravity="center"
+                android:lineSpacingMultiplier="1.1"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/image_event_end_field"
+                tools:text="第四棒陳傑憲 得分+1"/>
+
+
+            <Button
+                android:id="@+id/button_event_end_single"
+                style="@style/GameButton"
+                android:layout_width="@dimen/hitter_button_width"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/double_margin"
+                android:onClick="@{()->viewModel.saveAndDismiss()}"
+                android:text="@string/send_event"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/text_event_end_detail" />
+
+        <View
+            android:id="@+id/bar_event_end"
+            android:layout_width="332dp"
+            android:layout_height="2dp"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:layout_marginBottom="@dimen/event_dialog_bar_margin"
+            android:background="@color/grey_888"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <TextView
+            android:id="@+id/text_event_end_page"
+            style="@style/EventPage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{page}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@id/bar_event_end"
+            app:layout_constraintStart_toStartOf="@id/bar_event_end"
+            app:layout_constraintTop_toBottomOf="@id/bar_event_end"
+            tools:text="4/4" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+<!--    <TableLayout-->
+<!--        android:id="@+id/table_final_score"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/double_margin">-->
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/grey_888">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_one"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="1" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_two"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="2" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_three"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="3" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_four"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="4" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_five"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="5" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_six"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="6" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_seven"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="7" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_eight"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="8" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_nine"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="9" />-->
+<!--        </TableRow>-->
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_one"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.score[0])}" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_three"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.score[2])}" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_five"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.score[4])}" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_seven"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_nine"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_eleven"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_thirteen"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_fifteen"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_seventeen"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+
+<!--        </TableRow>-->
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_two"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.score[1])}" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_four"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.score[3])}" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_sixth"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.score[5])}" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_eighth"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_tenth"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_twelve"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_fourteen"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_sixteen"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_eighteen"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="-" />-->
+<!--        </TableRow>-->
+
+<!--    </TableLayout>-->
+
+<!--    <TableLayout-->
+<!--        android:id="@+id/table_final_box"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/margin">-->
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:background="@color/grey_888">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_run"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/R" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_hit"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/H" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/row_final_error"-->
+<!--                style="@style/FinalTableTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@string/E" />-->
+<!--        </TableRow>-->
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_guest_run"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.run[0])}"-->
+<!--                tools:text="2" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_guest_hit"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.hit[0])}"-->
+<!--                tools:text="2" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_guest_error"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.error[0])}"-->
+<!--                tools:text="2" />-->
+
+<!--        </TableRow>-->
+
+<!--        <TableRow-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent">-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_home_run"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.run[1])}"-->
+<!--                tools:text="2" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_home_hit"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.hit[1])}"-->
+<!--                tools:text="2" />-->
+
+<!--            <TextView-->
+<!--                android:id="@+id/text_final_home_error"-->
+<!--                style="@style/FinalTable"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="@{String.valueOf(viewModel.error[1])}"-->
+<!--                tools:text="2" />-->
+
+<!--        </TableRow>-->
+<!--    </TableLayout>-->
+</LinearLayout>

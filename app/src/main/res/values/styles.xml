@@ -4,10 +4,51 @@
 
     </style>
 
+    <style name="AppBottomSheetDialogTheme" parent="ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/BottomSheet</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowSoftInputMode">adjustResize|stateVisible</item>
+    </style>
+
+    <style name="BottomSheet" parent="Widget.Design.BottomSheet.Modal">
+        <item name="android:background">@drawable/bg_bottom_card</item>
+<!--        <item name="android:background">@color/transparent</item>-->
+    </style>
+
+
+    <style name="LoginEdit">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:textSize">16sp</item>
+        <item name="android:background">@drawable/bg_radius_border</item>
+    </style>
+
     <style name="BallSign">
         <item name="android:textSize">35sp</item>
 <!--        <item name="android:letterSpacing">0.4</item>-->
-        <item name="android:layout_marginStart">@dimen/margin</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:layout_marginBottom">3dp</item>
+    </style>
+
+    <style name="PlayerNumber">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="PlayerName">
+        <item name="android:textSize">18sp</item>
+    </style>
+
+    <style name="GameCardTitle">
+        <item name="android:textSize">25sp</item>
+    </style>
+
+    <style name="GameCardScore">
+        <item name="android:textSize">40sp</item>
+    </style>
+
+    <style name="GameInning">
+        <item name="android:textSize">22sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="GameTitle">
@@ -26,15 +67,140 @@
         <item name="android:textSize">16sp</item>
     </style>
 
-    <style name="GameButton" parent="Widget.AppCompat.Button.Borderless">
-        <item name="android:textSize">18sp</item>
-        <item name="android:letterSpacing">0.15</item>
-        <item name="android:textColor">@color/white</item>
-        <item name="android:background">@color/orange</item>
+    <style name="ButtonRadiusFilled">
+        <item name="android:background">@drawable/button_radius_filled</item>
+        <item name="android:textColor">@color/color_on_primary</item>
     </style>
 
-    <style name="Dialog">
+    <style name="ButtonFilled24">
+        <item name="android:background">@drawable/button_radius_filled_24</item>
+        <item name="android:textColor">@color/color_on_primary</item>
+    </style>
+
+    <style name="GameTag">
+        <item name="android:paddingTop">@dimen/quarter_margin</item>
+        <item name="android:paddingBottom">@dimen/quarter_margin</item>
+        <item name="android:paddingStart">@dimen/half_margin</item>
+        <item name="android:paddingEnd">@dimen/half_margin</item>
+    </style>
+
+    <style name="GameButton" parent="Widget.AppCompat.Button.Borderless">
+        <item name="android:textSize">15sp</item>
+        <item name="android:letterSpacing">0.15</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:background">@drawable/button_radius_filled</item>
+    </style>
+
+    <style name="GameButton2" parent="GameButton">
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/color_background</item>
+    </style>
+
+    <style name="RunnerButton">
+        <item name="android:drawableTop">@drawable/ic_person_24</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
+
+    <style name="GameButtonWhite" parent="GameButton">
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/white</item>
+    </style>
+
+    <style name="GameButtonOut" parent="GameButton">
+        <item name="android:textColor">@color/black</item>
+        <item name="backgroundTint">@color/grey_ddd</item>
+    </style>
+
+    <style name="EditText">
+        <item name="android:textSize">16sp</item>
+        <item name="android:gravity">center_vertical</item>
+    </style>
+
+    <style name="BoxNameText">
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="FinalTable">
+        <item name="android:textSize">16sp</item>
+        <item name="android:layout_height">@dimen/box_height</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingEnd">6dp</item>
+        <item name="android:paddingStart">6dp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="FinalTableTitle" parent="FinalTable">
+        <item name="android:textColor">@color/color_on_primary</item>
+    </style>
+
+    <style name="PlayerNameTable">
+        <item name="android:layout_weight">3</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:padding">4dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="PlayerTable">
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+    <style name="PlayerTableLarge">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_weight">1</item>
+    </style>
+
+    <style name="PlayerTableLargeTitle" parent="PlayerTableLarge">
+        <item name="android:textColor">@color/color_primary</item>
+    </style>
+
+    <style name="CreateTeamTitle">
+        <item name="android:textSize">22sp</item>
+    </style>
+
+    <!--   pager score -->
+    <style name="ScoreNumber">
+        <item name="android:textSize">35sp</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="NoGameHint">
+        <item name="android:textSize">20sp</item>
+        <item name="android:gravity">center</item>
+    </style>
+
+
+    <style name="GameDialog">
         <item name="android:windowBackground">@color/black_transparent</item>
     </style>
+
+    <style name="dateTimePickerDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/color_primary_light</item>
+    </style>
+
+    <style name="HitOverallNumber">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="layout_constraintHorizontal_bias">0.7</item>
+        <item name="layout_constraintVertical_bias">0.7</item>
+    </style>
+
+    <style name="DefaultPhoto">
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">?attr/colorOnPrimary</item>
+        <item name="android:background">@drawable/bg_default_photo</item>
+    </style>
+
+<!--    testing custom view-->
+    <declare-styleable name="CustomBaseView">
+        <attr name="onBase" format="integer" />
+    </declare-styleable>
 
 </resources>

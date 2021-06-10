@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "534551205378",
+    "project_id": "baseball-25538",
+    "storage_bucket": "baseball-25538.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:534551205378:android:ee6c423cfa7173460cf91b",
+        "android_client_info": {
+          "package_name": "com.gillian.baseball"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "534551205378-5uns4qip0kl2suheg1gaaspd8v5hp9ub.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gillian.baseball",
+            "certificate_hash": "c96a3337a476fac8d562a01050c2d07d07cd0bb6"
+          }
+        },
+        {
+          "client_id": "534551205378-dvqq0q0jrr0capvulvs2riupe9defnh3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gillian.baseball",
+            "certificate_hash": "6660da781461a5ed3cbdfa8adb403f9d2b580781"
+          }
+        },
+        {
+          "client_id": "534551205378-86bj9g48tc1mi74a8gnep6muval9hrdm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAIyuu8dyILLl3kv-je1_W-2zBl4RXcl3c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "534551205378-86bj9g48tc1mi74a8gnep6muval9hrdm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
