@@ -6,7 +6,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.R
-import com.gillian.baseball.data.Game
 import com.gillian.baseball.data.GameCard
 import com.gillian.baseball.data.LoadStatus
 import com.gillian.baseball.data.Result
@@ -38,12 +37,16 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
     val status: LiveData<LoadStatus>
         get() = _status
 
+    private val _refreshStatus = MutableLiveData<Boolean>()
+
+    val refreshStatus: LiveData<Boolean>
+        get() = _refreshStatus
 
     init {
-        getAllLiveGame(true)
+        fetchAllLiveGame(true)
     }
 
-    fun getAllLiveGame(isInit: Boolean = false) {
+    fun fetchAllLiveGame(isInit: Boolean = false) {
         viewModelScope.launch {
             _status.value = LoadStatus.LOADING
             val result = repository.getAllLiveGamesCard()
@@ -72,6 +75,7 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
                     null
                 }
             }
+            _refreshStatus.value = false
         }
 
     }
@@ -93,6 +97,12 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
 
     fun noLiveGame() {
         _errorMessage.value = Util.getString(R.string.error_no_live_game)
+    }
+
+    fun refresh() {
+        if (_status.value != LoadStatus.LOADING) {
+            fetchAllLiveGame(true)
+        }
     }
 
 }
