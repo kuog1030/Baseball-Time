@@ -32,8 +32,9 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
 
     val errorRecycler = MutableLiveData<Boolean>(false)
 
-    private var _changeToNextPage = MutableLiveData<Boolean>()
-    val changeToNextPage: LiveData<Boolean>
+    private var _changeToNextPage = MutableLiveData<Int>()
+
+    val changeToNextPage: LiveData<Int>
         get() = _changeToNextPage
 
     private var _dismiss = MutableLiveData<Array<EventPlayer?>>()
@@ -102,6 +103,11 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
                 EventType.HOMERUN.number -> 1
                 else -> 0
             }
+
+            // hitter get no rbi if double play
+            if (hasBaseOut.size == 2) {
+                it.rbi = 0
+            }
         }
 
         Log.i("remote", "--------------from event viewmodel save and dismiss--------------")
@@ -151,7 +157,13 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
             it.rbi = 1
         }
         atBaseList[0].base = -1
-        changeToNextPage()
+
+        for ((index, runner) in atBaseList.withIndex()) {
+            if (index == 0) continue
+            run(runner, false)
+        }
+
+        changeToNextPage(-1)
     }
 
     fun hbp() {
@@ -216,7 +228,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     // 回壘得分
-    fun run(atBase: AtBase) {
+    fun run(atBase: AtBase, changePage: Boolean = true) {
         atBase.base = -1
         atBase.eventType = EventType.RUN
         atBase.event = Event(inning = hitterEvent.value!!.inning,
@@ -229,7 +241,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         atBaseList[0].event?.let{
             it.rbi += 1
         }
-        changeToNextPage()
+        if (changePage) changeToNextPage()
     }
 
     // 打者按了野手選擇"上壘"
@@ -281,11 +293,11 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         newBaseList = arrayOf(null, null, null, null)
     }
 
-    fun changeToNextPage() {
+    fun changeToNextPage(page: Int = 1) {
         errorRecycler.value = false
         baseListToCustom()
         eventDetail.value = getDetailString()
-        _changeToNextPage.value = true
+        _changeToNextPage.value = page
     }
 
     fun onNextPageChanged() {

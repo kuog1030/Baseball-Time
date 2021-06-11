@@ -34,10 +34,6 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
-//        for (i in argsAtBase) {
-//            Log.i("at base debuging", "event dialog $i")
-//        }
-
         val binding = DialogEventBinding.inflate(inflater, container, false)
         val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
 
@@ -49,14 +45,23 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
             }
         }
 
+        fun changeToEnd() {
+            binding.viewpagerEvent.setCurrentItem(atBaseList.size, true)
+        }
+
         binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager, isSafe, atBaseList)
         binding.tabsEvent.setupWithViewPager(binding.viewpagerEvent)
         binding.viewpagerEventArrow.setArrowIndicatorRes(R.drawable.ic_baseline_arrow_backward_24, R.drawable.ic_baseline_arrow_forward_24)
         binding.viewpagerEventArrow.bind(binding.viewpagerEvent)
 
+
         viewModel.changeToNextPage.observe(viewLifecycleOwner, Observer {
             it?.let {
-                changePage()
+                if (it == 1) {
+                    changePage()
+                } else {
+                    changeToEnd()
+                }
                 viewModel.onNextPageChanged()
             }
         })
