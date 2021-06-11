@@ -80,40 +80,193 @@ fun List<Player>.toRankList() : List<Rank> {
 }
 
 
-fun List<Event>.toPersonalScore() : List<String> {
-
-    val result = mutableListOf<String>()
-
-    for (event in this) {
-        if (event.player.playerId == UserManager.userId) {
-            result.add(
-                    when (event.result) {
-                        EventType.SINGLE.number -> EventType.SINGLE.letter
-                        EventType.DOUBLE.number -> EventType.DOUBLE.letter
-                        EventType.TRIPLE.number -> EventType.TRIPLE.letter
-                        EventType.HOMERUN.number -> EventType.HOMERUN.letter
-                        EventType.HITBYPITCH.number -> EventType.HITBYPITCH.letter
-                        EventType.ERRORONBASE.number -> EventType.ERRORONBASE.letter
-                        EventType.DROPPEDTHIRD.number -> EventType.DROPPEDTHIRD.letter
-                        EventType.WALK.number -> EventType.WALK.letter
-                        EventType.STRIKEOUT.number -> EventType.STRIKEOUT.letter
-                        EventType.FIELDERCHOICE.number -> EventType.FIELDERCHOICE.letter
-                        EventType.GROUNDOUT.number -> EventType.GROUNDOUT.letter
-                        EventType.AIROUT.number -> EventType.AIROUT.letter
-                        EventType.SACRIFICEFLY.number -> EventType.SACRIFICEFLY.letter
-                        EventType.SACRIFICEGO.number -> EventType.SACRIFICEGO.letter
-                        else -> ""
-                    }
-            )
-        }
-    }
-
-    return result
-}
-
 fun Int.toInningCount() : String {
     return ("${this/3}.${this%3}")
 }
+
+
+fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
+
+
+    val myPitcher = mutableListOf(PitcherBox())
+    val myHitter = mutableListOf(HitterBox())
+    val myScore = mutableListOf<PersonalScore>()
+
+    val errorEvent = mutableListOf<Event>()
+
+    fun updateHitterBox(event: Event, box: HitterBox) {
+        val type = event.result
+        lateinit var targetEventType: EventType
+
+        for (eventType in EventType.values()) {
+            if (type == eventType.number) {
+                targetEventType = eventType
+                break
+            }
+        }
+
+        if (type == 0) {
+            targetEventType = EventType.RUN
+            //TODO()檢查這個~~
+            Log.i("gillian extension", "type = 0 and it shouldn't be print.")
+        }
+
+        if (targetEventType.isAtBat) box.atBat += 1
+        box.run += event.run
+        box.runsBattedIn += event.rbi
+
+        when (targetEventType) {
+            EventType.SINGLE -> {
+                box.hit += 1
+                box.single += 1
+            }
+            EventType.DOUBLE -> {
+                box.hit += 1
+                box.douBle += 1
+            }
+            EventType.TRIPLE -> {
+                box.hit += 1
+                box.triple += 1
+            }
+            EventType.HOMERUN -> {
+                box.hit += 1
+                box.homerun += 1
+            }
+            EventType.HITBYPITCH -> box.hitByPitch += 1
+            EventType.SACRIFICEFLY -> box.sacrificeFly += 1
+            EventType.DROPPEDTHIRD -> box.strikeOut += 1
+            EventType.STRIKEOUT -> box.strikeOut += 1
+            EventType.WALK -> box.baseOnBalls += 1
+            EventType.STEALBASE -> box.stealBase += 1
+            else -> null
+        }
+    }
+
+    fun updatePitcherBox(event: Event, box: PitcherBox) {
+        val type = event.result
+        lateinit var targetEventType: EventType
+
+        Log.i("gillian", "update pitcher box event = $event")
+
+        for (eventType in EventType.values()) {
+            if (type == eventType.number) {
+                targetEventType = eventType
+                break
+            }
+        }
+
+
+        if (type == 0) {
+            targetEventType = EventType.SACRIFICEFLY
+            Log.i("gillian", "event result is 0. this is not suppose to be printed")
+        }
+
+        box.run += event.run
+
+        when (targetEventType) {
+            EventType.SINGLE -> box.hit += 1
+            EventType.DOUBLE -> box.hit += 1
+            EventType.TRIPLE -> box.hit += 1
+            EventType.HOMERUN -> {
+                box.hit += 1
+                box.homerun += 1
+            }
+            //EventType.RUN -> box.run += 1 上面加過了這邊應該不用加
+            EventType.DROPPEDTHIRD -> box.strikeOut += 1
+            EventType.STRIKEOUT -> box.strikeOut += 1
+            EventType.WALK -> box.baseOnBalls += 1
+            // inning pitched is put into out while recording event
+            EventType.INNINGSPITCHED -> box.inningsPitched = event.out
+            EventType.IPEND -> box.inningsPitched = event.out
+            else -> null // TODO() 可能要throw error
+        }
+    }
+
+    fun updateMyPerformance(event: Event) {
+        for (type in EventType.values()) {
+            if ((event.result == type.number) && type.isBatting) {
+                myScore.add( PersonalScore(
+                    type = type.letter,
+                    time = event.time,
+                    color = type.color
+                ) )
+                break
+            }
+        }
+    }
+
+
+    for (event in this) {
+        // home team offense (hitting) during bottom inning (for example 3 bottom),
+        // which total inning is even ( 3 bottom = 6 )
+        // home hitting -> false xor true -> true
+        if (event.result == EventType.INNINGCHANGE.number) {
+            continue
+        }
+
+        if ((event.inning % 2 == 1) xor (isHome)) {
+
+            Log.i("gillian67", "hitter ${event.player.name}")
+            var noHitter = true
+
+            for (oneHitterBox in myHitter) {
+                if (oneHitterBox.playerId == event.player.playerId) {
+                    updateHitterBox(event, oneHitterBox)
+                    noHitter = false
+                    break
+                }
+            }
+
+            if (noHitter) {
+                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId, order = event.player.order)
+                updateHitterBox(event, newHitterBox)
+                myHitter.add(newHitterBox)
+            }
+
+            if (event.player.playerId == UserManager.playerId) {
+                updateMyPerformance(event)
+            }
+
+        } else {
+            if (event.result == EventType.ERROR.number) {
+                errorEvent.add(event)
+                Log.i("gillian64", "有失誤要記錄了 ${event}")
+                continue
+            }
+
+            var noPitcher = true
+            for (onePitcherBox in myPitcher) {
+                if (onePitcherBox.playerId == event.pitcher.playerId) {
+                    updatePitcherBox(event, onePitcherBox)
+                    noPitcher = false
+                    break
+                }
+            }
+
+            if (noPitcher) {
+                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId, order = event.player.order)
+                updatePitcherBox(event, newPitcherBox)
+                myPitcher.add(newPitcherBox)
+            }
+
+        }
+    }
+
+    for (event in errorEvent) {
+        for (oneHitterBox in myHitter) {
+            if (oneHitterBox.playerId == event.player.playerId) {
+                oneHitterBox.error += 1
+            }
+        }
+    }
+
+    myPitcher.sortBy {it.order}
+    myHitter.sortBy {it.order}
+    myScore.sortBy {it.time}
+
+    return MyStatistic(myPitcher = myPitcher, myHitter = myHitter, myPersonalScore = myScore)
+}
+
 
 // TODO()目前只改to my game stat並且有修改過東西 之後要把to both game stat也更新
 fun List<Event>.toBothGameStat() : Statistic {
@@ -278,186 +431,4 @@ fun List<Event>.toBothGameStat() : Statistic {
             homePitcher = homePitcher,
             guestHitter = guestHitter,
             homeHitter = homeHitter)
-}
-
-fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
-
-
-    val myPitcher = mutableListOf(PitcherBox())
-    val myHitter = mutableListOf(HitterBox())
-    val myScore = mutableListOf<PersonalScore>()
-
-    val errorEvent = mutableListOf<Event>()
-
-    fun updateHitterBox(event: Event, box: HitterBox) {
-        val type = event.result
-        lateinit var targetEventType: EventType
-
-        for (eventType in EventType.values()) {
-            if (type == eventType.number) {
-                targetEventType = eventType
-                break
-            }
-        }
-
-        if (type == 0) {
-            targetEventType = EventType.RUN
-            //TODO()檢查這個~~
-            Log.i("gillian extension", "type = 0 and it shouldn't be print.")
-        }
-
-        if (targetEventType.isAtBat) box.atBat += 1
-        box.run += event.run
-        box.runsBattedIn += event.rbi
-
-        when (targetEventType) {
-            EventType.SINGLE -> {
-                box.hit += 1
-                box.single += 1
-            }
-            EventType.DOUBLE -> {
-                box.hit += 1
-                box.douBle += 1
-            }
-            EventType.TRIPLE -> {
-                box.hit += 1
-                box.triple += 1
-            }
-            EventType.HOMERUN -> {
-                box.hit += 1
-                box.homerun += 1
-            }
-            EventType.HITBYPITCH -> box.hitByPitch += 1
-            EventType.SACRIFICEFLY -> box.sacrificeFly += 1
-            EventType.DROPPEDTHIRD -> box.strikeOut += 1
-            EventType.STRIKEOUT -> box.strikeOut += 1
-            EventType.WALK -> box.baseOnBalls += 1
-            EventType.STEALBASE -> box.stealBase += 1
-            else -> null
-        }
-    }
-
-    fun updatePitcherBox(event: Event, box: PitcherBox) {
-        val type = event.result
-        lateinit var targetEventType: EventType
-
-        Log.i("gillian", "update pitcher box event = $event")
-
-        for (eventType in EventType.values()) {
-            if (type == eventType.number) {
-                targetEventType = eventType
-                break
-            }
-        }
-
-
-        if (type == 0) {
-            targetEventType = EventType.SACRIFICEFLY
-            Log.i("gillian", "event result is 0. this is not suppose to be printed")
-        }
-
-        box.run += event.run
-
-        when (targetEventType) {
-            EventType.SINGLE -> box.hit += 1
-            EventType.DOUBLE -> box.hit += 1
-            EventType.TRIPLE -> box.hit += 1
-            EventType.HOMERUN -> {
-                box.hit += 1
-                box.homerun += 1
-            }
-            //EventType.RUN -> box.run += 1 上面加過了這邊應該不用加
-            EventType.DROPPEDTHIRD -> box.strikeOut += 1
-            EventType.STRIKEOUT -> box.strikeOut += 1
-            EventType.WALK -> box.baseOnBalls += 1
-            // inning pitched is put into out while recording event
-            EventType.INNINGSPITCHED -> box.inningsPitched = event.out
-            else -> null // TODO() 可能要throw error
-        }
-    }
-
-    fun updateMyPerformance(event: Event) {
-        for (type in EventType.values()) {
-            if ((event.result == type.number) && type.isBatting) {
-                myScore.add( PersonalScore(
-                    type = type.letter,
-                    time = event.time,
-                    color = type.color
-                ) )
-                break
-            }
-        }
-    }
-
-
-    for (event in this) {
-        // home team offense (hitting) during bottom inning (for example 3 bottom),
-        // which total inning is even ( 3 bottom = 6 )
-        // home hitting -> false xor true -> true
-        if (event.result == EventType.INNINGCHANGE.number) {
-            continue
-        }
-
-        if ((event.inning % 2 == 1) xor (isHome)) {
-
-            Log.i("gillian67", "hitter ${event.player.name}")
-            var noHitter = true
-
-            for (oneHitterBox in myHitter) {
-                if (oneHitterBox.playerId == event.player.playerId) {
-                    updateHitterBox(event, oneHitterBox)
-                    noHitter = false
-                    break
-                }
-            }
-
-            if (noHitter) {
-                val newHitterBox = HitterBox(name = event.player.name, playerId = event.player.playerId, order = event.player.order)
-                updateHitterBox(event, newHitterBox)
-                myHitter.add(newHitterBox)
-            }
-
-            if (event.player.playerId == UserManager.playerId) {
-                updateMyPerformance(event)
-            }
-
-        } else {
-            if (event.result == EventType.ERROR.number) {
-                errorEvent.add(event)
-                Log.i("gillian64", "有失誤要記錄了 ${event}")
-                continue
-            }
-
-            var noPitcher = true
-            for (onePitcherBox in myPitcher) {
-                if (onePitcherBox.playerId == event.pitcher.playerId) {
-                    updatePitcherBox(event, onePitcherBox)
-                    noPitcher = false
-                    break
-                }
-            }
-
-            if (noPitcher) {
-                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId, order = event.player.order)
-                updatePitcherBox(event, newPitcherBox)
-                myPitcher.add(newPitcherBox)
-            }
-
-        }
-    }
-
-    for (event in errorEvent) {
-        for (oneHitterBox in myHitter) {
-            if (oneHitterBox.playerId == event.player.playerId) {
-                oneHitterBox.error += 1
-            }
-        }
-    }
-
-    myPitcher.sortBy {it.order}
-    myHitter.sortBy {it.order}
-    myScore.sortBy {it.time}
-
-    Log.i("gillian67", "hitter size? ${myHitter.size}")
-    return MyStatistic(myPitcher = myPitcher, myHitter = myHitter, myPersonalScore = myScore)
 }

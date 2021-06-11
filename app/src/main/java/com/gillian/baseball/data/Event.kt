@@ -21,7 +21,13 @@ data class Event(
 ) : Parcelable {
 
     fun toLiveString() : String {
-        var liveString = "第${player.order/100}棒 ${player.name}"
+        var liveString = ""
+
+        if (player.order % 100 != 0) {
+            liveString += "代打　第${player.order/100}棒 ${player.name}"
+        } else {
+            liveString += "第${player.order/100}棒 ${player.name}"
+        }
 
         if (strike > 7) {
             liveString += "在纏鬥了${strike+ball}球之下，"
@@ -53,6 +59,8 @@ data class Event(
             } else {
                 liveString += "客隊換投。投手${pitcher.name}在投了${this.out}局後下場。"
             }
+        } else if (this.result == EventType.ERROR.number) {
+            liveString += "　${player.name}發生失誤。"
         } else {
             liveString += "壘上跑者${player.name}"
             for (type in EventType.values()) {

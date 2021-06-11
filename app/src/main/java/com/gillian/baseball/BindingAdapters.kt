@@ -350,11 +350,15 @@ fun bindHitStatPercentage(textView: TextView, average: Float) {
 
 @BindingAdapter("inningCount")
 fun bindTextInning(textView: TextView, inning: Int) {
-    val inningNine = (inning + 1 ) / 2
-    if (inning % 2 == 1) {
-        textView.text = BaseballApplication.instance.getString(R.string.inning_top, inningNine)
+    if (inning == -1) {
+        textView.text = BaseballApplication.instance.getString(R.string.inning_end)
     } else {
-        textView.text = BaseballApplication.instance.getString(R.string.inning_bottom, inningNine)
+        val inningNine = (inning + 1 ) / 2
+        if (inning % 2 == 1) {
+            textView.text = BaseballApplication.instance.getString(R.string.inning_top, inningNine)
+        } else {
+            textView.text = BaseballApplication.instance.getString(R.string.inning_bottom, inningNine)
+        }
     }
 }
 

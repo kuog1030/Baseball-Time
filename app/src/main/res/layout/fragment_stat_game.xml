@@ -88,7 +88,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/recycler_game_stat_box"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/text_game_stat_game"
+                    app:layout_constraintTop_toTopOf="parent"
                     tools:text="4-5" />
 
                 <ImageView

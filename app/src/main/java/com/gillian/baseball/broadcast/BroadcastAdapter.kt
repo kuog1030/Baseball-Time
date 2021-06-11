@@ -22,7 +22,11 @@ class BroadcastAdapter : ListAdapter<Event, RecyclerView.ViewHolder>(DiffCallbac
 
     class InningViewHolder(private var binding: ItemBroadcastInningBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(event: Event) {
-            binding.inning = event.inning
+            if (event.result == EventType.IPEND.number) {
+                binding.inning = -1
+            } else {
+                binding.inning = event.inning
+            }
             binding.executePendingBindings()
         }
     }
@@ -55,6 +59,7 @@ class BroadcastAdapter : ListAdapter<Event, RecyclerView.ViewHolder>(DiffCallbac
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position).result) {
             EventType.INNINGCHANGE.number -> TYPE_INNING
+            EventType.IPEND.number -> TYPE_INNING          // 最後一個出局數結束
             EventType.INNINGSPITCHED.number -> TYPE_TEXT // 換投
             EventType.STEALBASEFAIL.number -> TYPE_TEXT  // 盜壘失敗
             EventType.PICKOFF.number -> TYPE_TEXT    // 牽制出局

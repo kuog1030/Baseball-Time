@@ -23,6 +23,7 @@ enum class EventType(val number : Int, val letter: String, val isAtBat: Boolean,
     STEALBASEFAIL(33, "SBF", false, false, -1, "盜壘失敗。"),
     ONBASEOUT(34, "OUT", false, false, -1, "出局。"),
     INNINGSPITCHED(50, "IP", false, false, -1, "投球局數"),
-    INNINGCHANGE(51, "CHANGE", false, false, -1, "換局") // for文字轉播
+    INNINGCHANGE(51, "CHANGE", false, false, -1, "換局"), // for文字轉播
+    IPEND(52, "IP", false, false, -1, "投球局數")
     //PINCHPITCHER(61, "", false, false, -1, "換投")
 }
