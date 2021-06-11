@@ -73,10 +73,12 @@ class StatPlayerFragment : Fragment() {
     }
 
     private fun sharePlayerId(subject: String, body: String, chooserTitle: String) {
-        val sharingIntent = Intent(Intent.ACTION_SEND)
-        sharingIntent.type = "text/plain"
-        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
-        sharingIntent.putExtra(Intent.EXTRA_TEXT, body)
+        val sharingIntent = Intent().apply {
+            this.action = Intent.ACTION_SEND
+            this.type = "text/plain"
+            this.putExtra(Intent.EXTRA_SUBJECT, subject)
+            this.putExtra(Intent.EXTRA_TEXT, body)
+        }
         startActivity(Intent.createChooser(sharingIntent, chooserTitle))
     }
 }

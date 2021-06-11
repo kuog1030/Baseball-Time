@@ -533,6 +533,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
             android:background="@color/transparent"
+            android:visibility="@{viewModel.editable ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/button_stat_player_info"
             app:layout_constraintEnd_toEndOf="@+id/ticket_bottom"
             app:layout_constraintHorizontal_bias="0.5"
