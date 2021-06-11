@@ -1,5 +1,6 @@
 package com.gillian.baseball.statistics.statplayer
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,9 +10,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.gillian.baseball.BaseballApplication
+import com.gillian.baseball.R
 import com.gillian.baseball.databinding.FragmentStatPlayerBinding
 import com.gillian.baseball.editplayer.EditPlayerDialog
 import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.login.UserManager
+
 
 const val REQUEST_IMAGE_OPEN = 1
 
@@ -32,6 +37,12 @@ class StatPlayerFragment : Fragment() {
 
         binding.buttonStatPlayerLeave.setOnClickListener {
             findNavController().popBackStack()
+        }
+
+        binding.buttonStatPlayerShare.setOnClickListener {
+            val teamName = UserManager.team?.name ?: ""
+            val messageBody = BaseballApplication.instance.getString(R.string.share_player_id, teamName, args.playerId)
+            sharePlayerId(getString(R.string.share_subject), messageBody, getString(R.string.share_title))
         }
 
         viewModel.player.observe(viewLifecycleOwner, Observer {
@@ -59,5 +70,13 @@ class StatPlayerFragment : Fragment() {
 //        })
 
         return binding.root
+    }
+
+    private fun sharePlayerId(subject: String, body: String, chooserTitle: String) {
+        val sharingIntent = Intent(Intent.ACTION_SEND)
+        sharingIntent.type = "text/plain"
+        sharingIntent.putExtra(Intent.EXTRA_SUBJECT, subject)
+        sharingIntent.putExtra(Intent.EXTRA_TEXT, body)
+        startActivity(Intent.createChooser(sharingIntent, chooserTitle))
     }
 }

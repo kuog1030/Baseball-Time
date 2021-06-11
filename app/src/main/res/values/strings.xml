@@ -94,6 +94,9 @@
     <string name="team_player_stat">所有球員成績</string>
     <string name="team">Team</string>
     <string name="player_id_info">這個球員還沒有使用者認領，歡迎邀請這位球員也加入Baseball Time，使用這段球員代號來加入球隊、延續累積成績。</string>
+    <string name="share_subject">Baseball Time!</string>
+    <string name="share_title">傳送訊息給你要邀請的球員</string>
+    <string name="share_player_id">來Baseball Time認領你在%s的球員資料：%s</string>
 
 
     <!--   all games related -->

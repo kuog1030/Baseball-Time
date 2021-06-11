@@ -78,6 +78,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         if (editable.value == true) {
             teamName.value = UserManager.team?.name
             teamAcronym.value = UserManager.team?.acronym
+            teamImage.value = UserManager.team?.image
         }
         editable.value = !(editable.value!!)
     }
