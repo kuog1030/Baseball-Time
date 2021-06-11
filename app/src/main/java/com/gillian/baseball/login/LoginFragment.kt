@@ -11,6 +11,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.NavigationDirections
+import com.gillian.baseball.R
 import com.gillian.baseball.data.User
 import com.gillian.baseball.databinding.FragmentLoginBinding
 import com.gillian.baseball.ext.getVmFactory
@@ -112,7 +113,7 @@ class LoginFragment : Fragment() {
 
         // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken("534551205378-86bj9g48tc1mi74a8gnep6muval9hrdm.apps.googleusercontent.com")
+            .requestIdToken(getString(R.string.default_web_client_id))
             .requestEmail()
             .build()
 

@@ -19,15 +19,17 @@
         <TextView
             android:id="@+id/text_game_stat_title"
             android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:gravity="center"
             android:paddingTop="@dimen/half_margin"
             android:paddingBottom="@dimen/half_margin"
-            android:layout_height="wrap_content"
-            android:text="@string/game_stat_title"
+            android:text="@{viewModel.game.title}"
+            android:textColor="@color/color_primary"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="台灣大賽G7" />
 
         <ImageButton
             android:id="@+id/button_game_stat_leave"
@@ -35,6 +37,7 @@
             android:layout_height="18dp"
             android:layout_marginStart="@dimen/margin"
             android:background="@color/transparent"
+            android:tint="@color/color_primary"
             app:layout_constraintBottom_toBottomOf="@+id/text_game_stat_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_game_stat_title"
@@ -85,7 +88,7 @@
                     app:layout_constraintBottom_toTopOf="@+id/recycler_game_stat_box"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/text_game_stat_game"
                     tools:text="4-5" />
 
                 <ImageView
@@ -298,9 +301,9 @@
                         <TextView
                             android:id="@+id/text_box_guest"
                             style="@style/FinalTable"
-                            android:textSize="14sp"
                             android:layout_width="wrap_content"
                             android:text="@{viewModel.game.guest.name}"
+                            android:textSize="14sp"
                             tools:text="日本武士" />
 
                     </TableRow>
@@ -312,9 +315,9 @@
                         <TextView
                             android:id="@+id/text_box_home"
                             style="@style/FinalTable"
-                            android:textSize="14sp"
                             android:layout_width="wrap_content"
                             android:text="@{viewModel.game.home.name}"
+                            android:textSize="14sp"
                             tools:text="中華隊" />
                     </TableRow>
                 </TableLayout>
@@ -348,6 +351,16 @@
                 app:lottie_rawRes="@raw/login" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:background="@color/color_background"
+            android:gravity="center"
+            app:errorMessage="@{viewModel.errorMessage}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_game_stat_title"
+            tools:visibility="gone" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

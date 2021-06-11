@@ -12,7 +12,9 @@
             app:argType="com.gillian.baseball.data.MyGame" />
         <action
             android:id="@+id/action_gameFragment_to_finalFragment"
-            app:destination="@id/finalFragment" />
+            app:destination="@id/finalFragment"
+            app:popUpTo="@id/allGamesFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

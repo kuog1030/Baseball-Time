@@ -724,7 +724,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .document(gameId)
                 .get()
                 .addOnSuccessListener { documents ->
-                    if (documents != null) {
+                    if (documents.data != null) {
                         val gameResult = documents.toObject(Game::class.java)
                         // TODO()這邊怎麼error handle?
                         continuation.resume(Result.Success(gameResult!!))

@@ -377,6 +377,19 @@ fun bindLoadingStatus(view: View, status: LoadStatus?) {
     }
 }
 
+@BindingAdapter("errorMessage")
+fun bindApiErrorMessage(view: TextView, message: String?) {
+    when (message) {
+        null, "" -> {
+            view.visibility = View.GONE
+        }
+        else -> {
+            view.text = message
+            view.visibility = View.VISIBLE
+        }
+    }
+}
+
 //
 //@BindingAdapter("onFirstBase")
 //fun bindFirstBaseRunner(textView: TextView, baseList: Array<EventPlayer?>) {

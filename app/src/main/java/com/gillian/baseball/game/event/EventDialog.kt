@@ -68,8 +68,6 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
         viewModel.dismiss.observe(viewLifecycleOwner, Observer {
             it?.let {
 
-                Log.i("gillian", "current array ${it[0]}, ${it[1]}, ${it[2]}, ${it[3]}")
-
                 gameViewModel.addPitchCount()
 
                 if (viewModel.hasBaseOut.isEmpty()) {
