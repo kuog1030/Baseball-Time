@@ -29,8 +29,8 @@
             android:layout_marginEnd="@dimen/margin"
             android:layout_marginBottom="80dp"
             android:background="@drawable/bg_dialog"
-            android:paddingBottom="@dimen/one_half_margin"
             android:onClick="@{()->viewModel.nothing()}"
+            android:paddingBottom="@dimen/one_half_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -68,10 +68,10 @@
                     android:onClick="@{()->viewModel.expandPlayer()}"
                     android:paddingStart="@dimen/margin"
                     android:paddingEnd="@dimen/margin"
-                    android:textColor="@color/color_on_primary"
                     android:text="@{viewModel.playerToggleText}"
-                    android:textOn="@{viewModel.playerToggleText}"
+                    android:textColor="@color/color_on_primary"
                     android:textOff="@{viewModel.playerToggleText}"
+                    android:textOn="@{viewModel.playerToggleText}"
                     android:textSize="17sp" />
 
                 <androidx.recyclerview.widget.RecyclerView
@@ -86,16 +86,29 @@
                 </androidx.recyclerview.widget.RecyclerView>
             </LinearLayout>
 
-<!--            <Button-->
-<!--                style="@style/ButtonRadiusFilled"-->
-<!--                android:layout_width="0dp"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:textSize="17sp"-->
-<!--                app:layout_constraintTop_toBottomOf="@id/layout_pinch_player"-->
-<!--                app:layout_constraintStart_toStartOf="@id/layout_pinch_player"-->
-<!--                app:layout_constraintEnd_toEndOf="@id/layout_pinch_player"-->
-<!--                android:layout_marginTop="@dimen/one_half_margin"-->
-<!--                android:text="比賽中止"/>-->
+            <Button
+                android:id="@+id/button_pinch_save"
+                style="@style/ButtonRadiusFilled"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/one_half_margin"
+                android:text="比賽暫停"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="@id/layout_pinch_player"
+                app:layout_constraintStart_toStartOf="@id/layout_pinch_player"
+                app:layout_constraintTop_toBottomOf="@id/layout_pinch_player" />
+
+            <Button
+                android:id="@+id/button_pinch_final"
+                style="@style/ButtonRadiusFilled"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/one_half_margin"
+                android:text="比賽結束"
+                android:textSize="17sp"
+                app:layout_constraintEnd_toEndOf="@id/layout_pinch_player"
+                app:layout_constraintStart_toStartOf="@id/layout_pinch_player"
+                app:layout_constraintTop_toBottomOf="@id/button_pinch_save" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>
