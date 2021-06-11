@@ -693,11 +693,10 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
-    //TODO() 目前這個function沒有用到teamId欸
     override suspend fun getTeamEventPlayer(teamId: String): Result<MutableList<EventPlayer>> = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
                 .collection(PLAYERS)
-                .whereEqualTo(TEAMID, UserManager.teamId)
+                .whereEqualTo(TEAMID, teamId)
                 .get()
                 .addOnCompleteListener{ task ->
                     if (task.isSuccessful) {

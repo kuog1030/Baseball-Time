@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_edit_text"
-        android:layout_marginTop="@dimen/half_margin">
+        android:layout_marginTop="@dimen/quarter_margin">
 
         <TextView
             android:id="@+id/text_order_number"
@@ -28,8 +28,6 @@
             android:layout_width="30dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/one_half_margin"
-            android:layout_marginTop="@dimen/quarter_margin"
-            android:layout_marginBottom="@dimen/quarter_margin"
             android:text="@{String.valueOf(player.number)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

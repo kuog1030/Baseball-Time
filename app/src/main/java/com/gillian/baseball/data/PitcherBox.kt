@@ -20,6 +20,7 @@ data class PitcherBox(
         var name : String? = "",
         var order : Int = -1,
         val playerId : String = "",
+        var gamePlayed : Int = 0,
         var inningsPitched : Int = 0,
         var hit : Int = 0,
         var run : Int = 0,
@@ -37,6 +38,8 @@ data class PitcherBox(
 
     fun addNewBox(newBox: PitcherBox) {
         this.apply {
+            name = newBox.name
+            gamePlayed += 1
             inningsPitched += newBox.inningsPitched
             run += newBox.run
             hit += newBox.hit

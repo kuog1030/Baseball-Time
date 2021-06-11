@@ -15,6 +15,7 @@ data class HitterBox (
         var douBle: Int = 0,
         var triple: Int = 0,
         var homerun: Int = 0,
+        var gamePlayed: Int = 0,
         var runsBattedIn : Int = 0,
         var baseOnBalls : Int = 0,
         var hitByPitch : Int = 0,
@@ -43,6 +44,7 @@ data class HitterBox (
             homerun += newBox.homerun
             run += newBox.run
             hit += newBox.hit
+            gamePlayed += 1
             runsBattedIn += newBox.runsBattedIn
             baseOnBalls += newBox.baseOnBalls
             strikeOut += newBox.strikeOut
@@ -80,11 +82,11 @@ data class HitterBox (
     }
 
     // On-base Plus Slugging
-    fun myOps() : Float? {
+    fun myOps() : Float {
         if (atBat != 0) {
             return (obp + slg)
         } else {
-            return null
+            return 0F
         }
     }
 }
