@@ -26,27 +26,17 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintWidth_percent="2" />
 
-        <ImageView
-            android:id="@+id/image_rank_team_edit"
-            android:layout_width="90dp"
-            android:layout_height="90dp"
-            android:layout_marginTop="@dimen/margin"
-            android:visibility="@{viewModel.editable ? View.VISIBLE : View.INVISIBLE}"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/image_rank_team"
+            android:layout_width="85dp"
+            android:layout_height="85dp"
+            android:layout_marginTop="@dimen/one_half_margin"
+            app:civ_border_color="@color/white"
             app:layout_constraintEnd_toEndOf="@+id/view"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/bg_ticket" />
-
-        <ImageView
-            android:id="@+id/image_rank_team"
-            imageUrl="@{viewModel.teamImage}"
-            android:layout_width="80dp"
-            android:layout_height="80dp"
-            app:layout_constraintBottom_toBottomOf="@+id/image_rank_team_edit"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_rank_team_edit"
-            tools:src="@drawable/ic_baseline_sports_baseball_24" />
+            app:teamUrl="@{viewModel.teamImage}"
+            app:teamPhotoBorder="@{viewModel.editable}"/>
 
         <TextView
             android:id="@+id/text_rank_name"

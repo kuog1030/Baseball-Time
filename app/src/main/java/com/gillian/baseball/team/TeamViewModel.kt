@@ -79,6 +79,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
             teamName.value = UserManager.team?.name
             teamAcronym.value = UserManager.team?.acronym
             teamImage.value = UserManager.team?.image
+            readyToSentPhoto.value = null
         }
         editable.value = !(editable.value!!)
     }

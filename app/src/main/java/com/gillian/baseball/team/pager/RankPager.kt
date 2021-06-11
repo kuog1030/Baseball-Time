@@ -76,6 +76,7 @@ class RankPager : Fragment() {
 
         if (requestCode == REQUEST_IMAGE_OPEN && resultCode == Activity.RESULT_OK && data != null) {
             binding.imageRankTeam.setImageURI(data.data)
+            //binding.profileImage.setImageURI(data.data)
             viewModel.readyToSentPhoto.value = data.data
         }
     }

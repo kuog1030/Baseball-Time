@@ -289,6 +289,22 @@ fun bindProfilePhoto(imageView: ImageView, url: String?) {
             .into(imageView)
 }
 
+@BindingAdapter("teamUrl")
+fun bindTeamPhoto(imageView: de.hdodenhof.circleimageview.CircleImageView, url: String?) {
+    Glide.with(imageView.context)
+        .load(url)
+        .circleCrop()
+        .dontAnimate()
+        .into(imageView)
+}
+
+@BindingAdapter("teamPhotoBorder")
+fun bindPhotoBorder(imageView: de.hdodenhof.circleimageview.CircleImageView, editable: Boolean?) {
+    editable?.let{
+        imageView.borderWidth = if (editable) 15 else 0
+    }
+}
+
 @BindingAdapter("imageSquareUrl")
 fun bindProfileImageSquare(imageView: ImageView, url: String?) {
     Glide.with(imageView.context)

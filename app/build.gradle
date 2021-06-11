@@ -81,6 +81,9 @@ dependencies {
 
     implementation 'com.github.sembozdemir:ViewPagerArrowIndicator:1.0.0'
 
+    // circle image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
     // material calendar
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'
 
