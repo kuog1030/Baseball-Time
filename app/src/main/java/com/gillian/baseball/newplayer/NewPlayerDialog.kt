@@ -85,9 +85,4 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
         }
     }
 
-    override fun onStop() {
-        super.onStop()
-        Log.i("gillian", "new player dialog on stop")
-    }
-
 }

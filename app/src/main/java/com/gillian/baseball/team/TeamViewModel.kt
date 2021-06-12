@@ -16,7 +16,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     val myself = MutableLiveData<Player>()
-    val initUser = MutableLiveData<Team>()
 
     private val _teamPlayers = MutableLiveData<MutableList<Player>>()
 
@@ -113,61 +112,27 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    init {
-        if (UserManager.team == null) {
-            Log.i("gillian67", "team null?")
-            initMyUserData()
-        } else {
-            initTeamPage()
-        }
-    }
-
-    fun initMyUserData() {
-        viewModelScope.launch {
-            val result = repository.getTeam(UserManager.teamId)
-            initUser.value = when (result) {
-                is Result.Success -> {
-                    result.data
-                }
-                else -> {
-                    null
+    fun fetchMyPlayer() {
+        teamPlayers.value?.let {
+            for (player in it) {
+                if (player.userId == UserManager.userId) {
+                    myself.value = player
+                    break
                 }
             }
         }
     }
 
+    // team fragment on create -> init team page -> fetch team -> fetch my player
     fun initTeamPage() {
-        fetchMyPlayerInfo()
         fetchTeamPlayer()
         teamName.value = UserManager.team?.name
         teamImage.value = UserManager.team?.image
         teamAcronym.value = UserManager.team?.acronym
     }
 
-
-    fun fetchMyPlayerInfo() {
-        viewModelScope.launch {
-            _statusMe.value = LoadStatus.LOADING
-            val myResult = repository.getOnePlayer(UserManager.playerId)
-            myself.value = when (myResult) {
-                is Result.Success -> {
-                    _statusMe.value = LoadStatus.DONE
-                    myResult.data
-                }
-                is Result.Fail -> {
-                    _statusMe.value = LoadStatus.ERROR
-                    null
-                }
-                is Result.Error -> {
-                    _statusMe.value = LoadStatus.ERROR
-                    null
-                }
-                else -> {
-                    _statusMe.value = LoadStatus.ERROR
-                    null
-                }
-            }
-        }
+    init {
+        initTeamPage()
     }
 
     fun addNewPlayer() {

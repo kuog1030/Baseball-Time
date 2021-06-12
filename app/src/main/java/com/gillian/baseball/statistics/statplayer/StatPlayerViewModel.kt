@@ -19,6 +19,8 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
 
     val editable = MutableLiveData<Boolean>(false)
 
+    val noUserRegistered = MutableLiveData<Boolean>(false)
+
     private val _errorMessage = MutableLiveData<String>()
 
     val errorMessage: LiveData<String>
@@ -69,8 +71,7 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
     fun updateMoreHitStat() {
         player.value?.let{
             editable.value = (it.userId.isNullOrEmpty() || it.userId == UserManager.userId)  // 如果這個球員沒人認領 user id is null才可以修改
-            Log.i("gillian67", "${it.userId} and ${UserManager.userId}")
-
+            noUserRegistered.value = it.userId.isNullOrEmpty()
         }
     }
 
@@ -99,9 +100,10 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
         _navigateToTeam.value = null
     }
 
-    fun refresh() {
+    fun refresh(refreshStat: Boolean = false) {
+        isInit = refreshStat
         player.value?.let {
-            isInit = false
+            Log.i("gillian", "refresh")
             fetchPlayerStat(it.id)
         }
     }

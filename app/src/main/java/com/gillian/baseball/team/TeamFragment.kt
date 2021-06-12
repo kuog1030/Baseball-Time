@@ -20,14 +20,11 @@ class TeamFragment : Fragment() {
 
    //private val viewModel by viewModels<TeamViewModel> { getVmFactory() }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
+
         val binding = FragmentTeamBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(requireActivity(), this.getVmFactory()).get(TeamViewModel::class.java)
-
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -43,15 +40,9 @@ class TeamFragment : Fragment() {
             }
         })
 
-        viewModel.initUser.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                UserManager.team = it
-                viewModel.initTeamPage()
-            }
-        })
-
         viewModel.teamPlayers.observe(viewLifecycleOwner, Observer {
             it?.let{
+                viewModel.fetchMyPlayer()
                 viewModel.createRankList(it)
             }
         })

@@ -45,6 +45,8 @@ interface BaseballDataSource {
 
     suspend fun updatePitchStat(playerId: String, pitcherBox: PitcherBox) : Result<Boolean>
 
+    suspend fun clearMyStat(playerId: String, myName: String) : Result<Boolean>
+
     //suspend fun searchTeam(teamName: String) : Result<List<Team>>
 
     // TODO() 這個不一定需要用到吧?

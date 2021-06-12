@@ -544,6 +544,27 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
+    override suspend fun clearMyStat(playerId: String, myName: String): Result<Boolean> = suspendCoroutine { continuation ->
+        val newHitStat = HitterBox(playerId = playerId, name = myName)
+        val newPitchStat = PitcherBox(playerId = playerId, name = myName)
+
+        FirebaseFirestore.getInstance().collection(PLAYERS)
+                .document(playerId)
+                .update(HITSTAT, newHitStat,
+                        PITCHSTAT, newPitchStat)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+                            Log.w("remote", "[${this::class.simpleName}] Error clearing my stat. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                        }
+                        continuation.resume(Result.Fail("clear my stat fail"))
+                    }
+                }
+    }
+
     override suspend fun getAllGames(teamId: String): Result<List<Game>>  = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
                 .collection(GAMES)
@@ -749,12 +770,15 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val eventList = mutableListOf<Event>()
-                        for (document in task.result!!) {
-                            eventList.add(document.toObject(Event::class.java))
+                        if (task.result != null) {
+                            for (document in task.result!!) {
+                                eventList.add(document.toObject(Event::class.java))
+                            }
+                            val result = eventList.toMyGameStat(isHome)
+                            continuation.resume(Result.Success(result))
                         }
                         //val result = eventList.toBothGameStat()
-                        val result = eventList.toMyGameStat(isHome)
-                        continuation.resume(Result.Success(result))
+                        continuation.resume(Result.Fail("get all stats fail"))
                     } else {
                         task.exception?.let {
 
@@ -820,11 +844,14 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val eventList = mutableListOf<Event>()
-                        for (document in task.result!!) {
-                            eventList.add(document.toObject(Event::class.java))
+                        if (task.result != null) {
+                            for (document in task.result!!) {
+                                eventList.add(document.toObject(Event::class.java))
+                            }
+                            continuation.resume(eventList)
+                        } else {
+                            continuation.resume(emptyList())
                         }
-                        Log.i("remote", "get all event list success")
-                        continuation.resume(eventList)
                     } else {
                         task.exception?.let {
 

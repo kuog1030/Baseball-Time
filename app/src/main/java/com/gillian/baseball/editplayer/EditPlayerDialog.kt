@@ -59,7 +59,8 @@ class EditPlayerDialog(val player: Player) : BottomSheetDialogFragment() {
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             it?.let{
                 if (it) {
-                    ViewModelProvider(requireParentFragment()).get(StatPlayerViewModel::class.java).refresh()
+                    ViewModelProvider(requireParentFragment()).get(StatPlayerViewModel::class.java).refresh(viewModel.needStatRefresh)
+                    ViewModelProvider(requireActivity()).get(TeamViewModel::class.java).refresh()
                 }
                 dismiss()
                 viewModel.onDialogDismiss()
