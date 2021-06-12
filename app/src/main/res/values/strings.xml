@@ -75,6 +75,9 @@
     <string name="box_ip">IP</string>
     <string name="box_er">ER</string>
     <string name="box_hr">HR</string>
+    <string name="box_era">ERA</string>
+    <string name="box_whip">WHIP</string>
+    <string name="box_k9">K9</string>
     <string name="box_single">1B</string>
     <string name="box_double">2B</string>
     <string name="box_triple">3B</string>
@@ -133,7 +136,7 @@
     <!--    game final -->
     <string name="game_final">比賽結束</string>
     <string name="data_uploading">資料上傳中 ^^ </string>
-    <string name="game_end_dinner_time">比完賽去吃飯</string>
+    <string name="game_end_dinner_time">成績上傳後去吃飯</string>
 
     <!--    game record related -->
 

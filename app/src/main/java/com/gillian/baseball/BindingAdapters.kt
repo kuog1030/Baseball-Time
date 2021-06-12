@@ -366,6 +366,12 @@ fun bindHitStatPercentage(textView: TextView, average: Float) {
     textView.text = statFormat.format(average)
 }
 
+@BindingAdapter("pitchPercentage")
+fun bindPitchStatPercentage(textView: TextView, average: Float) {
+    val statFormat = "%.2f"
+    textView.text = statFormat.format(average)
+}
+
 @BindingAdapter("inningCount")
 fun bindTextInning(textView: TextView, inning: Int) {
     if (inning == -1) {

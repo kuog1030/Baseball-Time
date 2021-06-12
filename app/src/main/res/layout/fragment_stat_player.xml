@@ -288,7 +288,7 @@
             android:layout_marginEnd="@dimen/half_margin"
             app:layout_constraintEnd_toEndOf="@id/ticket_top"
             app:layout_constraintStart_toStartOf="@id/ticket_top"
-            app:layout_constraintTop_toBottomOf="@id/text_stat_player_pitch">
+            app:layout_constraintTop_toBottomOf="@id/text_stat_whip">
 
 
             <TableRow
@@ -369,7 +369,7 @@
                     style="@style/PlayerTableLarge"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@{String.valueOf(pitchStat.inningsPitched)}" />
+                    android:text="@{pitchStat.inningsFormat}" />
 
                 <TextView
                     style="@style/PlayerTableLarge"
@@ -387,7 +387,7 @@
                     style="@style/PlayerTableLarge"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@{String.valueOf(pitchStat.run)}" />
+                    android:text="@{String.valueOf(pitchStat.earnedRuns)}" />
 
                 <TextView
                     style="@style/PlayerTableLarge"
@@ -446,10 +446,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="OPS"
-            app:layout_constraintStart_toEndOf="@+id/text_stat_player_slg"
-            app:layout_constraintTop_toTopOf="@+id/text_stat_player_slg"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5" />
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/text_stat_player_slg"
+            app:layout_constraintTop_toTopOf="@+id/text_stat_player_slg" />
 
         <TextView
             android:id="@+id/text_stat_avg_number"
@@ -498,11 +498,83 @@
             android:textColor="@color/color_primary"
             android:textSize="19sp"
             android:textStyle="bold"
-            app:statPercentage="@{hitStat.myOps()}"
             app:layout_constraintEnd_toEndOf="@+id/text_stat_player_ops"
             app:layout_constraintStart_toStartOf="@+id/text_stat_player_ops"
             app:layout_constraintTop_toTopOf="@+id/text_stat_slg_number"
-            tools:text=".222"/>
+            app:statPercentage="@{hitStat.myOps()}"
+            tools:text=".222" />
+
+        <TextView
+            android:id="@+id/text_stat_era"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_margin"
+            android:text="@string/box_era"
+            app:layout_constraintEnd_toEndOf="@+id/text_stat_era_number"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_era_number"
+            app:layout_constraintTop_toBottomOf="@+id/text_stat_era_number" />
+
+        <TextView
+            android:id="@+id/text_stat_whip"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/box_whip"
+            app:layout_constraintEnd_toEndOf="@+id/text_stat_whip_number"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_whip_number"
+            app:layout_constraintTop_toTopOf="@+id/text_stat_era" />
+
+        <TextView
+            android:id="@+id/text_stat_k9"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/box_k9"
+            app:layout_constraintEnd_toEndOf="@+id/text_stat_k9_number"
+            app:layout_constraintStart_toStartOf="@+id/text_stat_k9_number"
+            app:layout_constraintTop_toTopOf="@+id/text_stat_era" />
+
+        <TextView
+            android:id="@+id/text_stat_era_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
+            android:textColor="@color/color_primary"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/text_stat_whip_number"
+            app:layout_constraintHorizontal_bias=".5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/text_stat_player_pitch"
+            app:pitchPercentage="@{pitchStat.era}"
+            tools:text="3.5" />
+
+
+        <TextView
+            android:id="@+id/text_stat_whip_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_primary"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toStartOf="@id/text_stat_k9_number"
+            app:layout_constraintHorizontal_bias=".5"
+            app:layout_constraintStart_toEndOf="@id/text_stat_era_number"
+            app:layout_constraintTop_toTopOf="@id/text_stat_era_number"
+            app:pitchPercentage="@{pitchStat.whip}"
+            tools:text="1.22" />
+
+        <TextView
+            android:id="@+id/text_stat_k9_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/color_primary"
+            android:textSize="19sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias=".5"
+            app:layout_constraintStart_toEndOf="@id/text_stat_whip_number"
+            app:layout_constraintTop_toTopOf="@id/text_stat_era_number"
+            app:pitchPercentage="@{pitchStat.myKNine}"
+            tools:text="7.4" />
 
         <ImageButton
             android:id="@+id/button_stat_player_edit"

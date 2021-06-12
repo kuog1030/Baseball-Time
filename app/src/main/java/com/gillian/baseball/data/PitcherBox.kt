@@ -25,6 +25,39 @@ data class PitcherBox(
     val inningsFormat : String
         get() = inningsPitched.toInningCount()
 
+    val era : Float
+        get() = myEra()
+
+    val whip : Float
+        get() = myWhip()
+
+    val kNine: Float
+        get() = myKNine()
+
+    fun myEra() : Float {
+        if (inningsPitched == 0) {
+            return 0F
+        } else {
+            return (earnedRuns.toFloat() / inningsPitched * 27)
+        }
+    }
+
+    fun myWhip() : Float {
+        if (inningsPitched == 0) {
+            return 0F
+        } else {
+            return ((hit + baseOnBalls) / inningsPitched.toFloat() * 3)
+        }
+    }
+
+    fun myKNine() : Float {
+        if (inningsPitched == 0) {
+            return 0F
+        } else {
+            return (strikeOut.toFloat() / inningsPitched * 27)
+        }
+    }
+
     fun addNewBox(newBox: PitcherBox) {
         this.apply {
             name = newBox.name
