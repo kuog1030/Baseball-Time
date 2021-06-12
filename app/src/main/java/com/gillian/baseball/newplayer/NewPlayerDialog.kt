@@ -51,7 +51,7 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
                 if (viewModel.needRefresh) {
                     try{
                         if (fromTeamFragment) {
-                            ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java).refresh()
+                            ViewModelProvider(requireActivity()).get(TeamViewModel::class.java).refresh()
                         } else {
                             ViewModelProvider(requireParentFragment()).get(OrderViewModel::class.java).refresh()
                         }

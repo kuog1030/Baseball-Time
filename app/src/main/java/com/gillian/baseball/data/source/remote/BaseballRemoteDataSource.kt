@@ -649,9 +649,12 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .get()
                 .addOnCompleteListener{ task ->
                     if (task.isSuccessful) {
-                        val result = task.result!!.toObject(Player::class.java)
-                        continuation.resume(Result.Success(result!!))
-
+                        if (task.result != null) {
+                            val result = task.result!!.toObject(Player::class.java)
+                            continuation.resume(Result.Success(result!!))
+                        } else {
+                            continuation.resume(Result.Fail("get one player fail"))
+                        }
                     } else {
                         task.exception?.let {
                             Log.w("remote", "[${this::class.simpleName}] Error getting one player. ${it.message}")
