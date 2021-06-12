@@ -24,7 +24,7 @@ fun List<Player>.toRankList() : List<Rank> {
                 1 -> getString(R.string.hit_rank)
                 2 -> getString(R.string.homerun_rank)
                 3 -> getString(R.string.avg_rank)
-                else -> getString(R.string.sb_rank)
+                else -> getString(R.string.so_rank)
             }
             resultList.add(result)
         } else {
@@ -60,14 +60,22 @@ fun List<Player>.toRankList() : List<Rank> {
                 }
 
             } else {
-                sortList = this.sortedWith (compareBy({ -it.hitStat.stealBase }, {it.hitStat.atBat}))
-                result.type = getString(R.string.sb_rank)
+                sortList = this.sortedWith(compareBy({ -it.hitStat.strikeOut}, {it.hitStat.atBat}))
+                result.type = getString(R.string.so_rank)
                 result.let {
                     it.topImage = sortList[0].image ?: ""
-                    it.topScore = sortList[0].hitStat.stealBase.toString()
-                    it.secondScore = sortList[1].hitStat.stealBase.toString()
-                    it.thirdScore = sortList[2].hitStat.stealBase.toString()
+                    it.topScore = sortList[0].hitStat.strikeOut.toString()
+                    it.secondScore = sortList[1].hitStat.strikeOut.toString()
+                    it.thirdScore = sortList[2].hitStat.strikeOut.toString()
                 }
+//                sortList = this.sortedWith (compareBy({ -it.hitStat.stealBase }, {it.hitStat.atBat}))
+//                result.type = getString(R.string.sb_rank)
+//                result.let {
+//                    it.topImage = sortList[0].image ?: ""
+//                    it.topScore = sortList[0].hitStat.stealBase.toString()
+//                    it.secondScore = sortList[1].hitStat.stealBase.toString()
+//                    it.thirdScore = sortList[2].hitStat.stealBase.toString()
+//                }
             }
             result.topName = sortList[0].name
             result.secondName = sortList[1].name

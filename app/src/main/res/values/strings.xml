@@ -28,6 +28,7 @@
     <string name="hit_rank">安打王</string>
     <string name="avg_rank">打擊王</string>
     <string name="sb_rank">盜壘王</string>
+    <string name="so_rank">被三振王！？</string>
     <string name="watch_all_team_stat">所有球員數據</string>
 
     <!--    team related -->

@@ -776,9 +776,10 @@ object BaseballRemoteDataSource : BaseballDataSource {
                             }
                             val result = eventList.toMyGameStat(isHome)
                             continuation.resume(Result.Success(result))
+                        } else {
+                            continuation.resume(Result.Fail("get all stats fail"))
                         }
                         //val result = eventList.toBothGameStat()
-                        continuation.resume(Result.Fail("get all stats fail"))
                     } else {
                         task.exception?.let {
 

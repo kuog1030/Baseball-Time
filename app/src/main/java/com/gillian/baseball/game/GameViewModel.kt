@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
 
 // debug用
-var totalInning = 2
+var totalInning = 18
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
@@ -612,7 +612,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     // pinchDialog -> 換投
     fun nextPitcher(next: EventPlayer, position: Int) {
         val totalInningPitched = (((inningCount+1) / 2 - 1) * 3 + outCount.value!!) - previousIp
-        previousIp = totalInningPitched
+        previousIp += totalInningPitched
 
         Log.i("game", "換投中 event送達~")
         sendEvent(
