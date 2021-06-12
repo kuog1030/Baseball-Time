@@ -10,6 +10,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.R
+import com.gillian.baseball.data.EventPlayer
 import com.gillian.baseball.data.OnBaseInfo
 import com.gillian.baseball.databinding.DialogOnBaseBinding
 import com.gillian.baseball.ext.getVmFactory
@@ -41,11 +42,20 @@ class OnBaseDialog(val onBaseInfo: OnBaseInfo) : AppCompatDialogFragment() {
             viewModel.recordError(player)
         })
 
+        val tenOnFieldPlayer = mutableListOf<EventPlayer>()
+
+
         binding.recyclerOnBaseError.adapter = fieldAdapter
         if (gameViewModel.isTop) {
-            fieldAdapter.submitList(gameViewModel.homeLineUp) // 上半場的話是主隊防守中
+            tenOnFieldPlayer.addAll(gameViewModel.homeLineUp)
+            tenOnFieldPlayer.add(gameViewModel.homePitcher)
+
+            fieldAdapter.submitList(tenOnFieldPlayer) // 上半場的話是主隊防守中
         } else {
-            fieldAdapter.submitList(gameViewModel.guestLineUp)
+            tenOnFieldPlayer.addAll(gameViewModel.guestLineUp)
+            tenOnFieldPlayer.add(gameViewModel.guestPitcher)
+
+            fieldAdapter.submitList(tenOnFieldPlayer)
         }
 
         viewModel.proceedWithError.observe(viewLifecycleOwner, Observer {

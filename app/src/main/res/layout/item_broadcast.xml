@@ -70,7 +70,7 @@
         <com.gillian.baseball.views.CustomBaseView
             android:id="@+id/my_custom_base"
             android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"

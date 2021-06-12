@@ -134,7 +134,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         when (inningCount) {
             totalInning -> {
                 game.value?.let{
-                    if (it.box.run[0] == it.box.run[1] && totalInning <= 12) {
+                    if (it.box.run[0] == it.box.run[1] && totalInning <= 22) {
                         // If Tie
                         totalInning += 2
                         switch()
@@ -370,13 +370,25 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             }
         }
 
+        val tenOnFieldPlayer = mutableListOf<EventPlayer>()
+        if (isTop == isHome) {
+            if (isHome) {
+                tenOnFieldPlayer.addAll(homeLineUp)
+                tenOnFieldPlayer.add(homePitcher)
+            } else {
+                tenOnFieldPlayer.addAll(guestLineUp)
+                tenOnFieldPlayer.add(guestPitcher)
+            }
+        }
+
+
         if (isSafe) {
             _navigateToEvent.value = EventInfo(gameId = argument.game.id,
                     atBaseList = atBaseList,
                     isSafe = true,
                     isDefence = (isTop == isHome),
                     hitterPreEvent = hitterEvent,
-                    onField = if(isHome) homeLineUp else guestLineUp)
+                    onField = tenOnFieldPlayer)
         } else {
 
             // 如果兩出局，只管打者
@@ -386,7 +398,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                         isSafe = false,
                         isDefence = (isTop == isHome),
                         hitterPreEvent = hitterEvent,
-                        onField = if(isHome) homeLineUp else guestLineUp,
+                        onField = tenOnFieldPlayer,
                         baseForThreeOut = toCustomBaseInt(baseList = baseList))
 
             } else {
@@ -395,7 +407,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                         isSafe = false,
                         isDefence = (isTop == isHome),
                         hitterPreEvent = hitterEvent,
-                        onField = if(isHome) homeLineUp else guestLineUp)
+                        onField = tenOnFieldPlayer)
             }
         }
     }
