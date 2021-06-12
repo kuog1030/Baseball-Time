@@ -88,7 +88,7 @@ fun Int.toInningCount() : String {
 fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
 
 
-    val myPitcher = mutableListOf(PitcherBox())
+    val myPitcher = mutableListOf(PitcherBox(order = -2))
     val myHitter = mutableListOf(HitterBox())
     val myScore = mutableListOf<PersonalScore>()
 
@@ -162,6 +162,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
         }
 
         box.run += event.run
+        box.earnedRuns += event.run
 
         when (targetEventType) {
             EventType.SINGLE -> box.hit += 1
@@ -228,6 +229,9 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             }
 
         } else {
+
+            Log.i("gillian12", "pitcher ${event.pitcher}")
+
             if (event.result == EventType.ERROR.number) {
                 errorEvent.add(event)
                 Log.i("gillian64", "有失誤要記錄了 ${event}")
@@ -244,7 +248,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             }
 
             if (noPitcher) {
-                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId, order = event.player.order)
+                val newPitcherBox = PitcherBox(name = event.pitcher.name, playerId = event.pitcher.playerId, order = event.pitcher.order)
                 updatePitcherBox(event, newPitcherBox)
                 myPitcher.add(newPitcherBox)
             }

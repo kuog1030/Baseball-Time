@@ -137,16 +137,21 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
             lineUp[index-1].order = index*100
         }
 
-        if (startingPitcher == null) {
-            pitcherList[0].order = 1
-        }
+
+        val copyPitcher = EventPlayer(
+                playerId = startingPitcher?.playerId ?: pitcherList[0].playerId,
+                order = 1,
+                name = startingPitcher?.name ?: pitcherList[0].name,
+                number = startingPitcher?.number ?: pitcherList[0].number
+        )
+
 
         val myTeam = GameTeam(
                 name = UserManager.team?.name ?: "",
                 acronym = UserManager.team?.acronym ?: "",
                 image = UserManager.team?.image?:"",
                 teamId = UserManager.teamId,
-                pitcher = startingPitcher ?: pitcherList[0],
+                pitcher = copyPitcher,
                 lineUp = lineUp.subList(0, minOf(totalOrder, lineUp.size))
         )
 

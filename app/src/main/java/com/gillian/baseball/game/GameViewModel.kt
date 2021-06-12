@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import java.util.concurrent.CopyOnWriteArrayList
 
 // debug用
-var totalInning = 4
+var totalInning = 2
 
 class GameViewModel(private val repository: BaseballRepository, private val argument: MyGame) : ViewModel() {
 
@@ -515,7 +515,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun sendEvent(event: Event) {
-        Log.i("gillian", "game VM send event base ${event.currentBase}")
+        Log.i("gillian12", "evnet pitcher is ${event.pitcher}")
         viewModelScope.launch {
             repository.sendEvent(argument.game.id, event)
         }

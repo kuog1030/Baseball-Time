@@ -1,5 +1,6 @@
 package com.gillian.baseball
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.broadcast.BroadcastAdapter
 import com.gillian.baseball.data.*
+import com.gillian.baseball.finalgame.EraAdapter
 import com.gillian.baseball.team.pager.RankAdapter
 import com.gillian.baseball.team.pager.TeammateAdapter
 import com.gillian.baseball.views.BoxAdapter

@@ -1,5 +1,6 @@
 package com.gillian.baseball.finalgame
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -54,6 +55,11 @@ class FinalViewModel(private val repository: BaseballRepository, val myGame: MyG
 
     val loading = MutableLiveData<Boolean>(true)
 
+    private val _statusNavigate = MutableLiveData<LoadStatus>()
+
+    val statusNavigate: LiveData<LoadStatus>
+        get() = _statusNavigate
+
     private val _status = MutableLiveData<LoadStatus>()
 
     val status: LiveData<LoadStatus>
@@ -63,6 +69,11 @@ class FinalViewModel(private val repository: BaseballRepository, val myGame: MyG
 
     val errorMessage: LiveData<String>
         get() = _errorMessage
+
+    private val _eraChanged = MutableLiveData<Boolean>()
+
+    val eraChanged: LiveData<Boolean>
+        get() = _eraChanged
 
     init {
         // 需要先update status = final嗎
@@ -111,11 +122,14 @@ class FinalViewModel(private val repository: BaseballRepository, val myGame: MyG
                     }
                 }
 
-                for (pitcher in it.myPitcher) {
-                    if (pitcher.playerId != "") {
-                        pitcherResult = repository.updatePitchStat(pitcher.playerId, pitcher)
-                    }
-                }
+                // TODO()不應該現在update
+//                for (pitcher in it.myPitcher) {
+//                    if (pitcher.playerId != "") {
+//                        pitcherResult = repository.updatePitchStat(pitcher.playerId, pitcher)
+//                    }
+//                }
+
+                Log.i("gillian12", "pitcher ${it.myPitcher}")
                 updateGameStatus(GameStatus.FINALWITHSTAT)
                 _status.value = LoadStatus.DONE
                 loading.value = false
@@ -133,28 +147,51 @@ class FinalViewModel(private val repository: BaseballRepository, val myGame: MyG
         _gameBox.value = box.toBoxViewList()
     }
 
-    fun updateNote() {
-        if (gameNote.value == null) {
-            _saveAndNavigate.value = true
-        } else {
-            viewModelScope.launch {
-                val noteResult = repository.updateGameNote(myGame.game.id, gameNote.value!!)
-                _saveAndNavigate.value = when (noteResult) {
-                    is Result.Success -> {
-                        noteResult.data
+
+    fun modifyPitcherEr(pitcher: PitcherBox, amount: Int) {
+        Log.i("gillian12", "add")
+        pitcher.earnedRuns += amount
+        _eraChanged.value = true
+    }
+
+    fun onEraChanged() {
+        _eraChanged.value = null
+    }
+
+
+    fun updateStatAndNote() {
+        _statusNavigate.value = LoadStatus.LOADING
+        viewModelScope.launch {
+
+            myStat.value?.let{
+                for (pitcher in it.myPitcher) {
+                    if (pitcher.playerId != "") {
+                        Log.i("gillian", "pitcher era is ${pitcher.earnedRuns}")
+                        pitcherResult = repository.updatePitchStat(pitcher.playerId, pitcher)
                     }
-                    is Result.Fail -> {
-                        _errorMessage.value = noteResult.error
-                        null
-                    }
-                    is Result.Error -> {
-                        _errorMessage.value = noteResult.exception.toString()
-                        null
-                    }
-                    else -> {
-                        _errorMessage.value = Util.getString(R.string.return_nothing)
-                        null
-                    }
+                }
+            }
+
+            val noteResult = repository.updateGameNote(myGame.game.id, gameNote.value!!)
+            _saveAndNavigate.value = when (noteResult) {
+                is Result.Success -> {
+                    _statusNavigate.value = LoadStatus.DONE
+                    noteResult.data
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = noteResult.error
+                    _statusNavigate.value = LoadStatus.ERROR
+                    null
+                }
+                is Result.Error -> {
+                    _errorMessage.value = noteResult.exception.toString()
+                    _statusNavigate.value = LoadStatus.ERROR
+                    null
+                }
+                else -> {
+                    _errorMessage.value = Util.getString(R.string.return_nothing)
+                    _statusNavigate.value = LoadStatus.ERROR
+                    null
                 }
             }
         }

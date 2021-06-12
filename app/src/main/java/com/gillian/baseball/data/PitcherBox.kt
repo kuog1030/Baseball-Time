@@ -4,17 +4,6 @@ import android.os.Parcelable
 import com.gillian.baseball.ext.toInningCount
 import kotlinx.android.parcel.Parcelize
 
-//data class PitcherBox(
-//        var ip : Float = 0F,
-//        var hit : Int = 0,
-//        var run : Int = 0,
-//        var earnedRuns : Int = 0,
-//        var bb : Int = 0,
-//        var so : Int = 0,
-//        var homerun : Int = 0,
-//
-//)
-
 @Parcelize
 data class PitcherBox(
         var name : String? = "",

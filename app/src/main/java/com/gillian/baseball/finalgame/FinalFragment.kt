@@ -30,9 +30,20 @@ class FinalFragment : Fragment() {
         val boxAdapter = BoxAdapter()
         binding.recyclerFinalBox.adapter = boxAdapter
 
+        val eraAdapter = EraAdapter(viewModel)
+        binding.recyclerFinalEra.adapter = eraAdapter
+
         viewModel.myStat.observe(viewLifecycleOwner, Observer {
             it?.let{
                 viewModel.updatePlayerStat()
+                eraAdapter.submitList(it.myPitcher)
+            }
+        })
+
+        viewModel.eraChanged.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                eraAdapter.notifyDataSetChanged()
+                viewModel.onEraChanged()
             }
         })
 
