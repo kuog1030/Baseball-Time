@@ -386,7 +386,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                         isSafe = false,
                         isDefence = (isTop == isHome),
                         hitterPreEvent = hitterEvent,
-                        onField = if(isHome) homeLineUp else guestLineUp)
+                        onField = if(isHome) homeLineUp else guestLineUp,
+                        baseForThreeOut = toCustomBaseInt(baseList = baseList))
 
             } else {
                 _navigateToOut.value = EventInfo(gameId = argument.game.id,

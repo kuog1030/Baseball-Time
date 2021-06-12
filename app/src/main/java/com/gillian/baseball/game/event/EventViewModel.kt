@@ -94,7 +94,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
             if (hasBaseOut.isNotEmpty()) {
                 it.out += hasBaseOut.size
             }
-            it.currentBase = customBaseInt.value ?: 0
+            it.currentBase = eventInfo.baseForThreeOut?: customBaseInt.value ?: 0
             scoreToBeAdded = it.rbi
             hitToBeAdded = when (it.result) {
                 EventType.SINGLE.number -> 1
