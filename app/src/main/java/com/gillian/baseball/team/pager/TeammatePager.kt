@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.BaseballApplication
@@ -37,6 +38,15 @@ class TeammatePager : Fragment() {
             findNavController().navigate(TeamFragmentDirections.actionTeamFragmentToStatPlayerFragment(UserManager.playerId))
         }
 
+        binding.layoutTeammateSwipe.setOnRefreshListener {
+            viewModel.initTeamPage()
+        }
+
+        viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                binding.layoutTeammateSwipe.isRefreshing = it
+            }
+        })
 
 //        viewModel.showNewPlayerDialog.observe(viewLifecycleOwner, Observer {
 //            it?.let{

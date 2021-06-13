@@ -25,14 +25,14 @@
         <TextView
             android:id="@+id/text_order_number"
             style="@style/PlayerNumber"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/one_half_margin"
             android:text="@{String.valueOf(player.number)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="24" />
+            tools:text="246" />
 
         <TextView
             style="@style/PlayerName"

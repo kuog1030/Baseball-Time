@@ -16,7 +16,7 @@ enum class EventType(val number : Int, val letter: String, val isAtBat: Boolean,
     GROUNDOUT(21, "GO", true, true, 1, "滾地球出局。"),
     AIROUT(22, "AO", true, true, 1, "高飛球出局。"),
     SACRIFICEFLY(23, "SF", false, true, 2, "高飛犧牲打。"), // 高飛犧牲打
-    SACRIFICEGO(24, "SAC", false, true, 2, "犧牲推進。"), // 推進效果的犧牲打
+    SACRIFICEHIT(24, "SH", false, true, 2, "犧牲推進。"), // 推進效果的犧牲打 不算打數
     // 壘包上事件
     STEALBASE(31, "SB", false, false, -1, "盜壘成功！"),
     PICKOFF(32, "PO", false, false, -1, "牽制出局。"),

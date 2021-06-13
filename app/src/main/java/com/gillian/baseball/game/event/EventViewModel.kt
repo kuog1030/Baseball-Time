@@ -279,10 +279,20 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     // 高飛犧牲打是air out (true)
-    fun airOut(hasRbi: Boolean) {
-        atBaseList[0].eventType = if (hasRbi) EventType.SACRIFICEFLY else EventType.AIROUT
+    fun airOut(isSacrifice: Boolean) {
+        atBaseList[0].eventType = if (isSacrifice) EventType.SACRIFICEFLY else EventType.AIROUT
         atBaseList[0].event?.let{
-            it.result = if (hasRbi) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
+            it.result = if (isSacrifice) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
+            it.out += 1
+        }
+        atBaseList[0].base = -1
+        changeToNextPage()
+    }
+
+    fun sacrificeHit() {
+        atBaseList[0].eventType = EventType.SACRIFICEHIT
+        atBaseList[0].event?.let{
+            it.result = EventType.SACRIFICEHIT.number
             it.out += 1
         }
         atBaseList[0].base = -1

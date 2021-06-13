@@ -141,6 +141,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
                 box.homerun += 1
             }
             EventType.HITBYPITCH -> box.hitByPitch += 1
+            EventType.SACRIFICEHIT -> box.sacrificeHit += 1
             EventType.SACRIFICEFLY -> box.sacrificeFly += 1
             EventType.DROPPEDTHIRD -> box.strikeOut += 1
             EventType.STRIKEOUT -> box.strikeOut += 1

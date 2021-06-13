@@ -21,6 +21,7 @@ data class HitterBox (
         var hitByPitch : Int = 0,
         var strikeOut : Int = 0,
         var stealBase: Int = 0,
+        var sacrificeHit: Int = 0,
         var sacrificeFly: Int = 0,
         var error: Int = 0
 ) : Parcelable {
@@ -49,6 +50,7 @@ data class HitterBox (
             baseOnBalls += newBox.baseOnBalls
             strikeOut += newBox.strikeOut
             stealBase += newBox.stealBase
+            sacrificeHit += newBox.sacrificeHit
             sacrificeFly += newBox.sacrificeFly
             error += newBox.error
         }
@@ -66,6 +68,7 @@ data class HitterBox (
     // 上壘率
     fun myObp() : Float {
         if (atBat != 0) {
+            // sacrifice hit is not counted into obp
             return ((hit + baseOnBalls + hitByPitch) / (atBat + baseOnBalls + hitByPitch + sacrificeFly).toFloat())
         } else {
             return 0F

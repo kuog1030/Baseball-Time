@@ -37,10 +37,10 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val navigateToTeamStat: LiveData<Boolean>
         get() = _navigateToTeamStat
 
-    private val _statusMe = MutableLiveData<LoadStatus>()
+    private val _refreshStatus = MutableLiveData<Boolean>()
 
-    val statusMe: LiveData<LoadStatus>
-        get() = _statusMe
+    val refreshStatus: LiveData<Boolean>
+        get() = _refreshStatus
 
     private val _statusEdit = MutableLiveData<LoadStatus>()
 
@@ -91,7 +91,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     fun fetchTeamPlayer() {
 
         viewModelScope.launch {
-
             val result = repository.getTeamPlayer(UserManager.teamId)
 
             _teamPlayers.value = when (result) {
@@ -109,6 +108,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
                     null
                 }
             }
+            _refreshStatus.value = false
         }
     }
 
