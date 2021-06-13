@@ -12,6 +12,7 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.gillian.baseball.BaseballApplication
+import com.gillian.baseball.R
 import com.gillian.baseball.data.*
 import com.gillian.baseball.databinding.FragmentGameBinding
 import com.gillian.baseball.ext.getVmFactory
@@ -122,7 +123,7 @@ class GameFragment : Fragment() {
 
     private fun backPressedCheck() {
         if (backPressedTime + 2000 < System.currentTimeMillis()) {
-            Toast.makeText(BaseballApplication.instance, "Press again", Toast.LENGTH_SHORT).show()
+            Toast.makeText(BaseballApplication.instance, getString(R.string.double_tap), Toast.LENGTH_SHORT).show()
         } else {
             findNavController().popBackStack()
         }
