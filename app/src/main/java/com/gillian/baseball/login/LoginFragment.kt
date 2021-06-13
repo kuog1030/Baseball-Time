@@ -78,10 +78,9 @@ class LoginFragment : Fragment() {
         })
 
         viewModel.userExist.observe(viewLifecycleOwner, Observer {
-            it?.let{exist ->
+            it?.let{ exist ->
                 if (exist) {
-                    // navigate
-                    findNavController().navigate(NavigationDirections.navigationToTeam())
+                    viewModel.fetchTeam(true)
                 } else {
                     findNavController().navigate(LoginFragmentDirections.actionLoginToFirst(newUser))
                     // navigate
