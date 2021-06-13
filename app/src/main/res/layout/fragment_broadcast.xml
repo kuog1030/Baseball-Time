@@ -158,5 +158,17 @@
             app:layout_constraintTop_toBottomOf="@+id/textView15"
             tools:text="5-4" />
 
+        <ImageButton
+            android:id="@+id/button_broadcast_close"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/half_margin"
+            android:layout_marginEnd="@dimen/half_margin"
+            android:background="@color/transparent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:visibility="@{viewModel.editable? View.VISIBLE : View.INVISIBLE}"
+            app:srcCompat="@drawable/ic_baseline_more_24" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

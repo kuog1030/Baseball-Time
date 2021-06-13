@@ -19,7 +19,8 @@ data class GameCard(
         var homeScore: Int = -1,
         var guestScore: Int = -1,
         var homeImage: String = "",
-        var guestImage: String = ""
+        var guestImage: String = "",
+        var recordedTeamId: String = ""
         //val myScore: List<String> = listOf()
 ) : Parcelable {
     val dateString: String

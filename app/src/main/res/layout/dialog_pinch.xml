@@ -92,8 +92,9 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one_half_margin"
-                android:text="比賽暫停"
+                android:text="開啟轉播"
                 android:textSize="17sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/layout_pinch_player"
                 app:layout_constraintStart_toStartOf="@id/layout_pinch_player"
                 app:layout_constraintTop_toBottomOf="@id/layout_pinch_player" />
@@ -106,6 +107,7 @@
                 android:layout_marginTop="@dimen/one_half_margin"
                 android:text="比賽結束"
                 android:textSize="17sp"
+                android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/layout_pinch_player"
                 app:layout_constraintStart_toStartOf="@id/layout_pinch_player"
                 app:layout_constraintTop_toBottomOf="@id/button_pinch_save" />

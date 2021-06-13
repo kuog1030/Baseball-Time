@@ -86,6 +86,7 @@
             android:background="@drawable/bg_edit_text_small"
             android:backgroundTint="@{viewModel.editable ? @color/white : @color/transparent}"
             android:ems="10"
+            android:maxLength="3"
             android:focusable="@{viewModel.editable ? true : false}"
             android:focusableInTouchMode="@{viewModel.editable? true : false}"
             android:inputType="textPersonName"

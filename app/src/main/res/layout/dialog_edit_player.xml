@@ -68,6 +68,7 @@
             android:ems="10"
             android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/number_hint}"
             android:inputType="number"
+            android:maxLength="3"
             android:text="@={viewModel.number}"
             android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
             app:layout_constraintEnd_toEndOf="@+id/edit_edit_player_name"

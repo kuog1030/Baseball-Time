@@ -20,7 +20,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
 
     val selectedSideRadio = MutableLiveData<Int>()
 
-    val toggleBroadcast = MutableLiveData<Boolean>(true)
+    val toggleBroadcast = MutableLiveData<Boolean>(false)
 
     val gameTitle = MutableLiveData<String>()
     val awayTeamName = MutableLiveData<String>()

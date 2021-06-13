@@ -5,10 +5,13 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.data.*
 import com.gillian.baseball.databinding.FragmentGameBinding
 import com.gillian.baseball.ext.getVmFactory
@@ -50,7 +53,10 @@ class GameFragment : Fragment() {
 
 
     //private val viewModel by viewModels<GameViewModel> {getVmFactory(debugGame) }
-   private val viewModel by viewModels<GameViewModel> {getVmFactory(GameFragmentArgs.fromBundle(requireArguments()).preGame) }
+    private val viewModel by viewModels<GameViewModel> {getVmFactory(GameFragmentArgs.fromBundle(requireArguments()).preGame) }
+
+    private var backPressedTime = 0L
+
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -58,6 +64,17 @@ class GameFragment : Fragment() {
 
         binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
+
+
+        val callback = object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                backPressedCheck()
+            }
+        }
+
+        requireActivity().onBackPressedDispatcher.addCallback(viewLifecycleOwner, callback)
+
+
 
         viewModel.navigateToEvent.observe(viewLifecycleOwner, Observer {
             it?.let{
@@ -100,5 +117,15 @@ class GameFragment : Fragment() {
 
 
         return binding.root
+    }
+
+
+    private fun backPressedCheck() {
+        if (backPressedTime + 2000 < System.currentTimeMillis()) {
+            Toast.makeText(BaseballApplication.instance, "Press again", Toast.LENGTH_SHORT).show()
+        } else {
+            findNavController().popBackStack()
+        }
+        backPressedTime = System.currentTimeMillis()
     }
 }
