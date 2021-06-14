@@ -19,7 +19,7 @@
         <View
             android:id="@+id/bg_game_top"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="107dp"
             android:background="@color/grey_ddd"
             app:layout_constraintTop_toTopOf="parent" />
 
