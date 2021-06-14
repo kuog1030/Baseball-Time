@@ -11,6 +11,7 @@ import com.gillian.baseball.data.LoadStatus
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.login.UserManager
 import kotlinx.coroutines.launch
 
 
@@ -34,6 +35,10 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     val confirmDelete = MutableLiveData<Boolean>(false)
 
+    var needStatRefresh = false
+
+    val isMe = MutableLiveData<Boolean>(false)
+
     private val _status = MutableLiveData<LoadStatus>()
 
     val status: LiveData<LoadStatus>
@@ -55,6 +60,7 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
         number.value = player.number.toString()
         nickname.value = player.nickname
         photoUrl.value = player.image
+        if (player.id == UserManager.playerId) isMe.value = true
     }
 
 
@@ -147,6 +153,33 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
             }
         }
     }
+
+    fun clearMyData() {
+        _status.value = LoadStatus.LOADING
+        viewModelScope.launch {
+            val result = repository.clearMyStat(UserManager.playerId, name.value ?: "")
+            _dismissDialog.value = when (result) {
+                is Result.Success -> {
+                    needStatRefresh = true
+                    _status.value = LoadStatus.DONE
+                    result.data
+                }
+                is Result.Fail -> {
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+                is Result.Error -> {
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+                else -> {
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+            }
+        }
+    }
+
 
     fun deletePlayer() {
         confirmDelete.value = true

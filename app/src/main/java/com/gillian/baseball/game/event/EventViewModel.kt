@@ -32,8 +32,9 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
 
     val errorRecycler = MutableLiveData<Boolean>(false)
 
-    private var _changeToNextPage = MutableLiveData<Boolean>()
-    val changeToNextPage: LiveData<Boolean>
+    private var _changeToNextPage = MutableLiveData<Int>()
+
+    val changeToNextPage: LiveData<Int>
         get() = _changeToNextPage
 
     private var _dismiss = MutableLiveData<Array<EventPlayer?>>()
@@ -93,7 +94,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
             if (hasBaseOut.isNotEmpty()) {
                 it.out += hasBaseOut.size
             }
-            it.currentBase = customBaseInt.value ?: 0
+            it.currentBase = eventInfo.baseForThreeOut?: customBaseInt.value ?: 0
             scoreToBeAdded = it.rbi
             hitToBeAdded = when (it.result) {
                 EventType.SINGLE.number -> 1
@@ -101,6 +102,11 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
                 EventType.TRIPLE.number -> 1
                 EventType.HOMERUN.number -> 1
                 else -> 0
+            }
+
+            // hitter get no rbi if double play
+            if (hasBaseOut.size == 2) {
+                it.rbi = 0
             }
         }
 
@@ -151,7 +157,13 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
             it.rbi = 1
         }
         atBaseList[0].base = -1
-        changeToNextPage()
+
+        for ((index, runner) in atBaseList.withIndex()) {
+            if (index == 0) continue
+            run(runner, false)
+        }
+
+        changeToNextPage(-1)
     }
 
     fun hbp() {
@@ -216,7 +228,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     // 回壘得分
-    fun run(atBase: AtBase) {
+    fun run(atBase: AtBase, changePage: Boolean = true) {
         atBase.base = -1
         atBase.eventType = EventType.RUN
         atBase.event = Event(inning = hitterEvent.value!!.inning,
@@ -229,7 +241,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         atBaseList[0].event?.let{
             it.rbi += 1
         }
-        changeToNextPage()
+        if (changePage) changeToNextPage()
     }
 
     // 打者按了野手選擇"上壘"
@@ -248,6 +260,7 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     // 例如野手選擇的跑者出局
     fun runnerOut(atBase: AtBase) {
         atBase.event = null
+        atBase.eventType = EventType.ONBASEOUT
         hasBaseOut.add(atBase.base)
         atBase.base = -1
         changeToNextPage()
@@ -266,10 +279,20 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
     }
 
     // 高飛犧牲打是air out (true)
-    fun airOut(hasRbi: Boolean) {
-        atBaseList[0].eventType = if (hasRbi) EventType.SACRIFICEFLY else EventType.AIROUT
+    fun airOut(isSacrifice: Boolean) {
+        atBaseList[0].eventType = if (isSacrifice) EventType.SACRIFICEFLY else EventType.AIROUT
         atBaseList[0].event?.let{
-            it.result = if (hasRbi) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
+            it.result = if (isSacrifice) EventType.SACRIFICEFLY.number else EventType.AIROUT.number
+            it.out += 1
+        }
+        atBaseList[0].base = -1
+        changeToNextPage()
+    }
+
+    fun sacrificeHit() {
+        atBaseList[0].eventType = EventType.SACRIFICEHIT
+        atBaseList[0].event?.let{
+            it.result = EventType.SACRIFICEHIT.number
             it.out += 1
         }
         atBaseList[0].base = -1
@@ -280,11 +303,11 @@ class EventViewModel(private val repository: BaseballRepository, private val eve
         newBaseList = arrayOf(null, null, null, null)
     }
 
-    fun changeToNextPage() {
+    fun changeToNextPage(page: Int = 1) {
         errorRecycler.value = false
         baseListToCustom()
         eventDetail.value = getDetailString()
-        _changeToNextPage.value = true
+        _changeToNextPage.value = page
     }
 
     fun onNextPageChanged() {

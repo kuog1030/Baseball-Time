@@ -84,7 +84,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:onClick="@{()->viewModel.run(atBase)}"
+            android:onClick="@{()->viewModel.run(atBase, true)}"
             android:text="@string/get_run"
             app:layout_constraintBottom_toTopOf="@+id/bar_hitter"
             app:layout_constraintEnd_toEndOf="@+id/button_runner_first"

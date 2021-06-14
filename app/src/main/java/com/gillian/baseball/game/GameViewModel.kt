@@ -130,76 +130,88 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         }
     }
 
-    fun switch() {
-
-        Log.i("gillian68", "$inningCount and $totalInning")
-        Log.i("gillian68", "${game.value!!.box.run[0]} and ${game.value!!.box.run[1]}")
-        if (inningCount == totalInning) {
-            game.value?.let{
-                if (it.box.run[0] == it.box.run[1] && totalInning <= 12) {
-                    // If Tie
-                    totalInning += 2
-                    switch()
-                } else {
-                    switchFinal()
+    fun switchCheck() {
+        when (inningCount) {
+            totalInning -> {
+                game.value?.let{
+                    if (it.box.run[0] == it.box.run[1] && totalInning <= 22) {
+                        // If Tie
+                        totalInning += 2
+                        switch()
+                    } else {
+                        switchFinal()
+                    }
                 }
             }
-
-        } else {
-            // 比賽還沒結束
-            if (atBatNumber == (lineUp.size - 1)) {
-                atBatNumber = 0
-            } else {
-                atBatNumber += 1
+            (totalInning - 1) -> {
+                game.value?.let{
+                    if (it.box.run[0] < it.box.run[1]) {
+                        switchFinal()
+                    } else {
+                        switch()
+                    }
+                }
             }
-
-            clearCount(includeOut = true)
-            inningCount += 1
-
-            sendEvent(Event(
-                inning = inningCount,
-                result = EventType.INNINGCHANGE.number
-            ))
-
-            if (isTop) {
-                // 目前上半局
-                homePitchCount = liveBallCount.value!!  // 紀錄這次投球數
-                liveBallCount.value = guestPitchCount
-
-                guestABNumber = atBatNumber  // 記錄下這次打席的最後人次+1
-                atBatNumber = homeABNumber   // 開始下一局的人次
-                lineUp = homeLineUp          // 下半局換主隊進攻
-                pitcher.value = guestPitcher.name
-                inningShow.value = "${(inningCount / 2)}"
-            } else {
-                guestPitchCount = liveBallCount.value!!
-                liveBallCount.value = homePitchCount
-
-                homeABNumber = atBatNumber
-                atBatNumber = guestABNumber
-                lineUp = guestLineUp
-                pitcher.value = homePitcher.name
-                inningShow.value = "${(inningCount / 2) + 1}"
-            }
-
-            nextAtBat.value = lineUp.lineUpPlayer(atBatNumber+1).name
-
-            uploadGameBox()
-            game.value!!.box.score.add(0)
-
-            isTop = !isTop
-            liveIsTop.value = isTop
-            baseList = arrayOf(lineUp[atBatNumber], null, null, null)
-            atBatName.value = "第${atBatNumber + 1}棒 ${baseList[0]?.name}"
-            Log.i("at base", "*-------------change!------------*")
-            updateRunnerUI()
-            // clearBase?
+            else -> switch()
         }
+    }
+
+    fun switch() {
+        Log.i("gillian611", "----------------------switch----------------------")
+        Log.i("gillian611", "$inningCount and $totalInning")
+        Log.i("gillian611", "${game.value!!.box.run[0]} and ${game.value!!.box.run[1]}")
+        // 比賽還沒結束
+        if (atBatNumber == (lineUp.size - 1)) {
+            atBatNumber = 0
+        } else {
+            atBatNumber += 1
+        }
+
+        clearCount(includeOut = true)
+        inningCount += 1
+
+        sendEvent(Event(
+            inning = inningCount,
+            result = EventType.INNINGCHANGE.number
+        ))
+
+        if (isTop) {
+            // 目前上半局
+            homePitchCount = liveBallCount.value!!  // 紀錄這次投球數
+            liveBallCount.value = guestPitchCount
+
+            guestABNumber = atBatNumber  // 記錄下這次打席的最後人次+1
+            atBatNumber = homeABNumber   // 開始下一局的人次
+            lineUp = homeLineUp          // 下半局換主隊進攻
+            pitcher.value = guestPitcher.name
+            inningShow.value = "${(inningCount / 2)}"
+        } else {
+            guestPitchCount = liveBallCount.value!!
+            liveBallCount.value = homePitchCount
+
+            homeABNumber = atBatNumber
+            atBatNumber = guestABNumber
+            lineUp = guestLineUp
+            pitcher.value = homePitcher.name
+            inningShow.value = "${(inningCount / 2) + 1}"
+        }
+
+        nextAtBat.value = lineUp.lineUpPlayer(atBatNumber+1).name
+
+        uploadGameBox()
+        game.value!!.box.score.add(0)
+
+        isTop = !isTop
+        liveIsTop.value = isTop
+        baseList = arrayOf(lineUp[atBatNumber], null, null, null)
+        atBatName.value = "第${atBatNumber + 1}棒 ${baseList[0]?.name}"
+        updateRunnerUI()
+        // clearBase?
     }
 
 
     fun switchFinal() {
-
+        Log.i("gillian611", "----------------------switch final----------------------")
         val totalInningPitched = (((inningCount+1) / 2 - 1) * 3 + outCount.value!!) - previousIp
         Log.i("game", "換投中 event送達~, out count ${outCount.value}")
 
@@ -207,7 +219,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                 Event(
                         pitcher = if (isHome) homePitcher else guestPitcher,
                         inning = if (isHome) (inningCount-1) else inningCount,
-                        result = EventType.INNINGSPITCHED.number, //50
+                        result = EventType.IPEND.number, //52
                         out = totalInningPitched
                 )
         )
@@ -295,7 +307,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         outCount.value = outCount.value!!.plus(1)
         if (outCount.value!! == 3) {
             // three out! switch TODO()這邊跟next player的差別要處理一下
-            switch()
+            switchCheck()
         } else {
             nextPlayer()
         }
@@ -304,7 +316,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     fun eventOut(totalOut: Int) {
         outCount.value = outCount.value!!.plus(totalOut)
         if (outCount.value!! >= 3) {
-            switch()
+            switchCheck()
         } else {
             nextPlayer()
         }
@@ -332,7 +344,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
 
         if (outCount.value!! == 3) {
             // three out! switch
-            switch()
+            switchCheck()
         }
 
         updateRunnerUI()
@@ -358,13 +370,25 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             }
         }
 
+        val tenOnFieldPlayer = mutableListOf<EventPlayer>()
+        if (isTop == isHome) {
+            if (isHome) {
+                tenOnFieldPlayer.addAll(homeLineUp)
+                tenOnFieldPlayer.add(homePitcher)
+            } else {
+                tenOnFieldPlayer.addAll(guestLineUp)
+                tenOnFieldPlayer.add(guestPitcher)
+            }
+        }
+
+
         if (isSafe) {
             _navigateToEvent.value = EventInfo(gameId = argument.game.id,
                     atBaseList = atBaseList,
                     isSafe = true,
                     isDefence = (isTop == isHome),
                     hitterPreEvent = hitterEvent,
-                    onField = if(isHome) homeLineUp else guestLineUp)
+                    onField = tenOnFieldPlayer)
         } else {
 
             // 如果兩出局，只管打者
@@ -374,7 +398,8 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                         isSafe = false,
                         isDefence = (isTop == isHome),
                         hitterPreEvent = hitterEvent,
-                        onField = if(isHome) homeLineUp else guestLineUp)
+                        onField = tenOnFieldPlayer,
+                        baseForThreeOut = toCustomBaseInt(baseList = baseList))
 
             } else {
                 _navigateToOut.value = EventInfo(gameId = argument.game.id,
@@ -382,7 +407,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
                         isSafe = false,
                         isDefence = (isTop == isHome),
                         hitterPreEvent = hitterEvent,
-                        onField = if(isHome) homeLineUp else guestLineUp)
+                        onField = tenOnFieldPlayer)
             }
         }
     }
@@ -490,7 +515,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     }
 
     fun sendEvent(event: Event) {
-        Log.i("gillian", "game VM send event base ${event.currentBase}")
+        Log.i("gillian12", "evnet pitcher is ${event.pitcher}")
         viewModelScope.launch {
             repository.sendEvent(argument.game.id, event)
         }
@@ -587,7 +612,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
     // pinchDialog -> 換投
     fun nextPitcher(next: EventPlayer, position: Int) {
         val totalInningPitched = (((inningCount+1) / 2 - 1) * 3 + outCount.value!!) - previousIp
-        previousIp = totalInningPitched
+        previousIp += totalInningPitched
 
         Log.i("game", "換投中 event送達~")
         sendEvent(

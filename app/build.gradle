@@ -16,8 +16,8 @@ android {
         applicationId "com.gillian.baseball"
         minSdkVersion 28
         targetSdkVersion 30
-        versionCode 210609
-        versionName "1.0.0"
+        versionCode 2106141
+        versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -80,6 +80,9 @@ dependencies {
     implementation 'com.google.android.gms:play-services-auth:19.0.0'
 
     implementation 'com.github.sembozdemir:ViewPagerArrowIndicator:1.0.0'
+
+    // circle image
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // material calendar
     implementation 'com.github.prolificinteractive:material-calendarview:2.0.0'

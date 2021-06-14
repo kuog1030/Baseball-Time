@@ -51,7 +51,7 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
                 if (viewModel.needRefresh) {
                     try{
                         if (fromTeamFragment) {
-                            ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java).refresh()
+                            ViewModelProvider(requireActivity()).get(TeamViewModel::class.java).refresh()
                         } else {
                             ViewModelProvider(requireParentFragment()).get(OrderViewModel::class.java).refresh()
                         }
@@ -83,11 +83,6 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
             viewModel.readyToSentPhoto.value = data.data
             Log.i("gillian", "ready to send photo is not null ${viewModel.readyToSentPhoto.value}")
         }
-    }
-
-    override fun onStop() {
-        super.onStop()
-        Log.i("gillian", "new player dialog on stop")
     }
 
 }

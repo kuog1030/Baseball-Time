@@ -11,9 +11,10 @@ import com.gillian.baseball.databinding.ItemOrderPlayerBinding
 class OrderAdapter : ListAdapter<EventPlayer, OrderAdapter.ViewHolder>(DiffCallback) {
 
     class ViewHolder(private var binding: ItemOrderPlayerBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(player: EventPlayer, isChecked: Boolean) {
+        fun bind(player: EventPlayer, isChecked: Boolean, position: Int) {
             binding.player = player
             binding.isChecked = isChecked
+            binding.order = if (isChecked) (position+1).toString() else ""
             binding.executePendingBindings()
         }
     }
@@ -25,7 +26,7 @@ class OrderAdapter : ListAdapter<EventPlayer, OrderAdapter.ViewHolder>(DiffCallb
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val player = getItem(position)
-        holder.bind(player, (position < 9))
+        holder.bind(player, (position < 9), position)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<EventPlayer>() {

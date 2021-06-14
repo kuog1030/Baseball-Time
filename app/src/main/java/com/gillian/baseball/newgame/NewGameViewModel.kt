@@ -45,6 +45,10 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
+    private val _emptyDate = MutableLiveData<Boolean>()
+    val emptyDate: LiveData<Boolean>
+        get() = _emptyDate
+
 
     val gameDate = MutableLiveData<String>(getString(R.string.select_a_date))
     private var gameDateLong: Long = -1L
@@ -78,8 +82,10 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
     fun scheduleNewGame() {
         if (gameTitle.value.isNullOrEmpty() || gameDate.value.isNullOrEmpty() || gamePlace.value.isNullOrEmpty() || awayName.value.isNullOrEmpty() || gameDateLong == -1L) {
             _errorMessage.value = BaseballApplication.instance.getString(R.string.error_schedule_game)
+            _emptyDate.value = if (gameDateLong == -1L) true else null
         } else {
             _errorMessage.value = null
+            _emptyDate.value = null
 
             // pithcer and lineup not yet initialized
             val myGameTeam = myTeam.toGameTeam()
@@ -91,10 +97,10 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
 
             if (isHome) {
                 game.home = myGameTeam
-                game.guest.name = awayName.value!!
+                game.guest.name = awayName.value?: ""
             } else {
                 game.guest = myGameTeam
-                game.home.name = awayName.value!!
+                game.home.name = awayName.value?: ""
             }
 
             uploadNewGame(game)

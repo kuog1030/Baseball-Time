@@ -5,10 +5,14 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
+import com.gillian.baseball.BaseballApplication
+import com.gillian.baseball.R
 import com.gillian.baseball.databinding.FragmentBroadcastBinding
 import com.gillian.baseball.ext.getVmFactory
 
@@ -37,6 +41,23 @@ class BroadcastFragment : Fragment() {
             }
         })
 
+        viewModel.turnOffBroadcast.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                findNavController().popBackStack()
+                viewModel.onBroadcastOff()
+            }
+        })
+
+        binding.buttonBroadcastClose.setOnClickListener {
+            AlertDialog.Builder(requireActivity())
+                    .setMessage(getString(R.string.turn_off_broadcast))
+                    .setTitle(getString(R.string.turn_off))
+                    .setPositiveButton(getString(R.string.confirm)) { _, _ ->
+                        viewModel.enableBroadcast()
+                    }
+                    .setNeutralButton(getString(R.string.cancel), null)
+                    .show()
+        }
 
 //        viewModel.liveGame.observe(viewLifecycleOwner, Observer {
 //            it?.let{

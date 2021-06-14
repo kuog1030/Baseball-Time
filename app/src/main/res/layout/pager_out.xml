@@ -40,11 +40,25 @@
             android:layout_marginTop="@dimen/double_margin"
             android:onClick="@{()->viewModel.airOut(false)}"
             android:text="@string/air_out"
-            app:layout_constraintBottom_toTopOf="@+id/button_out_sacrifice"
+            app:layout_constraintBottom_toTopOf="@+id/button_out_sgo"
             app:layout_constraintEnd_toEndOf="@+id/button_out_ground"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/button_out_ground"
             app:layout_constraintTop_toBottomOf="@+id/button_out_ground" />
+
+        <Button
+            android:id="@+id/button_out_sgo"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:onClick="@{()->viewModel.sacrificeHit()}"
+            android:text="@string/sacrifice_go"
+            app:layout_constraintBottom_toTopOf="@+id/button_out_sacrifice"
+            app:layout_constraintEnd_toEndOf="@+id/button_out_ground"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="@+id/button_out_ground"
+            app:layout_constraintTop_toBottomOf="@+id/button_out_air" />
 
         <Button
             android:id="@+id/button_out_sacrifice"
@@ -58,7 +72,7 @@
             app:layout_constraintEnd_toEndOf="@+id/button_out_ground"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="@+id/button_out_ground"
-            app:layout_constraintTop_toBottomOf="@+id/button_out_air" />
+            app:layout_constraintTop_toBottomOf="@+id/button_out_sgo" />
 
         <TextView
             android:id="@+id/textView"

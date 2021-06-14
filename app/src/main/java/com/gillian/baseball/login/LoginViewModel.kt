@@ -39,8 +39,8 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
         get() = _initTeam
 
 
-    fun fetchTeam() {
-        showLoginPage.value = false
+    fun fetchTeam(showLogin: Boolean = false) {
+        showLoginPage.value = showLogin
         viewModelScope.launch {
             val result = repository.getTeam(UserManager.teamId)
             _initTeam.value = when (result) {
@@ -80,7 +80,7 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     // 要在這一步找User 有沒有過我的資料
     // find user query我的user id，
-    // find user -> 回傳true 用原本的userId去找Player資料 -> 再找Team資料 -> 完成之後跳轉到team
+    // find user -> 回傳true get player id, team id -> 找 team 資料
     //           -> 回傳false 直接set -> 跳轉到login search
     fun searchIfUserExist() {
         firebaseUser.value?.let{

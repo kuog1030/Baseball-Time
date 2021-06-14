@@ -18,6 +18,7 @@ import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.newplayer.NewPlayerViewModel
 import com.gillian.baseball.statistics.statplayer.StatPlayerFragmentDirections
 import com.gillian.baseball.statistics.statplayer.StatPlayerViewModel
+import com.gillian.baseball.team.TeamViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 
@@ -58,7 +59,8 @@ class EditPlayerDialog(val player: Player) : BottomSheetDialogFragment() {
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             it?.let{
                 if (it) {
-                    ViewModelProvider(requireParentFragment()).get(StatPlayerViewModel::class.java).refresh()
+                    ViewModelProvider(requireParentFragment()).get(StatPlayerViewModel::class.java).refresh(viewModel.needStatRefresh)
+                    ViewModelProvider(requireActivity()).get(TeamViewModel::class.java).refresh()
                 }
                 dismiss()
                 viewModel.onDialogDismiss()
@@ -68,6 +70,7 @@ class EditPlayerDialog(val player: Player) : BottomSheetDialogFragment() {
 
         viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
             if (it == true) {
+                ViewModelProvider(requireActivity()).get(TeamViewModel::class.java).refresh()
                 findNavController().navigate(StatPlayerFragmentDirections.actionStatPlayerFragmentToTeamFragment())
                 viewModel.onTeamNavigated()
             }

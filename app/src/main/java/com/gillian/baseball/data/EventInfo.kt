@@ -9,6 +9,7 @@ data class EventInfo (
         val isSafe: Boolean,
         val hitterPreEvent: Event,
         val isDefence: Boolean,
+        val baseForThreeOut: Int? = null,
         val onField: List<EventPlayer>
 )
 

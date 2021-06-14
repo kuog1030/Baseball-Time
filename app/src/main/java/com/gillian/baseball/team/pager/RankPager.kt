@@ -10,10 +10,15 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.fragment.findNavController
+import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.broadcast.BroadcastAdapter
 import com.gillian.baseball.data.HitterBox
 import com.gillian.baseball.databinding.PagerRankBinding
 import com.gillian.baseball.editplayer.REQUEST_IMAGE_OPEN
+import com.gillian.baseball.ext.getVmFactory
+import com.gillian.baseball.factory.ViewModelFactory
+import com.gillian.baseball.team.TeamFragmentDirections
 import com.gillian.baseball.team.TeamViewModel
 import com.gillian.baseball.views.HitterBoxAdapter
 
@@ -27,7 +32,7 @@ class RankPager : Fragment() {
 
         binding.lifecycleOwner = viewLifecycleOwner
 
-        viewModel = ViewModelProvider(requireParentFragment()).get(TeamViewModel::class.java)
+        viewModel = ViewModelProvider(requireActivity(), this.getVmFactory()).get(TeamViewModel::class.java)
 
         binding.viewModel = viewModel
 
@@ -44,6 +49,13 @@ class RankPager : Fragment() {
         viewModel.newTeamImage.observe(viewLifecycleOwner, Observer {
             it?.let{
                 viewModel.updateTeamInfo(it)
+            }
+        })
+
+        viewModel.navigateToTeamStat.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                findNavController().navigate(TeamFragmentDirections.actionTeamFragmentToStatTeamFragment())
+                viewModel.onTeamStatNavigated()
             }
         })
 

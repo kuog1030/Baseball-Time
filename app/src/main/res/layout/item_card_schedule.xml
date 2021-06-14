@@ -13,31 +13,33 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_card"
-        android:layout_marginBottom="@dimen/margin">
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:background="@drawable/bg_card">
 
 
         <TextView
-            style="@style/DefaultPhoto"
             android:id="@+id/text_card_guest_d"
+            style="@style/DefaultPhoto"
             android:layout_width="@dimen/game_card_team_image"
             android:layout_height="@dimen/game_card_team_image"
-            app:defaultName="@{game.guestName}"
-            android:textSize="24sp"
             android:backgroundTint="@color/default_2photo"
+            android:textSize="24sp"
+            app:defaultName="@{game.guestName}"
             app:layout_constraintBottom_toBottomOf="@+id/image_card_schedule_guest"
             app:layout_constraintEnd_toEndOf="@+id/image_card_schedule_guest"
             app:layout_constraintStart_toStartOf="@+id/image_card_schedule_guest"
             app:layout_constraintTop_toTopOf="@+id/image_card_schedule_guest"
-            tools:text="A"/>
+            tools:text="A" />
 
         <TextView
-            style="@style/DefaultPhoto"
             android:id="@+id/text_card_home_d"
+            style="@style/DefaultPhoto"
             android:layout_width="@dimen/game_card_team_image"
             android:layout_height="@dimen/game_card_team_image"
-            app:defaultName="@{game.homeName}"
             android:textSize="24sp"
+            app:defaultName="@{game.homeName}"
             app:layout_constraintBottom_toBottomOf="@+id/image_card_schedule_home"
             app:layout_constraintEnd_toEndOf="@+id/image_card_schedule_home"
             app:layout_constraintStart_toStartOf="@+id/image_card_schedule_home"
@@ -48,41 +50,28 @@
             android:id="@+id/text_card_schedule_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{game.title}"
             android:layout_marginTop="@dimen/margin"
+            android:text='@{game.title + "　" + game.dateStringDate}'
+            android:textStyle="bold"
+            android:textColor="@color/color_primary"
+            android:letterSpacing=".1"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="全國棒球大專盃8強" />
-
-        <TextView
-            android:id="@+id/text_card_schedule_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text='@{game.place + " | " + game.dateString}'
-            android:textColor="?attr/colorPrimary"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_card_schedule_title"
-            tools:layout_editor_absoluteY="26dp"
-            tools:text="福和橋 | 2021-05-15 09:00"
-            android:gravity="bottom"
-            android:drawablePadding="@dimen/quarter_margin"
-            app:drawableStartCompat="@drawable/ic_location_on_24"
-            app:drawableTint="@color/color_primary" />
+            tools:text="全國棒球大專盃8強　12/10" />
 
         <TextView
             android:id="@+id/text_card_schedule_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="45sp"
             android:letterSpacing="0.3"
             android:text="@string/versus"
+            android:textSize="40sp"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_schedule_guest"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/image_card_schedule_guest"/>
+            app:layout_constraintTop_toTopOf="@+id/image_card_schedule_guest" />
 
         <ImageView
             android:id="@+id/image_card_schedule_guest"
@@ -92,7 +81,7 @@
             app:layout_constraintEnd_toStartOf="@+id/text_card_schedule_score"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_card_schedule_date"
+            app:layout_constraintTop_toBottomOf="@+id/text_card_schedule_title"
             app:photoUrl="@{game.guestImage}" />
 
         <TextView
@@ -124,7 +113,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_card_schedule_score"
             app:layout_constraintTop_toTopOf="@+id/text_card_schedule_guest"
-            tools:text="iOS"/>
+            tools:text="iOS" />
 
         <View
             android:id="@+id/bar_card_schedule"
@@ -140,14 +129,14 @@
             android:id="@+id/button_card_schedule_start"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:paddingBottom="@dimen/quarter_margin"
-            android:layout_marginTop="@dimen/half_margin"
+            android:layout_marginTop="6dp"
             android:layout_marginEnd="@dimen/margin"
-            android:gravity="center_vertical"
-            android:text="@string/start_game"
             android:background="@color/transparent"
-            android:textColor="#777777"
             android:drawableEnd="@drawable/ic_arrow_forward_20"
+            android:gravity="center_vertical"
+            android:paddingBottom="@dimen/quarter_margin"
+            android:text="@string/start_game"
+            android:textColor="#777777"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bar_card_schedule" />
 
@@ -156,38 +145,136 @@
             android:id="@+id/button_schedule_more"
             android:layout_width="wrap_content"
             android:layout_height="30dp"
-            android:paddingBottom="@dimen/quarter_margin"
             android:layout_marginStart="@dimen/margin"
             android:background="@color/transparent"
             android:drawableStart="@drawable/toggle_arrow"
-            android:text="@string/add_game_note"
-            android:textOn="@string/add_game_note"
-            android:textOff="@string/add_game_note"
+            android:paddingBottom="@dimen/quarter_margin"
+            android:text="@string/more"
             android:textColor="#777777"
+            android:textOff="@string/more"
+            android:textOn="@string/more"
             android:textSize="15sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/button_card_schedule_start"/>
+            app:layout_constraintTop_toTopOf="@+id/button_card_schedule_start" />
 
 
-        <LinearLayout
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/layout_card_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/button_schedule_more"
             android:background="@drawable/bg_card_bottom_part"
-            android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            app:layout_constraintTop_toBottomOf="@id/button_schedule_more"
+            tools:visibility="visible">
 
             <TextView
-                android:layout_width="match_parent"
+                android:id="@+id/text_card_detail_place"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/quarter_margin"
+                android:layout_marginStart="@dimen/margin"
+                android:drawablePadding="@dimen/half_margin"
+                android:gravity="center_vertical"
+                android:text="地點"
+                app:drawableStartCompat="@drawable/ic_location_on_20"
+                app:layout_constraintBottom_toBottomOf="@+id/text_card_schedule_date"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/text_card_schedule_date" />
+
+            <TextView
+                android:id="@+id/text_card_schedule_date"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="@dimen/half_margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:drawablePadding="@dimen/quarter_margin"
+                android:gravity="bottom"
+                android:text="@{game.place}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/text_card_detail_place"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="福和橋" />
+
+            <TextView
+                android:id="@+id/text_card_detail_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/half_margin"
+                android:drawablePadding="@dimen/half_margin"
+                android:gravity="center_vertical"
+                android:text="時間"
+                app:drawableStartCompat="@drawable/ic_time_filled_20"
+                app:layout_constraintStart_toStartOf="@+id/text_card_detail_place"
+                app:layout_constraintTop_toBottomOf="@+id/text_card_detail_place" />
+
+            <TextView
+                android:id="@+id/text_detail_time"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/margin"
                 android:layout_marginEnd="@dimen/margin"
-                android:layout_marginBottom="@dimen/margin"
+                android:drawablePadding="@dimen/quarter_margin"
+                android:gravity="bottom"
+                android:text="@{game.dateString}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/text_card_detail_place"
+                app:layout_constraintTop_toTopOf="@+id/text_card_detail_time"
+                tools:text="2021-05-15 09:00" />
+
+            <TextView
+                android:id="@+id/text_detail_note"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/margin"
                 android:text="@{game.note}"
-                tools:text=""/>
-        </LinearLayout>
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="@+id/text_card_schedule_date"
+                app:layout_constraintTop_toTopOf="@+id/text_card_detail_note"
+                tools:text="" />
+
+            <TextView
+                android:id="@+id/text_card_detail_note"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/half_margin"
+                android:drawablePadding="@dimen/half_margin"
+                android:text="@string/add_game_note"
+                app:drawableStartCompat="@drawable/ic_edit_20"
+                app:layout_constraintStart_toStartOf="@+id/text_card_detail_place"
+                app:layout_constraintTop_toBottomOf="@+id/text_card_detail_time" />
+
+            <Button
+                style="@style/Widget.AppCompat.Button.Borderless"
+                android:id="@+id/button_schedule_delete"
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="@dimen/half_margin"
+                android:layout_marginBottom="12dp"
+                android:background="@drawable/bg_radius_border"
+                android:padding="1dp"
+                android:text="@string/delete_game"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/text_detail_note"
+                app:layout_constraintStart_toStartOf="@+id/text_card_detail_note"
+                app:layout_constraintTop_toBottomOf="@+id/text_detail_note" />
+
+            <ProgressBar
+                android:id="@+id/progress_schedule_delete"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:background="#FFFFFF"
+                android:layout_marginTop="3dp"
+                android:layout_marginBottom="3dp"
+                android:layout_marginStart="@dimen/margin"
+                android:layout_marginEnd="@dimen/margin"
+                android:visibility="gone"
+                app:layout_constraintBottom_toBottomOf="@+id/button_schedule_delete"
+                app:layout_constraintEnd_toEndOf="@+id/button_schedule_delete"
+                app:layout_constraintStart_toStartOf="@+id/button_schedule_delete"
+                app:layout_constraintTop_toTopOf="@+id/button_schedule_delete"
+                tools:visibility="visible"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

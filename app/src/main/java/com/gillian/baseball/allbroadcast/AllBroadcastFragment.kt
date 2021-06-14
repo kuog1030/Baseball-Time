@@ -22,6 +22,15 @@ class AllBroadcastFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
+        binding.layoutBroadcastSwipe.setOnRefreshListener {
+            viewModel.refresh()
+        }
+
+        viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                binding.layoutBroadcastSwipe.isRefreshing = it
+            }
+        })
 
         binding.recyclerAllLive.adapter = CardScoreAdapter(CardScoreAdapter.OnClickListener { game ->
             findNavController().navigate(AllBroadcastFragmentDirections.actionAllToOneLive(game))

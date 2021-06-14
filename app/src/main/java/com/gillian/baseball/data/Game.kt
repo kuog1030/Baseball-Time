@@ -33,7 +33,8 @@ data class Game (
                 homeScore = box.run[1],
                 guestScore = box.run[0],
                 homeImage = home.image,
-                guestImage = guest.image
+                guestImage = guest.image,
+                recordedTeamId = recordedTeamId
         )
     }
 }

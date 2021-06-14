@@ -89,6 +89,19 @@
 
         </androidx.recyclerview.widget.RecyclerView>
 
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_final_era"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@+id/table_final_box"
+            app:layout_constraintStart_toStartOf="@id/table_final_box"
+            app:layout_constraintEnd_toEndOf="@id/edit_final_note"
+            android:layout_marginTop="@dimen/margin"
+            tools:listitem="@layout/item_pitcher_era"
+            tools:itemCount="3" />
+
         <TextView
             android:id="@+id/text_final_note"
             android:layout_width="wrap_content"
@@ -96,26 +109,27 @@
             android:drawablePadding="@dimen/margin"
             android:paddingStart="@dimen/half_margin"
             android:text="@string/add_game_note"
-            android:textSize="18sp"
+            android:layout_marginTop="@dimen/one_half_margin"
             app:drawableEndCompat="@drawable/ic_edit_24"
-            app:layout_constraintBottom_toTopOf="@+id/button_final_dinner"
             app:layout_constraintStart_toStartOf="@+id/edit_final_note"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/recycler_final_era"/>
 
         <EditText
             android:id="@+id/edit_final_note"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            app:layout_constraintHeight_min="150dp"
+            android:layout_height="0dp"
             android:layout_marginStart="@dimen/one_half_margin"
-            android:layout_marginEnd="@dimen/one_half_margin"
-            android:background="@drawable/bg_edit_text"
             android:layout_marginTop="@dimen/margin"
+            android:layout_marginEnd="@dimen/one_half_margin"
+            android:layout_marginBottom="@dimen/margin"
+            android:background="@drawable/bg_edit_text"
             android:ems="10"
-            android:text="@={viewModel.gameNote}"
             android:gravity="start|top"
             android:inputType="textMultiLine"
+            android:text="@={viewModel.gameNote}"
+            app:layout_constraintBottom_toTopOf="@+id/button_final_dinner"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_min="150dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_final_note" />
 
@@ -128,11 +142,25 @@
             android:layout_marginStart="@dimen/one_half_margin"
             android:layout_marginEnd="@dimen/one_half_margin"
             android:visibility="@{viewModel.loading ? View.GONE : View.VISIBLE}"
-            android:onClick="@{()->viewModel.updateNote()}"
+            android:onClick="@{()->viewModel.updateStatAndNote()}"
             android:text="@string/game_end_dinner_time"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"/>
+
+        <ProgressBar
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorPrimary"
+            android:indeterminateTint="@color/white"
+            android:padding="10dp"
+            android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/margin"
+            app:layout_constraintBottom_toBottomOf="@id/button_final_dinner"
+            app:layout_constraintEnd_toEndOf="@id/button_final_dinner"
+            app:layout_constraintStart_toStartOf="@id/button_final_dinner"
+            app:layout_constraintTop_toTopOf="@id/button_final_dinner"
+            app:loadingStatus="@{viewModel.statusNavigate}" />
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"

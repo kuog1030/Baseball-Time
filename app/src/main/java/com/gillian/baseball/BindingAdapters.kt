@@ -1,5 +1,6 @@
 package com.gillian.baseball
 
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -10,6 +11,7 @@ import com.bumptech.glide.request.RequestOptions
 import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.broadcast.BroadcastAdapter
 import com.gillian.baseball.data.*
+import com.gillian.baseball.finalgame.EraAdapter
 import com.gillian.baseball.team.pager.RankAdapter
 import com.gillian.baseball.team.pager.TeammateAdapter
 import com.gillian.baseball.views.BoxAdapter
@@ -289,6 +291,22 @@ fun bindProfilePhoto(imageView: ImageView, url: String?) {
             .into(imageView)
 }
 
+@BindingAdapter("teamUrl")
+fun bindTeamPhoto(imageView: de.hdodenhof.circleimageview.CircleImageView, url: String?) {
+    Glide.with(imageView.context)
+        .load(url)
+        .circleCrop()
+        .dontAnimate()
+        .into(imageView)
+}
+
+@BindingAdapter("teamPhotoBorder")
+fun bindPhotoBorder(imageView: de.hdodenhof.circleimageview.CircleImageView, editable: Boolean?) {
+    editable?.let{
+        imageView.borderWidth = if (editable) 15 else 0
+    }
+}
+
 @BindingAdapter("imageSquareUrl")
 fun bindProfileImageSquare(imageView: ImageView, url: String?) {
     Glide.with(imageView.context)
@@ -305,7 +323,11 @@ fun bindDefaultPhoto(textView: TextView, name: String?) {
     if (name == null) {
         textView.text = ""
     } else {
-        textView.text = name.substring(0, 1)
+        if (name.length < 1) {
+            textView.text = ""
+        } else {
+            textView.text = name.substring(0, 1)
+        }
     }
 }
 
@@ -338,13 +360,29 @@ fun bindTextAndTeamStat(textView: TextView, number: Int?) {
     }
 }
 
+@BindingAdapter("statPercentage")
+fun bindHitStatPercentage(textView: TextView, average: Float) {
+    val statFormat = "%.3f"
+    textView.text = statFormat.format(average)
+}
+
+@BindingAdapter("pitchPercentage")
+fun bindPitchStatPercentage(textView: TextView, average: Float) {
+    val statFormat = "%.2f"
+    textView.text = statFormat.format(average)
+}
+
 @BindingAdapter("inningCount")
 fun bindTextInning(textView: TextView, inning: Int) {
-    val inningNine = (inning + 1 ) / 2
-    if (inning % 2 == 1) {
-        textView.text = BaseballApplication.instance.getString(R.string.inning_top, inningNine)
+    if (inning == -1) {
+        textView.text = BaseballApplication.instance.getString(R.string.inning_end)
     } else {
-        textView.text = BaseballApplication.instance.getString(R.string.inning_bottom, inningNine)
+        val inningNine = (inning + 1 ) / 2
+        if (inning % 2 == 1) {
+            textView.text = BaseballApplication.instance.getString(R.string.inning_top, inningNine)
+        } else {
+            textView.text = BaseballApplication.instance.getString(R.string.inning_bottom, inningNine)
+        }
     }
 }
 
@@ -359,18 +397,24 @@ fun bindRecordedTeamName(textView: TextView, game: Game?) {
     }
 }
 
-@BindingAdapter("teamCode")
-fun bindTextTeamCode(textView: TextView, teamId: String?) {
-    teamId?.let{
-        textView.text = it.substring(0, 5)
-    }
-}
-
 @BindingAdapter("loadingStatus")
 fun bindLoadingStatus(view: View, status: LoadStatus?) {
     view.visibility = when (status) {
         LoadStatus.LOADING -> View.VISIBLE
         else -> View.GONE
+    }
+}
+
+@BindingAdapter("errorMessage")
+fun bindApiErrorMessage(view: TextView, message: String?) {
+    when (message) {
+        null, "" -> {
+            view.visibility = View.GONE
+        }
+        else -> {
+            view.text = message
+            view.visibility = View.VISIBLE
+        }
     }
 }
 

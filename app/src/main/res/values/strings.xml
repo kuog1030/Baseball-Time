@@ -28,6 +28,8 @@
     <string name="hit_rank">安打王</string>
     <string name="avg_rank">打擊王</string>
     <string name="sb_rank">盜壘王</string>
+    <string name="so_rank">被三振王！？</string>
+    <string name="watch_all_team_stat">所有球員數據</string>
 
     <!--    team related -->
     <string name="create_a_team">新增一支你的球隊吧</string>
@@ -61,6 +63,12 @@
     <string name="team_hint">最強OB隊</string>
     <string name="image">圖片</string>
 
+    <!--  broadcast  -->
+    <string name="turn_off_broadcast">要取消文字轉播嗎？</string>
+    <string name="turn_off">取消轉播</string>
+    <string name="confirm">確定</string>
+    <string name="cancel">返回</string>
+
     <!--   box related -->
     <string name="box_g">G</string>
     <string name="box_ab">AB</string>
@@ -74,6 +82,9 @@
     <string name="box_ip">IP</string>
     <string name="box_er">ER</string>
     <string name="box_hr">HR</string>
+    <string name="box_era">ERA</string>
+    <string name="box_whip">WHIP</string>
+    <string name="box_k9">K9</string>
     <string name="box_single">1B</string>
     <string name="box_double">2B</string>
     <string name="box_triple">3B</string>
@@ -90,8 +101,12 @@
     <string name="my_batting">打擊成績</string>
     <string name="my_pitching">投手成績</string>
     <string name="game_stat_title">成績看板</string>
+    <string name="team_player_stat">所有球員成績</string>
     <string name="team">Team</string>
     <string name="player_id_info">這個球員還沒有使用者認領，歡迎邀請這位球員也加入Baseball Time，使用這段球員代號來加入球隊、延續累積成績。</string>
+    <string name="share_subject">Baseball Time!</string>
+    <string name="share_title">傳送球員代號給你要邀請的人</string>
+    <string name="share_player_id">來Baseball Time認領你在%s的球員資料：%s</string>
 
 
     <!--   all games related -->
@@ -99,6 +114,7 @@
     <string name="schedule_games">安排一場比賽</string>
     <string name="more_detail">詳細數據</string>
     <string name="start_game">開始比賽</string>
+    <string name="delete_game">刪除比賽</string>
     <string name="no_schedule_hint">還沒有安排好的比賽喔</string>
     <string name="no_game_hint">還沒有球賽紀錄喔</string>
     <string name="score_win">累積勝場</string>
@@ -109,7 +125,7 @@
     <string name="no_game_place">（未記錄）</string>
     <string name="inning_top">%d局上</string>
     <string name="inning_bottom">%d局下</string>
-
+    <string name="inning_end">比賽結束</string>
 
     <!--    schedule a new game-->
     <string name="schedule_a_game">預訂一場球賽</string>
@@ -119,6 +135,7 @@
     <string name="starting_pitcher">預計先發投手</string>
     <string name="home_or_guest">你是主客隊？</string>
     <string name="versus">VS</string>
+    <string name="more">更多</string>
     <string name="add_game_note">備註</string>
     <string name="broadcast_on">文字轉播已開啟</string>
     <string name="broadcast_off">文字轉播已關閉</string>
@@ -126,9 +143,10 @@
     <!--    game final -->
     <string name="game_final">比賽結束</string>
     <string name="data_uploading">資料上傳中 ^^ </string>
-    <string name="game_end_dinner_time">比完賽去吃飯</string>
+    <string name="game_end_dinner_time">成績上傳後去吃飯</string>
 
     <!--    game record related -->
+    <string name="double_tap">請再按一次離開</string>
 
     <string name="ready_to_start">準備開始比賽</string>
     <string name="you_are">你是</string>
@@ -178,7 +196,8 @@
     
     <string name="ground_out">滾地球</string>
     <string name="air_out">高飛球</string>
-    <string name="sacrifice_fly">犧牲打（打點）</string>
+    <string name="sacrifice_go">犧牲短打</string>
+    <string name="sacrifice_fly">高飛犧牲打</string>
 
     <string name="walk">保送</string>
     <string name="intent_walk">故意四壞</string>

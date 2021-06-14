@@ -68,6 +68,7 @@
             android:ems="10"
             android:hint="@{viewModel.errorMessage != null ? @string/please_enter : @string/number_hint}"
             android:inputType="number"
+            android:maxLength="3"
             android:text="@={viewModel.number}"
             android:textColorHint="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
             app:layout_constraintEnd_toEndOf="@+id/edit_edit_player_name"
@@ -116,6 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/one_half_margin"
             android:backgroundTint="@color/grey_888"
+            android:visibility="@{viewModel.isMe? View.INVISIBLE : View.VISIBLE}"
             android:onClick="@{()->viewModel.deletePlayer()}"
             android:paddingStart="@dimen/half_margin"
             android:paddingEnd="@dimen/half_margin"
@@ -154,6 +156,21 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/button_edit_player_remove"
+            app:layout_constraintTop_toTopOf="@+id/button_edit_player_remove" />
+
+        <Button
+            android:id="@+id/button_edit_player_clear"
+            style="@style/GameButton"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:visibility="@{viewModel.isMe? View.VISIBLE : View.GONE}"
+            android:onClick="@{()->viewModel.clearMyData()}"
+            android:paddingStart="@dimen/half_margin"
+            android:paddingEnd="@dimen/half_margin"
+            android:text="清空累積成績"
+            app:layout_constraintBottom_toBottomOf="@+id/button_edit_player_remove"
+            app:layout_constraintEnd_toEndOf="@+id/button_edit_player_remove"
+            app:layout_constraintStart_toStartOf="@+id/button_edit_player_remove"
             app:layout_constraintTop_toTopOf="@+id/button_edit_player_remove" />
 
 

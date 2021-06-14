@@ -6,6 +6,9 @@
     <data>
         <import type="android.view.View" />
         <variable
+            name="order"
+            type="String" />
+        <variable
             name="isChecked"
             type="Boolean" />
         <variable
@@ -17,21 +20,19 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_edit_text"
-        android:layout_marginTop="@dimen/half_margin">
+        android:layout_marginTop="6dp">
 
         <TextView
             android:id="@+id/text_order_number"
             style="@style/PlayerNumber"
-            android:layout_width="30dp"
+            android:layout_width="35dp"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/one_half_margin"
-            android:layout_marginTop="@dimen/quarter_margin"
-            android:layout_marginBottom="@dimen/quarter_margin"
             android:text="@{String.valueOf(player.number)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="24" />
+            tools:text="246" />
 
         <TextView
             style="@style/PlayerName"
@@ -45,15 +46,21 @@
             app:layout_constraintStart_toEndOf="@id/text_order_number"
             tools:text="蘇智傑"/>
 
-        <ImageView
-            android:id="@+id/image_order_checked"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="@{isChecked ? View.VISIBLE : View.GONE}"
+        <TextView
+            android:id="@+id/text_order_order"
+            android:layout_width="23dp"
+            android:layout_height="23dp"
             android:layout_marginEnd="@dimen/one_half_margin"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text='@{order}'
+            android:background="@drawable/bg_number_border"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:visibility="@{isChecked ? View.VISIBLE : View.GONE}"
+            app:layout_constraintBottom_toBottomOf="@+id/text_player_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@drawable/ic_baseline_checked" />
+            app:layout_constraintTop_toTopOf="@+id/text_player_name"
+            tools:text="2" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

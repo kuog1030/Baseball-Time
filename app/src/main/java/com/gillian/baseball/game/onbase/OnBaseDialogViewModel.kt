@@ -1,5 +1,6 @@
 package com.gillian.baseball.game.onbase
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -36,7 +37,7 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository, private 
     fun stealBaseSuccess() {
         _proceedWithError.value = false
         viewModelScope.launch {
-            repository.sendEvent(onBaseInfo.gameId, Event(player = player!!, pitcher = pitcher!!, result = EventType.STEALBASE.number, inning = onBaseInfo.inning))
+            repository.sendEvent(onBaseInfo.gameId, Event(player = player!!, pitcher = pitcher!!, result = EventType.STEALBASE.number, inning = onBaseInfo.inning, out = onBaseInfo.out))
         }
     }
 

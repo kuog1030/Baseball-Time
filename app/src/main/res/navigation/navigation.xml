@@ -12,7 +12,9 @@
             app:argType="com.gillian.baseball.data.MyGame" />
         <action
             android:id="@+id/action_gameFragment_to_finalFragment"
-            app:destination="@id/finalFragment" />
+            app:destination="@id/finalFragment"
+            app:popUpTo="@id/allGamesFragment"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment
@@ -26,6 +28,9 @@
         <action
             android:id="@+id/action_teamFragment_to_statPlayerFragment"
             app:destination="@id/statPlayerFragment" />
+        <action
+            android:id="@+id/action_teamFragment_to_statTeamFragment"
+            app:destination="@id/statTeamFragment" />
     </fragment>
 
     <action android:id="@+id/navigationToStat" app:destination="@id/statFragment" />
@@ -152,5 +157,9 @@
             android:name="newUser"
             app:argType="com.gillian.baseball.data.User" />
     </fragment>
+    <fragment
+        android:id="@+id/statTeamFragment"
+        android:name="com.gillian.baseball.statistics.statteam.StatTeamFragment"
+        android:label="StatTeamFragment" />
 
 </navigation>

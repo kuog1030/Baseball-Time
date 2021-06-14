@@ -14,7 +14,9 @@
         android:layout_width="match_parent"
         android:layout_height="220dp"
         android:background="@drawable/bg_card"
-        android:layout_marginBottom="@dimen/margin">
+        android:layout_marginBottom="@dimen/margin"
+        android:layout_marginStart="@dimen/margin"
+        android:layout_marginEnd="@dimen/margin">
 
         <TextView
             style="@style/DefaultPhoto"
@@ -46,11 +48,12 @@
             android:layout_height="wrap_content"
             android:text='@{game.title + "  " + game.place}'
             android:textColor="?attr/colorPrimary"
+            android:textStyle="bold"
             android:layout_marginTop="@dimen/margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="全國棒球大專盃8強 - 福和橋" />
+            tools:text="全國棒球大專盃8強  福和橋" />
 
         <TextView
             android:id="@+id/text_card_score_date"

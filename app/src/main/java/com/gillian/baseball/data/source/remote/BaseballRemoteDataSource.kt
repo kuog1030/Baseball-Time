@@ -18,6 +18,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import java.util.*
+import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 import kotlin.coroutines.suspendCoroutine
 
@@ -543,6 +544,27 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
+    override suspend fun clearMyStat(playerId: String, myName: String): Result<Boolean> = suspendCoroutine { continuation ->
+        val newHitStat = HitterBox(playerId = playerId, name = myName)
+        val newPitchStat = PitcherBox(playerId = playerId, name = myName)
+
+        FirebaseFirestore.getInstance().collection(PLAYERS)
+                .document(playerId)
+                .update(HITSTAT, newHitStat,
+                        PITCHSTAT, newPitchStat)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+                            Log.w("remote", "[${this::class.simpleName}] Error clearing my stat. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                        }
+                        continuation.resume(Result.Fail("clear my stat fail"))
+                    }
+                }
+    }
+
     override suspend fun getAllGames(teamId: String): Result<List<Game>>  = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
                 .collection(GAMES)
@@ -578,8 +600,10 @@ object BaseballRemoteDataSource : BaseballDataSource {
                     if (task.isSuccessful) {
                         val result = mutableListOf<GameCard>()
                         for (document in task.result!!) {
-                            Log.i("remote", " ${document.id} -> ${document.data}")
-                            result.add(document.toObject(Game::class.java).toGameCard())
+                            val game = document.toObject(Game::class.java).toGameCard()
+                            if (game.date >= (Calendar.getInstance().timeInMillis - TimeUnit.DAYS.toMillis(3))) {
+                                result.add(game)
+                            }
                         }
                         continuation.resume(Result.Success(result))
                     } else {
@@ -646,9 +670,12 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .get()
                 .addOnCompleteListener{ task ->
                     if (task.isSuccessful) {
-                        val result = task.result!!.toObject(Player::class.java)
-                        continuation.resume(Result.Success(result!!))
-
+                        if (task.result != null) {
+                            val result = task.result!!.toObject(Player::class.java)
+                            continuation.resume(Result.Success(result!!))
+                        } else {
+                            continuation.resume(Result.Fail("get one player fail"))
+                        }
                     } else {
                         task.exception?.let {
                             Log.w("remote", "[${this::class.simpleName}] Error getting one player. ${it.message}")
@@ -690,11 +717,10 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
-    //TODO() 目前這個function沒有用到teamId欸
     override suspend fun getTeamEventPlayer(teamId: String): Result<MutableList<EventPlayer>> = suspendCoroutine {continuation ->
         FirebaseFirestore.getInstance()
                 .collection(PLAYERS)
-                .whereEqualTo(TEAMID, UserManager.teamId)
+                .whereEqualTo(TEAMID, teamId)
                 .get()
                 .addOnCompleteListener{ task ->
                     if (task.isSuccessful) {
@@ -721,7 +747,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .document(gameId)
                 .get()
                 .addOnSuccessListener { documents ->
-                    if (documents != null) {
+                    if (documents.data != null) {
                         val gameResult = documents.toObject(Game::class.java)
                         // TODO()這邊怎麼error handle?
                         continuation.resume(Result.Success(gameResult!!))
@@ -744,12 +770,16 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val eventList = mutableListOf<Event>()
-                        for (document in task.result!!) {
-                            eventList.add(document.toObject(Event::class.java))
+                        if (task.result != null) {
+                            for (document in task.result!!) {
+                                eventList.add(document.toObject(Event::class.java))
+                            }
+                            val result = eventList.toMyGameStat(isHome)
+                            continuation.resume(Result.Success(result))
+                        } else {
+                            continuation.resume(Result.Fail("get all stats fail"))
                         }
                         //val result = eventList.toBothGameStat()
-                        val result = eventList.toMyGameStat(isHome)
-                        continuation.resume(Result.Success(result))
                     } else {
                         task.exception?.let {
 
@@ -815,11 +845,14 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         val eventList = mutableListOf<Event>()
-                        for (document in task.result!!) {
-                            eventList.add(document.toObject(Event::class.java))
+                        if (task.result != null) {
+                            for (document in task.result!!) {
+                                eventList.add(document.toObject(Event::class.java))
+                            }
+                            continuation.resume(eventList)
+                        } else {
+                            continuation.resume(emptyList())
                         }
-                        Log.i("remote", "get all event list success")
-                        continuation.resume(eventList)
                     } else {
                         task.exception?.let {
 
@@ -897,6 +930,26 @@ object BaseballRemoteDataSource : BaseballDataSource {
                     continuation.resume(Result.Fail("delete player fail"))
                 }
             }
+
+    }
+
+    override suspend fun deleteGame(gameId: String): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(GAMES)
+                .document(gameId)
+                .delete()
+                .addOnCompleteListener {task ->
+                    if (task.isSuccessful) {
+                        continuation.resume(Result.Success(true))
+                    } else {
+                        task.exception?.let {
+
+                            Log.w("remote", "[${this::class.simpleName}] Error deleting schedule game. ${it.message}")
+                            continuation.resume(Result.Error(it))
+                            return@addOnCompleteListener
+                        }
+                        continuation.resume(Result.Fail("delete schedule game fail"))
+                    }
+                }
 
     }
 

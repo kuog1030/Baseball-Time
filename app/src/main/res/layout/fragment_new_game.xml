@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+        <import type="android.text.TextUtils"/>
         <variable
             name="viewModel"
             type="com.gillian.baseball.newgame.NewGameViewModel" />
@@ -169,7 +170,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/away_team_name"
-            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            android:textColor="@{viewModel.errorMessage == null ? @color/grey_666 : TextUtils.isEmpty(viewModel.awayName) ? @color/red_out : @color/grey_666}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_new_game_away"
             app:layout_constraintStart_toStartOf="@+id/text_new_game_title"
             app:layout_constraintTop_toTopOf="@+id/edit_new_game_away" />
@@ -195,7 +196,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/game_title"
-            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            android:textColor="@{viewModel.errorMessage == null ? @color/grey_666 : TextUtils.isEmpty(viewModel.gameTitle) ? @color/red_out : @color/grey_666}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_new_game_title"
             app:layout_constraintStart_toStartOf="@+id/text_new_game_side"
             app:layout_constraintTop_toTopOf="@+id/edit_new_game_title" />
@@ -220,7 +221,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/game_place"
-            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            android:textColor="@{viewModel.errorMessage == null ? @color/grey_666 : TextUtils.isEmpty(viewModel.gamePlace) ? @color/red_out : @color/grey_666}"
             app:layout_constraintBottom_toBottomOf="@+id/edit_new_game_place"
             app:layout_constraintStart_toStartOf="@+id/text_new_game_title"
             app:layout_constraintTop_toTopOf="@+id/edit_new_game_place" />
@@ -244,7 +245,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/game_date"
-            android:textColor="@{viewModel.errorMessage != null ? @color/red_out : @color/grey_888}"
+            android:textColor="@{viewModel.emptyDate != null ? @color/red_out : @color/grey_666}"
             app:layout_constraintBottom_toBottomOf="@+id/button_new_game_date"
             app:layout_constraintStart_toStartOf="@+id/text_new_game_away"
             app:layout_constraintTop_toTopOf="@+id/button_new_game_date" />
