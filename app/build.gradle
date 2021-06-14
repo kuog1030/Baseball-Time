@@ -16,7 +16,7 @@ android {
         applicationId "com.gillian.baseball"
         minSdkVersion 28
         targetSdkVersion 30
-        versionCode 2106132
+        versionCode 2106141
         versionName "1.1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
