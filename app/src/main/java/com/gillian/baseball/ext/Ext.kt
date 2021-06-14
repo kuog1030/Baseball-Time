@@ -171,7 +171,6 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
         }
 
         box.run += event.run
-        box.earnedRuns += event.run
 
         when (targetEventType) {
             EventType.SINGLE -> box.hit += 1
@@ -189,8 +188,9 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             EventType.INNINGSPITCHED -> {box.inningsPitched = event.out
                 Log.i("gillian614", "inning pitcher ${event.pitcher.name} ${event.pitcher.order} ${event.out}")
             }
-            EventType.IPEND -> {box.inningsPitched = event.out
-                Log.i("gillian614", "inning pitcher ${event.pitcher.name} ${event.pitcher.order} ${event.out}")
+            EventType.IPEND -> box.inningsPitched = event.out
+            EventType.IPUPDATE -> {box.earnedRuns = event.out
+                Log.i("gillian614", "earnd runs ${event.out}")
             }
             else -> null // TODO() 可能要throw error
         }

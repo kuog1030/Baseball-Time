@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.R
 import com.gillian.baseball.data.*
 import com.gillian.baseball.data.source.BaseballRepository
+import com.gillian.baseball.game.EventType
 import com.gillian.baseball.util.Util
 import kotlinx.coroutines.launch
 
@@ -168,6 +169,12 @@ class FinalViewModel(private val repository: BaseballRepository, val myGame: MyG
                     if (pitcher.playerId != "") {
                         Log.i("gillian", "pitcher era is ${pitcher.earnedRuns}")
                         pitcherResult = repository.updatePitchStat(pitcher.playerId, pitcher)
+                        repository.sendEvent(myGame.game.id,
+                            Event(result = EventType.IPUPDATE.number,
+                                out = pitcher.earnedRuns,
+                                inning = if (myGame.isHome) 1 else 2,
+                                pitcher = EventPlayer(playerId = pitcher.playerId, name = pitcher.name?:"", order = pitcher.order))
+                        )
                     }
                 }
             }
