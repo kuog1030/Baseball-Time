@@ -186,8 +186,12 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
             EventType.STRIKEOUT -> box.strikeOut += 1
             EventType.WALK -> box.baseOnBalls += 1
             // inning pitched is put into out while recording event
-            EventType.INNINGSPITCHED -> box.inningsPitched = event.out
-            EventType.IPEND -> box.inningsPitched = event.out
+            EventType.INNINGSPITCHED -> {box.inningsPitched = event.out
+                Log.i("gillian614", "inning pitcher ${event.pitcher.name} ${event.pitcher.order} ${event.out}")
+            }
+            EventType.IPEND -> {box.inningsPitched = event.out
+                Log.i("gillian614", "inning pitcher ${event.pitcher.name} ${event.pitcher.order} ${event.out}")
+            }
             else -> null // TODO() 可能要throw error
         }
     }

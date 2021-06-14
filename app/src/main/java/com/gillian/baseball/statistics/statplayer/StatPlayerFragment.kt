@@ -16,6 +16,7 @@ import com.gillian.baseball.databinding.FragmentStatPlayerBinding
 import com.gillian.baseball.editplayer.EditPlayerDialog
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.util.Util
 
 
 const val REQUEST_IMAGE_OPEN = 1
@@ -62,6 +63,19 @@ class StatPlayerFragment : Fragment() {
                 viewModel.onEditNavigated()
             }
         })
+
+        val fadeInAnim = Util.getAnim(R.anim.fade_in_anim)
+
+        viewModel.infoVisibility.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                if (it) {
+                    binding.textStatPlayerInfo.startAnimation(fadeInAnim)
+                } else {
+                    binding.textStatPlayerInfo.clearAnimation()
+                }
+            }
+        })
+        //            android:visibility="@{viewModel.infoVisibility? View.VISIBLE : View.INVISIBLE}"
 
 //        viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
 //            it?.let{

@@ -218,7 +218,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         sendEvent(
                 Event(
                         pitcher = if (isHome) homePitcher else guestPitcher,
-                        inning = if (isHome) (inningCount-1) else inningCount,
+                        inning = if (isHome) 1 else 2,
                         result = EventType.IPEND.number, //52
                         out = totalInningPitched
                 )

@@ -77,7 +77,7 @@
             android:id="@+id/recycler_final_box"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginTop="@dimen/one_half_margin"
             android:layout_marginEnd="@dimen/margin"
             android:orientation="horizontal"
             app:gameBox="@{viewModel.gameBox}"

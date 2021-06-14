@@ -56,7 +56,7 @@
             android:layout_marginStart="@dimen/margin"
             android:textSize="12sp"
             app:layout_constraintBaseline_toBaselineOf="@id/text_era_ip"
-            android:text='@{"總失分 " + String.valueOf(pitcher.run)}'
+            android:text='@{"原本是 " + String.valueOf(pitcher.run)}'
             app:layout_constraintStart_toEndOf="@id/text_era_ip"
             android:layout_marginEnd="@dimen/half_margin"
             tools:text="總失分 4"/>

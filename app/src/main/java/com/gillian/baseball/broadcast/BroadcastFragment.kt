@@ -15,6 +15,7 @@ import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.R
 import com.gillian.baseball.databinding.FragmentBroadcastBinding
 import com.gillian.baseball.ext.getVmFactory
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class BroadcastFragment : Fragment() {
 
@@ -49,9 +50,8 @@ class BroadcastFragment : Fragment() {
         })
 
         binding.buttonBroadcastClose.setOnClickListener {
-            AlertDialog.Builder(requireActivity())
+            MaterialAlertDialogBuilder(requireActivity(), R.style.CustomAlertDialog)
                     .setMessage(getString(R.string.turn_off_broadcast))
-                    .setTitle(getString(R.string.turn_off))
                     .setPositiveButton(getString(R.string.confirm)) { _, _ ->
                         viewModel.enableBroadcast()
                     }

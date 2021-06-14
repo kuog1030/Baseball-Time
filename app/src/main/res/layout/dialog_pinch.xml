@@ -51,6 +51,8 @@
                 android:id="@+id/layout_pinch_player"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:layout_constraintHeight_default="wrap"
+                app:layout_constraintHeight_max="450dp"
                 android:layout_marginStart="@dimen/one_half_margin"
                 android:layout_marginTop="@dimen/one_half_margin"
                 android:layout_marginEnd="@dimen/one_half_margin"
@@ -107,7 +109,7 @@
                 android:layout_marginTop="@dimen/one_half_margin"
                 android:text="比賽結束"
                 android:textSize="17sp"
-                android:visibility="gone"
+                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@id/layout_pinch_player"
                 app:layout_constraintStart_toStartOf="@id/layout_pinch_player"
                 app:layout_constraintTop_toBottomOf="@id/button_pinch_save" />

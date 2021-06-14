@@ -191,13 +191,15 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    // For Tea, Stat
+    // For Team Stat
     fun createStatTable(playerList: List<Player>){
         val hitResult = mutableListOf(HitterBox())
         val pitchResult = mutableListOf(PitcherBox())
 
         for (player in playerList) {
-            hitResult.add(player.hitStat)
+            if (player.hitStat.atBat != 0) {
+                hitResult.add(player.hitStat)
+            }
             if (player.pitchStat.inningsPitched != 0) {
                 pitchResult.add(player.pitchStat)
             }

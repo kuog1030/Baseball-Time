@@ -309,6 +309,7 @@ object BaseballRemoteDataSource : BaseballDataSource {
         val document = games.document()
 
         game.id = document.id
+        Log.i("gillian", "new game created and id is ${game.id}")
 
         document.set(game).addOnCompleteListener { task ->
             if (task.isSuccessful) {
