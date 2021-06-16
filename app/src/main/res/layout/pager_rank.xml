@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <View
-            android:id="@+id/view"
+            android:id="@+id/banner_teammate"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:background="@drawable/ic_wave"
@@ -32,7 +32,7 @@
             android:layout_height="85dp"
             android:layout_marginTop="@dimen/margin"
             app:civ_border_color="@color/white"
-            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="@+id/banner_teammate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:teamPhotoBorder="@{viewModel.editable}"
@@ -173,7 +173,7 @@
             app:layout_constraintEnd_toEndOf="@id/button_rank_edit"
             app:layout_constraintStart_toStartOf="@id/button_edit_save"
             app:layout_constraintTop_toTopOf="@id/button_edit_save"
-            app:loadingStatus="@{viewModel.statusEdit}" />
+            app:loadingStatus="@{viewModel.editStatus}" />
 
 
         <!--        <com.airbnb.lottie.LottieAnimationView-->

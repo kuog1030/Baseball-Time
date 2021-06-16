@@ -729,6 +729,17 @@ object BaseballRemoteDataSource : BaseballDataSource {
                         for (document in task.result!!) {
                             Log.i("remote", " ${document.id} -> ${document.data}")
                             result.add(EventPlayer(playerId = document["id"].toString(), name = document[NAME].toString(), number = document[NUMBER].toString()))
+//                            if (document["id"].toString() == UserManager.playerId) {
+//                                result.add(0, EventPlayer(playerId = document["id"].toString(), name = document[NAME].toString(), number = document[NUMBER].toString()))
+//                            } else {
+//                                result.add(
+//                                    EventPlayer(
+//                                        playerId = document["id"].toString(),
+//                                        name = document[NAME].toString(),
+//                                        number = document[NUMBER].toString()
+//                                    )
+//                                )
+//                            }
                         }
                         continuation.resume(Result.Success(result))
                     } else {

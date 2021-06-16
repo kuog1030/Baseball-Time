@@ -18,8 +18,6 @@ import com.gillian.baseball.newplayer.NewPlayerDialog
 
 class TeamFragment : Fragment() {
 
-   //private val viewModel by viewModels<TeamViewModel> { getVmFactory() }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
 
@@ -41,7 +39,7 @@ class TeamFragment : Fragment() {
         })
 
         viewModel.teamPlayers.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 viewModel.fetchMyPlayer()
                 viewModel.createRankList(it)
             }

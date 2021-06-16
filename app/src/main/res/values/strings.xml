@@ -32,6 +32,8 @@
     <string name="watch_all_team_stat">所有球員數據</string>
 
     <!--    team related -->
+    <string name="team_pager_all_player">所有隊員</string>
+    <string name="team_pager_team">球隊頁</string>
     <string name="create_a_team">新增一支你的球隊吧</string>
     <string name="team_name">球隊名稱</string>
     <string name="create_a_player">新增你自己吧</string>

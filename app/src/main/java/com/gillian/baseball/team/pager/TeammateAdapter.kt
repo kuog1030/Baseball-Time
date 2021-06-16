@@ -29,7 +29,7 @@ class TeammateAdapter(val onClickListener: OnClickListener) : ListAdapter<Player
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val player = getItem(position)
-        holder.itemView.setOnClickListener{
+        holder.itemView.setOnClickListener {
             onClickListener.onClick(player)
         }
         holder.bind(player)

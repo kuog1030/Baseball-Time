@@ -23,8 +23,6 @@ class TeammatePager : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
         val binding = PagerTeammateBinding.inflate(inflater, container, false)
-
-
         val viewModel = ViewModelProvider(requireActivity(), this.getVmFactory()).get(TeamViewModel::class.java)
 
         binding.lifecycleOwner = viewLifecycleOwner
