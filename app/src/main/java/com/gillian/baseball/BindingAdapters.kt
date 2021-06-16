@@ -417,9 +417,3 @@ fun bindApiErrorMessage(view: TextView, message: String?) {
         }
     }
 }
-
-//
-//@BindingAdapter("onFirstBase")
-//fun bindFirstBaseRunner(textView: TextView, baseList: Array<EventPlayer?>) {
-//    textView.text = if (baseList[1] != null) baseList[1]!!.name else ""
-//}

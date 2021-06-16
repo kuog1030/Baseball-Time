@@ -42,10 +42,13 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
 
 
     private val _errorMessage = MutableLiveData<String>()
+
     val errorMessage: LiveData<String>
         get() = _errorMessage
 
+    // error hint for empty date
     private val _emptyDate = MutableLiveData<Boolean>()
+
     val emptyDate: LiveData<Boolean>
         get() = _emptyDate
 
@@ -59,14 +62,14 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
         gameDate.value = dateFormat.format(Date(targetDate))
     }
 
-
+    // update game card ui base on radio group selection (home or guest)
     fun updateCard() {
         when (selectedSideRadio.value) {
             R.id.radio_new_game_home -> {
-                homeImage.value = UserManager.team?.image
-                guestImage.value = ""
                 homeName.value = UserManager.team?.name
+                homeImage.value = UserManager.team?.image
                 guestName.value = awayName.value
+                guestImage.value = ""
             }
             else -> {
                 homeName.value = awayName.value
@@ -87,13 +90,13 @@ class NewGameViewModel(val repository: BaseballRepository, private var myTeam: T
             _errorMessage.value = null
             _emptyDate.value = null
 
-            // pithcer and lineup not yet initialized
             val myGameTeam = myTeam.toGameTeam()
 
             val game = Game(title = gameTitle.value!!, date = gameDateLong, place = gamePlace.value!!,
                     note = gameNote.value ?: "",
                     status = GameStatus.SCHEDULED.number,
                     recordedTeamId = UserManager.teamId)
+
 
             if (isHome) {
                 game.home = myGameTeam

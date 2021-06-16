@@ -40,7 +40,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/versus"
-                    android:textSize="45dp"
+                    android:textSize="40sp"
+                    android:letterSpacing=".1"
                     app:layout_constraintBottom_toBottomOf="@+id/team_new_game_home"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
@@ -52,8 +53,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@{viewModel.guestName}"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView5"
-                    app:layout_constraintStart_toStartOf="@+id/imageView5"
+                    app:layout_constraintEnd_toEndOf="@+id/image_new_game_guest"
+                    app:layout_constraintStart_toStartOf="@+id/image_new_game_guest"
                     app:layout_constraintTop_toTopOf="@+id/team_new_game_home"
                     tools:text="客隊" />
 
@@ -63,9 +64,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="16dp"
                     android:text="@{viewModel.homeName}"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView6"
-                    app:layout_constraintStart_toStartOf="@+id/imageView6"
-                    app:layout_constraintTop_toBottomOf="@+id/imageView6"
+                    app:layout_constraintEnd_toEndOf="@+id/image_new_game_home"
+                    app:layout_constraintStart_toStartOf="@+id/image_new_game_home"
+                    app:layout_constraintTop_toBottomOf="@+id/image_new_game_home"
                     tools:text="主隊" />
 
 
@@ -77,10 +78,10 @@
                     app:defaultName="@{viewModel.guestName}"
                     android:textSize="28sp"
                     android:backgroundTint="@color/default_2photo"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView5"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView5"
-                    app:layout_constraintStart_toStartOf="@+id/imageView5"
-                    app:layout_constraintTop_toTopOf="@+id/imageView5" />
+                    app:layout_constraintBottom_toBottomOf="@+id/image_new_game_guest"
+                    app:layout_constraintEnd_toEndOf="@+id/image_new_game_guest"
+                    app:layout_constraintStart_toStartOf="@+id/image_new_game_guest"
+                    app:layout_constraintTop_toTopOf="@+id/image_new_game_guest" />
 
                 <TextView
                     style="@style/DefaultPhoto"
@@ -89,23 +90,23 @@
                     android:layout_height="64dp"
                     app:defaultName="@{viewModel.homeName}"
                     android:textSize="28sp"
-                    app:layout_constraintBottom_toBottomOf="@+id/imageView6"
-                    app:layout_constraintEnd_toEndOf="@+id/imageView6"
-                    app:layout_constraintStart_toStartOf="@+id/imageView6"
-                    app:layout_constraintTop_toTopOf="@+id/imageView6"
+                    app:layout_constraintBottom_toBottomOf="@+id/image_new_game_home"
+                    app:layout_constraintEnd_toEndOf="@+id/image_new_game_home"
+                    app:layout_constraintStart_toStartOf="@+id/image_new_game_home"
+                    app:layout_constraintTop_toTopOf="@+id/image_new_game_home"
                     tools:text="A"/>
 
                 <ImageView
-                    android:id="@+id/imageView6"
+                    android:id="@+id/image_new_game_home"
                     android:layout_width="65dp"
                     android:layout_height="64dp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toEndOf="@+id/text_new_game_versus"
-                    app:layout_constraintTop_toTopOf="@+id/imageView5"
+                    app:layout_constraintTop_toTopOf="@+id/image_new_game_guest"
                     app:photoUrl="@{viewModel.homeImage}"/>
 
                 <ImageView
-                    android:id="@+id/imageView5"
+                    android:id="@+id/image_new_game_guest"
                     android:layout_width="65dp"
                     android:layout_height="65dp"
                     app:layout_constraintBottom_toBottomOf="parent"
@@ -265,7 +266,7 @@
 
         <Button
             style="@style/GameButton"
-            android:id="@+id/button3"
+            android:id="@+id/button_new_game_save"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="@string/schedule_a_game"
@@ -300,26 +301,6 @@
             app:layout_constraintStart_toStartOf="@+id/edit_new_game_title"
             app:layout_constraintTop_toBottomOf="@+id/button_new_game_date"
             tools:text="明天記得帶球棒"/>
-
-
-        <!--        <TextView-->
-<!--            android:id="@+id/text_new_game_starter"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="@string/starting_pitcher"-->
-<!--            app:layout_constraintBottom_toBottomOf="@+id/spinner_new_game_starter"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/text_new_game_date"-->
-<!--            app:layout_constraintTop_toTopOf="@+id/spinner_new_game_starter" />-->
-
-<!--        <Spinner-->
-<!--            android:id="@+id/spinner_new_game_starter"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_marginTop="@dimen/double_margin"-->
-<!--            android:spinnerMode="dropdown"-->
-<!--            app:layout_constraintEnd_toEndOf="@+id/button_new_game_date"-->
-<!--            app:layout_constraintStart_toStartOf="@+id/button_new_game_date"-->
-<!--            app:layout_constraintTop_toBottomOf="@+id/button_new_game_date" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
