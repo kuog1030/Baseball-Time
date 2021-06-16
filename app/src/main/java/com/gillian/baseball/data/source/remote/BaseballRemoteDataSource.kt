@@ -84,12 +84,11 @@ object BaseballRemoteDataSource : BaseballDataSource {
                             UserManager.userId = user.get("id").toString()
                             UserManager.playerId = user.get(PLAYERID).toString()
                             UserManager.teamId = user.get(TEAMID).toString()
-                            Log.i("gillian", "user exist ${user.get("id")} , ${user.get(PLAYERID)}, ${user.get(TEAMID)}")
                         }
                         continuation.resume(Result.Success(userExist))
                     } else {
                         task.exception?.let {
-                            Log.w("gillianlog", "[${this::class.simpleName}] Error getting documents. ${it.message}")
+                            Log.w("gillian", "[${this::class.simpleName}] Error getting documents. ${it.message}")
                             continuation.resume(Result.Error(it))
                             return@addOnCompleteListener
                         }
