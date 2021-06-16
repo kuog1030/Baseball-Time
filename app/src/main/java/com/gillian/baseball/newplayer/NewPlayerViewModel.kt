@@ -46,12 +46,13 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
         errorMessage.value = null
 
         val numberInt = number.value!!.toInt()
+        val nickname = if (nickname.value.isNullOrEmpty()) name.value!! else nickname.value!!
 
         val player = Player(
                 teamId = UserManager.teamId,
                 name = name.value!!,
                 number = numberInt,
-                nickname = nickname.value ?: name.value!!,
+                nickname = nickname,
                 image = photoUrl.value
         )
 

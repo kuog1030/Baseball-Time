@@ -54,6 +54,8 @@
 
     <dimen name="player_name_box_width">105dp</dimen>
     <dimen name="player_box_width">34dp</dimen>
+    <dimen name="edit_player_photo">120dp</dimen>
+    <dimen name="edit_player_button">130dp</dimen>
 
     <!--   item game card -->
     <dimen name="game_card_height">180dp</dimen>

@@ -45,21 +45,25 @@ class BroadcastFragment : Fragment() {
         })
 
         viewModel.errorMessage.observe(viewLifecycleOwner, Observer { message ->
-            message?.let{
-                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG ).show()
+            message?.let {
+                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG).show()
             }
         })
 
         binding.buttonLiveClose.setOnClickListener {
-            MaterialAlertDialogBuilder(requireActivity(), R.style.CustomAlertDialog)
-                    .setTitle(getString(R.string.turn_off_broadcast))
-                    .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                        viewModel.stopBroadcast()
-                    }
-                    .setNeutralButton(getString(R.string.cancel), null)
-                    .show()
+            showAlertDialog()
         }
 
         return binding.root
+    }
+
+    private fun showAlertDialog() {
+        MaterialAlertDialogBuilder(requireActivity(), R.style.CustomAlertDialog)
+                .setTitle(getString(R.string.turn_off_broadcast))
+                .setPositiveButton(getString(R.string.confirm)) { _, _ ->
+                    viewModel.stopBroadcast()
+                }
+                .setNeutralButton(getString(R.string.cancel), null)
+                .show()
     }
 }

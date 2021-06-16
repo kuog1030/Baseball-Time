@@ -56,7 +56,7 @@ fun bindFourCount(textView: TextView, count: Int?) {
 
 @BindingAdapter("nextBat")
 fun bindNextBat(textView: TextView, player: String?) {
-    player?.let{
+    player?.let {
         textView.text = BaseballApplication.instance.getString(R.string.next_bat, player)
     }
 }
@@ -64,7 +64,7 @@ fun bindNextBat(textView: TextView, player: String?) {
 
 @BindingAdapter("teammates")
 fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: List<Player>?) {
-    teamPlayers?.let{
+    teamPlayers?.let {
         recyclerView.adapter?.apply {
             when (this) {
                 is TeammateAdapter -> submitList(it)
@@ -75,7 +75,7 @@ fun bindTeamPlayer(recyclerView: RecyclerView, teamPlayers: List<Player>?) {
 
 @BindingAdapter("rankList")
 fun bindRankList(recyclerView: RecyclerView, rank: List<Rank>?) {
-    rank?.let{
+    rank?.let {
         recyclerView.adapter?.apply {
             when (this) {
                 is RankAdapter -> submitList(it)
@@ -86,7 +86,7 @@ fun bindRankList(recyclerView: RecyclerView, rank: List<Rank>?) {
 
 @BindingAdapter("emptyListHint")
 fun bindEmptyHint(textView: TextView, players: List<Player>?) {
-    players?.let{
+    players?.let {
         if (players.isEmpty()) {
             textView.text = BaseballApplication.instance.getString(R.string.empty_player_list)
         } else {
@@ -97,7 +97,7 @@ fun bindEmptyHint(textView: TextView, players: List<Player>?) {
 
 @BindingAdapter("noPersonalRecord")
 fun bindEmptyPersonal(textView: TextView, myScore: List<PersonalScore>?) {
-    myScore?.let{
+    myScore?.let {
         if (it.isEmpty()) {
             textView.text = BaseballApplication.instance.getString(R.string.no_personal_record)
         } else {
@@ -108,9 +108,9 @@ fun bindEmptyPersonal(textView: TextView, myScore: List<PersonalScore>?) {
 
 @BindingAdapter("personalBox")
 fun bindPersonalBox(recyclerView: RecyclerView, myScore: List<PersonalScore>?) {
-    myScore?.let{
+    myScore?.let {
         recyclerView.adapter?.apply {
-            when(this) {
+            when (this) {
                 is PersonalScoreAdapter -> submitList(it)
             }
         }
@@ -119,9 +119,9 @@ fun bindPersonalBox(recyclerView: RecyclerView, myScore: List<PersonalScore>?) {
 
 @BindingAdapter("hitterBox")
 fun bindHitterBox(recyclerView: RecyclerView, hitterBox: List<HitterBox>?) {
-    hitterBox?.let{
+    hitterBox?.let {
         recyclerView.adapter?.apply {
-            when(this) {
+            when (this) {
                 is HitterBoxAdapter -> submitList(it)
             }
         }
@@ -130,9 +130,9 @@ fun bindHitterBox(recyclerView: RecyclerView, hitterBox: List<HitterBox>?) {
 
 @BindingAdapter("pitcherBox")
 fun bindPitcherBox(recyclerView: RecyclerView, pitcherBox: List<PitcherBox>?) {
-    pitcherBox?.let{
+    pitcherBox?.let {
         recyclerView.adapter?.apply {
-            when(this) {
+            when (this) {
                 is PitcherBoxAdapter -> submitList(it)
             }
         }
@@ -141,9 +141,9 @@ fun bindPitcherBox(recyclerView: RecyclerView, pitcherBox: List<PitcherBox>?) {
 
 @BindingAdapter("gameBox")
 fun bindGameBox(recyclerView: RecyclerView, gameBox: List<BoxView>?) {
-    gameBox?.let{
+    gameBox?.let {
         recyclerView.adapter?.apply {
-            when(this) {
+            when (this) {
                 is BoxAdapter -> submitList(it)
             }
         }
@@ -152,7 +152,7 @@ fun bindGameBox(recyclerView: RecyclerView, gameBox: List<BoxView>?) {
 
 @BindingAdapter("orderText")
 fun bindOrderToText(textView: TextView, order: Int?) {
-    order?.let{
+    order?.let {
         textView.text = when (order % 100) {
             0 -> (order / 100).toString()
             else -> ""
@@ -162,9 +162,9 @@ fun bindOrderToText(textView: TextView, order: Int?) {
 
 @BindingAdapter("scoresGames")
 fun bindScoresGames(recyclerView: RecyclerView, games: List<GameCard>?) {
-    games?.let{
+    games?.let {
         recyclerView.adapter?.apply {
-            when(this) {
+            when (this) {
                 is CardScoreAdapter -> submitList(it)
             }
         }
@@ -173,9 +173,9 @@ fun bindScoresGames(recyclerView: RecyclerView, games: List<GameCard>?) {
 
 @BindingAdapter("liveEvents")
 fun bindLiveEvents(recyclerView: RecyclerView, events: List<Event>?) {
-    events?.let{
+    events?.let {
         recyclerView.adapter?.apply {
-            when(this) {
+            when (this) {
                 is BroadcastAdapter -> submitList(it)
             }
         }
@@ -184,7 +184,7 @@ fun bindLiveEvents(recyclerView: RecyclerView, events: List<Event>?) {
 
 @BindingAdapter("gameResult")
 fun bindGameResultToText(textView: TextView, result: GameResult?) {
-    result?.let{
+    result?.let {
         when (result) {
             GameResult.WIN -> {
                 textView.text = "勝"
@@ -202,8 +202,8 @@ fun bindGameResultToText(textView: TextView, result: GameResult?) {
 
 @BindingAdapter("atBaseFirst")
 fun bindAtBaseFirst(textView: TextView, atBase: AtBase?) {
-    atBase?.let{
-        if (atBase.base == 1){
+    atBase?.let {
+        if (atBase.base == 1) {
             textView.text = atBase.player.name
             textView.visibility = View.VISIBLE
         } else {
@@ -214,8 +214,8 @@ fun bindAtBaseFirst(textView: TextView, atBase: AtBase?) {
 
 @BindingAdapter("atBaseSecond")
 fun bindAtBaseSecond(textView: TextView, atBase: AtBase?) {
-    atBase?.let{
-        if (atBase.base == 2){
+    atBase?.let {
+        if (atBase.base == 2) {
             textView.text = atBase.player.name
             textView.visibility = View.VISIBLE
         } else {
@@ -226,8 +226,8 @@ fun bindAtBaseSecond(textView: TextView, atBase: AtBase?) {
 
 @BindingAdapter("atBaseThird")
 fun bindAtBaseThird(textView: TextView, atBase: AtBase?) {
-    atBase?.let{
-        if (atBase.base == 3){
+    atBase?.let {
+        if (atBase.base == 3) {
             textView.text = atBase.player.name
             textView.visibility = View.VISIBLE
         } else {
@@ -294,15 +294,15 @@ fun bindProfilePhoto(imageView: ImageView, url: String?) {
 @BindingAdapter("teamUrl")
 fun bindTeamPhoto(imageView: de.hdodenhof.circleimageview.CircleImageView, url: String?) {
     Glide.with(imageView.context)
-        .load(url)
-        .circleCrop()
-        .dontAnimate()
-        .into(imageView)
+            .load(url)
+            .circleCrop()
+            .dontAnimate()
+            .into(imageView)
 }
 
 @BindingAdapter("teamPhotoBorder")
 fun bindPhotoBorder(imageView: de.hdodenhof.circleimageview.CircleImageView, editable: Boolean?) {
-    editable?.let{
+    editable?.let {
         imageView.borderWidth = if (editable) 15 else 0
     }
 }
@@ -353,7 +353,7 @@ fun bindStyleForPersonalScore(textView: TextView, color: Int) {
 
 @BindingAdapter("overallTeamStat")
 fun bindTextAndTeamStat(textView: TextView, number: Int?) {
-    if (number == null){
+    if (number == null) {
         textView.text = "-"
     } else {
         textView.text = number.toString()
@@ -377,7 +377,7 @@ fun bindTextInning(textView: TextView, inning: Int) {
     if (inning == -1) {
         textView.text = BaseballApplication.instance.getString(R.string.inning_end)
     } else {
-        val inningNine = (inning + 1 ) / 2
+        val inningNine = (inning + 1) / 2
         if (inning % 2 == 1) {
             textView.text = BaseballApplication.instance.getString(R.string.inning_top, inningNine)
         } else {
@@ -388,7 +388,7 @@ fun bindTextInning(textView: TextView, inning: Int) {
 
 @BindingAdapter("recordedTeam")
 fun bindRecordedTeamName(textView: TextView, game: Game?) {
-    game?.let{
+    game?.let {
         if (game.recordedTeamId == game.home.teamId) {
             textView.text = game.home.name
         } else {
