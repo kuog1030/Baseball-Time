@@ -5,11 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.databinding.FragmentTeamBinding
 import com.gillian.baseball.ext.getVmFactory
-import com.gillian.baseball.newplayer.NewPlayerDialog
 
 class TeamFragment : Fragment() {
 
@@ -24,14 +22,6 @@ class TeamFragment : Fragment() {
 
         binding.viewpagerTeams.adapter = TeamAdapter(childFragmentManager)
         binding.tabsTeams.setupWithViewPager(binding.viewpagerTeams)
-
-        viewModel.showNewPlayerDialog.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                val newPlayerDialog = NewPlayerDialog(true)
-                newPlayerDialog.show(childFragmentManager, "")
-                viewModel.onNewPlayerDialogShowed()
-            }
-        })
 
 
         return binding.root

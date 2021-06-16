@@ -19,45 +19,32 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 const val REQUEST_IMAGE_OPEN = 1
 
-class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialogFragment() {
+class NewPlayerDialog(private val fromTeamFragment: Boolean = false) : BottomSheetDialogFragment() {
 
     private val viewModel by viewModels<NewPlayerViewModel> { getVmFactory() }
     private lateinit var binding: DialogNewPlayerBinding
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+            inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         binding = DialogNewPlayerBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.imageNewPlayerPhoto.setOnClickListener{
+        binding.imageNewPlayerPhoto.setOnClickListener {
             pickImageFromGallery()
         }
 
         viewModel.photoUrl.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                if (viewModel.proceedToSave.value!!) {
-                    Log.i("gillian", "upload success ma $it")
-                    viewModel.createPlayer()
-                }
+            it?.let {
+                viewModel.createPlayer()
             }
         })
 
-
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (viewModel.needRefresh) {
-                    try{
-                        if (fromTeamFragment) {
-                            ViewModelProvider(requireActivity()).get(TeamViewModel::class.java).refresh()
-                        } else {
-                            ViewModelProvider(requireParentFragment()).get(OrderViewModel::class.java).refresh()
-                        }
-                    } finally {
-                    }
-                }
+                if (viewModel.needRefresh) refreshParentFragment()
                 dismiss()
                 viewModel.onDialogDismiss()
             }
@@ -67,10 +54,20 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
         return binding.root
     }
 
+    private fun refreshParentFragment() {
+        try {
+            if (fromTeamFragment) {
+                ViewModelProvider(requireActivity()).get(TeamViewModel::class.java).refresh()
+            } else {
+                ViewModelProvider(requireParentFragment()).get(OrderViewModel::class.java).refresh()
+            }
+        } finally {
+        }
+    }
+
     private fun pickImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK).apply{
+        val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
-            //addCategory(Intent.CATEGORY_OPENABLE)
         }
         startActivityForResult(intent, REQUEST_IMAGE_OPEN)
     }
@@ -79,9 +76,8 @@ class NewPlayerDialog(val fromTeamFragment: Boolean = false) : BottomSheetDialog
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_OPEN && resultCode == Activity.RESULT_OK && data != null) {
-            binding.imageNewPlayerPhoto.setImageURI(data.data)
-            viewModel.readyToSentPhoto.value = data.data
-            Log.i("gillian", "ready to send photo is not null ${viewModel.readyToSentPhoto.value}")
+            binding.imageNewPlayerNew.setImageURI(data.data)
+            viewModel.photoToBeSent.value = data.data
         }
     }
 

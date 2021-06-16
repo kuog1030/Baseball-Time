@@ -34,7 +34,7 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     var needStatRefresh = false
 
-    // only if this player is user can wipe player's accumulated data
+    // only when this player is user itself can wipe player's accumulated data
     val isMe = MutableLiveData<Boolean>(false)
 
     private val _newImage = MutableLiveData<String>()

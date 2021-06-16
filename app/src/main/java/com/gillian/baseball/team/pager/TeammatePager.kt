@@ -15,6 +15,7 @@ import com.gillian.baseball.databinding.PagerTeammateBinding
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.factory.ViewModelFactory
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.newplayer.NewPlayerDialog
 import com.gillian.baseball.team.TeamFragmentDirections
 import com.gillian.baseball.team.TeamViewModel
 
@@ -46,12 +47,14 @@ class TeammatePager : Fragment() {
             }
         })
 
-//        viewModel.showNewPlayerDialog.observe(viewLifecycleOwner, Observer {
-//            it?.let{
-//                findNavController().navigate(NavigationDirections.navigationToNewPlayer(true))
-//                viewModel.onNewPlayerDialogShowed()
-//            }
-//        })
+
+        viewModel.showNewPlayerDialog.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                val newPlayerDialog = NewPlayerDialog(true)
+                newPlayerDialog.show(childFragmentManager, "")
+                viewModel.onNewPlayerDialogShowed()
+            }
+        })
 
         return binding.root
     }
