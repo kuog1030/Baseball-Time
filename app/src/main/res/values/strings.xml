@@ -66,6 +66,8 @@
     <string name="image">圖片</string>
 
     <!--  broadcast  -->
+    <string name="search_broadcast_title">搜尋比賽標題</string>
+    <string name="current_live_game">目前可供線上收看的比賽</string>
     <string name="turn_off_broadcast">要取消文字轉播嗎？</string>
     <string name="turn_off">取消轉播</string>
     <string name="confirm">確定</string>

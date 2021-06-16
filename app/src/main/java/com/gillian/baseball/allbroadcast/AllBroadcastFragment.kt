@@ -27,7 +27,7 @@ class AllBroadcastFragment : Fragment() {
         }
 
         viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 binding.layoutBroadcastSwipe.isRefreshing = it
             }
         })
