@@ -22,13 +22,13 @@ class AllBroadcastFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        binding.layoutBroadcastSwipe.setOnRefreshListener {
+        binding.layoutAllLiveSwipe.setOnRefreshListener {
             viewModel.refresh()
         }
 
         viewModel.refreshStatus.observe(viewLifecycleOwner, Observer {
             it?.let {
-                binding.layoutBroadcastSwipe.isRefreshing = it
+                binding.layoutAllLiveSwipe.isRefreshing = it
             }
         })
 

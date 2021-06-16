@@ -17,12 +17,12 @@
         android:paddingEnd="@dimen/margin">
 
         <TextView
-            android:id="@+id/textView5"
+            android:id="@+id/text_item_live_content"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginStart="16dp"
+            android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="12dp"
-            android:layout_marginEnd="16dp"
+            android:layout_marginEnd="@dimen/margin"
             android:text="@{event.toLiveString()}"
             app:layout_constraintEnd_toStartOf="@id/my_custom_base"
             app:layout_constraintStart_toStartOf="parent"
@@ -30,53 +30,51 @@
             tools:text="第4棒 Czerny擊出一壘安打2出局" />
 
         <TextView
-            android:id="@+id/textView6"
+            android:id="@+id/text_item_live_ball"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/green_ball"
-            android:textSize="25sp"
+            android:textSize="@dimen/ball_count"
             app:ballCount="@{event.ball}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintHorizontal_chainStyle="spread_inside"
-            app:layout_constraintStart_toStartOf="@+id/textView5"
-            app:layout_constraintTop_toBottomOf="@+id/textView5"
+            app:layout_constraintStart_toStartOf="@+id/text_item_live_content"
+            app:layout_constraintTop_toBottomOf="@+id/text_item_live_content"
             tools:text="@string/three_two" />
 
         <TextView
-            android:id="@+id/textView12"
+            android:id="@+id/text_item_live_strike"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_margin"
             android:textColor="@color/yellow_strike"
-            android:textSize="25sp"
-            app:layout_constraintStart_toEndOf="@+id/textView6"
-            app:layout_constraintTop_toTopOf="@+id/textView6"
+            android:textSize="@dimen/ball_count"
+            app:layout_constraintStart_toEndOf="@+id/text_item_live_ball"
+            app:layout_constraintTop_toTopOf="@+id/text_item_live_ball"
             app:twoCount="@{event.strike}"
             tools:text="@string/two_one" />
 
         <TextView
-            android:id="@+id/text_broadcast_out"
+            android:id="@+id/text_item_live_out"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_margin"
             android:textColor="@color/red_out"
-            android:textSize="25sp"
+            android:textSize="@dimen/ball_count"
             app:ballCount="@{event.out}"
-            app:layout_constraintStart_toEndOf="@+id/textView12"
-            app:layout_constraintTop_toTopOf="@+id/textView12"
+            app:layout_constraintStart_toEndOf="@+id/text_item_live_strike"
+            app:layout_constraintTop_toTopOf="@+id/text_item_live_strike"
             tools:text="@string/three_two" />
 
-        <!--        Testing custom view-->
         <com.gillian.baseball.views.CustomBaseView
             android:id="@+id/my_custom_base"
-            android:layout_width="50dp"
+            android:layout_width="@dimen/custom_base"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="4dp"
+            android:layout_marginEnd="@dimen/quarter_margin"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:onBase="@{event.currentBase}" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

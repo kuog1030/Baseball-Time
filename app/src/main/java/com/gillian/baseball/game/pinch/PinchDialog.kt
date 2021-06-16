@@ -61,7 +61,7 @@ class PinchDialog(private val isDefense: Boolean) : AppCompatDialogFragment() {
 
         binding.buttonPinchFinal.setOnClickListener {
             MaterialAlertDialogBuilder(requireActivity(), R.style.CustomAlertDialog)
-                .setMessage("確定要結束比賽？")
+                .setTitle(getString(R.string.confirm_to_end))
                 .setPositiveButton(getString(R.string.confirm)) { _, _ ->
                     gameViewModel.switchFinal()
                 }

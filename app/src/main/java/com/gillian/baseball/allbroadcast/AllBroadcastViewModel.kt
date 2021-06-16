@@ -14,7 +14,7 @@ import kotlinx.coroutines.launch
 
 class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewModel() {
 
-    
+
     val searchTitle = MutableLiveData<String>()
 
     // cache the games data for title searching
@@ -90,9 +90,9 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
 
     private fun checkIfNoGame(size: Int): String? {
         return if (size == 0) {
-            null
-        } else {
             Util.getString(R.string.error_no_live_game)
+        } else {
+            null
         }
     }
 

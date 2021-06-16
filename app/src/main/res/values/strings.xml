@@ -152,7 +152,8 @@
     <string name="game_end_dinner_time">成績上傳後去吃飯</string>
 
     <!--    game record related -->
-    <string name="double_tap">請再按一次離開</string>
+    <string name="double_tap">請再按一次離開</string>\
+    <string name="confirm_to_end">確定要結束比賽嗎？</string>
 
     <string name="ready_to_start">準備開始比賽</string>
     <string name="you_are">你是</string>

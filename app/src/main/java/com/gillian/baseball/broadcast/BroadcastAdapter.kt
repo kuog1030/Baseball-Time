@@ -59,13 +59,13 @@ class BroadcastAdapter : ListAdapter<Event, RecyclerView.ViewHolder>(DiffCallbac
     override fun getItemViewType(position: Int): Int {
         return when (getItem(position).result) {
             EventType.INNINGCHANGE.number -> TYPE_INNING
-            EventType.IPEND.number -> TYPE_INNING          // 最後一個出局數結束
-            EventType.INNINGSPITCHED.number -> TYPE_TEXT // 換投
-            EventType.STEALBASEFAIL.number -> TYPE_TEXT  // 盜壘失敗
-            EventType.PICKOFF.number -> TYPE_TEXT    // 牽制出局
-            EventType.STEALBASE.number -> TYPE_TEXT  // 盜壘成功
-            EventType.ERROR.number -> TYPE_TEXT      // 發生失誤
-            EventType.ONBASEOUT.number -> TYPE_TEXT  // 壘包上的出局 如雙殺
+            EventType.IPEND.number -> TYPE_INNING
+            EventType.INNINGSPITCHED.number -> TYPE_TEXT
+            EventType.STEALBASEFAIL.number -> TYPE_TEXT
+            EventType.PICKOFF.number -> TYPE_TEXT
+            EventType.STEALBASE.number -> TYPE_TEXT
+            EventType.ERROR.number -> TYPE_TEXT
+            EventType.ONBASEOUT.number -> TYPE_TEXT
             else -> TYPE_EVENT
         }
     }
@@ -78,6 +78,7 @@ class BroadcastAdapter : ListAdapter<Event, RecyclerView.ViewHolder>(DiffCallbac
         override fun areContentsTheSame(oldItem: Event, newItem: Event): Boolean {
             return oldItem == newItem
         }
+
         private const val TYPE_EVENT = 0x07
         private const val TYPE_INNING = 0x08
         private const val TYPE_TEXT = 0x09

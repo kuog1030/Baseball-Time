@@ -13,7 +13,8 @@
     <dimen name="radio_button_padding">10dp</dimen>
     <dimen name="radius">15dp</dimen>
 
-    <!--        -->
+    <!--    game related -->
+    <dimen name="ball_count">25sp</dimen>
 
     <!--    game event dialog-->
     <dimen name="event_dialog_bar_margin">50dp</dimen>
@@ -21,7 +22,8 @@
     <dimen name="hitter_button_width">150dp</dimen>
     <dimen name="hitter_button_width2">130dp</dimen>
 
-
+    <!--   broadcast related -->
+    <dimen name="custom_base">50dp</dimen>
 
     <!--   box related -->
     <dimen name="box_name_width">90dp</dimen>

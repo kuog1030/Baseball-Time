@@ -54,7 +54,7 @@
 
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/layout_broadcast_swipe"
+            android:id="@+id/layout_all_live_swipe"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/half_margin"
@@ -82,10 +82,10 @@
             android:layout_marginEnd="@dimen/double_margin"
             android:gravity="center"
             android:text="@{viewModel.errorMessage}"
-            app:layout_constraintBottom_toBottomOf="@+id/layout_broadcast_swipe"
-            app:layout_constraintEnd_toEndOf="@+id/layout_broadcast_swipe"
-            app:layout_constraintStart_toStartOf="@+id/layout_broadcast_swipe"
-            app:layout_constraintTop_toTopOf="@+id/layout_broadcast_swipe"
+            app:layout_constraintBottom_toBottomOf="@+id/layout_all_live_swipe"
+            app:layout_constraintEnd_toEndOf="@+id/layout_all_live_swipe"
+            app:layout_constraintStart_toStartOf="@+id/layout_all_live_swipe"
+            app:layout_constraintTop_toTopOf="@+id/layout_all_live_swipe"
             tools:text="@string/error_search" />
 
         <ProgressBar

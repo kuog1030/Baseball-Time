@@ -5,13 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.gillian.baseball.BaseballApplication
 import com.gillian.baseball.R
 import com.gillian.baseball.databinding.FragmentBroadcastBinding
 import com.gillian.baseball.ext.getVmFactory
@@ -19,51 +18,47 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 class BroadcastFragment : Fragment() {
 
-    val args: BroadcastFragmentArgs by navArgs()
-    private val viewModel by viewModels<BroadcastViewModel> {getVmFactory(args.game) }
+    private val args: BroadcastFragmentArgs by navArgs()
+    private val viewModel by viewModels<BroadcastViewModel> { getVmFactory(args.game) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val binding = FragmentBroadcastBinding.inflate(inflater, container, false)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        Log.i("gillian", "view model liveevent1 ${viewModel.liveEvents}")
-        viewModel
-        val adapter = BroadcastAdapter()
-
-        binding.recyclerLive.adapter = adapter
         binding.viewModel = viewModel
+
+        val adapter = BroadcastAdapter()
+        binding.recyclerLive.adapter = adapter
 
 
         viewModel.liveEvents.observe(viewLifecycleOwner, Observer {
-            Log.i("gillian", "view model liveevent4 ${viewModel.liveEvents}")
-            it?.let{
-                Log.i("gillian", "i get new event size = ${it.size} event ${it}")
+            it?.let {
                 adapter.notifyDataSetChanged()
             }
         })
 
-        viewModel.turnOffBroadcast.observe(viewLifecycleOwner, Observer {
-            it?.let{
+        viewModel.stopBroadcast.observe(viewLifecycleOwner, Observer {
+            it?.let {
                 findNavController().popBackStack()
                 viewModel.onBroadcastOff()
             }
         })
 
-        binding.buttonBroadcastClose.setOnClickListener {
+        viewModel.errorMessage.observe(viewLifecycleOwner, Observer { message ->
+            message?.let{
+                Toast.makeText(requireContext(), message, Toast.LENGTH_LONG ).show()
+            }
+        })
+
+        binding.buttonLiveClose.setOnClickListener {
             MaterialAlertDialogBuilder(requireActivity(), R.style.CustomAlertDialog)
-                    .setMessage(getString(R.string.turn_off_broadcast))
+                    .setTitle(getString(R.string.turn_off_broadcast))
                     .setPositiveButton(getString(R.string.confirm)) { _, _ ->
-                        viewModel.enableBroadcast()
+                        viewModel.stopBroadcast()
                     }
                     .setNeutralButton(getString(R.string.cancel), null)
                     .show()
         }
-
-//        viewModel.liveGame.observe(viewLifecycleOwner, Observer {
-//            it?.let{
-//                Log.i("gillian64", "live game change ${it.box}")
-//            }
-//        })
 
         return binding.root
     }
