@@ -37,8 +37,8 @@ class RankPager : Fragment() {
             }
         }
 
-        viewModel.newTeamImage.observe(viewLifecycleOwner, Observer {
-            it?.let {
+        viewModel.newTeamImage.observe(viewLifecycleOwner, Observer { image ->
+            image?.let {
                 viewModel.updateTeamInfo(it)
             }
         })

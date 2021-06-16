@@ -112,6 +112,8 @@
 
 
     <!--   all games related -->
+    <string name="game_pager_schedule">未來比賽</string>
+    <string name="game_pager_score">已結束</string>
     <string name="fast_start_games">快速開始比賽</string>
     <string name="schedule_games">安排一場比賽</string>
     <string name="more_detail">詳細數據</string>

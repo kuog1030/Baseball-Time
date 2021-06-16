@@ -3,13 +3,15 @@ package com.gillian.baseball.allgames
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
+import com.gillian.baseball.R
 import com.gillian.baseball.allgames.schedule.SchedulePager
 import com.gillian.baseball.allgames.scores.ScoresPager
+import com.gillian.baseball.util.Util
 
 
 class AllGamesAdapter(fragmentManager: FragmentManager) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val titleList = listOf("未來比賽", "已結束")
+    private val titleList = listOf(Util.getString(R.string.game_pager_schedule), Util.getString(R.string.game_pager_score))
 
     override fun getItem(position: Int): Fragment {
 

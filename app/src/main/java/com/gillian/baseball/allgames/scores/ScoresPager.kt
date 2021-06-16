@@ -15,20 +15,19 @@ import com.gillian.baseball.databinding.PagerScoresBinding
 class ScoresPager : Fragment() {
 
     private lateinit var binding: PagerScoresBinding
+    lateinit var viewModel : AllGamesViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         binding = PagerScoresBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(requireParentFragment()).get(AllGamesViewModel::class.java)
+
+        binding.viewModel = viewModel
         binding.lifecycleOwner = viewLifecycleOwner
 
-        val viewModel = ViewModelProvider(requireParentFragment()).get(AllGamesViewModel::class.java)
-        
 
         binding.recyclerScores.adapter = CardScoreAdapter(CardScoreAdapter.OnClickListener{ game ->
-            //navigation
-            //TODO() wayne的做法是call viewmodel 的navigate function 然後在同樣這個fragment去observe他
             findNavController().navigate(NavigationDirections.navigationToStatGame(game.id, game.isHome))
         })
-        binding.viewModel = viewModel
 
 
         return binding.root

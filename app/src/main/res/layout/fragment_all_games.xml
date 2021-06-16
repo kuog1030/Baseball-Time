@@ -17,7 +17,7 @@
 
 
         <TextView
-            android:id="@+id/text_all_game_team"
+            android:id="@+id/text_all_games_team"
             android:layout_width="wrap_content"
             android:layout_height="50dp"
             android:gravity="bottom"
@@ -39,9 +39,9 @@
             android:layout_height="35dp"
             android:layout_marginEnd="@dimen/quarter_margin"
             android:layout_marginBottom="4dp"
-            app:layout_constraintBottom_toBottomOf="@id/text_all_game_team"
+            app:layout_constraintBottom_toBottomOf="@id/text_all_games_team"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@id/text_all_game_team"
+            app:layout_constraintStart_toEndOf="@id/text_all_games_team"
             app:tabGravity="fill"
             app:tabIndicator="@drawable/button_radius_filled_24"
             app:tabIndicatorAnimationMode="elastic"
@@ -57,19 +57,18 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/text_all_game_team">
+            app:layout_constraintTop_toBottomOf="@id/text_all_games_team">
 
         </androidx.viewpager.widget.ViewPager>
 
         <View
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintBottom_toBottomOf="@id/text_all_game_team"
             android:background="@color/grey_transparent"
             android:visibility="@{viewModel.clicked ? View.VISIBLE : View.GONE}"
-            tools:visibility="gone"/>
+            app:layout_constraintBottom_toBottomOf="@id/text_all_games_team"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

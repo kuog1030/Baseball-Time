@@ -21,10 +21,11 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val teamPlayers: LiveData<MutableList<Player>>
         get() = _teamPlayers
 
-    private val _teamPlayersWithMe = MutableLiveData<List<Player>>()
+    // team players without user itself (teammate only)
+    private val _teammates = MutableLiveData<List<Player>>()
 
-    val teamPlayersWithMe: LiveData<List<Player>>
-        get() = _teamPlayersWithMe
+    val teammates: LiveData<List<Player>>
+        get() = _teammates
 
     private val _showNewPlayerDialog = MutableLiveData<Boolean>()
 
@@ -84,7 +85,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         _editable.value = !(_editable.value!!)
     }
 
-    // team fragment on create -> init team page -> fetch team -> fetch my player & create rank list
+    // team fragment on create -> init team page -> fetch team -> separate player & create rank list
     fun initTeamPage() {
         fetchTeamPlayer()
         fetchTeamFromUserManager()
@@ -106,8 +107,10 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
             _teamPlayers.value = when (result) {
                 is Result.Success -> {
-                    _teamPlayersWithMe.value = result.data.filter { it.userId != UserManager.userId }
-                    result.data
+                    val teamPlayer = result.data
+                    separateTeamAndMe(teamPlayer, UserManager.userId)
+                    createRankList(teamPlayer)
+                    teamPlayer
                 }
                 is Result.Fail -> {
                     null
@@ -123,11 +126,10 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    // get my player data from team players list
-    fun fetchMyPlayer() {
-        teamPlayers.value?.let { players ->
-            myself.value = players.firstOrNull {it.userId == UserManager.userId}
-        }
+
+    private fun separateTeamAndMe(players: List<Player>, myId: String) {
+        _teammates.value = players.filter { it.userId != myId }
+        myself.value = players.firstOrNull { it.userId == myId }
     }
 
     // create rank list base on team players list
@@ -138,6 +140,24 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     init {
         initTeamPage()
+    }
+
+    // create the table view for Team Stat Page
+    fun createStatTable(playerList: List<Player>) {
+        val hitResult = mutableListOf(HitterBox())
+        val pitchResult = mutableListOf(PitcherBox())
+
+        for (player in playerList) {
+            if (player.hitStat.atBat != 0) {
+                hitResult.add(player.hitStat)
+            }
+            if (player.pitchStat.inningsPitched != 0) {
+                pitchResult.add(player.pitchStat)
+            }
+        }
+
+        _hitterStat.value = hitResult
+        _pitcherStat.value = pitchResult
     }
 
     // updating team info process :
@@ -193,24 +213,6 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
                 }
             }
         }
-    }
-
-    // create the table view for Team Stat Page
-    fun createStatTable(playerList: List<Player>) {
-        val hitResult = mutableListOf(HitterBox())
-        val pitchResult = mutableListOf(PitcherBox())
-
-        for (player in playerList) {
-            if (player.hitStat.atBat != 0) {
-                hitResult.add(player.hitStat)
-            }
-            if (player.pitchStat.inningsPitched != 0) {
-                pitchResult.add(player.pitchStat)
-            }
-        }
-
-        _hitterStat.value = hitResult
-        _pitcherStat.value = pitchResult
     }
 
 
