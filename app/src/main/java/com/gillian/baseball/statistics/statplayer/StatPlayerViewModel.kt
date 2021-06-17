@@ -17,9 +17,13 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
 
     val player = MutableLiveData<Player>()
 
+    // player will be editable if (1) it is user itself (2) has no user registered (user id is null)
     val editable = MutableLiveData<Boolean>(false)
 
+    // determine whether player's user id to be shown
     val noUserRegistered = MutableLiveData<Boolean>(false)
+
+    val infoVisibility = MutableLiveData<Boolean>(false)
 
     private val _errorMessage = MutableLiveData<String>()
 
@@ -31,25 +35,15 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
     val navigateToEdit: LiveData<Player>
         get() = _navigateToEdit
 
-    val infoVisibility = MutableLiveData<Boolean>(false)
-
-    private val _navigateToTeam = MutableLiveData<Boolean>()
-
-    val navigateToTeam: LiveData<Boolean>
-        get() = _navigateToTeam
-
-    var isInit = true
-
-
 
     fun fetchPlayerStat(playerId: String) {
-        Log.i("gillian", "get player stat!!")
         viewModelScope.launch {
             val result = repository.getOnePlayer(playerId)
 
-            player.value = when(result) {
+            player.value = when (result) {
                 is Result.Success -> {
                     _errorMessage.value = null
+                    updateEditable(result.data)
                     result.data
                 }
                 is Result.Fail -> {
@@ -68,10 +62,25 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
         }
     }
 
-    fun updateMoreHitStat() {
-        player.value?.let{
-            editable.value = (it.userId.isNullOrEmpty() || it.userId == UserManager.userId)  // 如果這個球員沒人認領 user id is null才可以修改
+    private fun updateEditable(player: Player) {
+        player.let {
+            editable.value = (it.userId.isNullOrEmpty() || it.userId == UserManager.userId)
             noUserRegistered.value = it.userId.isNullOrEmpty()
+        }
+    }
+
+    fun showInfo(toShow: Boolean = true) {
+        if (toShow) {
+            // for toggle button - switch between on or off
+            infoVisibility.value = !(infoVisibility.value!!)
+        } else {
+            infoVisibility.value = false
+        }
+    }
+
+    fun refresh() {
+        player.value?.let {
+            fetchPlayerStat(it.id)
         }
     }
 
@@ -82,42 +91,4 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
     fun onEditNavigated() {
         _navigateToEdit.value = null
     }
-
-    fun showInfo(show: Boolean = true) {
-        if (show) {
-            infoVisibility.value = !(infoVisibility.value!!)
-        } else {
-            infoVisibility.value = false
-        }
-
-    }
-
-    fun navigateToTeam() {
-        _navigateToTeam.value = true
-    }
-
-    fun onTeamNavigated() {
-        _navigateToTeam.value = null
-    }
-
-    fun refresh(refreshStat: Boolean = false) {
-        isInit = refreshStat
-        player.value?.let {
-            Log.i("gillian", "refresh")
-            fetchPlayerStat(it.id)
-        }
-    }
-
-//    fun createBox() {
-//        // only triggered when player value is not null
-//        val hitListWithTitle = mutableListOf(HitterBox())
-//        hitListWithTitle.add(player.value!!.hitStat)
-//        val pitchListWithTitle = mutableListOf(PitcherBox())
-//        pitchListWithTitle.add(player.value!!.pitchStat)
-//
-//        hitStat.value = hitListWithTitle
-//        pitchStat.value = pitchListWithTitle
-//        Log.i("gillian", "hit stat ${hitStat.value!!.size} and ${hitStat.value!![1]}")
-//    }
-
 }

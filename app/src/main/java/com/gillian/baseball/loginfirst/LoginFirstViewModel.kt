@@ -101,6 +101,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         }
     }
 
+    // connect the existing player and new user
     fun signUpUserFromRegister() {
         registerInfo.value = false
         // extract info from existed player
@@ -138,6 +139,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         }
     }
 
+    // this will update the existing player's user id
     fun registerPlayer() {
         player.value?.let {
             viewModelScope.launch {
@@ -210,6 +212,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         }
     }
 
+    // sign up a new user with completely new team and player
     fun signUpUser() {
         if (allInfoFilled()) {
             viewModelScope.launch {
@@ -240,6 +243,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         }
     }
 
+    // create a new team and player into database
     fun initTeamAndPlayer() {
         val numberInt = newPlayerNumber.value!!.toInt()
 

@@ -445,7 +445,7 @@
             android:id="@+id/text_stat_player_ops"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OPS"
+            android:text="@string/box_ops"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/text_stat_player_slg"
@@ -590,7 +590,7 @@
             app:layout_constraintTop_toTopOf="@+id/button_stat_player_leave" />
 
         <TextView
-            android:id="@+id/textView22"
+            android:id="@+id/text_stat_player_id"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.player.id}"
@@ -602,7 +602,7 @@
             app:layout_constraintHorizontal_bias="0.7"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView13"
+            app:layout_constraintTop_toBottomOf="@+id/bar_stat_player"
             tools:text="0kaCKMTWNn7DB0g6YkBr" />
 
         <ImageButton
@@ -616,11 +616,11 @@
             android:onClick="@{()->viewModel.showInfo(true)}"
             android:src="@drawable/ic_help_outline_24"
             android:visibility="@{viewModel.noUserRegistered ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@+id/textView22"
+            app:layout_constraintBottom_toBottomOf="@+id/text_stat_player_id"
             app:layout_constraintEnd_toStartOf="@+id/button_stat_player_share"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView22"
-            app:layout_constraintTop_toTopOf="@id/textView22" />
+            app:layout_constraintStart_toEndOf="@+id/text_stat_player_id"
+            app:layout_constraintTop_toTopOf="@id/text_stat_player_id" />
 
         <ImageButton
             android:id="@+id/button_stat_player_share"
@@ -637,7 +637,7 @@
             app:srcCompat="@drawable/ic_share_24" />
 
         <View
-            android:id="@+id/textView13"
+            android:id="@+id/bar_stat_player"
             android:layout_width="0dp"
             android:layout_height="10dp"
             android:layout_marginStart="@dimen/one_half_margin"

@@ -29,9 +29,7 @@ class LoginFirstFragment : Fragment() {
         binding.viewpagerFirstLogin.adapter = LoginFirstAdapter(childFragmentManager)
         binding.tabsFirstLogin.setupWithViewPager(binding.viewpagerFirstLogin)
 
-
-
-        return  binding.root
+        return binding.root
     }
 
 }

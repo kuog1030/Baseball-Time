@@ -19,12 +19,10 @@ import com.gillian.baseball.login.UserManager
 import com.gillian.baseball.util.Util
 
 
-const val REQUEST_IMAGE_OPEN = 1
-
 class StatPlayerFragment : Fragment() {
 
     private val viewModel by viewModels<StatPlayerViewModel> { getVmFactory() }
-    private lateinit var binding : FragmentStatPlayerBinding
+    private lateinit var binding: FragmentStatPlayerBinding
     private val args: StatPlayerFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -48,18 +46,15 @@ class StatPlayerFragment : Fragment() {
 
         viewModel.player.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (viewModel.isInit) {
-                    binding.hitStat = it.hitStat
-                    binding.pitchStat = it.pitchStat
-                    viewModel.updateMoreHitStat()
-                }
+                binding.hitStat = it.hitStat
+                binding.pitchStat = it.pitchStat
             }
         })
 
         viewModel.navigateToEdit.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 val editPlayerDialog = EditPlayerDialog(it)
-                editPlayerDialog.show(childFragmentManager, "edit")
+                editPlayerDialog.show(childFragmentManager, "")
                 viewModel.onEditNavigated()
             }
         })
@@ -67,7 +62,7 @@ class StatPlayerFragment : Fragment() {
         val fadeInAnim = Util.getAnim(R.anim.fade_in_anim)
 
         viewModel.infoVisibility.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 if (it) {
                     binding.textStatPlayerInfo.startAnimation(fadeInAnim)
                 } else {
@@ -75,13 +70,6 @@ class StatPlayerFragment : Fragment() {
                 }
             }
         })
-        //            android:visibility="@{viewModel.infoVisibility? View.VISIBLE : View.INVISIBLE}"
-
-//        viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
-//            it?.let{
-//                findNavController().navigate(NavigationDirections.navigationToTeam())
-//            }
-//        })
 
         return binding.root
     }

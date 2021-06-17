@@ -100,6 +100,7 @@
     <string name="box_avg">AVG</string>
     <string name="box_obp">OBP</string>
     <string name="box_slg">SLG</string>
+    <string name="box_ops">OPS</string>
 
     <!--    Stat related-->
     <string name="my_performance">我的成績</string>

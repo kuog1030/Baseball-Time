@@ -32,8 +32,6 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     val confirmDelete = MutableLiveData<Boolean>(false)
 
-    var needStatRefresh = false
-
     // only when this player is user itself can wipe player's accumulated data
     val isMe = MutableLiveData<Boolean>(false)
 
@@ -183,7 +181,6 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
             val result = repository.clearMyStat(UserManager.playerId, name.value ?: "")
             _dismissDialog.value = when (result) {
                 is Result.Success -> {
-                    needStatRefresh = true
                     _status.value = LoadStatus.DONE
                     result.data
                 }
