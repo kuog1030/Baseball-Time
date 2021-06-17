@@ -133,7 +133,7 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     }
 
     // create rank list base on team players list
-    fun createRankList(playerList: List<Player>) {
+    private fun createRankList(playerList: List<Player>) {
         rankList.value = playerList.toRankList()
     }
 
