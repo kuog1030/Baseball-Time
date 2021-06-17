@@ -14,24 +14,27 @@ import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 import java.util.*
 
-private val totalOrder = 9
-
 class OrderViewModel(private val repository: BaseballRepository, private val gameCard: GameCard?) : ViewModel() {
+
+    private val totalOrder = 9
 
     val selectedSideRadio = MutableLiveData<Int>()
 
+    val gameTitle = MutableLiveData<String>()
+
+    val awayTeamName = MutableLiveData<String>()
+
     val toggleBroadcast = MutableLiveData<Boolean>(false)
 
-    val gameTitle = MutableLiveData<String>()
-    val awayTeamName = MutableLiveData<String>()
-    val pitcher = MutableLiveData<String>()
-    var startingPitcher : EventPlayer? = null
+    var startingPitcher: EventPlayer? = null
 
+    // line up which is movable
     var lineUp = mutableListOf<EventPlayer>()
-    var pitcherList = mutableListOf<EventPlayer>()
-    lateinit var myBench : MutableList<EventPlayer>
 
-    val awayLineUp = mutableListOf<EventPlayer>()
+    // the pitcher list for choosing starting pitcher
+    var pitcherList = mutableListOf<EventPlayer>()
+
+    lateinit var myBench: MutableList<EventPlayer>
 
     val submitList = MutableLiveData<Boolean>()
 
@@ -42,13 +45,14 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
         }
 
     private val _setUpGame = MutableLiveData<Game>()
+
     val setUpGame: LiveData<Game>
         get() = _setUpGame
 
     private val _navigateToGame = MutableLiveData<MyGame>()
+
     val navigateToGame: LiveData<MyGame>
         get() = _navigateToGame
-
 
     private val _showNewPlayerDialog = MutableLiveData<Boolean>()
 
@@ -71,20 +75,18 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
         getTeamPlayer()
     }
 
-    fun fillInfo() {
-        gameCard?.let{
+    // fill the scheduled game info
+    private fun fillInfo() {
+        gameCard?.let {
             selectedSideRadio.value = if (it.isHome) R.id.radio_order_home else R.id.radio_order_guest
             gameTitle.value = it.title
             awayTeamName.value = if (it.isHome) it.guestName else it.homeName
         }
     }
 
-    fun getTeamPlayer() {
-
+    private fun getTeamPlayer() {
         _status.value = LoadStatus.LOADING
-
         viewModelScope.launch {
-
             val result = repository.getTeamEventPlayer(UserManager.teamId)
             lineUp = when (result) {
                 is Result.Success -> {
@@ -107,7 +109,6 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
             }
             submitList.value = true
         }
-        Log.i("gillian", "pitcher $startingPitcher")
     }
 
     // check if all filled -> set up a game -> (either) create / update game in firebase
@@ -121,23 +122,9 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
         }
     }
 
-    fun setUpAGame() {
-        _errorMessage.value = null
-        val readyToSent = Game(
-                id = gameCard?.id ?: "",
-                title = gameTitle.value!!,
-                date = Calendar.getInstance().timeInMillis,
-                place = gameCard?.place ?: "",
-                recordedTeamId = UserManager.teamId,
-                status = if (toggleBroadcast.value == true) GameStatus.PLAYING.number else GameStatus.PLAYINGPRIVATE.number)
 
-        // TODO() 這樣對手的playerid都會一樣有點危險
-        for (index in 1..minOf(totalOrder, lineUp.size)) {
-            awayLineUp.add(EventPlayer(playerId = "$index", name = "第${index}棒", order = (index*100)))
-            lineUp[index-1].order = index*100
-        }
-
-
+    private fun setUpAGame() {
+        // pitcher could also be in batting line up, thus separate pitcher and the same person in line
         val copyPitcher = EventPlayer(
                 playerId = startingPitcher?.playerId ?: pitcherList[0].playerId,
                 order = 1,
@@ -145,38 +132,57 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
                 number = startingPitcher?.number ?: pitcherList[0].number
         )
 
-
-        val myTeam = GameTeam(
-                name = UserManager.team?.name ?: "",
-                acronym = UserManager.team?.acronym ?: "",
-                image = UserManager.team?.image?:"",
-                teamId = UserManager.teamId,
-                pitcher = copyPitcher,
-                lineUp = lineUp.subList(0, minOf(totalOrder, lineUp.size))
-        )
-
-        // 先發九人以外的那些
+        // players other than starting players
         myBench = lineUp.subList(minOf(totalOrder, lineUp.size), lineUp.size)
+        val myTeam = createMyGameTeam(copyPitcher)
 
+        val awayLineUp = createAwayLineUp()
         val awayTeam = GameTeam(
                 name = awayTeamName.value!!,
                 pitcher = EventPlayer(name = "對方投手", playerId = "10"),
                 lineUp = awayLineUp
         )
 
-        readyToSent.home = if (isHome) myTeam else awayTeam
-        readyToSent.guest = if (isHome) awayTeam else myTeam
+        val readyToSend = Game(
+                id = gameCard?.id ?: "",
+                place = gameCard?.place ?: "",
+                title = gameTitle.value!!,
+                date = Calendar.getInstance().timeInMillis,
+                recordedTeamId = UserManager.teamId,
+                home = if (isHome) myTeam else awayTeam,
+                guest = if (isHome) awayTeam else myTeam,
+                status = if (toggleBroadcast.value == true) GameStatus.PLAYING.number else GameStatus.PLAYINGPRIVATE.number)
 
         if (gameCard == null) {
-            createGameInFirebase(readyToSent)
+            createGameInFirebase(readyToSend)
         } else {
-            updateGameInFirebase(readyToSent)
+            updateGameInFirebase(readyToSend)
         }
     }
 
-    fun createGameInFirebase(readyToSent: Game) {
-        viewModelScope.launch {
+    private fun createAwayLineUp(): MutableList<EventPlayer> {
+        val result = mutableListOf<EventPlayer>()
+        for (index in 1..minOf(totalOrder, lineUp.size)) {
+            result.add(EventPlayer(playerId = "", name = "第${index}棒", order = (index * 100)))
+            lineUp[index - 1].order = index * 100
+        }
+        return result
+    }
 
+    private fun createMyGameTeam(startingPitcher: EventPlayer): GameTeam {
+        return GameTeam(
+                name = UserManager.team?.name ?: "",
+                acronym = UserManager.team?.acronym ?: "",
+                image = UserManager.team?.image ?: "",
+                teamId = UserManager.teamId,
+                pitcher = startingPitcher,
+                lineUp = lineUp.subList(0, minOf(totalOrder, lineUp.size))
+        )
+    }
+
+
+    private fun createGameInFirebase(readyToSent: Game) {
+        viewModelScope.launch {
             val result = repository.createGame(readyToSent)
 
             _setUpGame.value = when (result) {
@@ -200,7 +206,7 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
         }
     }
 
-    fun updateGameInFirebase(readyToSent: Game) {
+    private fun updateGameInFirebase(readyToSent: Game) {
         viewModelScope.launch {
             val result = repository.updateGame(readyToSent)
 
@@ -225,17 +231,6 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
         }
     }
 
-
-    fun selectPitcher(position: Int) {
-        startingPitcher = pitcherList[position]
-        startingPitcher?.order = 1
-    }
-
-
-    fun showNewPlayerDialog() {
-        _showNewPlayerDialog.value = true
-    }
-
     fun navigateToGame(game: Game) {
         if (_status.value == LoadStatus.DONE) {
             _setUpGame.value = null
@@ -245,6 +240,16 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
 
     fun onGameNavigated() {
         _navigateToGame.value = null
+    }
+
+    // for pitcher spinner selection
+    fun selectPitcher(position: Int) {
+        startingPitcher = pitcherList[position]
+        startingPitcher?.order = 1
+    }
+
+    fun showNewPlayerDialog() {
+        _showNewPlayerDialog.value = true
     }
 
     fun onNewPlayerDialogShowed() {

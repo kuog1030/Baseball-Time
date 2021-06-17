@@ -19,9 +19,10 @@ class PitcherSpinnerAdapter(context: Context, playerList: List<EventPlayer>) : A
     }
 
 
-    private fun initView(position: Int, convertView: View?, parent: ViewGroup) : View {
+    private fun initView(position: Int, convertView: View?, parent: ViewGroup): View {
 
-        val binding = convertView?.tag as? ItemOrderPitcherBinding ?: ItemOrderPitcherBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = convertView?.tag as? ItemOrderPitcherBinding
+                ?: ItemOrderPitcherBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         binding.player = getItem(position)
 
         return binding.root

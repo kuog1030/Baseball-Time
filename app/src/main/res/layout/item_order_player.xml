@@ -5,12 +5,10 @@
 
     <data>
         <import type="android.view.View" />
+        <import type="android.text.TextUtils"/>
         <variable
             name="order"
             type="String" />
-        <variable
-            name="isChecked"
-            type="Boolean" />
         <variable
             name="player"
             type="com.gillian.baseball.data.EventPlayer" />
@@ -32,7 +30,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="246" />
+            tools:text="32" />
 
         <TextView
             style="@style/PlayerName"
@@ -56,7 +54,7 @@
             android:textSize="15sp"
             android:textStyle="bold"
             android:gravity="center"
-            android:visibility="@{isChecked ? View.VISIBLE : View.GONE}"
+            android:visibility="@{TextUtils.isEmpty(order) ? View.GONE : View.VISIBLE}"
             app:layout_constraintBottom_toBottomOf="@+id/text_player_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_player_name"

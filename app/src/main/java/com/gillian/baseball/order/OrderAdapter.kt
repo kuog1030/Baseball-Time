@@ -11,10 +11,9 @@ import com.gillian.baseball.databinding.ItemOrderPlayerBinding
 class OrderAdapter : ListAdapter<EventPlayer, OrderAdapter.ViewHolder>(DiffCallback) {
 
     class ViewHolder(private var binding: ItemOrderPlayerBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(player: EventPlayer, isChecked: Boolean, position: Int) {
+        fun bind(player: EventPlayer, position: Int) {
             binding.player = player
-            binding.isChecked = isChecked
-            binding.order = if (isChecked) (position+1).toString() else ""
+            binding.order = if (position < 9) (position + 1).toString() else ""
             binding.executePendingBindings()
         }
     }
@@ -26,7 +25,7 @@ class OrderAdapter : ListAdapter<EventPlayer, OrderAdapter.ViewHolder>(DiffCallb
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val player = getItem(position)
-        holder.bind(player, (position < 9), position)
+        holder.bind(player, position)
     }
 
     companion object DiffCallback : DiffUtil.ItemCallback<EventPlayer>() {
@@ -34,9 +33,8 @@ class OrderAdapter : ListAdapter<EventPlayer, OrderAdapter.ViewHolder>(DiffCallb
             return oldItem === newItem
         }
 
-        // TODO() 這個判斷要改掉
         override fun areContentsTheSame(oldItem: EventPlayer, newItem: EventPlayer): Boolean {
-            return oldItem.number == newItem.number
+            return oldItem == newItem
         }
 
     }
