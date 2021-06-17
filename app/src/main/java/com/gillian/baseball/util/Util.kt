@@ -6,11 +6,11 @@ import com.gillian.baseball.BaseballApplication
 
 object Util {
 
-    fun getString(resourceId: Int) : String{
+    fun getString(resourceId: Int): String {
         return BaseballApplication.instance.getString(resourceId)
     }
 
-    fun getAnim(resourceId: Int) : Animation {
+    fun getAnim(resourceId: Int): Animation {
         return AnimationUtils.loadAnimation(BaseballApplication.instance, resourceId)
     }
 }

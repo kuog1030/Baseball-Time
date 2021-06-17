@@ -90,7 +90,7 @@
 
             <Button
                 android:id="@+id/button_pinch_save"
-                style="@style/ButtonRadiusFilled"
+                style="@style/ButtonFilled"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one_half_margin"
@@ -103,7 +103,7 @@
 
             <Button
                 android:id="@+id/button_pinch_final"
-                style="@style/ButtonRadiusFilled"
+                style="@style/ButtonFilled"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one_half_margin"

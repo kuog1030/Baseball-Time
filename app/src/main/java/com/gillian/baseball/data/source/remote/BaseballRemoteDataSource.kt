@@ -111,7 +111,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
                             continuation.resume(Result.Error(it))
                             return@addOnCompleteListener
                         }
-                        Log.i("gillian", "create user")
                         continuation.resume(Result.Fail("sign up fail"))
                     }
                 }

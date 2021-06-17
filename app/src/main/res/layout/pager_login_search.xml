@@ -23,7 +23,7 @@
             android:layout_marginStart="40dp"
             android:layout_marginEnd="40dp"
             android:ems="10"
-            android:hint="搜尋球員代號"
+            android:hint="@string/search_player"
             android:inputType="textPersonName"
             app:layout_constraintVertical_bias=".1"
             android:text="@={viewModel.searchPlayerId}"
@@ -68,6 +68,7 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/edit_search_team_title"
             app:layout_constraintVertical_chainStyle="packed"
+            app:layout_constraintVertical_bias=".6"
             app:photoUrl="@{viewModel.player.image}" />
 
         <TextView
@@ -139,6 +140,24 @@
             app:layout_constraintStart_toStartOf="@+id/edit_search_team_title"
             app:layout_constraintTop_toBottomOf="@+id/button_search_info"
             tools:visibility="gone" />
+
+        <ProgressBar
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:background="?attr/colorPrimary"
+            android:indeterminateTint="@color/white"
+            android:padding="10dp"
+            android:layout_marginStart="@dimen/one_half_margin"
+            android:layout_marginEnd="@dimen/one_half_margin"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:elevation="2dp"
+            app:layout_constraintBottom_toBottomOf="@id/button_search_register"
+            app:layout_constraintEnd_toEndOf="@id/button_search_register"
+            app:layout_constraintStart_toStartOf="@id/button_search_register"
+            app:layout_constraintTop_toTopOf="@id/button_search_register"
+            app:loadingStatus="@{viewModel.status}"
+            tools:visibility="visible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

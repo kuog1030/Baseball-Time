@@ -15,6 +15,9 @@
     <string name="empty_player_list">目前還沒有隊友喔，右上角新增隊員</string>
 
     <!--    first login-->
+    <string name="login_pager_create">創建隊伍</string>
+    <string name="login_pager_search">認領球員資料</string>
+    <string name="search_player">搜尋球員代號</string>
     <string name="sign_in_with_google">Sign In With Google</string>
     <string name="team_code">代號</string>
     <string name="straight_to_broadcast">收看文字轉播</string>

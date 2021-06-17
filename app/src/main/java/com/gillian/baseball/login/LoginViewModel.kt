@@ -70,7 +70,7 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
     // UserManager user Id, player Id, team Id will be set if find user return true
-    fun searchIfUserExist(uid: String) {
+    private fun searchIfUserExist(uid: String) {
             viewModelScope.launch {
                 val result = repository.findUser(uid)
                 _userExist.value = when (result) {
