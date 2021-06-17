@@ -33,8 +33,8 @@
 
         <ImageButton
             android:id="@+id/button_game_stat_leave"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="@dimen/button_leave"
+            android:layout_height="@dimen/button_leave"
             android:layout_marginStart="@dimen/margin"
             android:background="@color/transparent"
             android:tint="@color/color_primary"
@@ -44,7 +44,6 @@
             app:srcCompat="@drawable/ic_baseline_arrow_backward_24" />
 
         <androidx.core.widget.NestedScrollView
-            android:id="@+id/nestedScrollView2"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -149,13 +148,11 @@
 
                 <TextView
                     android:id="@+id/text_game_stat_my"
+                    style="@style/StatGameTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/my_performance"
-                    android:textColor="@color/color_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/text_game_stat_bat"
                     app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_box" />
 
@@ -191,13 +188,11 @@
 
                 <TextView
                     android:id="@+id/text_game_stat_bat"
+                    style="@style/StatGameTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/batters_perfomance"
-                    android:textColor="@color/color_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_hitter"
                     app:layout_constraintTop_toBottomOf="@+id/text_game_stat_my" />
 
@@ -237,13 +232,11 @@
 
                 <TextView
                     android:id="@+id/text_game_stat_pitch"
+                    style="@style/StatGameTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/pitchers_perfomance"
-                    android:textColor="@color/color_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/recycler_game_stat_pitcher"
                     app:layout_constraintTop_toBottomOf="@+id/recycler_game_stat_hitter" />
 
