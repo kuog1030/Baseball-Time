@@ -238,5 +238,29 @@
     <string name="R">R</string>
     <string name="E">E</string>
 
-
+    <!--   Event Type -->
+    <string name="event_single">擊出一壘安打。</string>
+    <string name="event_double">擊出二壘安打。</string>
+    <string name="event_triple">擊出三壘安打。</string>
+    <string name="event_homerun">擊出全壘打！</string>
+    <string name="event_hbp">觸身球保送。</string>
+    <string name="event_error_on_base">因對手失誤上壘。</string>
+    <string name="event_dropped_third">不死三振。</string>
+    <string name="event_walk">四壞球保送。</string>
+    <string name="event_strike_out">三振出局。</string>
+    <string name="event_fielder_choice">野手選擇上壘。</string>
+    <string name="event_run">回壘得分。</string>
+    <string name="event_error">失誤。</string>
+    <string name="event_GO">滾地球出局。</string>
+    <string name="event_AO">高飛球出局。</string>
+    <string name="event_SF">高飛犧牲打。</string>
+    <string name="event_SH">犧牲推進。</string>
+    <string name="event_steal_base">盜壘成功！</string>
+    <string name="event_pick_off">牽制出局。</string>
+    <string name="event_steal_base_fail">盜壘失敗。</string>
+    <string name="event_on_base_out">出局。</string>
+    <string name="event_ip">投球局數</string>
+    <string name="event_change">換局</string>
+    <string name="event_ip_end">投球局數</string>
+    <string name="event_ip_update">更新自責分</string>
 </resources>

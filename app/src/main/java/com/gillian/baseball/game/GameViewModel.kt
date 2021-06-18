@@ -123,9 +123,6 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
         get() = _navigateToPinch
 
 
-    /* ------------------------------------------------------------------------
-                                    init done
-    --------------------------------------------------------------------------- */
 
     fun scored(score: Int) {
         if (isTop) {

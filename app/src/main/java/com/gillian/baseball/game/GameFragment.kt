@@ -42,7 +42,7 @@ class GameFragment : Fragment() {
         viewModel.navigateToEvent.observe(viewLifecycleOwner, Observer {
             it?.let{
                 val eventDialog = EventDialog(it)
-                eventDialog.show(childFragmentManager, "Success")
+                eventDialog.show(childFragmentManager, "Event")
                 viewModel.onEventNavigated()
             }
         })
@@ -73,7 +73,7 @@ class GameFragment : Fragment() {
         viewModel.navigateToPinch.observe(viewLifecycleOwner, Observer {
             it?.let{
                 val pinchDialog = PinchDialog(viewModel.isTop == viewModel.isHome)
-                pinchDialog.show(childFragmentManager, "pinch")
+                pinchDialog.show(childFragmentManager, "Pinch")
                 viewModel.onPinchNavigated()
             }
         })
