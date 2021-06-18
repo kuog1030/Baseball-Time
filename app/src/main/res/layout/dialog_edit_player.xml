@@ -14,7 +14,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_bottom_card">
+        android:background="@drawable/bg_dialog_bottom">
 
         <TextView
             android:id="@+id/text_edit_player_name"
@@ -103,7 +103,7 @@
             android:layout_height="@dimen/close_size"
             android:layout_marginTop="@dimen/margin"
             android:layout_marginEnd="@dimen/margin"
-            android:background="@drawable/ic_baseline_clear_24"
+            android:background="@drawable/ic_clear_24"
             android:onClick="@{()->viewModel.dismissAndDontSave()}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent" />

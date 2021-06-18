@@ -3,12 +3,12 @@
 
     <item
         android:id="@+id/teamFragment"
-        android:icon="@drawable/ic_baseline_people_24"
+        android:icon="@drawable/ic_people_24"
         android:title=""/>
 
     <item
         android:id="@+id/allGamesFragment"
-        android:icon="@drawable/ic_baseline_sports_baseball_24"
+        android:icon="@drawable/ic_baseball_24"
         android:title=""/>
 
     <item

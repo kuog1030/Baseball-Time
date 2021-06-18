@@ -171,7 +171,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/quarter_margin"
                 android:background="@color/transparent"
-                android:drawableTop="@drawable/ic_baseline_person_add_alt_24"
+                android:drawableTop="@drawable/ic_person_add_alt_24"
                 android:onClick="@{()->viewModel.showNewPlayerDialog()}"
                 android:paddingTop="7dp"
                 android:text="@string/add_new_player"

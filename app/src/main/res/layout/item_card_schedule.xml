@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="game"
             type="com.gillian.baseball.data.GameCard" />
@@ -51,10 +52,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/margin"
-            android:text='@{game.title + "　" + game.dateStringDate}'
-            android:textStyle="bold"
-            android:textColor="@color/color_primary"
             android:letterSpacing=".1"
+            android:text='@{game.title + "　" + game.dateStringDate}'
+            android:textColor="@color/color_primary"
+            android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -132,7 +133,7 @@
             android:layout_marginTop="6dp"
             android:layout_marginEnd="@dimen/margin"
             android:background="@color/transparent"
-            android:drawableEnd="@drawable/ic_arrow_forward_20"
+            android:drawableEnd="@drawable/ic_arrow_forward_18"
             android:gravity="center_vertical"
             android:paddingBottom="@dimen/quarter_margin"
             android:text="@string/start_game"
@@ -244,8 +245,8 @@
                 app:layout_constraintTop_toBottomOf="@+id/text_card_detail_time" />
 
             <Button
-                style="@style/Widget.AppCompat.Button.Borderless"
                 android:id="@+id/button_schedule_delete"
+                style="@style/Widget.AppCompat.Button.Borderless"
                 android:layout_width="0dp"
                 android:layout_height="30dp"
                 android:layout_marginTop="@dimen/half_margin"
@@ -262,17 +263,17 @@
                 android:id="@+id/progress_schedule_delete"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:background="#FFFFFF"
-                android:layout_marginTop="3dp"
-                android:layout_marginBottom="3dp"
                 android:layout_marginStart="@dimen/margin"
+                android:layout_marginTop="3dp"
                 android:layout_marginEnd="@dimen/margin"
+                android:layout_marginBottom="3dp"
+                android:background="#FFFFFF"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/button_schedule_delete"
                 app:layout_constraintEnd_toEndOf="@+id/button_schedule_delete"
                 app:layout_constraintStart_toStartOf="@+id/button_schedule_delete"
                 app:layout_constraintTop_toTopOf="@+id/button_schedule_delete"
-                tools:visibility="visible"/>
+                tools:visibility="visible" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

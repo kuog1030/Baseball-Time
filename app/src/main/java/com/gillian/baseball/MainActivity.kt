@@ -36,7 +36,6 @@ class MainActivity : AppCompatActivity() {
                 else -> setBottomNavigation(false)
             }
         }
-
     }
 
     private fun setBottomNavigation(visible: Boolean) {

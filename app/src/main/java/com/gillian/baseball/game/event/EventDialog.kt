@@ -1,7 +1,6 @@
 package com.gillian.baseball.game.event
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -50,7 +49,7 @@ class EventDialog(private val eventInfo: EventInfo) : AppCompatDialogFragment() 
 
         binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager, isSafe, atBaseList)
         binding.tabsEvent.setupWithViewPager(binding.viewpagerEvent)
-        binding.viewpagerEventArrow.setArrowIndicatorRes(R.drawable.ic_baseline_arrow_backward_24, R.drawable.ic_baseline_arrow_forward_24)
+        binding.viewpagerEventArrow.setArrowIndicatorRes(R.drawable.ic_arrow_backward_24, R.drawable.ic_arrow_forward_24)
         binding.viewpagerEventArrow.bind(binding.viewpagerEvent)
 
         // change page after button clicked

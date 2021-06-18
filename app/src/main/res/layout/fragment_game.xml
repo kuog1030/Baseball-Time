@@ -385,7 +385,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/card_title"
             app:layout_constraintEnd_toEndOf="@id/card_title"
             app:layout_constraintTop_toTopOf="@+id/card_title"
-            app:srcCompat="@drawable/ic_baseline_more_24" />
+            app:srcCompat="@drawable/ic_more_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="player"
             type="com.gillian.baseball.data.EventPlayer" />
@@ -17,7 +19,7 @@
         android:paddingBottom="@dimen/half_margin">
 
         <TextView
-            android:id="@+id/text_order_number"
+            android:id="@+id/text_pitcher_order_number"
             style="@style/PlayerNumber"
             android:layout_width="30dp"
             android:layout_height="wrap_content"
@@ -29,15 +31,15 @@
             tools:text="24" />
 
         <TextView
+            android:id="@+id/text_pitcher_player_name"
             style="@style/PlayerName"
-            android:id="@+id/text_player_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_margin"
             android:text="@{player.name}"
-            app:layout_constraintTop_toTopOf="@id/text_order_number"
-            app:layout_constraintBottom_toBottomOf="@id/text_order_number"
-            app:layout_constraintStart_toEndOf="@id/text_order_number"
-            tools:text="蘇智傑"/>
+            app:layout_constraintBottom_toBottomOf="@id/text_pitcher_order_number"
+            app:layout_constraintStart_toEndOf="@id/text_pitcher_order_number"
+            app:layout_constraintTop_toTopOf="@id/text_pitcher_order_number"
+            tools:text="蘇智傑" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

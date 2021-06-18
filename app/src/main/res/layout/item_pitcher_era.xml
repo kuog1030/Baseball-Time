@@ -4,10 +4,13 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
         <variable
             name="pitcher"
             type="com.gillian.baseball.data.PitcherBox" />
+
         <variable
             name="viewModel"
             type="com.gillian.baseball.finalgame.FinalViewModel" />
@@ -36,7 +39,7 @@
             android:text="@{pitcher.name}"
             app:layout_constraintStart_toEndOf="@+id/text_era_order"
             app:layout_constraintTop_toTopOf="@+id/text_era_order"
-            tools:text="林安可"/>
+            tools:text="林安可" />
 
 
         <TextView
@@ -47,19 +50,19 @@
             android:text='@{pitcher.inningsFormat + "局"}'
             app:layout_constraintStart_toEndOf="@+id/text_era_name"
             app:layout_constraintTop_toTopOf="@+id/text_era_name"
-            tools:text="3.2局"/>
+            tools:text="3.2局" />
 
         <TextView
-            android:id="@+id/textView26"
+            android:id="@+id/text_era_original"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
+            android:layout_marginEnd="@dimen/half_margin"
+            android:text='@{"原本是 " + String.valueOf(pitcher.run)}'
             android:textSize="12sp"
             app:layout_constraintBaseline_toBaselineOf="@id/text_era_ip"
-            android:text='@{"原本是 " + String.valueOf(pitcher.run)}'
             app:layout_constraintStart_toEndOf="@id/text_era_ip"
-            android:layout_marginEnd="@dimen/half_margin"
-            tools:text="總失分 4"/>
+            tools:text="總失分 4" />
 
         <ImageButton
             android:id="@+id/button_era_minus"
@@ -94,10 +97,10 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_era_era"
-            app:srcCompat="@drawable/ic_baseline_add_24" />
+            app:srcCompat="@drawable/ic_add_24" />
 
         <TextView
-            android:id="@+id/textView31"
+            android:id="@+id/text_era_title"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:background="@color/color_background"

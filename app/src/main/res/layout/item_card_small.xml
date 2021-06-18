@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="game"
             type="com.gillian.baseball.data.GameCard" />
@@ -14,10 +16,10 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="90dp"
-        android:background="@drawable/bg_card"
-        android:layout_marginBottom="@dimen/margin"
         android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin">
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:background="@drawable/bg_card">
 
         <TextView
             android:id="@+id/text_card_small_title"
@@ -46,8 +48,8 @@
             android:id="@+id/bar_card_small"
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:background="@color/grey_888"
             android:layout_marginTop="@dimen/quarter_margin"
+            android:background="@color/grey_888"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/text_card_small_title" />
@@ -99,7 +101,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bar_card_small"
-            app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+            app:srcCompat="@drawable/ic_arrow_forward_24" />
 
         <TextView
             android:id="@+id/text_card_small_result"
@@ -107,27 +109,27 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin"
             android:textSize="18sp"
-            app:gameResult="@{game.gameResult}"
             android:visibility="@{game.status == 1 ? View.GONE : View.VISIBLE}"
+            app:gameResult="@{game.gameResult}"
             app:layout_constraintBottom_toBottomOf="@+id/image_card_small_arrow"
             app:layout_constraintEnd_toStartOf="@+id/image_card_small_arrow"
             app:layout_constraintTop_toTopOf="@+id/image_card_small_arrow"
             tools:text="L" />
 
         <TextView
-            style="@style/GameTag"
             android:id="@+id/text_card_small_status"
+            style="@style/GameTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/game_playing"
             android:layout_marginEnd="@dimen/quarter_margin"
             android:background="@color/red_out"
-            android:textStyle="bold"
+            android:text="@string/game_playing"
             android:textColor="@color/white"
+            android:textStyle="bold"
             android:visibility="@{game.status == 1 ? View.VISIBLE : View.GONE}"
             app:layout_constraintBottom_toBottomOf="@+id/image_card_small_arrow"
             app:layout_constraintEnd_toEndOf="@+id/image_card_small_arrow"
-            app:layout_constraintTop_toTopOf="@+id/image_card_small_arrow"/>
+            app:layout_constraintTop_toTopOf="@+id/image_card_small_arrow" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

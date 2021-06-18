@@ -1,6 +1,5 @@
 package com.gillian.baseball
 
-import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,7 +10,6 @@ import com.bumptech.glide.request.RequestOptions
 import com.gillian.baseball.allgames.CardScoreAdapter
 import com.gillian.baseball.broadcast.BroadcastAdapter
 import com.gillian.baseball.data.*
-import com.gillian.baseball.finalgame.EraAdapter
 import com.gillian.baseball.team.pager.RankAdapter
 import com.gillian.baseball.team.pager.TeammateAdapter
 import com.gillian.baseball.views.BoxAdapter
@@ -187,14 +185,14 @@ fun bindGameResultToText(textView: TextView, result: GameResult?) {
     result?.let {
         when (result) {
             GameResult.WIN -> {
-                textView.text = "勝"
+                textView.text = BaseballApplication.instance.getString(R.string.win)
                 textView.setTextColor(BaseballApplication.instance.getColor(R.color.hit_block))
             }
             GameResult.LOSE -> {
-                textView.text = "敗"
+                textView.text = BaseballApplication.instance.getString(R.string.lose)
             }
             else -> {
-                textView.text = "和"
+                textView.text = BaseballApplication.instance.getString(R.string.tie)
             }
         }
     }
@@ -278,8 +276,8 @@ fun bindProfileImage(imageView: ImageView, url: String?) {
             .load(url)
             .circleCrop()
             .apply(RequestOptions()
-                    .placeholder(R.drawable.ic_baseline_sports_baseball_24)
-                    .error(R.drawable.ic_baseline_sports_baseball_24))
+                    .placeholder(R.drawable.ic_baseball_24)
+                    .error(R.drawable.ic_baseball_24))
             .into(imageView)
 }
 
@@ -305,17 +303,6 @@ fun bindPhotoBorder(imageView: de.hdodenhof.circleimageview.CircleImageView, edi
     editable?.let {
         imageView.borderWidth = if (editable) 15 else 0
     }
-}
-
-@BindingAdapter("imageSquareUrl")
-fun bindProfileImageSquare(imageView: ImageView, url: String?) {
-    Glide.with(imageView.context)
-            .load(url)
-            .centerCrop()
-            .apply(RequestOptions()
-                    .placeholder(R.drawable.ic_baseline_sports_baseball_24)
-                    .error(R.drawable.ic_baseline_sports_baseball_24))
-            .into(imageView)
 }
 
 @BindingAdapter("defaultName")

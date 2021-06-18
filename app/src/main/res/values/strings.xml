@@ -130,6 +130,9 @@
     <string name="no_schedule_hint">還沒有安排好的比賽喔</string>
     <string name="no_game_hint">還沒有球賽紀錄喔</string>
     <string name="score_win">累積勝場</string>
+    <string name="win">勝</string>
+    <string name="lose">敗</string>
+    <string name="tie">和</string>
     <string name="score_rate">累積敗場</string>
     <string name="game_playing">LIVE</string>
     <string name="game_start_time">開賽時間</string>

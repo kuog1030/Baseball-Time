@@ -11,7 +11,7 @@
     </style>
 
     <style name="BottomSheet" parent="Widget.Design.BottomSheet.Modal">
-        <item name="android:background">@drawable/bg_bottom_card</item>
+        <item name="android:background">@drawable/bg_dialog_bottom</item>
 <!--        <item name="android:background">@color/transparent</item>-->
     </style>
 

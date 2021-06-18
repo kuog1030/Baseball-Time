@@ -41,7 +41,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_game_stat_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_game_stat_title"
-            app:srcCompat="@drawable/ic_baseline_arrow_backward_24" />
+            app:srcCompat="@drawable/ic_arrow_backward_24" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"

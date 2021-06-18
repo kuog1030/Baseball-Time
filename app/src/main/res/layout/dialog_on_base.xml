@@ -189,7 +189,7 @@
                     android:layout_height="match_parent"
                     android:background="@color/transparent"
                     android:onClick="@{()->viewModel.closeErrorList()}"
-                    app:srcCompat="@drawable/ic_baseline_arrow_backward_24" />
+                    app:srcCompat="@drawable/ic_arrow_backward_24" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_on_base_error"
