@@ -29,10 +29,11 @@ class PinchDialog(private val isDefense: Boolean) : AppCompatDialogFragment() {
     private val viewModel by viewModels<PinchViewModel> { getVmFactory() }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-
         val binding = DialogPinchBinding.inflate(inflater, container, false)
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
+
         viewModel.setToggleText(isDefense)
 
         val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
@@ -54,7 +55,6 @@ class PinchDialog(private val isDefense: Boolean) : AppCompatDialogFragment() {
                 viewModel.onDialogDismiss()
             }
         })
-
 
         binding.recyclerPinchPlayer.adapter = benchAdapter
         benchAdapter.submitList(gameViewModel.myBench)

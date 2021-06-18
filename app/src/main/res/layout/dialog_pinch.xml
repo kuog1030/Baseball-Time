@@ -64,7 +64,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/button_radius_filled"
-                    android:checked="@{viewModel.expandBlock == 1}"
+                    android:checked="@{viewModel.expandBlock}"
                     android:drawableEnd="@drawable/toggle_arrow"
                     android:drawableTint="@color/color_on_primary"
                     android:onClick="@{()->viewModel.expandPlayer()}"
@@ -81,7 +81,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/one_half_margin"
-                    android:visibility="@{viewModel.expandBlock == 1? View.VISIBLE : View.GONE}"
+                    android:visibility="@{viewModel.expandBlock? View.VISIBLE : View.GONE}"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:visibility="gone">
 
@@ -89,12 +89,12 @@
             </LinearLayout>
 
             <Button
-                android:id="@+id/button_pinch_save"
+                android:id="@+id/button_pinch_broadcast"
                 style="@style/ButtonFilled"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one_half_margin"
-                android:text="開啟轉播"
+                android:text="@string/start_broadcasting"
                 android:textSize="17sp"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/layout_pinch_player"
@@ -107,12 +107,12 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/one_half_margin"
-                android:text="比賽結束"
+                android:text="@string/game_final"
                 android:textSize="17sp"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="@id/layout_pinch_player"
                 app:layout_constraintStart_toStartOf="@id/layout_pinch_player"
-                app:layout_constraintTop_toBottomOf="@id/button_pinch_save" />
+                app:layout_constraintTop_toBottomOf="@id/layout_pinch_player" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.constraintlayout.widget.ConstraintLayout>

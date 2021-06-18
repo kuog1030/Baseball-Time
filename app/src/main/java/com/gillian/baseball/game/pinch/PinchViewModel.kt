@@ -4,38 +4,56 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.gillian.baseball.R
+import com.gillian.baseball.data.GameStatus
+import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.util.Util.getString
+import kotlinx.coroutines.launch
 
 
 class PinchViewModel(private val repository: BaseballRepository) : ViewModel() {
 
-    val expandBlock = MutableLiveData<Int>(0)
+    val expandBlock = MutableLiveData<Boolean>(false)
 
     val playerToggleText = MutableLiveData<String>("")
 
+    private val _errorMessage = MutableLiveData<String>()
+
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
     private val _dismissDialog = MutableLiveData<Boolean>()
 
-    val dismissDialog : LiveData<Boolean>
+    val dismissDialog: LiveData<Boolean>
         get() = _dismissDialog
 
     fun expandPlayer() {
-        expandBlock.value = when (expandBlock.value) {
-            1 -> 0
-            else -> 1
-        }
+        expandBlock.value = !(expandBlock.value!!)
     }
 
-    fun expandError() {
-        expandBlock.value = when (expandBlock.value) {
-            2 -> 0
-            else -> 2
-        }
+    fun setToggleText(isDefence: Boolean) {
+        playerToggleText.value = if (isDefence) getString(R.string.pinch_pitcher) else getString(R.string.pinch_hitter)
     }
 
-    fun setToggleText(isDefence : Boolean) {
-        playerToggleText.value = if(isDefence) getString(R.string.pinch_pitcher) else getString(R.string.pinch_hitter)
+    fun startBroadcast(gameId: String) {
+        viewModelScope.launch {
+            when (repository.updateGameStatus(gameId, GameStatus.PLAYING)) {
+                is Result.Success -> {
+                    _errorMessage.value = null
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = result.error
+                }
+                is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
+                }
+                else -> {
+                    _errorMessage.value = getString(R.string.return_nothing)
+                }
+            }
+        }
     }
 
     fun dismiss() {
