@@ -6,13 +6,14 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import com.gillian.baseball.data.AtBase
 
 class EventDialogAdapter(
-    fragmentManager: FragmentManager,
-    val isSafe: Boolean,
-    val atBaseList: List<AtBase>
+        fragmentManager: FragmentManager,
+        private val isSafe: Boolean,
+        private val atBaseList: List<AtBase>
 ) : FragmentStatePagerAdapter(fragmentManager, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {
-
+        // the order will be hitter -> last runner -...-> first runner -> end page
+        // which means the runner pager goes backward ( third base show before second base)
         return when (position) {
             0 -> {
                 if (isSafe) {

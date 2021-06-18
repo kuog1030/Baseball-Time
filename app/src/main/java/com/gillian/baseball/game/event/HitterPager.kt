@@ -11,19 +11,18 @@ import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.databinding.PagerHitterBinding
 import com.gillian.baseball.game.order.PinchAdapter
 
-class HitterPager(val page : String, val atBase: AtBase) : Fragment() {
-
-    //val viewModel by viewModels<HitterViewModel> { getVmFactory() }
+class HitterPager(val page: String, val atBase: AtBase) : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         val binding = PagerHitterBinding.inflate(inflater, container, false)
         val viewModel = ViewModelProvider(requireParentFragment()).get(EventViewModel::class.java)
+
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         binding.page = page
 
-        val fieldAdapter = PinchAdapter(PinchAdapter.OnClickListener{ player, position ->
+        val fieldAdapter = PinchAdapter(PinchAdapter.OnClickListener { player, _ ->
             viewModel.recordError(player)
         })
 

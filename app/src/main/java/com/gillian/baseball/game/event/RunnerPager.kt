@@ -9,7 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.AtBase
 import com.gillian.baseball.databinding.PagerRunnerBinding
 
-class RunnerPager(val page : String, val atBase: AtBase) : Fragment() {
+class RunnerPager(val page: String, val atBase: AtBase) : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
