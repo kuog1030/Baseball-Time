@@ -39,7 +39,8 @@ class PinchViewModel(private val repository: BaseballRepository) : ViewModel() {
 
     fun startBroadcast(gameId: String) {
         viewModelScope.launch {
-            when (repository.updateGameStatus(gameId, GameStatus.PLAYING)) {
+            val result = repository.updateGameStatus(gameId, GameStatus.PLAYING)
+            when (result) {
                 is Result.Success -> {
                     _errorMessage.value = null
                 }
