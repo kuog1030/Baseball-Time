@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
-            android:text="球隊名稱"
+            android:text="@string/team_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_rank_team" />
 
@@ -71,7 +71,7 @@
             android:id="@+id/text_rank_acronym"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="球隊簡稱"
+            android:text="@string/team_acronym"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".4"
             app:layout_constraintStart_toStartOf="@+id/image_rank_team"
@@ -174,17 +174,6 @@
             app:layout_constraintStart_toStartOf="@id/button_edit_save"
             app:layout_constraintTop_toTopOf="@id/button_edit_save"
             app:loadingStatus="@{viewModel.editStatus}" />
-
-
-        <!--        <com.airbnb.lottie.LottieAnimationView-->
-        <!--            android:id="@+id/animationViewTest"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:lottie_autoPlay="true"-->
-        <!--            app:lottie_loop="true"-->
-        <!--            app:lottie_rawRes="@raw/uploading" />-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

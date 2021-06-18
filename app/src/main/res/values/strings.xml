@@ -39,6 +39,7 @@
     <string name="team_pager_team">球隊頁</string>
     <string name="create_a_team">新增一支你的球隊吧</string>
     <string name="team_name">球隊名稱</string>
+    <string name="team_acronym">球隊簡稱</string>
     <string name="create_a_player">新增你自己吧</string>
     <string name="create_a_player_button">新增球員</string>
     <string name="edit_player_save">儲存球員資料</string>

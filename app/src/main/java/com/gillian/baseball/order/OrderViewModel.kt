@@ -59,6 +59,12 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
     val showNewPlayerDialog: LiveData<Boolean>
         get() = _showNewPlayerDialog
 
+    // error handle for blank input
+    private val _emptyInfo = MutableLiveData<String>()
+
+    val emptyInfo: LiveData<String>
+        get() = _emptyInfo
+
     private val _errorMessage = MutableLiveData<String>()
 
     val errorMessage: LiveData<String>
@@ -114,10 +120,10 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
     // check if all filled -> set up a game -> (either) create / update game in firebase
     //   -> set up game -> navigate to game
     fun checkIfAllFilled() {
-        if (selectedSideRadio.value == null || gameTitle.value == null || awayTeamName.value == null || startingPitcher == null) {
-            _errorMessage.value = getString(R.string.error_order)
+        if (selectedSideRadio.value == null || gameTitle.value.isNullOrEmpty() || awayTeamName.value.isNullOrEmpty() || startingPitcher == null) {
+            _emptyInfo.value = getString(R.string.error_order)
         } else {
-            _errorMessage.value = null
+            _emptyInfo.value = null
             setUpAGame()
         }
     }
@@ -126,8 +132,8 @@ class OrderViewModel(private val repository: BaseballRepository, private val gam
     private fun setUpAGame() {
         // pitcher could also be in batting line up, thus separate pitcher and the same person in line
         val copyPitcher = EventPlayer(
-                playerId = startingPitcher?.playerId ?: pitcherList[0].playerId,
                 order = 1,
+                playerId = startingPitcher?.playerId ?: pitcherList[0].playerId,
                 name = startingPitcher?.name ?: pitcherList[0].name,
                 number = startingPitcher?.number ?: pitcherList[0].number
         )

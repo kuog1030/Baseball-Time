@@ -35,11 +35,10 @@ class OrderFragment : Fragment() {
         val adapter = OrderAdapter()
         binding.recyclerOrderPlayers.adapter = adapter
 
-
         val itemTouchHelper = ItemTouchHelper(simpleCallback)
         itemTouchHelper.attachToRecyclerView(binding.recyclerOrderPlayers)
 
-
+        // submit list after fetching team players
         viewModel.submitList.observe(viewLifecycleOwner, Observer {
             it?.let{
                 adapter.submitList(viewModel.lineUp)
@@ -59,7 +58,6 @@ class OrderFragment : Fragment() {
         viewModel.navigateToGame.observe(viewLifecycleOwner, Observer {
             it?.let{
                 findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToGameFragment(it))
-                Log.i("gillian", "refactor game $it")
                 viewModel.onGameNavigated()
             }
         })
