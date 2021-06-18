@@ -573,7 +573,7 @@
             app:layout_constraintHorizontal_bias=".5"
             app:layout_constraintStart_toEndOf="@id/text_stat_whip_number"
             app:layout_constraintTop_toTopOf="@id/text_stat_era_number"
-            app:pitchPercentage="@{pitchStat.myKNine}"
+            app:pitchPercentage="@{pitchStat.kNine}"
             tools:text="7.4" />
 
         <ImageButton
