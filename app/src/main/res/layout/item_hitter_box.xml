@@ -5,15 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="isTitle"
             type="Boolean" />
+
         <variable
             name="isEven"
             type="Boolean" />
+
         <variable
             name="hitter"
-            type="com.gillian.baseball.data.HitterBox"/>
+            type="com.gillian.baseball.data.HitterBox" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -22,11 +25,11 @@
 
         <TableLayout
             android:id="@+id/table_player_box"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp">
+            android:layout_marginStart="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <TableRow
@@ -35,22 +38,20 @@
                 android:background="@{isTitle? @color/color_primary : isEven? @color/grey_ddd : @color/white}">
 
                 <TextView
-                    android:id="@+id/row_player_box_order"
-                    android:gravity="end"
-                    android:layout_weight=".5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_weight=".5"
+                    android:gravity="end"
                     android:textColor="@color/grey_888"
                     app:orderText="@{hitter.order}"
-                    tools:text="1"/>
+                    tools:text="1" />
 
                 <TextView
-                    android:id="@+id/row_player_box_name"
                     style="@style/PlayerNameTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{hitter.name}"
-                    tools:text="陳俊秀"/>
+                    tools:text="陳俊秀" />
 
                 <TextView
                     android:id="@+id/row_hitter_box_one"
@@ -58,7 +59,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_ab : String.valueOf(hitter.atBat)}"
-                    tools:text="AB"/>
+                    tools:text="AB" />
 
                 <TextView
                     android:id="@+id/row_hitter_box_two"
@@ -66,7 +67,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_r : String.valueOf(hitter.run)}"
-                    tools:text="R"/>
+                    tools:text="R" />
 
                 <TextView
                     android:id="@+id/row_hitter_box_three"
@@ -74,7 +75,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_h : String.valueOf(hitter.hit)}"
-                    tools:text="H"/>
+                    tools:text="H" />
 
                 <TextView
                     android:id="@+id/row_hitter_box_four"
@@ -82,7 +83,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_rbi : String.valueOf(hitter.runsBattedIn)}"
-                    tools:text="RBI"/>
+                    tools:text="RBI" />
 
                 <TextView
                     android:id="@+id/row_hitter_box_five"
@@ -90,7 +91,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_bb : String.valueOf(hitter.baseOnBalls)}"
-                    tools:text="BB"/>
+                    tools:text="BB" />
 
                 <TextView
                     android:id="@+id/row_hitter_box_six"
@@ -98,7 +99,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_so : String.valueOf(hitter.strikeOut)}"
-                    tools:text="SO"/>
+                    tools:text="SO" />
 
                 <TextView
                     android:id="@+id/row_hitter_box_seven"
@@ -106,7 +107,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text='@{isTitle ? @string/box_sb : String.valueOf(hitter.stealBase) }'
-                    tools:text="SB"/>
+                    tools:text="SB" />
 
                 <TextView
                     android:id="@+id/row_hitter_box_eight"
@@ -114,7 +115,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text='@{isTitle ? @string/box_e : String.valueOf(hitter.error) }'
-                    tools:text="E"/>
+                    tools:text="E" />
             </TableRow>
         </TableLayout>
 

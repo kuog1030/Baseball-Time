@@ -17,7 +17,7 @@ class GameCardViewModelFactory constructor(
                 when {
                     isAssignableFrom(OrderViewModel::class.java) ->
                         OrderViewModel(repository, gameCard)
-                    isAssignableFrom(BroadcastViewModel::class.java)->
+                    isAssignableFrom(BroadcastViewModel::class.java) ->
                         BroadcastViewModel(repository, gameCard!!)
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")

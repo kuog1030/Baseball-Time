@@ -5,12 +5,14 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="isTitle"
             type="Boolean" />
+
         <variable
             name="pitcher"
-            type="com.gillian.baseball.data.PitcherBox"/>
+            type="com.gillian.baseball.data.PitcherBox" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -19,11 +21,11 @@
 
         <TableLayout
             android:id="@+id/table_player_box"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp">
+            android:layout_marginStart="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <TableRow
@@ -32,13 +34,12 @@
                 android:background="@{isTitle? @color/color_primary : @color/white}">
 
                 <TextView
-                    android:id="@+id/row_player_box_name"
                     style="@style/PlayerNameTable"
-                    android:layout_weight="2"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
+                    android:layout_weight="2"
                     android:text="@{pitcher.name}"
-                    tools:text="潘威倫"/>
+                    tools:text="潘威倫" />
 
                 <TextView
                     android:id="@+id/row_pitcher_box_one"
@@ -46,7 +47,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_ip : pitcher.inningsFormat}"
-                    tools:text="IP"/>
+                    tools:text="IP" />
 
                 <TextView
                     android:id="@+id/row_pitcher_box_two"
@@ -54,7 +55,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_h : String.valueOf(pitcher.hit)}"
-                    tools:text="H"/>
+                    tools:text="H" />
 
                 <TextView
                     android:id="@+id/row_pitcher_box_three"
@@ -62,7 +63,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_r : String.valueOf(pitcher.run)}"
-                    tools:text="R"/>
+                    tools:text="R" />
 
                 <TextView
                     android:id="@+id/row_pitcher_box_four"
@@ -70,7 +71,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_er : String.valueOf(pitcher.earnedRuns)}"
-                    tools:text="ER"/>
+                    tools:text="ER" />
 
                 <TextView
                     android:id="@+id/row_pitcher_box_five"
@@ -78,7 +79,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_bb : String.valueOf(pitcher.baseOnBalls)}"
-                    tools:text="BB"/>
+                    tools:text="BB" />
 
                 <TextView
                     android:id="@+id/row_pitcher_box_six"
@@ -86,7 +87,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text="@{isTitle ? @string/box_so : String.valueOf(pitcher.strikeOut)}"
-                    tools:text="SO"/>
+                    tools:text="SO" />
 
                 <TextView
                     android:id="@+id/row_pitcher_box_seven"
@@ -94,7 +95,7 @@
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
                     android:text='@{isTitle ? @string/box_hr : String.valueOf(pitcher.homerun) }'
-                    tools:text="HR"/>
+                    tools:text="HR" />
             </TableRow>
         </TableLayout>
 

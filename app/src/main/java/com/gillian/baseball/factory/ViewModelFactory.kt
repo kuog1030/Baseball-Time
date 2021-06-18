@@ -14,32 +14,32 @@ import com.gillian.baseball.statistics.statgame.StatGameViewModel
 import com.gillian.baseball.statistics.statplayer.StatPlayerViewModel
 
 class ViewModelFactory constructor(
-    private val repository: BaseballRepository
+        private val repository: BaseballRepository
 ) : ViewModelProvider.NewInstanceFactory() {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
-        with(modelClass) {
-            when {
-                isAssignableFrom(TeamViewModel::class.java) ->
-                    TeamViewModel(repository)
-                isAssignableFrom(NewPlayerViewModel::class.java) ->
-                    NewPlayerViewModel(repository)
-                isAssignableFrom(AllGamesViewModel::class.java) ->
-                    AllGamesViewModel(repository)
-                isAssignableFrom(StatGameViewModel::class.java) ->
-                    StatGameViewModel(repository)
-                isAssignableFrom(StatPlayerViewModel::class.java) ->
-                    StatPlayerViewModel(repository)
-                isAssignableFrom(EditPlayerViewModel::class.java)->
-                    EditPlayerViewModel(repository)
-                isAssignableFrom(LoginViewModel::class.java) ->
-                    LoginViewModel(repository)
-                isAssignableFrom(AllBroadcastViewModel::class.java) ->
-                    AllBroadcastViewModel(repository)
-                isAssignableFrom(PinchViewModel::class.java)->
-                    PinchViewModel(repository)
-                else ->
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-            }
-        } as T
+            with(modelClass) {
+                when {
+                    isAssignableFrom(TeamViewModel::class.java) ->
+                        TeamViewModel(repository)
+                    isAssignableFrom(NewPlayerViewModel::class.java) ->
+                        NewPlayerViewModel(repository)
+                    isAssignableFrom(AllGamesViewModel::class.java) ->
+                        AllGamesViewModel(repository)
+                    isAssignableFrom(StatGameViewModel::class.java) ->
+                        StatGameViewModel(repository)
+                    isAssignableFrom(StatPlayerViewModel::class.java) ->
+                        StatPlayerViewModel(repository)
+                    isAssignableFrom(EditPlayerViewModel::class.java) ->
+                        EditPlayerViewModel(repository)
+                    isAssignableFrom(LoginViewModel::class.java) ->
+                        LoginViewModel(repository)
+                    isAssignableFrom(AllBroadcastViewModel::class.java) ->
+                        AllBroadcastViewModel(repository)
+                    isAssignableFrom(PinchViewModel::class.java) ->
+                        PinchViewModel(repository)
+                    else ->
+                        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+                }
+            } as T
 }

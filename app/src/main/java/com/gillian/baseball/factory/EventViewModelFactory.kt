@@ -12,12 +12,12 @@ class EventViewModelFactory constructor(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
-        with(modelClass) {
-            when {
-                isAssignableFrom(EventViewModel::class.java) ->
-                    EventViewModel(repository, eventInfo)
-                else ->
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-            }
-        } as T
+            with(modelClass) {
+                when {
+                    isAssignableFrom(EventViewModel::class.java) ->
+                        EventViewModel(repository, eventInfo)
+                    else ->
+                        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+                }
+            } as T
 }

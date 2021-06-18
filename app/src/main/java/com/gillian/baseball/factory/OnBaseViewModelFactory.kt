@@ -13,12 +13,12 @@ class OnBaseViewModelFactory constructor(
 ) : ViewModelProvider.Factory {
 
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
-        with(modelClass) {
-            when {
-                isAssignableFrom(OnBaseDialogViewModel::class.java) ->
-                    OnBaseDialogViewModel(repository, onBaseInfo)
-                else ->
-                    throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
-            }
-        } as T
+            with(modelClass) {
+                when {
+                    isAssignableFrom(OnBaseDialogViewModel::class.java) ->
+                        OnBaseDialogViewModel(repository, onBaseInfo)
+                    else ->
+                        throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
+                }
+            } as T
 }

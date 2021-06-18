@@ -5,9 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="isTitle"
             type="Boolean" />
+
         <variable
             name="isEven"
             type="Boolean" />
@@ -19,11 +21,11 @@
 
         <TableLayout
             android:id="@+id/table_game_box"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="1dp">
+            android:layout_marginStart="1dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
 
 
             <TableRow
@@ -35,75 +37,79 @@
                     style="@style/PlayerNameTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="TEAM"/>
+                    tools:text="TEAM" />
 
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="1"/>
+                    tools:text="1" />
 
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="2"/>
+                    tools:text="2" />
 
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="3"/>
+                    tools:text="3" />
 
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="4"/>
+                    tools:text="4" />
 
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="5"/>
+                    tools:text="5" />
 
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="6"/>
+                    tools:text="6" />
 
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="7"/>
+                    tools:text="7" />
 
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="8"/>
+                    tools:text="8" />
+
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="9"/>
+                    tools:text="9" />
+
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="R"/>
+                    tools:text="R" />
+
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="H"/>
+                    tools:text="H" />
+
                 <TextView
                     style="@style/PlayerTable"
                     boxStyle="@{isTitle}"
                     android:layout_height="wrap_content"
-                    tools:text="E"/>
+                    tools:text="E" />
             </TableRow>
         </TableLayout>
 

@@ -18,13 +18,9 @@ class CustomBaseView : ConstraintLayout {
     private lateinit var second: ImageView
     private lateinit var third: ImageView
 
-
-    //val layout: ConstraintLayout = LayoutInflater.from(context).inflate(R.layout.like_button, this, true) as ConstraintLayout
-
     var onBase: Int = 0
         set(value) {
             field = value
-            Log.i("gillian", "on base is set again $value")
             setBaseList(value)
         }
 
@@ -57,11 +53,6 @@ class CustomBaseView : ConstraintLayout {
 
     }
 
-
-    init {
-        //context.obtainStyledAttributes(attrs, R.styleable.CustomBaseView)
-
-    }
 
     private fun setBaseList(base: Int = 0) {
         if (base / 100 != 0) {
