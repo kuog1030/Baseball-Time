@@ -133,7 +133,7 @@
                 android:layout_height="match_parent"
                 android:paddingStart="@dimen/margin"
                 android:paddingBottom="@dimen/margin"
-                android:visibility="@{viewModel.errorRecycler? View.VISIBLE : View.GONE}"
+                android:visibility="@{viewModel.showErrorList? View.VISIBLE : View.GONE}"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/item_order_pitcher"
                 tools:itemCount="5"/>
@@ -147,7 +147,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:text="@{String.valueOf(viewModel.hitterEvent.player.name)}"
+            android:text="@{viewModel.hitter.player.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

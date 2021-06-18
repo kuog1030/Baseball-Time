@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginEnd="8dp"
-            android:onClick="@{()->viewModel.thirdBase(atBase)}"
+            android:onClick="@{()->viewModel.toBase(atBase, 3)}"
             android:text="@string/third_base"
             app:layout_constraintEnd_toStartOf="@+id/button_runner_second"
             app:layout_constraintHorizontal_bias="0.5"

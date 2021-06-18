@@ -245,6 +245,7 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
 
             Log.i("gillian12", "pitcher ${event.pitcher}")
 
+            // TODO error should also be checked if player exists or not
             if (event.result == EventType.ERROR.number) {
                 errorEvent.add(event)
                 Log.i("gillian64", "有失誤要記錄了 ${event}")
@@ -273,6 +274,14 @@ fun List<Event>.toMyGameStat(isHome: Boolean) : MyStatistic {
         for (oneHitterBox in myHitter) {
             if (oneHitterBox.playerId == event.player.playerId) {
                 oneHitterBox.error += 1
+                break
+            }
+        }
+
+        for (onePitcherBox in myPitcher) {
+            if (onePitcherBox.playerId == event.player.playerId) {
+                onePitcherBox.error += 1
+                break
             }
         }
     }

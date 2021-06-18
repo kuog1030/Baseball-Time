@@ -13,6 +13,7 @@ data class PitcherBox(
         var inningsPitched : Int = 0,
         var hit : Int = 0,
         var run : Int = 0,
+        var error: Int = 0,
         var earnedRuns : Int = 0,
         var baseOnBalls : Int = 0,
         var strikeOut : Int = 0,
@@ -65,6 +66,7 @@ data class PitcherBox(
             inningsPitched += newBox.inningsPitched
             run += newBox.run
             hit += newBox.hit
+            error += newBox.error
             earnedRuns += newBox.earnedRuns
             baseOnBalls += newBox.baseOnBalls
             strikeOut += newBox.strikeOut
