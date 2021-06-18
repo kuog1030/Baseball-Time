@@ -506,7 +506,8 @@ object BaseballRemoteDataSource : BaseballDataSource {
     override suspend fun updateGameNote(gameId: String, note: String): Result<Boolean> = suspendCoroutine { continuation ->
         FirebaseFirestore.getInstance().collection(GAMES)
                 .document(gameId)
-                .update(NOTE, note)
+                .update(NOTE, note,
+                        STATUS, GameStatus.FINALWITHSTAT.number)
                 .addOnCompleteListener{task ->
                     if (task.isSuccessful) {
                         continuation.resume(Result.Success(true))
