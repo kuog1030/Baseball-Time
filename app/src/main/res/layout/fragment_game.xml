@@ -349,7 +349,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/half_margin"
                 android:layout_marginBottom="4dp"
-                android:text='@{"P  "+ viewModel.pitcher}'
+                android:text='@{"P  "+ viewModel.pitcherName}'
                 app:layout_constraintBottom_toTopOf="@id/card_batting"
                 app:layout_constraintEnd_toStartOf="@+id/text_game_total_count"
                 tools:text="P  潘威倫" />

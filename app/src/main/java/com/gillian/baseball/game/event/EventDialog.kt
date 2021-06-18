@@ -82,7 +82,7 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
                     gameViewModel.setNewBaseList(it)
                     Log.i("gillian67", "這邊")
                     if (!isSafe) {
-                        gameViewModel.eventOut(1)
+                        gameViewModel.out(1)
                     } else {
                         gameViewModel.nextPlayer()
                     }
@@ -92,9 +92,9 @@ class EventDialog(val eventInfo: EventInfo) : AppCompatDialogFragment() {
                     gameViewModel.setNewBaseList(it)
                     if (viewModel.scoreToBeAdded != 0) gameViewModel.scored(viewModel.scoreToBeAdded)
                     if (isSafe) {
-                        gameViewModel.eventOut(1) // 選殺
+                        gameViewModel.out(1) // 選殺
                     } else {
-                        gameViewModel.eventOut(viewModel.hasBaseOut.size +1) // 雙殺三殺
+                        gameViewModel.out(viewModel.hasBaseOut.size +1) // 雙殺三殺
                     }
                 }
 
