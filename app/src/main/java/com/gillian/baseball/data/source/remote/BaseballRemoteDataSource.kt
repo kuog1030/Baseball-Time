@@ -803,31 +803,6 @@ object BaseballRemoteDataSource : BaseballDataSource {
                 }
     }
 
-    override suspend fun getBothGameStat(gameId: String): Result<Statistic> = suspendCoroutine { continuation ->
-        val theGame = FirebaseFirestore.getInstance().collection(GAMES).document(gameId)
-
-        theGame.collection(PLAYS)
-                .get()
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val eventList = mutableListOf<Event>()
-                        for (document in task.result!!) {
-                            eventList.add(document.toObject(Event::class.java))
-                        }
-                        val result = eventList.toBothGameStat()
-                        continuation.resume(Result.Success(result))
-                    } else {
-                        task.exception?.let {
-
-                            Log.w("remote", "[${this::class.simpleName}] Error getting documents. ${it.message}")
-                            continuation.resume(Result.Error(it))
-                            return@addOnCompleteListener
-                        }
-                        continuation.resume(Result.Fail("get all stats fail"))
-                    }
-                }
-    }
-
 
     // TODO 回傳result?
     override suspend fun sendEvent(gameId: String, event: Event) {

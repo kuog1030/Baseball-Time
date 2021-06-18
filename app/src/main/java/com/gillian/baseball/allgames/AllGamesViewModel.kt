@@ -66,7 +66,7 @@ class AllGamesViewModel(private val repository: BaseballRepository) : ViewModel(
     }
 
 
-    fun getAllGamesCard() {
+    private fun getAllGamesCard() {
         viewModelScope.launch {
             _status.value = LoadStatus.LOADING
             when (val result = repository.getAllGamesCard(UserManager.teamId)) {

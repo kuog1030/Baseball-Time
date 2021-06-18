@@ -141,10 +141,6 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
         return remoteDataSource.getMyGameStat(gameId, isHome)
     }
 
-    override suspend fun getBothGameStat(gameId: String): Result<Statistic> {
-        return remoteDataSource.getBothGameStat(gameId)
-    }
-
     override suspend fun sendEvent(gameId: String, event: Event) {
         return remoteDataSource.sendEvent(gameId, event)
     }
