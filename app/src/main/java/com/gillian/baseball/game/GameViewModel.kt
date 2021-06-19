@@ -447,7 +447,7 @@ class GameViewModel(private val repository: BaseballRepository, private val argu
             baseList[i] = baseList[i - 1]
         }
         baseList[myself] = null
-        updateRunnerUI() // 放這邊合理嗎?
+        updateRunnerUI()
 
         return (hasRbi)
     }

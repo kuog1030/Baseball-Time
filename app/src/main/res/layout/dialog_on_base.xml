@@ -10,7 +10,7 @@
             type="com.gillian.baseball.data.OnBaseInfo" />
         <variable
             name="viewModel"
-            type="com.gillian.baseball.game.onbase.OnBaseDialogViewModel" />
+            type="com.gillian.baseball.game.onbase.OnBaseViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout

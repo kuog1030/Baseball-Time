@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.data.OnBaseInfo
 import com.gillian.baseball.data.source.BaseballRepository
-import com.gillian.baseball.game.onbase.OnBaseDialogViewModel
+import com.gillian.baseball.game.onbase.OnBaseViewModel
 
 
 class OnBaseViewModelFactory constructor(
@@ -15,8 +15,8 @@ class OnBaseViewModelFactory constructor(
     override fun <T : ViewModel?> create(modelClass: Class<T>) =
             with(modelClass) {
                 when {
-                    isAssignableFrom(OnBaseDialogViewModel::class.java) ->
-                        OnBaseDialogViewModel(repository, onBaseInfo)
+                    isAssignableFrom(OnBaseViewModel::class.java) ->
+                        OnBaseViewModel(repository, onBaseInfo)
                     else ->
                         throw IllegalArgumentException("Unknown ViewModel class: ${modelClass.name}")
                 }

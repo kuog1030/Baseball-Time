@@ -5,7 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
 import com.gillian.baseball.data.AtBase
 
-class EventDialogAdapter(
+class EventAdapter(
         fragmentManager: FragmentManager,
         private val isSafe: Boolean,
         private val atBaseList: List<AtBase>

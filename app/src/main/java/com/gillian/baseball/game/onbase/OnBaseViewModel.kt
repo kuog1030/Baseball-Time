@@ -13,7 +13,7 @@ import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.game.EventType
 import kotlinx.coroutines.launch
 
-class OnBaseDialogViewModel(private val repository: BaseballRepository, private val onBaseInfo : OnBaseInfo) : ViewModel() {
+class OnBaseViewModel(private val repository: BaseballRepository, private val onBaseInfo : OnBaseInfo) : ViewModel() {
 
     var player = onBaseInfo.baseList[onBaseInfo.onClickPlayer]
 

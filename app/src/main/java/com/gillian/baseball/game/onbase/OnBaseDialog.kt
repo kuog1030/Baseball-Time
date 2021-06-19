@@ -20,7 +20,7 @@ import com.gillian.baseball.game.order.PinchAdapter
 
 class OnBaseDialog(val onBaseInfo: OnBaseInfo) : AppCompatDialogFragment() {
 
-    private val viewModel by viewModels<OnBaseDialogViewModel> { getVmFactory(onBaseInfo) }
+    private val viewModel by viewModels<OnBaseViewModel> { getVmFactory(onBaseInfo) }
     private val onClickPlayer = onBaseInfo.onClickPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {

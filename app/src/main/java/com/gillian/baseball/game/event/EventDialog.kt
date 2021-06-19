@@ -47,7 +47,7 @@ class EventDialog(private val eventInfo: EventInfo) : AppCompatDialogFragment() 
             binding.viewpagerEvent.setCurrentItem(atBaseList.size, true)
         }
 
-        binding.viewpagerEvent.adapter = EventDialogAdapter(childFragmentManager, isSafe, atBaseList)
+        binding.viewpagerEvent.adapter = EventAdapter(childFragmentManager, isSafe, atBaseList)
         binding.tabsEvent.setupWithViewPager(binding.viewpagerEvent)
         binding.viewpagerEventArrow.setArrowIndicatorRes(R.drawable.ic_arrow_backward_24, R.drawable.ic_arrow_forward_24)
         binding.viewpagerEventArrow.bind(binding.viewpagerEvent)
