@@ -115,6 +115,11 @@
             app:destination="@id/teamFragment"
             app:popUpTo="@id/teamFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_statPlayerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </fragment>
 
     <fragment

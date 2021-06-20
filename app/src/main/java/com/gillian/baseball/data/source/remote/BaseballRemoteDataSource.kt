@@ -851,4 +851,38 @@ object BaseballRemoteDataSource : BaseballDataSource {
 
     }
 
+    override suspend fun deleteUser(userId: String): Result<Boolean> = suspendCoroutine { continuation ->
+        FirebaseFirestore.getInstance().collection(USERS)
+            .document(userId)
+            .delete()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+
+                    FirebaseFirestore.getInstance().collection(PLAYERS)
+                        .document(UserManager.playerId)
+                        .update(USERID, null)
+                        .addOnCompleteListener { playerTask ->
+                            if (playerTask.isSuccessful) {
+                                continuation.resume(Result.Success(true))
+                            } else {
+                                playerTask.exception?.let {
+                                    Log.w("gillian", "[${this::class.simpleName}] Error removing player user id. ${it.message}")
+                                    continuation.resume(Result.Error(it))
+                                    return@addOnCompleteListener
+                                }
+                                continuation.resume(Result.Fail("remove player user id"))
+                            }
+                        }
+                } else {
+                    task.exception?.let {
+                        Log.w("gillian", "[${this::class.simpleName}] Error deleting user. ${it.message}")
+                        continuation.resume(Result.Error(it))
+                        return@addOnCompleteListener
+                    }
+                    continuation.resume(Result.Fail("delete user fail"))
+                }
+            }
+
+    }
+
 }

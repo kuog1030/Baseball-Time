@@ -113,6 +113,8 @@
     <string name="game_stat_title">成績看板</string>
     <string name="team_player_stat">所有球員成績</string>
     <string name="team">Team</string>
+    <string name="delete_user_confirm">確定要重設帳號嗎？</string>
+    <string name="delete_user">這個動作會解開你和這個球員的關係（也就是說球員紀錄會保留，但並不是你擁有這個球員），並退出目前的球隊。之後你會回到登入畫面，可以重新創立球隊、球員或是加入別的球隊。請注意！這個步驟無法復原。</string>
     <string name="player_id_info">這個球員還沒有使用者認領，歡迎邀請這位球員也加入Baseball Time，使用這段球員代號來加入球隊、延續累積成績。</string>
     <string name="share_subject">Baseball Time!</string>
     <string name="share_title">傳送球員代號給你要邀請的人</string>

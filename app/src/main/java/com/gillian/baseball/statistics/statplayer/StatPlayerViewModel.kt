@@ -20,6 +20,8 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
     // player will be editable if (1) it is user itself (2) has no user registered (user id is null)
     val editable = MutableLiveData<Boolean>(false)
 
+    var isUser = MutableLiveData<Boolean>(false)
+
     // determine whether player's user id to be shown
     val noUserRegistered = MutableLiveData<Boolean>(false)
 
@@ -34,6 +36,11 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
 
     val navigateToEdit: LiveData<Player>
         get() = _navigateToEdit
+
+    private val _navigateToLogin = MutableLiveData<Boolean>()
+
+    val navigateToLogin: LiveData<Boolean>
+        get() = _navigateToLogin
 
 
     fun fetchPlayerStat(playerId: String) {
@@ -66,6 +73,7 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
         player.let {
             editable.value = (it.userId.isNullOrEmpty() || it.userId == UserManager.userId)
             noUserRegistered.value = it.userId.isNullOrEmpty()
+            isUser.value = (UserManager.userId == it.userId)
         }
     }
 
@@ -75,6 +83,30 @@ class StatPlayerViewModel(private val repository: BaseballRepository) : ViewMode
             infoVisibility.value = !(infoVisibility.value!!)
         } else {
             infoVisibility.value = false
+        }
+    }
+
+    fun deleteUser() {
+        viewModelScope.launch {
+            val result = repository.deleteUser(UserManager.userId)
+            _navigateToLogin.value = when (result) {
+                is Result.Success -> {
+                    _errorMessage.value = null
+                    result.data
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = result.error
+                    null
+                }
+                is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
+                    null
+                }
+                else -> {
+                    _errorMessage.value = Util.getString(R.string.return_nothing)
+                    null
+                }
+            }
         }
     }
 

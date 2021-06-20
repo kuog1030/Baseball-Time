@@ -35,6 +35,7 @@
     </style>
 
     <style name="ButtonFilled24">
+        <item name="backgroundTint">@color/color_primary</item>
         <item name="android:background">@drawable/button_radius_filled_24</item>
         <item name="android:textColor">@color/color_on_primary</item>
     </style>

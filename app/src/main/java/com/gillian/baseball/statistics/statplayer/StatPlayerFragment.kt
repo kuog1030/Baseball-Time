@@ -17,6 +17,7 @@ import com.gillian.baseball.editplayer.EditPlayerDialog
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.login.UserManager
 import com.gillian.baseball.util.Util
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
 
 class StatPlayerFragment : Fragment() {
@@ -44,6 +45,17 @@ class StatPlayerFragment : Fragment() {
             sharePlayerId(getString(R.string.share_subject), messageBody, getString(R.string.share_title))
         }
 
+        binding.buttonStatPlayerDelete.setOnClickListener {
+            MaterialAlertDialogBuilder(requireActivity(), R.style.CustomAlertDialog)
+                .setTitle(getString(R.string.delete_user_confirm))
+                .setMessage(getString(R.string.delete_user))
+                .setPositiveButton(getString(R.string.confirm)) { _, _ ->
+                    viewModel.deleteUser()
+                }
+                .setNeutralButton(getString(R.string.cancel), null)
+                .show()
+        }
+
         viewModel.player.observe(viewLifecycleOwner, Observer {
             it?.let {
                 binding.hitStat = it.hitStat
@@ -56,6 +68,16 @@ class StatPlayerFragment : Fragment() {
                 val editPlayerDialog = EditPlayerDialog(it)
                 editPlayerDialog.show(childFragmentManager, "")
                 viewModel.onEditNavigated()
+            }
+        })
+
+        viewModel.navigateToLogin.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                UserManager.userId = ""
+                UserManager.teamId = ""
+                UserManager.playerId = ""
+                UserManager.team = null
+                findNavController().navigate(StatPlayerFragmentDirections.actionStatPlayerFragmentToLoginFragment())
             }
         })
 

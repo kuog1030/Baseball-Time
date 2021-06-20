@@ -148,4 +148,8 @@ class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
     override suspend fun deleteGame(gameId: String): Result<Boolean> {
         TODO("Not yet implemented")
     }
+
+    override suspend fun deleteUser(userId: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
 }

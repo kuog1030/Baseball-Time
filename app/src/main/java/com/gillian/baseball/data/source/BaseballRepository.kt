@@ -75,4 +75,6 @@ interface BaseballRepository {
 
     suspend fun deleteGame(gameId: String): Result<Boolean>
 
+    suspend fun deleteUser(userId: String): Result<Boolean>
+
 }
