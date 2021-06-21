@@ -210,58 +210,45 @@ fun List<Player>.toRankList(): List<Rank> {
     lateinit var sortList: List<Player>
     val resultList = mutableListOf<Rank>()
 
+    fun getResultOfHitStat(hitStat: HitterBox, type: Int): Float {
+        return when (type) {
+            1 -> hitStat.avg
+            2 -> hitStat.homerun.toFloat()
+            3 -> hitStat.hit.toFloat()
+            else -> hitStat.strikeOut.toFloat()
+        }
+    }
+
+    fun getFormatOfHitStat(type: Int): String {
+        return when (type) {
+            1 -> "%.3f"
+            else -> "%.0f"
+        }
+    }
+
+    fun getTitleOfHitStat(type: Int): String {
+        return when (type) {
+            1 -> getString(R.string.avg_rank)
+            2 -> getString(R.string.homerun_rank)
+            3 -> getString(R.string.hit_rank)
+            else -> getString(R.string.so_rank)
+        }
+    }
+
     for (type in 1..4) {
         val result = Rank()
-
         if (this.size <= 3) {
-            result.type = when (type) {
-                1 -> getString(R.string.hit_rank)
-                2 -> getString(R.string.homerun_rank)
-                3 -> getString(R.string.avg_rank)
-                else -> getString(R.string.so_rank)
-            }
+            result.type = getTitleOfHitStat(type)
             resultList.add(result)
         } else {
-            if (type == 1) {
-                sortList = this.sortedWith(compareBy({ -it.hitStat.avg }, { it.hitStat.atBat }))
-                result.type = getString(R.string.avg_rank)
-                result.let {
-                    val statFormat = "%.3f"
-                    it.topImage = sortList[0].image ?: ""
-                    it.topScore = statFormat.format(sortList[0].hitStat.avg)
-                    it.secondScore = statFormat.format(sortList[1].hitStat.avg)
-                    it.thirdScore = statFormat.format(sortList[2].hitStat.avg)
-                }
-
-            } else if (type == 2) {
-                sortList = this.sortedWith(compareBy({ -it.hitStat.homerun }, { it.hitStat.atBat }))
-                result.type = getString(R.string.homerun_rank)
-                result.let {
-                    it.topImage = sortList[0].image ?: ""
-                    it.topScore = sortList[0].hitStat.homerun.toString()
-                    it.secondScore = sortList[1].hitStat.homerun.toString()
-                    it.thirdScore = sortList[2].hitStat.homerun.toString()
-                }
-
-            } else if (type == 3) {
-                sortList = this.sortedWith(compareBy({ -it.hitStat.hit }, { it.hitStat.atBat }))
-                result.type = getString(R.string.hit_rank)
-                result.let {
-                    it.topImage = sortList[0].image ?: ""
-                    it.topScore = sortList[0].hitStat.hit.toString()
-                    it.secondScore = sortList[1].hitStat.hit.toString()
-                    it.thirdScore = sortList[2].hitStat.hit.toString()
-                }
-
-            } else {
-                sortList = this.sortedWith(compareBy({ -it.hitStat.strikeOut }, { it.hitStat.atBat }))
-                result.type = getString(R.string.so_rank)
-                result.let {
-                    it.topImage = sortList[0].image ?: ""
-                    it.topScore = sortList[0].hitStat.strikeOut.toString()
-                    it.secondScore = sortList[1].hitStat.strikeOut.toString()
-                    it.thirdScore = sortList[2].hitStat.strikeOut.toString()
-                }
+            sortList = this.sortedWith(compareBy({ -(getResultOfHitStat(it.hitStat, type)) }, { it.hitStat.atBat }))
+            result.let {
+                val statFormat = getFormatOfHitStat(type)
+                result.type = getTitleOfHitStat(type)
+                it.topImage = sortList[0].image ?: ""
+                it.topScore = statFormat.format(getResultOfHitStat(sortList[0].hitStat, type))
+                it.secondScore = statFormat.format(getResultOfHitStat(sortList[1].hitStat, type))
+                it.thirdScore = statFormat.format(getResultOfHitStat(sortList[2].hitStat, type))
             }
             result.topName = sortList[0].name
             result.secondName = sortList[1].name

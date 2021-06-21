@@ -142,4 +142,8 @@ class FakeDataSource : BaseballDataSource {
         TODO("Not yet implemented")
     }
 
+    override suspend fun deleteUser(userId: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
 }
