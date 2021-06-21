@@ -30,7 +30,7 @@
     </style>
 
     <style name="ButtonFilled">
-        <item name="android:background">@drawable/button_radius_filled</item>
+        <item name="android:background">@drawable/button_radius_ripple</item>
         <item name="android:textColor">@color/color_on_primary</item>
     </style>
 
@@ -97,7 +97,7 @@
         <item name="android:textSize">15sp</item>
         <item name="android:letterSpacing">0.15</item>
         <item name="android:textColor">?attr/colorOnPrimary</item>
-        <item name="android:background">@drawable/button_radius_filled</item>
+        <item name="android:background">@drawable/button_radius_ripple</item>
     </style>
 
     <style name="GameButton2" parent="GameButton">
