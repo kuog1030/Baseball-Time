@@ -19,6 +19,8 @@ data class HitterBox(
         var runsBattedIn: Int = 0,
         var baseOnBalls: Int = 0,
         var hitByPitch: Int = 0,
+        var groundOut: Int = 0,
+        var airOut: Int = 0,
         var strikeOut: Int = 0,
         var stealBase: Int = 0,
         var sacrificeHit: Int = 0,
@@ -48,6 +50,8 @@ data class HitterBox(
             gamePlayed += 1
             runsBattedIn += newBox.runsBattedIn
             baseOnBalls += newBox.baseOnBalls
+            groundOut += newBox.groundOut
+            airOut += newBox.airOut
             strikeOut += newBox.strikeOut
             stealBase += newBox.stealBase
             sacrificeHit += newBox.sacrificeHit
