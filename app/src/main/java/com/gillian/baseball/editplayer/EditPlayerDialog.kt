@@ -11,16 +11,13 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
-import com.gillian.baseball.NavigationDirections
 import com.gillian.baseball.data.Player
 import com.gillian.baseball.databinding.DialogEditPlayerBinding
 import com.gillian.baseball.ext.getVmFactory
-import com.gillian.baseball.newplayer.NewPlayerViewModel
 import com.gillian.baseball.statistics.statplayer.StatPlayerFragmentDirections
 import com.gillian.baseball.statistics.statplayer.StatPlayerViewModel
 import com.gillian.baseball.team.TeamViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-
 
 const val REQUEST_IMAGE_OPEN = 1
 
@@ -37,29 +34,21 @@ class EditPlayerDialog(val player: Player) : BottomSheetDialogFragment() {
 
         viewModel.initOriginInfo(player)
 
-        binding.newPhoto = false
-
-        binding.imageEditPlayerPhoto.setOnClickListener{
+        binding.imageEditPlayerPhoto.setOnClickListener {
             pickImageFromGallery()
         }
 
-        binding.imageEditPlayerNewPhoto.setOnClickListener{
-            pickImageFromGallery()
-        }
 
-        viewModel.photoUrl.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                if (viewModel.proceedToSave.value!!) {
-                    Log.i("gillian", "proceed to save")
-                    viewModel.updatePlayer()
-                }
+        viewModel.newImage.observe(viewLifecycleOwner, Observer {
+            it?.let { image ->
+                viewModel.updatePlayer(image)
             }
         })
 
         viewModel.dismissDialog.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                if (it) {
-                    ViewModelProvider(requireParentFragment()).get(StatPlayerViewModel::class.java).refresh(viewModel.needStatRefresh)
+            it?.let { hasChange ->
+                if (hasChange) {
+                    ViewModelProvider(requireParentFragment()).get(StatPlayerViewModel::class.java).refresh()
                     ViewModelProvider(requireActivity()).get(TeamViewModel::class.java).refresh()
                 }
                 dismiss()
@@ -68,8 +57,9 @@ class EditPlayerDialog(val player: Player) : BottomSheetDialogFragment() {
         })
 
 
+        // delete player -> navigate to team
         viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
-            if (it == true) {
+            it?.let {
                 ViewModelProvider(requireActivity()).get(TeamViewModel::class.java).refresh()
                 findNavController().navigate(StatPlayerFragmentDirections.actionStatPlayerFragmentToTeamFragment())
                 viewModel.onTeamNavigated()
@@ -80,7 +70,7 @@ class EditPlayerDialog(val player: Player) : BottomSheetDialogFragment() {
     }
 
     private fun pickImageFromGallery() {
-        val intent = Intent(Intent.ACTION_PICK).apply{
+        val intent = Intent(Intent.ACTION_PICK).apply {
             type = "image/*"
         }
         startActivityForResult(intent, REQUEST_IMAGE_OPEN)
@@ -90,9 +80,8 @@ class EditPlayerDialog(val player: Player) : BottomSheetDialogFragment() {
         super.onActivityResult(requestCode, resultCode, data)
 
         if (requestCode == REQUEST_IMAGE_OPEN && resultCode == Activity.RESULT_OK && data != null) {
-            binding.newPhoto = true
-            binding.imageEditPlayerNewPhoto.setImageURI(data.data)
-            viewModel.readyToSentPhoto.value = data.data
+            binding.imageEditPlayerNew.setImageURI(data.data)
+            viewModel.photoToBeSent.value = data.data
         }
     }
 

@@ -89,10 +89,6 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
         return remoteDataSource.clearMyStat(playerId, myName)
     }
 
-    override suspend fun getAllEvents(gameId: String): List<Event> {
-        return remoteDataSource.getAllEvents(gameId)
-    }
-
     override suspend fun getLiveEvents(gameId: String): MutableLiveData<List<Event>> {
         return remoteDataSource.getLiveEvents(gameId)
     }
@@ -141,10 +137,6 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
         return remoteDataSource.getMyGameStat(gameId, isHome)
     }
 
-    override suspend fun getBothGameStat(gameId: String): Result<Statistic> {
-        return remoteDataSource.getBothGameStat(gameId)
-    }
-
     override suspend fun sendEvent(gameId: String, event: Event) {
         return remoteDataSource.sendEvent(gameId, event)
     }
@@ -155,5 +147,9 @@ class DefaultBaseballRepository(private val remoteDataSource: BaseballDataSource
 
     override suspend fun deleteGame(gameId: String): Result<Boolean> {
         return remoteDataSource.deleteGame(gameId)
+    }
+
+    override suspend fun deleteUser(userId: String): Result<Boolean> {
+        return remoteDataSource.deleteUser(userId)
     }
 }

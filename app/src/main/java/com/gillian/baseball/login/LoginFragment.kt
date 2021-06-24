@@ -27,19 +27,11 @@ import com.google.firebase.ktx.Firebase
 class LoginFragment : Fragment() {
 
     private val viewModel by viewModels<LoginViewModel> { getVmFactory() }
-    private lateinit var auth: FirebaseAuth
-    private lateinit var newUser : User
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        if (hasUser()) {
-            Log.i("gillian6", "has user")
-            viewModel.fetchTeam()
-        }
-
+        if (hasUser()) viewModel.fetchTeam()
     }
-
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -48,10 +40,6 @@ class LoginFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-
-        // login -> intent -> viewModel.signInWithGoogle -> get firebase user
-        // -> check if user exists (yes) -> navigate to team
-        //                         (no)  -> proceed login flow
         binding.buttonLoginGoogle.setOnClickListener {
             login()
         }
@@ -60,33 +48,27 @@ class LoginFragment : Fragment() {
             findNavController().navigate(NavigationDirections.navigationToAllBroadcast())
         }
 
+        // login -> intent -> viewModel.signInWithGoogle -> get firebase user
+        // -> check if user exists (yes) -> fetch Team -> navigate to team
+        //                         (no)  -> proceed login flow
+        viewModel.userExist.observe(viewLifecycleOwner, Observer {
+            it?.let { exist ->
+                if (exist) {
+                    viewModel.fetchTeam(true)
+                } else {
+                    val newUser = viewModel.createNewUser(viewModel.firebaseUser.value!!)
+                    findNavController().navigate(LoginFragmentDirections.actionLoginToFirst(newUser))
+                }
+            }
+        })
 
         viewModel.initTeam.observe(viewLifecycleOwner, Observer {
             it?.let {
                 UserManager.team = it
-                Log.i("gillian67", "fetch team success ${UserManager.team}")
                 findNavController().navigate(NavigationDirections.navigationToTeam())
             }
         })
 
-
-        viewModel.firebaseUser.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                newUser = User(email = it.email!!, id = it.uid, image = it.photoUrl.toString())
-                viewModel.searchIfUserExist()
-            }
-        })
-
-        viewModel.userExist.observe(viewLifecycleOwner, Observer {
-            it?.let{ exist ->
-                if (exist) {
-                    viewModel.fetchTeam(true)
-                } else {
-                    findNavController().navigate(LoginFragmentDirections.actionLoginToFirst(newUser))
-                    // navigate
-                }
-            }
-        })
 
         return binding.root
     }
@@ -98,10 +80,9 @@ class LoginFragment : Fragment() {
             val task = GoogleSignIn.getSignedInAccountFromIntent(data)
             try {
                 val account = task.getResult(ApiException::class.java)!!
-                Log.d("gillianlog", "firebaseAuthWithGoogle : ${account.id} and ${account.idToken}")
                 viewModel.signInWithGoogle(account.idToken)
             } catch (e: ApiException) {
-                Log.w("gillianlog", "Google sign in failed : $e")
+                Log.w("gillian", "Google sign in failed : $e")
 
             }
         }
@@ -109,23 +90,18 @@ class LoginFragment : Fragment() {
 
 
     private fun login() {
-
-        // Configure Google Sign In
         val gso = GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-            .requestIdToken(getString(R.string.default_web_client_id))
-            .requestEmail()
-            .build()
+                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestEmail()
+                .build()
 
         val googleSignInClient = GoogleSignIn.getClient(requireActivity(), gso)
         val singInIntent = googleSignInClient.signInIntent
         startActivityForResult(singInIntent, SIGN_IN)
-        Log.i("gillianlog", "login function called gso $gso")
-
     }
 
 
-    private fun hasUser() : Boolean {
-        Log.i("gillian67", "user id ${UserManager.userId}, team id ${UserManager.teamId}")
+    private fun hasUser(): Boolean {
         return (UserManager.userId != "" && UserManager.teamId != "")
     }
 

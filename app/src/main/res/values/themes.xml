@@ -1,6 +1,5 @@
 <resources xmlns:tools="http://schemas.android.com/tools">
     <!-- Base application theme. -->
-<!--    <style name="Theme.Baseball" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">-->
     <style name="Theme.Baseball" parent="Theme.MaterialComponents.DayNight.NoActionBar.Bridge">
         <!-- Primary brand color. -->
         <item name="colorPrimary">@color/color_primary</item>

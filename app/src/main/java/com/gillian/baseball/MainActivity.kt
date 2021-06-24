@@ -23,23 +23,6 @@ class MainActivity : AppCompatActivity() {
         val navController = this.findNavController(R.id.myNavHostFragment)
 
         binding.bottomNavView.setupWithNavController(navController)
-//        binding.bottomNavView.setOnNavigationItemSelectedListener { item ->
-//            when (item.itemId) {
-//                R.id.teamFragment -> {
-//                    navController.navigate(NavigationDirections.navigationToTeam())
-//                    true
-//                }
-//                R.id.allGamesFragment -> {
-//                    navController.navigate(NavigationDirections.navigationToAllGames(false))
-//                    true
-//                }
-//                R.id.allBroadcastFragment -> {
-//                    navController.navigate(NavigationDirections.navigationToAllBroadcast())
-//                    true
-//                }
-//                else -> false
-//            }
-//        }
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             when (destination.id) {
@@ -53,7 +36,6 @@ class MainActivity : AppCompatActivity() {
                 else -> setBottomNavigation(false)
             }
         }
-
     }
 
     private fun setBottomNavigation(visible: Boolean) {

@@ -8,7 +8,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.gillian.baseball.data.PersonalScore
 import com.gillian.baseball.databinding.ItemPersonalScoreBinding
 
-
 class PersonalScoreAdapter : ListAdapter<PersonalScore, PersonalScoreAdapter.ViewHolder>(DiffCallback) {
 
     class ViewHolder(private var binding: ItemPersonalScoreBinding) : RecyclerView.ViewHolder(binding.root) {

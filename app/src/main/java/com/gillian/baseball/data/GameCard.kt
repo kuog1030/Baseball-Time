@@ -21,7 +21,6 @@ data class GameCard(
         var homeImage: String = "",
         var guestImage: String = "",
         var recordedTeamId: String = ""
-        //val myScore: List<String> = listOf()
 ) : Parcelable {
     val dateString: String
         get() = toDateString(date, 0)

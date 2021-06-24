@@ -1,6 +1,5 @@
 package com.gillian.baseball.allbroadcast
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -16,21 +15,20 @@ import kotlinx.coroutines.launch
 class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewModel() {
 
 
+    val searchTitle = MutableLiveData<String>()
+
+    // cache the games data for title searching
+    var cacheAllGames: List<GameCard> = emptyList()
+
     private val _allLiveResult = MutableLiveData<List<GameCard>>()
 
     val allLiveResult: LiveData<List<GameCard>>
         get() = _allLiveResult
 
-    val searchTitle = MutableLiveData<String>()
-
-
-    var cacheAllGames: List<GameCard> = emptyList()
-
     private val _errorMessage = MutableLiveData<String>()
 
     val errorMessage: LiveData<String>
         get() = _errorMessage
-
 
     private val _status = MutableLiveData<LoadStatus>()
 
@@ -46,17 +44,16 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
         fetchAllLiveGame(true)
     }
 
-    fun fetchAllLiveGame(isInit: Boolean = false) {
+    private fun fetchAllLiveGame(isInit: Boolean = false) {
         viewModelScope.launch {
             if (isInit) _status.value = LoadStatus.LOADING
             val result = repository.getAllLiveGamesCard()
 
             _allLiveResult.value = when (result) {
                 is Result.Success -> {
-                    _errorMessage.value = null
+                    _errorMessage.value = checkIfNoGame(result.data.size)
                     if (isInit) _status.value = LoadStatus.DONE
                     cacheAllGames = result.data
-                    if (result.data.isEmpty()) noLiveGame()
                     result.data
                 }
                 is Result.Fail -> {
@@ -77,13 +74,9 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
             }
             _refreshStatus.value = false
         }
-
     }
 
-    // 我需要設定unclickable欸
     fun searchGame() {
-        Log.i("gillian", "searching ${searchTitle.value}")
-
         if (searchTitle.value == null) {
             _allLiveResult.value = cacheAllGames
 
@@ -95,8 +88,12 @@ class AllBroadcastViewModel(private val repository: BaseballRepository) : ViewMo
         }
     }
 
-    fun noLiveGame() {
-        _errorMessage.value = Util.getString(R.string.error_no_live_game)
+    private fun checkIfNoGame(size: Int): String? {
+        return if (size == 0) {
+            Util.getString(R.string.error_no_live_game)
+        } else {
+            null
+        }
     }
 
     fun refresh() {

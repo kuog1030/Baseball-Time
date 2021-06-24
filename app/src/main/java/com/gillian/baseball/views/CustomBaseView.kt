@@ -18,13 +18,9 @@ class CustomBaseView : ConstraintLayout {
     private lateinit var second: ImageView
     private lateinit var third: ImageView
 
-
-    //val layout: ConstraintLayout = LayoutInflater.from(context).inflate(R.layout.like_button, this, true) as ConstraintLayout
-
     var onBase: Int = 0
         set(value) {
             field = value
-            Log.i("gillian", "on base is set again $value")
             setBaseList(value)
         }
 
@@ -58,12 +54,7 @@ class CustomBaseView : ConstraintLayout {
     }
 
 
-    init {
-        //context.obtainStyledAttributes(attrs, R.styleable.CustomBaseView)
-
-    }
-
-    fun setBaseList(base: Int = 0) {
+    private fun setBaseList(base: Int = 0) {
         if (base / 100 != 0) {
             third.setColorFilter(BaseballApplication.instance.getColor(R.color.yellow_strike))
         } else {
@@ -84,53 +75,3 @@ class CustomBaseView : ConstraintLayout {
     }
 
 }
-
-//class CustomBaseView(context: Context?, attrs: AttributeSet?) : View(context, attrs) {
-//
-//    private val greyPaint = Paint().apply {
-//        color = Color.GRAY
-//    }
-//
-//    private val yellowPaint = Paint().apply {
-//        color = Color.YELLOW
-//    }
-//
-//    private val path = Path()
-//
-//    override fun onDraw(canvas: Canvas?) {
-//        super.onDraw(canvas)
-//        drawSecondBase(canvas)
-//        drawFirstBase(canvas)
-//        drawThirdBase(canvas)
-//    }
-//
-//    private fun drawFirstBase(canvas: Canvas?) {
-//        path.reset()
-//        path.moveTo(290F, 90F)
-//        path.lineTo(360F, 161F)
-//        path.lineTo(290F, 232F)
-//        path.lineTo(220F, 161F)
-//        path.lineTo(290F, 90F)
-//        canvas?.drawPath(path, greyPaint)
-//    }
-//
-//    private fun drawSecondBase(canvas: Canvas?) {
-//        path.reset()
-//        path.moveTo(200F, 0F)
-//        path.lineTo(270F, 70F)
-//        path.lineTo(200F, 141F)
-//        path.lineTo(130F, 70F)
-//        path.lineTo(200F, 0F)
-//        canvas?.drawPath(path, greyPaint)
-//    }
-//
-//    private fun drawThirdBase(canvas: Canvas?) {
-//        path.reset()
-//        path.moveTo(110F, 90F)
-//        path.lineTo(180F, 161F)
-//        path.lineTo(110F, 232F)
-//        path.lineTo(40F, 161F)
-//        path.lineTo(110F, 90F)
-//        canvas?.drawPath(path, greyPaint)
-//    }
-//}

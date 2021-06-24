@@ -20,7 +20,7 @@ import com.gillian.baseball.game.order.PinchAdapter
 
 class OnBaseDialog(val onBaseInfo: OnBaseInfo) : AppCompatDialogFragment() {
 
-    private val viewModel by viewModels<OnBaseDialogViewModel> {getVmFactory(onBaseInfo) }
+    private val viewModel by viewModels<OnBaseViewModel> { getVmFactory(onBaseInfo) }
     private val onClickPlayer = onBaseInfo.onClickPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,37 +38,31 @@ class OnBaseDialog(val onBaseInfo: OnBaseInfo) : AppCompatDialogFragment() {
 
         val gameViewModel = ViewModelProvider(requireParentFragment()).get(GameViewModel::class.java)
 
-        val fieldAdapter = PinchAdapter(PinchAdapter.OnClickListener{ player, position ->
+        val fieldAdapter = PinchAdapter(PinchAdapter.OnClickListener { player, _ ->
             viewModel.recordError(player)
         })
-
-        val tenOnFieldPlayer = mutableListOf<EventPlayer>()
 
 
         binding.recyclerOnBaseError.adapter = fieldAdapter
         if (gameViewModel.isTop) {
-            tenOnFieldPlayer.addAll(gameViewModel.homeLineUp)
-            tenOnFieldPlayer.add(gameViewModel.homePitcher)
-
-            fieldAdapter.submitList(tenOnFieldPlayer) // 上半場的話是主隊防守中
+            val tenOnFieldPlayer = createTenOnField(gameViewModel.homeLineUp, gameViewModel.homePitcher)
+            fieldAdapter.submitList(tenOnFieldPlayer)
         } else {
-            tenOnFieldPlayer.addAll(gameViewModel.guestLineUp)
-            tenOnFieldPlayer.add(gameViewModel.guestPitcher)
-
+            val tenOnFieldPlayer = createTenOnField(gameViewModel.guestLineUp, gameViewModel.guestPitcher)
             fieldAdapter.submitList(tenOnFieldPlayer)
         }
 
         viewModel.proceedWithError.observe(viewLifecycleOwner, Observer {
-            it?.let{ withError ->
+            it?.let { withError ->
                 gameViewModel.advanceBase(onClickPlayer)
                 viewModel.onProceedDone()
-                if (withError) { gameViewModel.addErrorToBox(1) }
+                if (withError) gameViewModel.addErrorToBox(1)
                 dismiss()
             }
         })
 
         viewModel.onBaseOut.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 gameViewModel.onBaseOut(onClickPlayer, it)
                 viewModel.onOutDone()
                 dismiss()
@@ -80,5 +74,13 @@ class OnBaseDialog(val onBaseInfo: OnBaseInfo) : AppCompatDialogFragment() {
         }
 
         return binding.root
+    }
+
+    private fun createTenOnField(lineUp: List<EventPlayer>, pitcher: EventPlayer): List<EventPlayer> {
+        val result = mutableListOf<EventPlayer>()
+        result.addAll(lineUp)
+        result.add(pitcher)
+
+        return result
     }
 }

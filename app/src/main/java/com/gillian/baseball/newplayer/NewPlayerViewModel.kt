@@ -1,7 +1,6 @@
 package com.gillian.baseball.newplayer
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,7 @@ import com.gillian.baseball.data.Player
 import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 
 class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
@@ -22,13 +22,17 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     val nickname = MutableLiveData<String>()
 
-    val photoUrl = MutableLiveData<String>()
+    private val _photoUrl = MutableLiveData<String>()
 
-    val errorMessage = MutableLiveData<Int>()
+    val photoUrl: LiveData<String>
+        get() = _photoUrl
 
-    val readyToSentPhoto = MutableLiveData<Uri>()
+    private val _errorMessage = MutableLiveData<String>()
 
-    val proceedToSave = MutableLiveData<Boolean>(false)
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
+    val photoToBeSent = MutableLiveData<Uri>()
 
     private val _status = MutableLiveData<LoadStatus>()
 
@@ -42,88 +46,90 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
     val dismissDialog : LiveData<Boolean>
         get() = _dismissDialog
 
+    // check if info filled -> (upload photo) -> create player
+    fun checkIfInfoFilled() {
+        if (name.value.isNullOrEmpty() || number.value.isNullOrEmpty()) {
+            _errorMessage.value = getString(R.string.create_new_player_error)
+        } else {
+            _errorMessage.value = null
+            _status.value = LoadStatus.LOADING
+
+            if (photoToBeSent.value != null) {
+                uploadPhoto(photoToBeSent.value!!)
+            } else {
+                _photoUrl.value = ""
+            }
+        }
+    }
+
+    private fun uploadPhoto(uri: Uri) {
+        viewModelScope.launch {
+            val result = repository.uploadImage(uri)
+            _photoUrl.value = when (result) {
+                is Result.Success -> {
+                    _errorMessage.value = null
+                    result.data
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = result.error
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+                is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+                else -> {
+                    _errorMessage.value = getString(R.string.return_nothing)
+                    _status.value = LoadStatus.ERROR
+                    null
+                }
+            }
+        }
+    }
+
     fun createPlayer() {
-        errorMessage.value = null
-
-        val numberInt = number.value!!.toInt()
-
-        val player = Player(
-                teamId = UserManager.teamId,
-                name = name.value!!,
-                number = numberInt,
-                nickname = nickname.value ?: name.value!!,
-                image = photoUrl.value
-        )
+        val player = initiateNewPlayer()
 
         viewModelScope.launch {
             val result = repository.createPlayer(player)
             _dismissDialog.value = when (result) {
                 is Result.Success -> {
-                    Log.i("gillian", "in coroutine create success")
                     _status.value = LoadStatus.DONE
+                    _errorMessage.value = null
                     needRefresh = true
-                    proceedToSave.value = null
                     result.data
                 }
                 is Result.Fail -> {
                     _status.value = LoadStatus.ERROR
+                    _errorMessage.value = result.error
                     null
                 }
                 is Result.Error -> {
                     _status.value = LoadStatus.ERROR
+                    _errorMessage.value = result.exception.toString()
                     null
                 }
                 else -> {
                     _status.value = LoadStatus.ERROR
+                    _errorMessage.value = getString(R.string.return_nothing)
                     null
                 }
             }
         }
     }
 
-    // with photo -> upload Photo -> proceed to Save -> createPlayer
-    // no photo -> createPlayer
-    fun checkIfInfoFilled() {
-        if (name.value.isNullOrEmpty() || number.value.isNullOrEmpty()) {
-            errorMessage.value = R.string.create_new_player_error
-        } else {
-            errorMessage.value = null
-            _status.value = LoadStatus.LOADING
-            if (readyToSentPhoto.value != null) {
-                uploadPhoto(readyToSentPhoto.value!!)  // 有照片的話等照片上傳
-            } else {
-                createPlayer()
-            }
-        }
-    }
+    private fun initiateNewPlayer() : Player {
+        val nickname = if (nickname.value.isNullOrEmpty()) name.value!! else nickname.value!!
 
-
-
-    fun uploadPhoto(uri: Uri) {
-        Log.i("gillian", "upload photo")
-        viewModelScope.launch {
-            val result = repository.uploadImage(uri)
-            photoUrl.value = when (result) {
-                is Result.Success -> {
-                    proceedToSave.value = true
-                    result.data
-                }
-                is Result.Fail -> {
-                    _status.value = LoadStatus.ERROR
-                    Log.i("gillian", "fail ${result.error}")
-                    null
-                }
-                is Result.Error -> {
-                    _status.value = LoadStatus.ERROR
-                    Log.i("gillian", "error ${result.exception}")
-                    null
-                }
-                else -> {
-                    _status.value = LoadStatus.ERROR
-                    null
-                }
-            }
-        }
+        return Player(
+                teamId = UserManager.teamId,
+                name = name.value!!,
+                number = number.value!!.toInt(),
+                nickname = nickname,
+                image = photoUrl.value
+        )
     }
 
     fun dismissDialog() {
@@ -134,9 +140,4 @@ class NewPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
         _dismissDialog.value = null
     }
 
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.i("gillian", "new player view model on clear")
-    }
 }

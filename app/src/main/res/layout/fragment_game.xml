@@ -19,7 +19,7 @@
         <View
             android:id="@+id/bg_game_top"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="107dp"
             android:background="@color/grey_ddd"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,33 +113,33 @@
             app:layout_constraintTop_toBottomOf="@id/bg_game_top">
 
             <ImageView
-                android:id="@+id/imageView8"
+                android:id="@+id/image_game_second"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginBottom="60dp"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+                app:layout_constraintBottom_toBottomOf="@+id/image_game_third"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:srcCompat="@drawable/diamond_field" />
 
             <ImageView
-                android:id="@+id/imageView9"
+                android:id="@+id/image_game_third"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginEnd="60dp"
                 app:layout_constraintBottom_toTopOf="@+id/card_batting"
-                app:layout_constraintEnd_toEndOf="@+id/imageView8"
+                app:layout_constraintEnd_toEndOf="@+id/image_game_second"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.65"
                 app:srcCompat="@drawable/diamond_field" />
 
             <ImageView
-                android:id="@+id/imageView7"
+                android:id="@+id/image_game_one"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_marginStart="60dp"
-                app:layout_constraintStart_toStartOf="@+id/imageView8"
-                app:layout_constraintTop_toTopOf="@+id/imageView9"
+                app:layout_constraintStart_toStartOf="@+id/image_game_second"
+                app:layout_constraintTop_toTopOf="@+id/image_game_third"
                 app:srcCompat="@drawable/diamond_field" />
 
             <View
@@ -299,7 +299,7 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/imageView9"
+                app:layout_constraintTop_toBottomOf="@+id/image_game_third"
                 tools:text="No.19 Sean" />
 
             <Button
@@ -311,9 +311,9 @@
                 android:onClick="@{()->viewModel.toOnBaseDialog(1)}"
                 android:text="@{viewModel.firstBaseName}"
                 android:visibility="@{viewModel.firstBaseVisible? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView7"
+                app:layout_constraintBottom_toBottomOf="@+id/image_game_one"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView7"
+                app:layout_constraintTop_toTopOf="@+id/image_game_one"
                 tools:text="No.15 Sam" />
 
             <Button
@@ -325,9 +325,9 @@
                 android:onClick="@{()->viewModel.toOnBaseDialog(3)}"
                 android:text="@{viewModel.thirdBaseName}"
                 android:visibility="@{viewModel.thirdBaseVisible? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/imageView9"
+                app:layout_constraintBottom_toBottomOf="@+id/image_game_third"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imageView9"
+                app:layout_constraintTop_toTopOf="@+id/image_game_third"
                 tools:text="No.28 Peter" />
 
             <Button
@@ -338,18 +338,18 @@
                 android:onClick="@{()->viewModel.toOnBaseDialog(2)}"
                 android:text="@{viewModel.secondBaseName}"
                 android:visibility="@{viewModel.secondBaseVisible? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toTopOf="@+id/imageView8"
+                app:layout_constraintBottom_toTopOf="@+id/image_game_second"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="No.99 Wency" />
 
             <TextView
-                android:id="@+id/textView2"
+                android:id="@+id/text_batting_pitcher"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/half_margin"
                 android:layout_marginBottom="4dp"
-                android:text='@{"P  "+ viewModel.pitcher}'
+                android:text='@{"P  "+ viewModel.pitcherName}'
                 app:layout_constraintBottom_toTopOf="@id/card_batting"
                 app:layout_constraintEnd_toStartOf="@+id/text_game_total_count"
                 tools:text="P  潘威倫" />
@@ -361,7 +361,7 @@
                 android:layout_marginEnd="@dimen/half_margin"
                 android:text="@{String.valueOf(viewModel.liveBallCount)}"
                 app:layout_constraintEnd_toEndOf="@+id/card_batting"
-                app:layout_constraintTop_toTopOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/text_batting_pitcher"
                 tools:text="22" />
 
             <TextView
@@ -371,7 +371,7 @@
                 android:layout_marginStart="@dimen/half_margin"
                 app:nextBat="@{viewModel.nextAtBat}"
                 app:layout_constraintStart_toStartOf="@+id/card_batting"
-                app:layout_constraintTop_toTopOf="@+id/textView2"
+                app:layout_constraintTop_toTopOf="@+id/text_batting_pitcher"
                 tools:text="下一棒：張偉聖"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
@@ -385,7 +385,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/card_title"
             app:layout_constraintEnd_toEndOf="@id/card_title"
             app:layout_constraintTop_toTopOf="@+id/card_title"
-            app:srcCompat="@drawable/ic_baseline_more_24" />
+            app:srcCompat="@drawable/ic_more_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

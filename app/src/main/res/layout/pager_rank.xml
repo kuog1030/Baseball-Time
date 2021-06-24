@@ -18,7 +18,7 @@
         android:layout_height="match_parent">
 
         <View
-            android:id="@+id/view"
+            android:id="@+id/banner_teammate"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:background="@drawable/ic_wave"
@@ -32,7 +32,7 @@
             android:layout_height="85dp"
             android:layout_marginTop="@dimen/margin"
             app:civ_border_color="@color/white"
-            app:layout_constraintEnd_toEndOf="@+id/view"
+            app:layout_constraintEnd_toEndOf="@+id/banner_teammate"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:teamPhotoBorder="@{viewModel.editable}"
@@ -44,7 +44,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"
             android:layout_marginTop="@dimen/margin"
-            android:text="球隊名稱"
+            android:text="@string/team_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/image_rank_team" />
 
@@ -71,7 +71,7 @@
             android:id="@+id/text_rank_acronym"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="球隊簡稱"
+            android:text="@string/team_acronym"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias=".4"
             app:layout_constraintStart_toStartOf="@+id/image_rank_team"
@@ -104,7 +104,7 @@
             android:layout_marginEnd="@dimen/double_margin"
             android:background="@color/transparent"
             android:onClick="@{()->viewModel.startEdit()}"
-            android:src="@{viewModel.editable ? @drawable/ic_baseline_clear_24 : @drawable/ic_edit_24}"
+            android:src="@{viewModel.editable ? @drawable/ic_clear_24 : @drawable/ic_edit_24}"
             app:layout_constraintBottom_toBottomOf="@+id/image_rank_team"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/image_rank_team"
@@ -128,7 +128,7 @@
                     android:layout_height="@dimen/one_half_margin"
                     android:layout_marginEnd="@dimen/margin"
                     android:background="@color/transparent"
-                    android:drawableEnd="@drawable/ic_arrow_forward_20"
+                    android:drawableEnd="@drawable/ic_arrow_forward_18"
                     android:drawablePadding="@dimen/half_margin"
                     android:onClick="@{()->viewModel.navigateToTeamStat()}"
                     android:text="@string/watch_all_team_stat"
@@ -173,18 +173,7 @@
             app:layout_constraintEnd_toEndOf="@id/button_rank_edit"
             app:layout_constraintStart_toStartOf="@id/button_edit_save"
             app:layout_constraintTop_toTopOf="@id/button_edit_save"
-            app:loadingStatus="@{viewModel.statusEdit}" />
-
-
-        <!--        <com.airbnb.lottie.LottieAnimationView-->
-        <!--            android:id="@+id/animationViewTest"-->
-        <!--            android:layout_width="match_parent"-->
-        <!--            android:layout_height="wrap_content"-->
-        <!--            app:layout_constraintTop_toTopOf="parent"-->
-        <!--            app:layout_constraintBottom_toBottomOf="parent"-->
-        <!--            app:lottie_autoPlay="true"-->
-        <!--            app:lottie_loop="true"-->
-        <!--            app:lottie_rawRes="@raw/uploading" />-->
+            app:loadingStatus="@{viewModel.editStatus}" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

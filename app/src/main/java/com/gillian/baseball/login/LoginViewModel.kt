@@ -21,16 +21,6 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
     val userExist : LiveData<Boolean>
         get() = _userExist
 
-    private val _signUpResult = MutableLiveData<User>()
-
-    val signUpResult : LiveData<User>
-        get() = _signUpResult
-
-    private val _navigateToTeam = MutableLiveData<Team>()
-
-    val navigateToTeam : LiveData<Team>
-        get() = _navigateToTeam
-
     val showLoginPage = MutableLiveData<Boolean>(true)
 
     private val _initTeam = MutableLiveData<Team>()
@@ -54,14 +44,14 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-
+    // google login firebase
     fun signInWithGoogle(token: String?) {
-        Log.i("gillianlog", "sign in ing!")
         token?.let {
             viewModelScope.launch {
                 val result = repository.signInWithGoogle(token)
                 firebaseUser.value = when(result) {
                     is Result.Success -> {
+                        searchIfUserExist(result.data.uid)
                         result.data
                     }
                     is Result.Fail -> {
@@ -78,14 +68,11 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    // 要在這一步找User 有沒有過我的資料
-    // find user query我的user id，
-    // find user -> 回傳true get player id, team id -> 找 team 資料
-    //           -> 回傳false 直接set -> 跳轉到login search
-    fun searchIfUserExist() {
-        firebaseUser.value?.let{
+
+    // UserManager user Id, player Id, team Id will be set if find user return true
+    private fun searchIfUserExist(uid: String) {
             viewModelScope.launch {
-                val result = repository.findUser(it.uid)
+                val result = repository.findUser(uid)
                 _userExist.value = when (result) {
                     is Result.Success -> {
                         result.data
@@ -96,14 +83,12 @@ class LoginViewModel(private val repository: BaseballRepository) : ViewModel() {
                 }
 
             }
-        }
     }
 
-    // 如果已經授權過 拿到的firebase user會是一樣的
-
-
-    fun onSearchNavigated() {
-        _signUpResult.value = null
+    fun createNewUser(firebaseUser: FirebaseUser) : User {
+        return User(email = firebaseUser.email!!,
+                id = firebaseUser.uid,
+                image = firebaseUser.photoUrl.toString())
     }
 
 }

@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.event.EventViewModel" />
+
         <variable
             name="page"
             type="String" />
@@ -21,15 +23,14 @@
             style="@style/GameButton"
             android:layout_width="@dimen/hitter_button_width"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
             android:onClick="@{()->viewModel.groundOut()}"
             android:text="@string/ground_out"
             app:layout_constraintBottom_toTopOf="@+id/button_out_air"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView"
-            app:layout_constraintVertical_bias=".2"
+            app:layout_constraintTop_toBottomOf="@+id/text_out_name"
+            app:layout_constraintVertical_bias=".3"
             app:layout_constraintVertical_chainStyle="packed" />
 
         <Button
@@ -75,12 +76,12 @@
             app:layout_constraintTop_toBottomOf="@+id/button_out_sgo" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/text_out_name"
             style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/one_half_margin"
-            android:text="@{String.valueOf(viewModel.hitterEvent.player.name)}"
+            android:text="@{viewModel.hitter.player.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

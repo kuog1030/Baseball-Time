@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout>
+
     <data>
+
         <variable
             name="score"
             type="com.gillian.baseball.data.PersonalScore" />
@@ -17,13 +19,13 @@
             android:id="@+id/text_personal_score"
             android:layout_width="@dimen/personal_score_width"
             android:layout_height="@dimen/personal_score_height"
-            app:personalScoreStyle="@{score.color}"
             android:gravity="center"
             android:text="@{score.type}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:personalScoreStyle="@{score.color}"
             tools:text="1B" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

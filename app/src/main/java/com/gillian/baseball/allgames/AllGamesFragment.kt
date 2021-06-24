@@ -27,44 +27,12 @@ class AllGamesFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-
-
         binding.viewpagerAllGames.adapter = AllGamesAdapter(childFragmentManager)
         binding.tabsAllGames.setupWithViewPager(binding.viewpagerAllGames)
 
         if (args.needRefresh) viewModel.refresh()
 
-        // fast start a new game
-        viewModel.startNewGame.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                findNavController().navigate(NavigationDirections.navigationToOrder(null))
-                viewModel.onNewGameStarted()
-            }
-        })
-
-        viewModel.navigateToNewGame.observe(viewLifecycleOwner, Observer {
-            it?.let {
-                findNavController().navigate(AllGamesFragmentDirections.actionAllGamesToNewGame(UserManager.team ?: Team()))
-                viewModel.onNewGameCreated()
-            }
-        })
-
-        viewModel.allGameCards.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                viewModel.seperateFinishedGame()
-            }
-        })
 
         return binding.root
-    }
-
-    override fun onResume() {
-        super.onResume()
-        Log.i("gillian", "on resume")
-    }
-
-    override fun onStart() {
-        super.onStart()
-        Log.i("gillian", "on start")
     }
 }

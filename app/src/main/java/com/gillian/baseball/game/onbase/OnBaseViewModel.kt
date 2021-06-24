@@ -13,15 +13,16 @@ import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.game.EventType
 import kotlinx.coroutines.launch
 
-class OnBaseDialogViewModel(private val repository: BaseballRepository, private val onBaseInfo : OnBaseInfo) : ViewModel() {
+class OnBaseViewModel(private val repository: BaseballRepository, private val onBaseInfo : OnBaseInfo) : ViewModel() {
 
     var player = onBaseInfo.baseList[onBaseInfo.onClickPlayer]
+
     var pitcher = onBaseInfo.pitcher
-    var atBase = AtBase(base = onBaseInfo.onClickPlayer, player = player!!)
 
     val errorLayout = MutableLiveData<Boolean>(false)
 
     private var _proceedWithError = MutableLiveData<Boolean>()
+
     val proceedWithError: LiveData<Boolean>
         get() = _proceedWithError
 
@@ -36,8 +37,10 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository, private 
 
     fun stealBaseSuccess() {
         _proceedWithError.value = false
-        viewModelScope.launch {
-            repository.sendEvent(onBaseInfo.gameId, Event(player = player!!, pitcher = pitcher!!, result = EventType.STEALBASE.number, inning = onBaseInfo.inning, out = onBaseInfo.out))
+        if (player != null && pitcher != null) {
+            viewModelScope.launch {
+                repository.sendEvent(onBaseInfo.gameId, Event(player = player!!, pitcher = pitcher!!, result = EventType.STEALBASE.number, inning = onBaseInfo.inning, out = onBaseInfo.out))
+            }
         }
     }
 
@@ -45,12 +48,16 @@ class OnBaseDialogViewModel(private val repository: BaseballRepository, private 
         _onBaseOut.value = EventType.STEALBASEFAIL
     }
 
-    fun advanceByError(expand: Boolean) {
+    fun advanceByError() {
         if (onBaseInfo.isDefence) {
-            errorLayout.value = expand
+            errorLayout.value = true
         } else {
             _proceedWithError.value = true
         }
+    }
+
+    fun closeErrorList() {
+        errorLayout.value = false
     }
 
     fun recordError(onClickPlayer: EventPlayer) {

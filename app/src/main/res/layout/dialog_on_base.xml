@@ -10,7 +10,7 @@
             type="com.gillian.baseball.data.OnBaseInfo" />
         <variable
             name="viewModel"
-            type="com.gillian.baseball.game.onbase.OnBaseDialogViewModel" />
+            type="com.gillian.baseball.game.onbase.OnBaseViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,7 +46,7 @@
                 style="@style/GameButton"
                 android:layout_width="@dimen/hitter_button_width"
                 android:layout_height="wrap_content"
-                android:onClick="@{()->viewModel.advanceByError(true)}"
+                android:onClick="@{()->viewModel.advanceByError()}"
                 android:text="@string/error_advance"
                 android:layout_marginTop="@dimen/margin"
                 app:layout_constraintBottom_toTopOf="@+id/button_on_base_error"
@@ -180,15 +180,16 @@
                 app:layout_constraintBottom_toBottomOf="@+id/button_on_base_run"
                 app:layout_constraintEnd_toEndOf="@+id/button_on_base_steal_fail"
                 app:layout_constraintStart_toStartOf="@+id/button_on_base_error"
-                app:layout_constraintTop_toTopOf="@+id/button_on_base_pick_off">
+                app:layout_constraintTop_toTopOf="@+id/button_on_base_pick_off"
+                tools:visibility="gone">
 
                 <ImageButton
                     android:id="@+id/button_on_base_leave"
                     android:layout_width="24dp"
                     android:layout_height="match_parent"
                     android:background="@color/transparent"
-                    android:onClick="@{()->viewModel.advanceByError(false)}"
-                    app:srcCompat="@drawable/ic_baseline_arrow_backward_24" />
+                    android:onClick="@{()->viewModel.closeErrorList()}"
+                    app:srcCompat="@drawable/ic_arrow_backward_24" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_on_base_error"

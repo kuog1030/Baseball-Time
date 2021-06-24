@@ -15,6 +15,9 @@
     <string name="empty_player_list">目前還沒有隊友喔，右上角新增隊員</string>
 
     <!--    first login-->
+    <string name="login_pager_create">創建隊伍</string>
+    <string name="login_pager_search">認領球員資料</string>
+    <string name="search_player">搜尋球員代號</string>
     <string name="sign_in_with_google">Sign In With Google</string>
     <string name="team_code">代號</string>
     <string name="straight_to_broadcast">收看文字轉播</string>
@@ -32,13 +35,17 @@
     <string name="watch_all_team_stat">所有球員數據</string>
 
     <!--    team related -->
+    <string name="team_pager_all_player">所有隊員</string>
+    <string name="team_pager_team">球隊頁</string>
     <string name="create_a_team">新增一支你的球隊吧</string>
     <string name="team_name">球隊名稱</string>
+    <string name="team_acronym">球隊簡稱</string>
     <string name="create_a_player">新增你自己吧</string>
     <string name="create_a_player_button">新增球員</string>
     <string name="edit_player_save">儲存球員資料</string>
     <string name="remove_from_team">從球隊移除</string>
     <string name="remove_confirm">確定移除嗎？</string>
+    <string name="clear_personal_record">清空累積成績</string>
     <string name="player_name">球員名稱</string>
     <string name="your_number">你的背號</string>
     <string name="player_number">球員背號</string>
@@ -64,6 +71,8 @@
     <string name="image">圖片</string>
 
     <!--  broadcast  -->
+    <string name="search_broadcast_title">搜尋比賽標題</string>
+    <string name="current_live_game">目前可供線上收看的比賽</string>
     <string name="turn_off_broadcast">要取消文字轉播嗎？</string>
     <string name="turn_off">取消轉播</string>
     <string name="confirm">確定</string>
@@ -92,6 +101,7 @@
     <string name="box_avg">AVG</string>
     <string name="box_obp">OBP</string>
     <string name="box_slg">SLG</string>
+    <string name="box_ops">OPS</string>
 
     <!--    Stat related-->
     <string name="my_performance">我的成績</string>
@@ -103,6 +113,8 @@
     <string name="game_stat_title">成績看板</string>
     <string name="team_player_stat">所有球員成績</string>
     <string name="team">Team</string>
+    <string name="delete_user_confirm">確定要重設帳號嗎？</string>
+    <string name="delete_user">這個動作會解開你和這個球員的關係（也就是說球員紀錄會保留，但並不是你擁有這個球員），並退出目前的球隊。之後你會回到登入畫面，可以重新創立球隊、球員或是加入別的球隊。請注意！這個步驟無法復原。</string>
     <string name="player_id_info">這個球員還沒有使用者認領，歡迎邀請這位球員也加入Baseball Time，使用這段球員代號來加入球隊、延續累積成績。</string>
     <string name="share_subject">Baseball Time!</string>
     <string name="share_title">傳送球員代號給你要邀請的人</string>
@@ -110,6 +122,8 @@
 
 
     <!--   all games related -->
+    <string name="game_pager_schedule">未來比賽</string>
+    <string name="game_pager_score">已結束</string>
     <string name="fast_start_games">快速開始比賽</string>
     <string name="schedule_games">安排一場比賽</string>
     <string name="more_detail">詳細數據</string>
@@ -118,6 +132,9 @@
     <string name="no_schedule_hint">還沒有安排好的比賽喔</string>
     <string name="no_game_hint">還沒有球賽紀錄喔</string>
     <string name="score_win">累積勝場</string>
+    <string name="win">勝</string>
+    <string name="lose">敗</string>
+    <string name="tie">和</string>
     <string name="score_rate">累積敗場</string>
     <string name="game_playing">LIVE</string>
     <string name="game_start_time">開賽時間</string>
@@ -146,7 +163,9 @@
     <string name="game_end_dinner_time">成績上傳後去吃飯</string>
 
     <!--    game record related -->
-    <string name="double_tap">請再按一次離開</string>
+    <string name="double_tap">請再按一次離開</string>\
+    <string name="confirm_to_end">確定要結束比賽嗎？</string>
+    <string name="start_broadcasting">開啟轉播</string>
 
     <string name="ready_to_start">準備開始比賽</string>
     <string name="you_are">你是</string>
@@ -225,5 +244,29 @@
     <string name="R">R</string>
     <string name="E">E</string>
 
-
+    <!--   Event Type -->
+    <string name="event_single">擊出一壘安打。</string>
+    <string name="event_double">擊出二壘安打。</string>
+    <string name="event_triple">擊出三壘安打。</string>
+    <string name="event_homerun">擊出全壘打！</string>
+    <string name="event_hbp">觸身球保送。</string>
+    <string name="event_error_on_base">因對手失誤上壘。</string>
+    <string name="event_dropped_third">不死三振。</string>
+    <string name="event_walk">四壞球保送。</string>
+    <string name="event_strike_out">三振出局。</string>
+    <string name="event_fielder_choice">野手選擇上壘。</string>
+    <string name="event_run">回壘得分。</string>
+    <string name="event_error">失誤。</string>
+    <string name="event_GO">滾地球出局。</string>
+    <string name="event_AO">高飛球出局。</string>
+    <string name="event_SF">高飛犧牲打。</string>
+    <string name="event_SH">犧牲推進。</string>
+    <string name="event_steal_base">盜壘成功！</string>
+    <string name="event_pick_off">牽制出局。</string>
+    <string name="event_steal_base_fail">盜壘失敗。</string>
+    <string name="event_on_base_out">出局。</string>
+    <string name="event_ip">投球局數</string>
+    <string name="event_change">換局</string>
+    <string name="event_ip_end">投球局數</string>
+    <string name="event_ip_update">更新自責分</string>
 </resources>

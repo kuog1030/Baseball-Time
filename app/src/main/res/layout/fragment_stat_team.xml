@@ -31,14 +31,14 @@
 
         <ImageButton
             android:id="@+id/button_team_stat_leave"
-            android:layout_width="18dp"
-            android:layout_height="18dp"
+            android:layout_width="@dimen/button_leave"
+            android:layout_height="@dimen/button_leave"
             android:layout_marginStart="@dimen/margin"
             android:background="@color/transparent"
             app:layout_constraintBottom_toBottomOf="@+id/text_team_stat_title"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_team_stat_title"
-            app:srcCompat="@drawable/ic_baseline_arrow_backward_24" />
+            app:srcCompat="@drawable/ic_arrow_backward_24" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -52,13 +52,11 @@
 
                 <TextView
                     android:id="@+id/text_team_stat_bat"
+                    style="@style/StatGameTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/batters_perfomance"
-                    android:textColor="@color/color_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/recycler_team_stat_hitter"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -100,13 +98,11 @@
 
                 <TextView
                     android:id="@+id/text_team_stat_pitch"
+                    style="@style/StatGameTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/margin"
                     android:text="@string/pitchers_perfomance"
-                    android:textColor="@color/color_primary"
-                    android:textSize="18sp"
-                    android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="@+id/recycler_team_stat_pitcher"
                     app:layout_constraintTop_toBottomOf="@+id/recycler_team_stat_hitter" />
 

@@ -1,7 +1,6 @@
 package com.gillian.baseball.editplayer
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -12,6 +11,8 @@ import com.gillian.baseball.data.Player
 import com.gillian.baseball.data.Result
 import com.gillian.baseball.data.source.BaseballRepository
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.util.Util
+import com.gillian.baseball.util.Util.getString
 import kotlinx.coroutines.launch
 
 
@@ -27,17 +28,22 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     val photoUrl = MutableLiveData<String>()
 
-    val proceedToSave = MutableLiveData<Boolean>(false)
-
-    val readyToSentPhoto = MutableLiveData<Uri>()
-
-    val errorMessage = MutableLiveData<Int>()
+    val photoToBeSent = MutableLiveData<Uri>()
 
     val confirmDelete = MutableLiveData<Boolean>(false)
 
-    var needStatRefresh = false
-
+    // only when this player is user itself can wipe player's accumulated data
     val isMe = MutableLiveData<Boolean>(false)
+
+    private val _newImage = MutableLiveData<String>()
+
+    val newImage: LiveData<String>
+        get() = _newImage
+
+    private val _errorMessage = MutableLiveData<String>()
+
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
 
     private val _status = MutableLiveData<LoadStatus>()
 
@@ -46,31 +52,52 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     private val _navigateToTeam = MutableLiveData<Boolean>()
 
-    val navigateToTeam : LiveData<Boolean>
+    val navigateToTeam: LiveData<Boolean>
         get() = _navigateToTeam
 
     private val _dismissDialog = MutableLiveData<Boolean>()
 
-    val dismissDialog : LiveData<Boolean>
+    val dismissDialog: LiveData<Boolean>
         get() = _dismissDialog
 
+
     fun initOriginInfo(player: Player) {
-        oldPlayer = player
-        name.value = player.name
-        number.value = player.number.toString()
-        nickname.value = player.nickname
-        photoUrl.value = player.image
-        if (player.id == UserManager.playerId) isMe.value = true
+        player.let {
+            oldPlayer = it
+            name.value = it.name
+            number.value = it.number.toString()
+            nickname.value = it.nickname
+            photoUrl.value = it.image
+
+            isMe.value = (it.id == UserManager.playerId)
+        }
     }
 
 
-    fun uploadPhoto(uri: Uri) {
+    // check if info filled -> (upload photo) -> updatePlayer
+    fun checkIfInfoFilled() {
+
+        if (name.value.isNullOrEmpty() || number.value.isNullOrEmpty()) {
+            _errorMessage.value = getString(R.string.create_new_player_error)
+        } else {
+            _errorMessage.value = null
+            _status.value = LoadStatus.LOADING
+
+            if (photoToBeSent.value != null) {
+                uploadPhoto(photoToBeSent.value!!)
+            } else {
+                _newImage.value = photoUrl.value ?: ""
+            }
+        }
+    }
+
+
+    private fun uploadPhoto(uri: Uri) {
         viewModelScope.launch {
             val result = repository.uploadImage(uri)
 
-            photoUrl.value = when (result) {
+            _newImage.value = when (result) {
                 is Result.Success -> {
-                    proceedToSave.value = true
                     result.data
                 }
                 is Result.Fail -> {
@@ -89,45 +116,25 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    // with photo -> upload Photo -> proceed to Save -> updatePlayer
-    // no photo -> updatePlayer
-    fun checkIfInfoFilled() {
-        if (name.value.isNullOrEmpty() || number.value.isNullOrEmpty()) {
-            errorMessage.value = R.string.create_new_player_error
-        } else {
-            errorMessage.value = null
-            _status.value = LoadStatus.LOADING
-            if (readyToSentPhoto.value != null) {
-                Log.i("gillian", "waiting for photo to be uploaded")
-                uploadPhoto(readyToSentPhoto.value!!)  // 有照片的話等照片上傳
-            } else {
-                updatePlayer()
-            }
-        }
-    }
 
-
-    fun updatePlayer() {
+    fun updatePlayer(imageUrl: String) {
         val numberInt = number.value!!.toInt()
 
         val newPlayer = Player(
-            id = oldPlayer.id,
-            name = name.value!!,
-            number = numberInt,
-            nickname = nickname.value ?: name.value!!,
-            image = photoUrl.value
+                id = oldPlayer.id,
+                name = name.value!!,
+                number = numberInt,
+                nickname = nickname.value ?: name.value!!,
+                image = imageUrl
         )
 
-        Log.i("gillian", "newplayer $newPlayer")
-
         viewModelScope.launch {
-            val uploadResult = repository.updatePlayerInfo(newPlayer)
+            val result = repository.updatePlayerInfo(newPlayer)
 
-            _dismissDialog.value = when (uploadResult) {
+            _dismissDialog.value = when (result) {
                 is Result.Success -> {
                     _status.value = LoadStatus.DONE
-                    proceedToSave.value = null
-                    uploadResult.data
+                    result.data
                 }
                 is Result.Fail -> {
                     _status.value = LoadStatus.ERROR
@@ -147,9 +154,23 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
 
     fun confirmDelete() {
         viewModelScope.launch {
-            _navigateToTeam.value = when (repository.deletePlayer(oldPlayer.id)) {
-                is Result.Success -> true
-                else -> null
+            _navigateToTeam.value = when (val result = repository.deletePlayer(oldPlayer.id)) {
+                is Result.Success -> {
+                    _errorMessage.value = null
+                    true
+                }
+                is Result.Fail -> {
+                    _errorMessage.value = result.error
+                    null
+                }
+                is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
+                    null
+                }
+                else -> {
+                    _errorMessage.value = getString(R.string.return_nothing)
+                    null
+                }
             }
         }
     }
@@ -160,7 +181,6 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
             val result = repository.clearMyStat(UserManager.playerId, name.value ?: "")
             _dismissDialog.value = when (result) {
                 is Result.Success -> {
-                    needStatRefresh = true
                     _status.value = LoadStatus.DONE
                     result.data
                 }
@@ -197,9 +217,4 @@ class EditPlayerViewModel(val repository: BaseballRepository) : ViewModel() {
         _dismissDialog.value = null
     }
 
-
-    override fun onCleared() {
-        super.onCleared()
-        Log.i("gillian", "edit player view model on clear")
-    }
 }

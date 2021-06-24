@@ -21,7 +21,7 @@
     <color name="black">#FF000000</color>
     <color name="black_transparent">#99000000</color>
     <color name="black_login">#555555</color>
-    <color name="grey_transparent">#55000000</color>
+    <color name="grey_transparent">#80000000</color>
     <color name="transparent">#00000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey_333">#FF222222</color>
@@ -30,17 +30,6 @@
     <color name="grey_888">#FF888888</color>
     <color name="grey_ddd">#FFdddddd</color>
     <color name="grey_eee">#FFeeeeee</color>
-
-<!--    <color name="avg">#FFECB3</color>-->
-<!--    <color name="obp">#FFCCBC</color>-->
-<!--    <color name="slg">#D7CCC8</color>-->
-<!--    <color name="slg_dark">#5D4037</color>-->
-
-<!--    這其實也蠻好看的-->
-<!--    <color name="avg">#7B838C</color>-->
-<!--    <color name="obp">#D8D9D7</color>-->
-<!--    <color name="slg">#9FADBF</color>-->
-<!--    <color name="slg_dark">#40362E</color>-->
 
     <color name="avg">#5EA4BF</color>
     <color name="obp">#F2BD1D</color>

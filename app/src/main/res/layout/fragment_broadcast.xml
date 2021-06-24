@@ -16,10 +16,11 @@
 
 
         <TextView
-            android:id="@+id/textView14"
+            android:id="@+id/text_live_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="12dp"
+            android:textSize="16sp"
             android:text="@{viewModel.game.title}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -27,148 +28,151 @@
             tools:text="天下第一武道大會" />
 
         <TextView
-            android:id="@+id/textView15"
+            android:id="@+id/text_live_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/half_margin"
             android:layout_marginEnd="@dimen/margin"
             android:text="@string/game_start_time"
-            app:layout_constraintEnd_toStartOf="@+id/textView18"
+            app:layout_constraintEnd_toStartOf="@+id/text_live_the_time"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+            app:layout_constraintTop_toBottomOf="@+id/text_live_title" />
 
         <TextView
-            android:id="@+id/textView16"
+            android:id="@+id/text_live_recorded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin"
             android:text="@string/recorded_team"
-            app:layout_constraintEnd_toStartOf="@+id/textView19"
+            app:layout_constraintEnd_toStartOf="@+id/text_live_the_recprded"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintHorizontal_chainStyle="packed"
-            app:layout_constraintStart_toEndOf="@+id/textView20"
-            app:layout_constraintTop_toTopOf="@+id/textView18" />
+            app:layout_constraintStart_toEndOf="@+id/text_live_middle"
+            app:layout_constraintTop_toTopOf="@+id/text_live_the_time" />
 
         <ImageView
-            android:id="@+id/textView17"
+            android:id="@+id/image_live_recorded_guest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:visibility="@{viewModel.game.isHome? View.GONE : View.VISIBLE}"
-            app:layout_constraintBottom_toBottomOf="@+id/textView10"
-            app:layout_constraintEnd_toStartOf="@+id/textView10"
+            app:layout_constraintBottom_toBottomOf="@+id/text_live_guest"
+            app:layout_constraintEnd_toStartOf="@+id/text_live_guest"
             app:layout_constraintStart_toStartOf="parent"
             app:srcCompat="@drawable/ic_edit_24"
             app:tint="@color/color_primary" />
 
         <ImageView
-            android:id="@+id/text_broadcast_recorded_home"
+            android:id="@+id/image_live_recorded_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:padding="3dp"
             android:visibility="@{viewModel.game.isHome? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@+id/textView11"
+            app:layout_constraintBottom_toBottomOf="@+id/text_live_home"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toEndOf="@+id/textView11"
+            app:layout_constraintStart_toEndOf="@+id/text_live_home"
             app:srcCompat="@drawable/ic_edit_24"
             app:tint="@color/color_primary" />
 
         <TextView
-            android:id="@+id/textView10"
+            android:id="@+id/text_live_guest"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.game.guestName}"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView21"
-            app:layout_constraintEnd_toStartOf="@+id/textView21"
+            app:layout_constraintBottom_toBottomOf="@+id/text_live_score"
+            app:layout_constraintEnd_toStartOf="@+id/text_live_score"
             app:layout_constraintHorizontal_bias="0.6"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView21"
+            app:layout_constraintTop_toTopOf="@+id/text_live_score"
             tools:text="Android" />
 
         <TextView
-            android:id="@+id/textView11"
+            android:id="@+id/text_live_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.game.homeName}"
             android:textSize="18sp"
-            app:layout_constraintBottom_toBottomOf="@+id/textView21"
+            app:layout_constraintBottom_toBottomOf="@+id/text_live_score"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.4"
-            app:layout_constraintStart_toEndOf="@+id/textView21"
-            app:layout_constraintTop_toTopOf="@+id/textView21"
+            app:layout_constraintStart_toEndOf="@+id/text_live_score"
+            app:layout_constraintTop_toTopOf="@+id/text_live_score"
             tools:text="iOS" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recycler_live"
             android:layout_width="match_parent"
             android:layout_height="0dp"
+            android:layout_marginTop="@dimen/quarter_margin"
+            android:paddingTop="@dimen/quarter_margin"
+            android:clipToPadding = "false"
             android:orientation="vertical"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView21"
+            app:layout_constraintTop_toBottomOf="@+id/text_live_score"
             app:liveEvents="@{viewModel.liveEvents}"
             tools:listitem="@layout/item_broadcast" />
 
         <TextView
-            android:id="@+id/textView18"
+            android:id="@+id/text_live_the_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@{viewModel.game.dateStringTime}"
-            app:layout_constraintEnd_toStartOf="@+id/textView20"
+            app:layout_constraintEnd_toStartOf="@+id/text_live_middle"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView15"
-            app:layout_constraintTop_toTopOf="@+id/textView15"
+            app:layout_constraintStart_toEndOf="@+id/text_live_time"
+            app:layout_constraintTop_toTopOf="@+id/text_live_time"
             tools:text="05/26 13:00"/>
 
         <TextView
-            android:id="@+id/textView19"
+            android:id="@+id/text_live_the_recprded"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:recordedTeam="@{viewModel.liveGame}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toEndOf="@+id/textView16"
-            app:layout_constraintTop_toTopOf="@+id/textView16"
+            app:layout_constraintStart_toEndOf="@+id/text_live_recorded"
+            app:layout_constraintTop_toTopOf="@+id/text_live_recorded"
             tools:text="Android"/>
 
         <TextView
-            android:id="@+id/textView20"
+            android:id="@+id/text_live_middle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView14" />
+            app:layout_constraintTop_toBottomOf="@+id/text_live_title" />
 
         <TextView
-            android:id="@+id/textView21"
+            android:id="@+id/text_live_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/margin"
+            android:layout_marginTop="@dimen/half_margin"
             android:letterSpacing=".4"
             android:text='@{String.valueOf(viewModel.liveGame.box.run[0]) + "-" + String.valueOf(viewModel.liveGame.box.run[1])}'
             android:textSize="35sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/textView15"
+            app:layout_constraintTop_toBottomOf="@+id/text_live_time"
             tools:text="5-4" />
 
         <ImageButton
-            android:id="@+id/button_broadcast_close"
+            android:id="@+id/button_live_close"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/half_margin"
             android:layout_marginEnd="@dimen/half_margin"
             android:background="@color/transparent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
             android:visibility="@{viewModel.editable? View.VISIBLE : View.INVISIBLE}"
-            app:srcCompat="@drawable/ic_baseline_more_24" />
+            app:layout_constraintBottom_toBottomOf="@+id/text_live_title"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/text_live_title"
+            app:srcCompat="@drawable/ic_more_horiz_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

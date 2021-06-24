@@ -14,7 +14,7 @@ class HitterBoxAdapter : ListAdapter<HitterBox, HitterBoxAdapter.ViewHolder>(Dif
     class ViewHolder(private var binding: ItemHitterBoxBinding) : RecyclerView.ViewHolder(binding.root) {
         fun bind(isTitle: Boolean, isEven: Boolean, hitter: HitterBox) {
             binding.isTitle = isTitle
-            binding.isEven = isEven
+            binding.isEven = isEven  // for different background color
             binding.hitter = hitter
             binding.executePendingBindings()
         }
@@ -37,7 +37,7 @@ class HitterBoxAdapter : ListAdapter<HitterBox, HitterBoxAdapter.ViewHolder>(Dif
         }
 
         override fun areContentsTheSame(oldItem: HitterBox, newItem: HitterBox): Boolean {
-            return oldItem.order == newItem.order
+            return oldItem.playerId == newItem.playerId
         }
 
     }

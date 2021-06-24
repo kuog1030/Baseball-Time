@@ -1,6 +1,5 @@
 package com.gillian.baseball.allgames
 
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +13,7 @@ import com.gillian.baseball.databinding.ItemCardScoreBinding
 import com.gillian.baseball.databinding.ItemCardSmallBinding
 
 
-class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, val isBroadcast: Boolean = false, val viewModel: AllGamesViewModel? = null)
+class CardScoreAdapter(private val onClickListener: OnClickListener, val isBroadcast: Boolean = false, val viewModel: AllGamesViewModel? = null)
     : ListAdapter<GameCard, RecyclerView.ViewHolder>(DiffCallback) {
 
     class OnClickListener(val clickListener: (gameCard: GameCard) -> Unit) {
@@ -34,11 +33,7 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, va
             binding.game = game
             binding.buttonCardScheduleStart.setOnClickListener { onClickListener.onClick(game) }
             binding.buttonScheduleMore.setOnCheckedChangeListener { _, isChecked ->
-                if (isChecked) {
-                    binding.layoutCardDetail.visibility = View.VISIBLE
-                } else {
-                    binding.layoutCardDetail.visibility = View.GONE
-                }
+                binding.layoutCardDetail.visibility = if (isChecked) View.VISIBLE else View.GONE
             }
             binding.executePendingBindings()
 
@@ -78,10 +73,10 @@ class CardScoreAdapter(val onClickListener: CardScoreAdapter.OnClickListener, va
     }
 
     override fun getItemViewType(position: Int): Int {
-        if (isBroadcast) {
-            return (TYPE_SMALL)
+        return if (isBroadcast) {
+            (TYPE_SMALL)
         } else {
-            return when (getItem(position).status) {
+            when (getItem(position).status) {
                 GameStatus.SCHEDULED.number -> TYPE_SCHEDULE
                 else -> when (position) {
                     0 -> TYPE_FULL

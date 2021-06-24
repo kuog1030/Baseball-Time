@@ -13,7 +13,8 @@
     <dimen name="radio_button_padding">10dp</dimen>
     <dimen name="radius">15dp</dimen>
 
-    <!--        -->
+    <!--    game related -->
+    <dimen name="ball_count">25sp</dimen>
 
     <!--    game event dialog-->
     <dimen name="event_dialog_bar_margin">50dp</dimen>
@@ -21,11 +22,13 @@
     <dimen name="hitter_button_width">150dp</dimen>
     <dimen name="hitter_button_width2">130dp</dimen>
 
-
+    <!--   broadcast related -->
+    <dimen name="custom_base">50dp</dimen>
 
     <!--   box related -->
     <dimen name="box_name_width">90dp</dimen>
     <dimen name="box_height">32dp</dimen>
+    <dimen name="button_leave">18dp</dimen>
 
 
     <dimen name="bar_height">1dp</dimen>
@@ -52,12 +55,14 @@
 
     <dimen name="player_name_box_width">105dp</dimen>
     <dimen name="player_box_width">34dp</dimen>
+    <dimen name="edit_player_photo">120dp</dimen>
+    <dimen name="edit_player_button">130dp</dimen>
 
     <!--   item game card -->
     <dimen name="game_card_height">180dp</dimen>
     <dimen name="game_card_small_height">100dp</dimen>
     <dimen name="game_card_team_image">50dp</dimen>
-    <dimen name="personal_score_height">25dp</dimen>
+    <dimen name="personal_score_height">24dp</dimen>
     <dimen name="personal_score_width">45dp</dimen>
 
     <dimen name="card_radius">15dp</dimen>

@@ -1,6 +1,5 @@
 package com.gillian.baseball.broadcast
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,17 +14,24 @@ import kotlinx.coroutines.launch
 
 class BroadcastViewModel(private val repository: BaseballRepository, val game: GameCard) : ViewModel() {
 
-
+    // register snapshot listener for getting live events
     var liveEvents = MutableLiveData<List<Event>>()
 
+    // register snapshot listener for
     var liveGame = MutableLiveData<Game>()
 
+    // editable only when the game is recorded by user
     val editable = MutableLiveData<Boolean>(false)
 
-    private val _turnOffBroadcast = MutableLiveData<Boolean>()
+    private val _errorMessage = MutableLiveData<String>()
 
-    val turnOffBroadcast : LiveData<Boolean>
-        get() = _turnOffBroadcast
+    val errorMessage: LiveData<String>
+        get() = _errorMessage
+
+    private val _stopBroadcast = MutableLiveData<Boolean>()
+
+    val stopBroadcast: LiveData<Boolean>
+        get() = _stopBroadcast
 
     init {
         fetchLiveEvent()
@@ -33,25 +39,27 @@ class BroadcastViewModel(private val repository: BaseballRepository, val game: G
         if (game.place.isEmpty()) {
             game.place = getString(R.string.no_game_place)
         }
-        if (game.recordedTeamId == UserManager.teamId) {
-            editable.value = true
-        }
+        editable.value = (game.recordedTeamId == UserManager.teamId)
     }
 
-    fun enableBroadcast() {
+    fun stopBroadcast() {
         viewModelScope.launch {
             val result = repository.updateGameStatus(game.id, GameStatus.PLAYINGPRIVATE)
-            _turnOffBroadcast.value = when (result) {
+            _stopBroadcast.value = when (result) {
                 is Result.Success -> {
+                    _errorMessage.value = null
                     result.data
                 }
                 is Result.Fail -> {
+                    _errorMessage.value = result.error
                     null
                 }
                 is Result.Error -> {
+                    _errorMessage.value = result.exception.toString()
                     null
                 }
                 else -> {
+                    _errorMessage.value = getString(R.string.return_nothing)
                     null
                 }
             }
@@ -60,7 +68,7 @@ class BroadcastViewModel(private val repository: BaseballRepository, val game: G
 
 
     fun onBroadcastOff() {
-        _turnOffBroadcast.value = null
+        _stopBroadcast.value = null
     }
 
     private fun fetchLiveEvent() {

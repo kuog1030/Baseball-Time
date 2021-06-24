@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="game"
             type="com.gillian.baseball.data.GameCard" />
@@ -13,30 +14,30 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="220dp"
-        android:background="@drawable/bg_card"
-        android:layout_marginBottom="@dimen/margin"
         android:layout_marginStart="@dimen/margin"
-        android:layout_marginEnd="@dimen/margin">
+        android:layout_marginEnd="@dimen/margin"
+        android:layout_marginBottom="@dimen/margin"
+        android:background="@drawable/bg_card">
 
         <TextView
-            style="@style/DefaultPhoto"
             android:id="@+id/text_card_score_guest_d"
+            style="@style/DefaultPhoto"
             android:layout_width="@dimen/game_card_team_image"
             android:layout_height="@dimen/game_card_team_image"
-            app:defaultName="@{game.guestName}"
             android:textSize="24sp"
+            app:defaultName="@{game.guestName}"
             app:layout_constraintBottom_toBottomOf="@+id/image_card_score_guest"
             app:layout_constraintEnd_toEndOf="@+id/image_card_score_guest"
             app:layout_constraintStart_toStartOf="@+id/image_card_score_guest"
             app:layout_constraintTop_toTopOf="@+id/image_card_score_guest" />
 
         <TextView
-            style="@style/DefaultPhoto"
             android:id="@+id/text_card_score_home_d"
+            style="@style/DefaultPhoto"
             android:layout_width="@dimen/game_card_team_image"
             android:layout_height="@dimen/game_card_team_image"
-            app:defaultName="@{game.homeName}"
             android:textSize="24sp"
+            app:defaultName="@{game.homeName}"
             app:layout_constraintBottom_toBottomOf="@+id/image_card_score_home"
             app:layout_constraintEnd_toEndOf="@+id/image_card_score_home"
             app:layout_constraintStart_toStartOf="@+id/image_card_score_home"
@@ -46,10 +47,10 @@
             android:id="@+id/text_card_score_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin"
             android:text='@{game.title + "  " + game.place}'
             android:textColor="?attr/colorPrimary"
             android:textStyle="bold"
-            android:layout_marginTop="@dimen/margin"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -65,15 +66,15 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/text_card_score_title"
             tools:layout_editor_absoluteY="26dp"
-            tools:text="2021/05/15 09:00"/>
+            tools:text="2021/05/15 09:00" />
 
         <TextView
             android:id="@+id/text_card_score_score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="45sp"
             android:letterSpacing="0.4"
             android:text='@{String.valueOf(game.guestScore) + "-" + String.valueOf(game.homeScore)}'
+            android:textSize="45sp"
             app:layout_constraintBottom_toBottomOf="@+id/text_card_score_guest"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.498"
@@ -90,7 +91,7 @@
             app:layout_constraintEnd_toStartOf="@+id/text_card_score_score"
             app:layout_constraintHorizontal_bias="0.522"
             app:layout_constraintStart_toStartOf="parent"
-            app:photoUrl="@{game.guestImage}"/>
+            app:photoUrl="@{game.guestImage}" />
 
         <TextView
             android:id="@+id/text_card_score_guest"
@@ -109,7 +110,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/text_card_score_score"
             app:layout_constraintTop_toTopOf="@+id/image_card_score_guest"
-            app:photoUrl="@{game.homeImage}"/>
+            app:photoUrl="@{game.homeImage}" />
 
         <TextView
             android:id="@+id/text_card_score_home"
@@ -150,7 +151,7 @@
             app:layout_constraintBottom_toBottomOf="@+id/text_card_score_detail"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/text_card_score_detail"
-            app:srcCompat="@drawable/ic_baseline_arrow_forward_24" />
+            app:srcCompat="@drawable/ic_arrow_forward_24" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -8,7 +8,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.gillian.baseball.databinding.PagerEndBinding
 
-class EndPager (val page: String) : Fragment() {
+class EndPager(val page: String) : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
@@ -16,9 +16,8 @@ class EndPager (val page: String) : Fragment() {
         val viewModel = ViewModelProvider(requireParentFragment()).get(EventViewModel::class.java)
 
         binding.lifecycleOwner = viewLifecycleOwner
-        binding.page = page
         binding.viewModel = viewModel
-
+        binding.page = page
 
         return binding.root
     }

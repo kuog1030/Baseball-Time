@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
-        <import type="android.view.View"/>
+
+        <import type="android.view.View" />
+
         <variable
             name="viewModel"
             type="com.gillian.baseball.allgames.AllGamesViewModel" />
@@ -18,26 +20,6 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-
-
-            <!--            <com.prolificinteractive.materialcalendarview.MaterialCalendarView-->
-            <!--                android:id="@+id/calendar_scores"-->
-            <!--                android:layout_width="300dp"-->
-            <!--                android:layout_height="300dp"-->
-            <!--                app:mcv_showOtherDates="all"-->
-            <!--                android:layout_marginStart="@dimen/double_margin"-->
-            <!--                android:layout_marginEnd="@dimen/double_margin"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent"/>-->
-
-            <!--            <CalendarView-->
-            <!--                android:id="@+id/calendarView"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                app:layout_constraintEnd_toEndOf="parent"-->
-            <!--                app:layout_constraintStart_toStartOf="parent"-->
-            <!--                app:layout_constraintTop_toTopOf="parent" />-->
 
             <TextView
                 android:id="@+id/text_scores_win_title"
@@ -67,11 +49,11 @@
                 style="@style/ScoreNumber"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:overallTeamStat="@{viewModel.totalLose}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/text_scores_win"
                 app:layout_constraintTop_toTopOf="@+id/text_scores_win"
+                app:overallTeamStat="@{viewModel.totalLose}"
                 tools:text="0.5" />
 
             <TextView
@@ -102,12 +84,22 @@
                 android:id="@+id/text_scores_no_game"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="200dp"
                 android:text='@{viewModel.scheduleGames != null ? @string/no_game_hint : ""}'
                 android:visibility="@{viewModel.scoresGames.size == 0 ? View.VISIBLE : View.GONE}"
-                app:layout_constraintTop_toBottomOf="@id/text_scores_rate_title"
-                android:layout_marginTop="200dp"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@id/text_scores_rate_title" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="200dp"
+                app:errorMessage="@{viewModel.errorMessage}"
+                android:elevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/text_scores_rate_title" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -10,26 +10,26 @@ import com.gillian.baseball.data.source.remote.BaseballRemoteDataSource
 
 object ServiceLocator {
 
-        @Volatile
-        var repository: BaseballRepository? = null
-            @VisibleForTesting set
+    @Volatile
+    var repository: BaseballRepository? = null
+        @VisibleForTesting set
 
-        fun provideRepository(context: Context): BaseballRepository {
-            synchronized(this) {
-                return repository
+    fun provideRepository(context: Context): BaseballRepository {
+        synchronized(this) {
+            return repository
                     ?: repository
                     ?: createBaseballRepository(context)
-            }
         }
+    }
 
-        private fun createBaseballRepository(context: Context): BaseballRepository {
-            return DefaultBaseballRepository(
+    private fun createBaseballRepository(context: Context): BaseballRepository {
+        return DefaultBaseballRepository(
                 BaseballRemoteDataSource,
                 createLocalDataSource(context)
-            )
-        }
+        )
+    }
 
-        private fun createLocalDataSource(context: Context): BaseballDataSource {
-            return BaseballLocalDataSource(context)
-        }
+    private fun createLocalDataSource(context: Context): BaseballDataSource {
+        return BaseballLocalDataSource(context)
+    }
 }

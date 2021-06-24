@@ -8,6 +8,7 @@
         <variable
             name="viewModel"
             type="com.gillian.baseball.game.event.EventViewModel" />
+
         <variable
             name="page"
             type="String" />
@@ -19,7 +20,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/text_end_title"
+            android:id="@+id/text_event_end_title"
             style="@style/EventPage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -27,7 +28,7 @@
             android:text="@string/event_end"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent" />
 
         <com.gillian.baseball.views.CustomBaseView
             android:id="@+id/image_event_end_field"
@@ -36,37 +37,37 @@
             android:layout_marginTop="30dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/text_end_title"
+            app:layout_constraintTop_toBottomOf="@+id/text_event_end_title"
             app:onBase="@{viewModel.customBaseInt}" />
 
-            <TextView
-                style="@style/EventDetailText"
-                android:id="@+id/text_event_end_detail"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/double_margin"
-                android:layout_marginTop="@dimen/double_margin"
-                android:layout_marginEnd="@dimen/double_margin"
-                android:text="@{viewModel.eventDetail}"
-                android:gravity="center"
-                android:lineSpacingMultiplier="1.1"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/image_event_end_field"
-                tools:text="第四棒陳傑憲 得分+1"/>
+        <TextView
+            android:id="@+id/text_event_end_detail"
+            style="@style/EventDetailText"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/double_margin"
+            android:layout_marginTop="@dimen/double_margin"
+            android:layout_marginEnd="@dimen/double_margin"
+            android:gravity="center"
+            android:lineSpacingMultiplier="1.1"
+            android:text="@{viewModel.eventDetail}"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/image_event_end_field"
+            tools:text="第四棒陳傑憲 得分+1" />
 
 
-            <Button
-                android:id="@+id/button_event_end_single"
-                style="@style/GameButton"
-                android:layout_width="@dimen/hitter_button_width"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/double_margin"
-                android:onClick="@{()->viewModel.saveAndDismiss()}"
-                android:text="@string/send_event"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/text_event_end_detail" />
+        <Button
+            android:id="@+id/button_event_end_single"
+            style="@style/GameButton"
+            android:layout_width="@dimen/hitter_button_width"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/double_margin"
+            android:onClick="@{()->viewModel.saveAndDismiss()}"
+            android:text="@string/send_event"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/text_event_end_detail" />
 
         <View
             android:id="@+id/bar_event_end"

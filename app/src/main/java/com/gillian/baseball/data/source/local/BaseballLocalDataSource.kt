@@ -89,10 +89,6 @@ class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getAllEvents(gameId: String): List<Event> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun getLiveEvents(gameId: String): MutableLiveData<List<Event>> {
         TODO("Not yet implemented")
     }
@@ -141,10 +137,6 @@ class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
         TODO("Not yet implemented")
     }
 
-    override suspend fun getBothGameStat(gameId: String): Result<Statistic> {
-        TODO("Not yet implemented")
-    }
-
     override suspend fun sendEvent(gameId: String, event: Event) {
         TODO("Not yet implemented")
     }
@@ -154,6 +146,10 @@ class BaseballLocalDataSource(val context: Context) : BaseballDataSource {
     }
 
     override suspend fun deleteGame(gameId: String): Result<Boolean> {
+        TODO("Not yet implemented")
+    }
+
+    override suspend fun deleteUser(userId: String): Result<Boolean> {
         TODO("Not yet implemented")
     }
 }

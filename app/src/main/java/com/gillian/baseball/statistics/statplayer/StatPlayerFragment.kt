@@ -16,14 +16,14 @@ import com.gillian.baseball.databinding.FragmentStatPlayerBinding
 import com.gillian.baseball.editplayer.EditPlayerDialog
 import com.gillian.baseball.ext.getVmFactory
 import com.gillian.baseball.login.UserManager
+import com.gillian.baseball.util.Util
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 
-
-const val REQUEST_IMAGE_OPEN = 1
 
 class StatPlayerFragment : Fragment() {
 
     private val viewModel by viewModels<StatPlayerViewModel> { getVmFactory() }
-    private lateinit var binding : FragmentStatPlayerBinding
+    private lateinit var binding: FragmentStatPlayerBinding
     private val args: StatPlayerFragmentArgs by navArgs()
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,29 +45,53 @@ class StatPlayerFragment : Fragment() {
             sharePlayerId(getString(R.string.share_subject), messageBody, getString(R.string.share_title))
         }
 
+        binding.buttonStatPlayerDelete.setOnClickListener {
+            MaterialAlertDialogBuilder(requireActivity(), R.style.CustomAlertDialog)
+                .setTitle(getString(R.string.delete_user_confirm))
+                .setMessage(getString(R.string.delete_user))
+                .setPositiveButton(getString(R.string.confirm)) { _, _ ->
+                    viewModel.deleteUser()
+                }
+                .setNeutralButton(getString(R.string.cancel), null)
+                .show()
+        }
+
         viewModel.player.observe(viewLifecycleOwner, Observer {
             it?.let {
-                if (viewModel.isInit) {
-                    binding.hitStat = it.hitStat
-                    binding.pitchStat = it.pitchStat
-                    viewModel.updateMoreHitStat()
-                }
+                binding.hitStat = it.hitStat
+                binding.pitchStat = it.pitchStat
             }
         })
 
         viewModel.navigateToEdit.observe(viewLifecycleOwner, Observer {
-            it?.let{
+            it?.let {
                 val editPlayerDialog = EditPlayerDialog(it)
-                editPlayerDialog.show(childFragmentManager, "edit")
+                editPlayerDialog.show(childFragmentManager, "")
                 viewModel.onEditNavigated()
             }
         })
 
-//        viewModel.navigateToTeam.observe(viewLifecycleOwner, Observer {
-//            it?.let{
-//                findNavController().navigate(NavigationDirections.navigationToTeam())
-//            }
-//        })
+        viewModel.navigateToLogin.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                UserManager.userId = ""
+                UserManager.teamId = ""
+                UserManager.playerId = ""
+                UserManager.team = null
+                findNavController().navigate(StatPlayerFragmentDirections.actionStatPlayerFragmentToLoginFragment())
+            }
+        })
+
+        val fadeInAnim = Util.getAnim(R.anim.fade_in_anim)
+
+        viewModel.infoVisibility.observe(viewLifecycleOwner, Observer {
+            it?.let {
+                if (it) {
+                    binding.textStatPlayerInfo.startAnimation(fadeInAnim)
+                } else {
+                    binding.textStatPlayerInfo.clearAnimation()
+                }
+            }
+        })
 
         return binding.root
     }

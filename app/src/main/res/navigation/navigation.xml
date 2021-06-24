@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/navigation"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation"
     app:startDestination="@id/loginFragment">
 
     <fragment
         android:id="@+id/gameFragment"
         android:name="com.gillian.baseball.game.GameFragment"
-        android:label="GameFragment" >
+        android:label="GameFragment">
         <argument
             android:name="preGame"
             app:argType="com.gillian.baseball.data.MyGame" />
@@ -18,13 +19,9 @@
     </fragment>
 
     <fragment
-        android:id="@+id/statFragment"
-        android:name="com.gillian.baseball.statistics.StatFragment"
-        android:label="StatFragment" />
-    <fragment
         android:id="@+id/teamFragment"
         android:name="com.gillian.baseball.team.TeamFragment"
-        android:label="TeamFragment" >
+        android:label="TeamFragment">
         <action
             android:id="@+id/action_teamFragment_to_statPlayerFragment"
             app:destination="@id/statPlayerFragment" />
@@ -33,21 +30,11 @@
             app:destination="@id/statTeamFragment" />
     </fragment>
 
-    <action android:id="@+id/navigationToStat" app:destination="@id/statFragment" />
-    <action
-        android:id="@+id/navigationToTeam"
-        app:destination="@id/teamFragment"
-        app:popUpTo="@id/navigation" />
-    <action android:id="@+id/navigationToOrder" app:destination="@id/orderFragment" />
-    <action android:id="@+id/navigationToAllGames" app:destination="@id/allGamesFragment" />
-    <action android:id="@+id/navigationToNewPlayer" app:destination="@id/newPlayerDialog" />
-    <action android:id="@+id/navigationToStatGame" app:destination="@id/statGameFragment" />
-    <action android:id="@+id/navigationToAllBroadcast" app:destination="@id/allBroadcastFragment" />
 
     <fragment
         android:id="@+id/orderFragment"
         android:name="com.gillian.baseball.order.OrderFragment"
-        android:label="OrderFragment" >
+        android:label="OrderFragment">
         <action
             android:id="@+id/action_orderFragment_to_gameFragment"
             app:destination="@id/gameFragment"
@@ -61,31 +48,34 @@
     <fragment
         android:id="@+id/finalFragment"
         android:name="com.gillian.baseball.finalgame.FinalFragment"
-        android:label="FinalFragment" >
-        <argument android:name="endGame"
+        android:label="FinalFragment">
+        <argument
+            android:name="endGame"
             app:argType="com.gillian.baseball.data.MyGame" />
     </fragment>
+
     <dialog
         android:id="@+id/newPlayerDialog"
         android:name="com.gillian.baseball.newplayer.NewPlayerDialog"
-        android:label="NewPlayerDialog" >
-    </dialog>
+        android:label="NewPlayerDialog" />
+
     <fragment
         android:id="@+id/allGamesFragment"
         android:name="com.gillian.baseball.allgames.AllGamesFragment"
-        android:label="AllGamesFragment" >
+        android:label="AllGamesFragment">
         <argument
             android:name="needRefresh"
-            app:argType="boolean"
-            android:defaultValue="false" />
+            android:defaultValue="false"
+            app:argType="boolean" />
         <action
             android:id="@+id/action_allGames_to_newGame"
             app:destination="@id/newGameFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/newGameFragment"
         android:name="com.gillian.baseball.newgame.NewGameFragment"
-        android:label="NewGameFragment" >
+        android:label="NewGameFragment">
         <argument
             android:name="myTeam"
             app:argType="com.gillian.baseball.data.Team" />
@@ -96,14 +86,15 @@
             app:popUpToInclusive="true">
             <argument
                 android:name="needRefresh"
-                app:argType="boolean"
-                android:defaultValue="false" />
+                android:defaultValue="false"
+                app:argType="boolean" />
         </action>
     </fragment>
+
     <fragment
         android:id="@+id/statGameFragment"
         android:name="com.gillian.baseball.statistics.statgame.StatGameFragment"
-        android:label="StatGameFragment" >
+        android:label="StatGameFragment">
         <argument
             android:name="gameId"
             app:argType="string" />
@@ -111,10 +102,11 @@
             android:name="isHome"
             app:argType="boolean" />
     </fragment>
+
     <fragment
         android:id="@+id/statPlayerFragment"
         android:name="com.gillian.baseball.statistics.statplayer.StatPlayerFragment"
-        android:label="StatPlayerFragment" >
+        android:label="StatPlayerFragment">
         <argument
             android:name="playerId"
             app:argType="string" />
@@ -123,32 +115,41 @@
             app:destination="@id/teamFragment"
             app:popUpTo="@id/teamFragment"
             app:popUpToInclusive="true" />
+        <action
+            android:id="@+id/action_statPlayerFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
+            app:popUpTo="@id/navigation"
+            app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/loginFragment"
         android:name="com.gillian.baseball.login.LoginFragment"
-        android:label="LoginFragment" >
+        android:label="LoginFragment">
         <action
             android:id="@+id/action_login_to_first"
             app:destination="@id/loginFirstFragment"
             app:popUpToInclusive="true" />
     </fragment>
+
     <fragment
         android:id="@+id/broadcastFragment"
         android:name="com.gillian.baseball.broadcast.BroadcastFragment"
-        android:label="BroadcastFragment" >
+        android:label="BroadcastFragment">
         <argument
             android:name="game"
-            app:argType="com.gillian.baseball.data.GameCard"/>
+            app:argType="com.gillian.baseball.data.GameCard" />
     </fragment>
+
     <fragment
         android:id="@+id/allBroadcastFragment"
         android:name="com.gillian.baseball.allbroadcast.AllBroadcastFragment"
-        android:label="AllBroadcastFragment" >
+        android:label="AllBroadcastFragment">
         <action
             android:id="@+id/action_all_to_oneLive"
             app:destination="@id/broadcastFragment" />
     </fragment>
+
     <fragment
         android:id="@+id/loginFirstFragment"
         android:name="com.gillian.baseball.loginfirst.LoginFirstFragment"
@@ -157,9 +158,21 @@
             android:name="newUser"
             app:argType="com.gillian.baseball.data.User" />
     </fragment>
+
     <fragment
         android:id="@+id/statTeamFragment"
         android:name="com.gillian.baseball.statistics.statteam.StatTeamFragment"
         android:label="StatTeamFragment" />
+
+
+    <action
+        android:id="@+id/navigationToTeam"
+        app:destination="@id/teamFragment"
+        app:popUpTo="@id/navigation" />
+    <action android:id="@+id/navigationToOrder" app:destination="@id/orderFragment" />
+    <action android:id="@+id/navigationToAllGames" app:destination="@id/allGamesFragment" />
+    <action android:id="@+id/navigationToNewPlayer" app:destination="@id/newPlayerDialog" />
+    <action android:id="@+id/navigationToStatGame" app:destination="@id/statGameFragment" />
+    <action android:id="@+id/navigationToAllBroadcast" app:destination="@id/allBroadcastFragment" />
 
 </navigation>

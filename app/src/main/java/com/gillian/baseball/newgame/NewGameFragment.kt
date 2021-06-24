@@ -23,7 +23,6 @@ import java.util.*
 
 class NewGameFragment : Fragment() {
 
-    //    private val viewModel by viewModels<OnBaseDialogViewModel> {getVmFactory(onBaseInfo) }
     private val viewModel by viewModels<NewGameViewModel> {getVmFactory(NewGameFragmentArgs.fromBundle(requireArguments()).myTeam) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -50,7 +49,7 @@ class NewGameFragment : Fragment() {
 
         viewModel.scheduleSuccess.observe(viewLifecycleOwner, Observer {
             it?.let{
-                if (it) findNavController().navigate(NewGameFragmentDirections.actionNewGameToAllGames())
+                findNavController().navigate(NewGameFragmentDirections.actionNewGameToAllGames())
                 viewModel.onGameUploadedAndNavigated()
             }
         })

@@ -1,7 +1,6 @@
 package com.gillian.baseball.team
 
 import android.net.Uri
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -22,10 +21,11 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val teamPlayers: LiveData<MutableList<Player>>
         get() = _teamPlayers
 
-    private val _teamPlayersWithMe = MutableLiveData<List<Player>>()
+    // team players without user itself (teammate only)
+    private val _teammates = MutableLiveData<List<Player>>()
 
-    val teamPlayersWithMe: LiveData<List<Player>>
-        get() = _teamPlayersWithMe
+    val teammates: LiveData<List<Player>>
+        get() = _teammates
 
     private val _showNewPlayerDialog = MutableLiveData<Boolean>()
 
@@ -42,14 +42,14 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val refreshStatus: LiveData<Boolean>
         get() = _refreshStatus
 
-    private val _statusEdit = MutableLiveData<LoadStatus>()
+    private val _editStatus = MutableLiveData<LoadStatus>()
 
-    val statusEdit: LiveData<LoadStatus>
-        get() = _statusEdit
+    val editStatus: LiveData<LoadStatus>
+        get() = _editStatus
 
     private val _newTeamImage = MutableLiveData<String>()
 
-    val newTeamImage : LiveData<String>
+    val newTeamImage: LiveData<String>
         get() = _newTeamImage
 
     // For Team Stat
@@ -63,40 +63,54 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
     val pitcherStat: LiveData<List<PitcherBox>>
         get() = _pitcherStat
 
+    // For team info editing
+    private val _editable = MutableLiveData<Boolean>(false)
 
-    var teamName = MutableLiveData<String>()
+    val editable : LiveData<Boolean>
+        get() = _editable
+
+
+    val teamName = MutableLiveData<String>()
     val teamAcronym = MutableLiveData<String>()
     val teamImage = MutableLiveData<String>()
 
-
-    val editable = MutableLiveData<Boolean>(false)
-    val readyToSentPhoto = MutableLiveData<Uri>()
+    val photoToBeSent = MutableLiveData<Uri>()
     val rankList = MutableLiveData<List<Rank>>()
 
     fun startEdit() {
-        if (editable.value == true) {
-            teamName.value = UserManager.team?.name
-            teamAcronym.value = UserManager.team?.acronym
-            teamImage.value = UserManager.team?.image
-            readyToSentPhoto.value = null
+        if (_editable.value == true) {
+            fetchTeamFromUserManager()
+            photoToBeSent.value = null
         }
-        editable.value = !(editable.value!!)
+        _editable.value = !(_editable.value!!)
     }
 
-    fun createRankList(playerList: List<Player>) {
-        rankList.value = playerList.toRankList()
+    // team fragment on create -> init team page -> fetch team -> separate player & create rank list
+    fun initTeamPage() {
+        fetchTeamPlayer()
+        fetchTeamFromUserManager()
     }
 
+    
+    private fun fetchTeamFromUserManager() {
+        UserManager.team?.let {
+            teamName.value = it.name
+            teamImage.value = it.image
+            teamAcronym.value = it.acronym
+        }
+    }
 
-    fun fetchTeamPlayer() {
-
+    
+    private fun fetchTeamPlayer() {
         viewModelScope.launch {
             val result = repository.getTeamPlayer(UserManager.teamId)
 
             _teamPlayers.value = when (result) {
                 is Result.Success -> {
-                    _teamPlayersWithMe.value = result.data.filter { it.userId != UserManager.userId }
-                    result.data
+                    val teamPlayer = result.data
+                    separateTeamAndMe(teamPlayer, UserManager.userId)
+                    createRankList(teamPlayer)
+                    teamPlayer
                 }
                 is Result.Fail -> {
                     null
@@ -112,92 +126,31 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         }
     }
 
-    fun fetchMyPlayer() {
-        teamPlayers.value?.let {
-            for (player in it) {
-                if (player.userId == UserManager.userId) {
-                    myself.value = player
-                    break
-                }
-            }
-        }
+
+    private fun separateTeamAndMe(players: List<Player>, myId: String) {
+        _teammates.value = players.filter { it.userId != myId }
+        myself.value = players.firstOrNull { it.userId == myId }
     }
 
-    // team fragment on create -> init team page -> fetch team -> fetch my player
-    fun initTeamPage() {
-        fetchTeamPlayer()
-        teamName.value = UserManager.team?.name
-        teamImage.value = UserManager.team?.image
-        teamAcronym.value = UserManager.team?.acronym
+    // create rank list base on team players list
+    private fun createRankList(playerList: List<Player>) {
+        rankList.value = playerList.toRankList()
     }
+
 
     init {
         initTeamPage()
     }
 
-    fun addNewPlayer() {
-        _showNewPlayerDialog.value = true
-    }
-
-
-    fun checkIfInfoFilled() {
-        if (teamAcronym.value != "" && teamName.value != "") {
-            _statusEdit.value = LoadStatus.LOADING
-            if (readyToSentPhoto.value != null) {
-                uploadPhoto(readyToSentPhoto.value!!)
-            } else {
-                _newTeamImage.value = teamImage.value
-            }
-        }
-    }
-
-    fun uploadPhoto(uri: Uri) {
-        viewModelScope.launch {
-            val result = repository.uploadImage(uri)
-            _newTeamImage.value = when (result) {
-                is Result.Success -> {
-                    result.data
-                }
-                else -> {
-                    _statusEdit.value = LoadStatus.ERROR
-                    null
-                }
-            }
-        }
-    }
-
-
-
-    fun updateTeamInfo(imageUrl: String) {
-        // 6/8 TODO
-        val newTeam = Team(name = teamName.value ?: "", acronym = teamAcronym.value ?: "", image = imageUrl, id = UserManager.teamId)
-        viewModelScope.launch {
-
-            val result = repository.updateTeamInfo(newTeam)
-            when (result) {
-                is Result.Success -> {
-                    UserManager.team = newTeam
-                    readyToSentPhoto.value = null
-                    teamImage.value = imageUrl
-                    _statusEdit.value = LoadStatus.DONE
-                    startEdit()
-                }
-                else -> {
-                    _statusEdit.value = LoadStatus.ERROR
-                    startEdit()
-                }
-            }
-
-        }
-    }
-
-    // For Tea, Stat
-    fun createStatTable(playerList: List<Player>){
+    // create the table view for Team Stat Page
+    fun createStatTable(playerList: List<Player>) {
         val hitResult = mutableListOf(HitterBox())
         val pitchResult = mutableListOf(PitcherBox())
 
         for (player in playerList) {
-            hitResult.add(player.hitStat)
+            if (player.hitStat.atBat != 0) {
+                hitResult.add(player.hitStat)
+            }
             if (player.pitchStat.inningsPitched != 0) {
                 pitchResult.add(player.pitchStat)
             }
@@ -207,16 +160,77 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         _pitcherStat.value = pitchResult
     }
 
+    // updating team info process :
+    // check if info filled -> (upload photo) -> update team info
+    fun checkIfInfoFilled() {
+        if (teamAcronym.value != "" && teamName.value != "") {
+            _editStatus.value = LoadStatus.LOADING
+
+            // check if uploading new photo needed
+            if (photoToBeSent.value != null) {
+                uploadPhoto(photoToBeSent.value!!)
+            } else {
+                _newTeamImage.value = teamImage.value
+            }
+        }
+    }
+
+
+    private fun uploadPhoto(uri: Uri) {
+        viewModelScope.launch {
+            val result = repository.uploadImage(uri)
+            _newTeamImage.value = when (result) {
+                is Result.Success -> {
+                    result.data
+                }
+                else -> {
+                    _editStatus.value = LoadStatus.ERROR
+                    null
+                }
+            }
+        }
+    }
+
+
+    fun updateTeamInfo(imageUrl: String) {
+        val newTeam = Team(name = teamName.value ?: "",
+                            acronym = teamAcronym.value ?: "",
+                            image = imageUrl,
+                            id = UserManager.teamId)
+
+        viewModelScope.launch {
+            when (repository.updateTeamInfo(newTeam)) {
+                is Result.Success -> {
+                    UserManager.team = newTeam
+                    photoToBeSent.value = null
+                    teamImage.value = imageUrl
+                    _editStatus.value = LoadStatus.DONE
+                    startEdit()
+                }
+                else -> {
+                    _editStatus.value = LoadStatus.ERROR
+                    startEdit()
+                }
+            }
+        }
+    }
+
 
     fun navigateToTeamStat() {
-        teamPlayers.value?.let{
+        teamPlayers.value?.let {
             createStatTable(it)
             _navigateToTeamStat.value = true
         }
     }
 
+
     fun onTeamStatNavigated() {
         _navigateToTeamStat.value = null
+    }
+
+
+    fun navigateToNewPlayer() {
+        _showNewPlayerDialog.value = true
     }
 
 
@@ -224,9 +238,9 @@ class TeamViewModel(private val repository: BaseballRepository) : ViewModel() {
         _showNewPlayerDialog.value = null
     }
 
+
     fun refresh() {
         fetchTeamPlayer()
     }
-
 
 }

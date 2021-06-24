@@ -1,16 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:tools="http://schemas.android.com/tools"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <import type="android.view.View" />
+
+        <import type="android.text.TextUtils" />
+
         <variable
             name="order"
             type="String" />
-        <variable
-            name="isChecked"
-            type="Boolean" />
+
         <variable
             name="player"
             type="com.gillian.baseball.data.EventPlayer" />
@@ -19,11 +21,11 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@drawable/bg_edit_text"
-        android:layout_marginTop="6dp">
+        android:layout_marginTop="6dp"
+        android:background="@drawable/bg_edit_text">
 
         <TextView
-            android:id="@+id/text_order_number"
+            android:id="@+id/text_item_order_number"
             style="@style/PlayerNumber"
             android:layout_width="35dp"
             android:layout_height="wrap_content"
@@ -32,34 +34,34 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:text="246" />
+            tools:text="32" />
 
         <TextView
+            android:id="@+id/text_item_order_name"
             style="@style/PlayerName"
-            android:id="@+id/text_player_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/double_margin"
             android:text="@{player.name}"
-            app:layout_constraintTop_toTopOf="@id/text_order_number"
-            app:layout_constraintBottom_toBottomOf="@id/text_order_number"
-            app:layout_constraintStart_toEndOf="@id/text_order_number"
-            tools:text="蘇智傑"/>
+            app:layout_constraintBottom_toBottomOf="@id/text_item_order_number"
+            app:layout_constraintStart_toEndOf="@id/text_item_order_number"
+            app:layout_constraintTop_toTopOf="@id/text_item_order_number"
+            tools:text="蘇智傑" />
 
         <TextView
             android:id="@+id/text_order_order"
             android:layout_width="23dp"
             android:layout_height="23dp"
             android:layout_marginEnd="@dimen/one_half_margin"
-            android:text='@{order}'
             android:background="@drawable/bg_number_border"
+            android:gravity="center"
+            android:text='@{order}'
             android:textSize="15sp"
             android:textStyle="bold"
-            android:gravity="center"
-            android:visibility="@{isChecked ? View.VISIBLE : View.GONE}"
-            app:layout_constraintBottom_toBottomOf="@+id/text_player_name"
+            android:visibility="@{TextUtils.isEmpty(order) ? View.GONE : View.VISIBLE}"
+            app:layout_constraintBottom_toBottomOf="@+id/text_item_order_name"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/text_player_name"
+            app:layout_constraintTop_toTopOf="@+id/text_item_order_name"
             tools:text="2" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

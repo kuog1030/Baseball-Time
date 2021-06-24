@@ -27,12 +27,10 @@ class StatGameFragment : Fragment() {
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
 
-        val boxAdapter = BoxAdapter()
+        viewModel.fetchMyTeamStat(args.gameId, args.isHome)
+        viewModel.fetchGame(args.gameId)
 
-        viewModel.isHome.value = args.isHome
-        viewModel.gameId.value = args.gameId
-
-        binding.recyclerGameStatBox.adapter = boxAdapter
+        binding.recyclerGameStatBox.adapter = BoxAdapter()
         binding.recyclerGameStatMy.adapter = PersonalScoreAdapter()
         binding.recyclerGameStatHitter.adapter = HitterBoxAdapter()
         binding.recyclerGameStatPitcher.adapter = PitcherBoxAdapter()
@@ -40,20 +38,6 @@ class StatGameFragment : Fragment() {
         binding.buttonGameStatLeave.setOnClickListener{
             findNavController().popBackStack()
         }
-
-        viewModel.game.observe(viewLifecycleOwner, Observer {
-            it?.let{
-                viewModel.createBoxView()
-            }
-        })
-
-
-        viewModel.gameId.observe(viewLifecycleOwner, Observer {
-            viewModel.fetchMyTeamStat()
-            viewModel.fetchGame()
-        })
-
-
 
         return binding.root
     }

@@ -16,7 +16,7 @@
         android:padding="@dimen/margin">
 
         <TextView
-            android:id="@+id/text_broadcast_text"
+            android:id="@+id/text_item_live_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="@dimen/margin"

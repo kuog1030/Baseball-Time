@@ -22,8 +22,6 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
 
     var player = MutableLiveData<Player>()
 
-
-
     val newTeamName = MutableLiveData<String>()
 
     val newPlayerName = MutableLiveData<String>()
@@ -31,7 +29,6 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
     val newPlayerNumber = MutableLiveData<String>()
 
     val registerInfo = MutableLiveData<Boolean>(false)
-
 
     private val _signUpUserFromRegister = MutableLiveData<User>()
 
@@ -69,8 +66,11 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         get() = _navigateFromRegister
 
 
+    // two way to sign up 1. new create 2. register existed player
 
 
+    //                             (team, player id)  (user id)
+    // Register: searchPlayer -> signUpUserFromRegister -> registerPlayer -> fetchTeam
     fun searchPlayer() {
         registerInfo.value = false
         if (searchPlayerId.value.isNullOrEmpty()) {
@@ -82,22 +82,18 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
                 playerList.value = when(result) {
                     is Result.Success -> {
                         _errorMessage.value = if (result.data.isEmpty()) (getString(R.string.error_no_player_result)) else null
-                        _status.value = LoadStatus.DONE
                         result.data
                     }
                     is Result.Fail -> {
                         _errorMessage.value = result.error
-                        _status.value = LoadStatus.ERROR
                         null
                     }
                     is Result.Error -> {
                         _errorMessage.value = result.exception.toString()
-                        _status.value = LoadStatus.ERROR
                         null
                     }
                     else -> {
                         _errorMessage.value = Util.getString(R.string.return_nothing)
-                        _status.value = LoadStatus.ERROR
                         null
                     }
                 }
@@ -105,14 +101,15 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         }
     }
 
+    // connect the existing player and new user
     fun signUpUserFromRegister() {
         registerInfo.value = false
+        // extract info from existed player
         player.value?.let{
             user.playerId = it.id
-            user.teamId = it.teamId!!  // 他不會是錯的，因為錯的話隊友那邊根本看球員頁看不到這個人
+            user.teamId = it.teamId
             UserManager.playerId = it.id
-            UserManager.teamId = it.teamId ?: ""
-            // 唯一沒拿到的就是完整的team資訊
+            UserManager.teamId = it.teamId
 
             viewModelScope.launch {
                 _status.value = LoadStatus.LOADING
@@ -139,10 +136,10 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
                     }
                 }
             }
-            // view model scope end
         }
     }
 
+    // this will update the existing player's user id
     fun registerPlayer() {
         player.value?.let {
             viewModelScope.launch {
@@ -150,7 +147,6 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
 
                 _proceedFetchTeam.value = when (result) {
                     is Result.Success -> {
-                        _status.value = LoadStatus.DONE
                         result.data
                     }
                     is Result.Fail -> {
@@ -179,9 +175,23 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
                 val result = repository.getTeam(it.teamId)
                 _navigateFromRegister.value = when (result) {
                     is Result.Success -> {
+                        _errorMessage.value = null
+                        _status.value = LoadStatus.DONE
                         result.data
                     }
+                    is Result.Fail -> {
+                        _errorMessage.value = result.error
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
+                    is Result.Error -> {
+                        _errorMessage.value = result.exception.toString()
+                        _status.value = LoadStatus.ERROR
+                        null
+                    }
                     else -> {
+                        _errorMessage.value = getString(R.string.return_nothing)
+                        _status.value = LoadStatus.ERROR
                         null
                     }
                 }
@@ -189,12 +199,22 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         }
     }
 
-    fun signUpUser() {
-        if (newTeamName.value.isNullOrEmpty() || newPlayerNumber.value.isNullOrEmpty() || newPlayerName.value == null) {
-            _errorMessage.value = Util.getString(R.string.error_init_team_player)
+
+    //          (user id)  (team, team id, player id)
+    // Create: signUpUser -> initTeamAndPlayer
+    private fun allInfoFilled() : Boolean {
+        return if (newTeamName.value.isNullOrEmpty() || newPlayerNumber.value.isNullOrEmpty() || newPlayerName.value == null) {
+            _errorMessage.value = getString(R.string.error_init_team_player)
+            false
         } else {
             _errorMessage.value = null
+            true
+        }
+    }
 
+    // sign up a new user with completely new team and player
+    fun signUpUser() {
+        if (allInfoFilled()) {
             viewModelScope.launch {
                 _status.value = LoadStatus.LOADING
                 val result = repository.signUpUser(user)
@@ -214,7 +234,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
                         null
                     }
                     else -> {
-                        _errorMessage.value = Util.getString(R.string.return_nothing)
+                        _errorMessage.value = getString(R.string.return_nothing)
                         _status.value = LoadStatus.ERROR
                         null
                     }
@@ -223,6 +243,7 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         }
     }
 
+    // create a new team and player into database
     fun initTeamAndPlayer() {
         val numberInt = newPlayerNumber.value!!.toInt()
 
@@ -230,9 +251,11 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
         val player = Player(name = newPlayerName.value ?: "", number = numberInt, image = user.image)
 
         viewModelScope.launch {
-            val result = repository.initTeamAndPlayer(team, player)  // UserManager.playerId & teamId will be set
+            // UserManager.playerId & teamId will be set
+            val result = repository.initTeamAndPlayer(team, player)
             _navigateToTeam.value = when (result) {
                 is Result.Success -> {
+                    _errorMessage.value = null
                     _status.value = LoadStatus.DONE
                     result.data
                 }
@@ -253,7 +276,6 @@ class LoginFirstViewModel(private val repository: BaseballRepository, private va
                 }
             }
         }
-
     }
 
     fun onTeamNavigated() {

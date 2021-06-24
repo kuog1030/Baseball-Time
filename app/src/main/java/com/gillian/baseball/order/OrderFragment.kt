@@ -22,7 +22,7 @@ import com.gillian.baseball.order.OrderFragmentDirections
 
 class OrderFragment : Fragment() {
 
-    val args: OrderFragmentArgs by navArgs()
+    private val args: OrderFragmentArgs by navArgs()
     private val viewModel by viewModels<OrderViewModel> {getVmFactory(args.scheduleGame) }
     lateinit var binding : FragmentOrderBinding
 
@@ -35,15 +35,12 @@ class OrderFragment : Fragment() {
         val adapter = OrderAdapter()
         binding.recyclerOrderPlayers.adapter = adapter
 
-
         val itemTouchHelper = ItemTouchHelper(simpleCallback)
         itemTouchHelper.attachToRecyclerView(binding.recyclerOrderPlayers)
 
-
+        // submit list after fetching team players
         viewModel.submitList.observe(viewLifecycleOwner, Observer {
             it?.let{
-                Log.i("gillian", "success and ${viewModel.lineUp}")
-
                 adapter.submitList(viewModel.lineUp)
                 setUpSpinnerAdapter(viewModel.pitcherList)
 
@@ -51,7 +48,7 @@ class OrderFragment : Fragment() {
             }
         })
 
-
+        // set up game in firebase
         viewModel.setUpGame.observe(viewLifecycleOwner, Observer {
             it?.let{
                 viewModel.navigateToGame(it)
@@ -60,7 +57,6 @@ class OrderFragment : Fragment() {
 
         viewModel.navigateToGame.observe(viewLifecycleOwner, Observer {
             it?.let{
-                //findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToGameFragment())
                 findNavController().navigate(OrderFragmentDirections.actionOrderFragmentToGameFragment(it))
                 viewModel.onGameNavigated()
             }
@@ -81,8 +77,8 @@ class OrderFragment : Fragment() {
         override fun onMove(recyclerView: RecyclerView,
                             viewHolder: RecyclerView.ViewHolder,
                             target: RecyclerView.ViewHolder): Boolean {
-            var startPosition = viewHolder.adapterPosition
-            var endPosition = target.adapterPosition
+            val startPosition = viewHolder.adapterPosition
+            val endPosition = target.adapterPosition
 
             swap(viewModel.lineUp, startPosition, endPosition)
             recyclerView.adapter?.notifyItemMoved(startPosition, endPosition)
@@ -101,7 +97,6 @@ class OrderFragment : Fragment() {
         binding.spinnerOrderPitcher.adapter = spinnerAdapter
         binding.spinnerOrderPitcher.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
             }
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
