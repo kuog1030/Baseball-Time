@@ -42,7 +42,6 @@ A statistics oriented baseball recording app with real-time score.
   * Navigation
   * LiveData
 * User Interface
-  * Custom View
   * RecyclerView
   * ViewPager
 * Tools
