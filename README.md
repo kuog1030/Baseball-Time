@@ -3,6 +3,10 @@ A statistics oriented baseball recording app with real-time score.
 
 [<img width="200" src="https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png"/>](https://play.google.com/store/apps/details?id=com.gillian.baseball)
 
+Just taking a look? Use this Google account:
+* username - `baseballtime.user@gmail.com`
+* password - `play#ball`
+
 ## Features
 
 :baseball: **Login and Create your team!**
@@ -59,4 +63,4 @@ A statistics oriented baseball recording app with real-time score.
 
 ## Contact
 
-Gillian Kuo - gillianKuo375@gmail.com
+Gillian Kuo - gilliankuo375@gmail.com
